@@ -83,7 +83,7 @@
         }).bind(this), null);
     };
 
-    ns.XModelWrapper.prototype.cansel = function() {
+    ns.XModelWrapper.prototype.cancel = function() {
         this.__is_canseled = true;
     };
 

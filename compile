@@ -5,7 +5,7 @@ COMPILER='java -jar ./tool/compiler-latest/compiler.jar' # Google Closure Compil
 ${COMPILER} \
 --language_in=ECMASCRIPT6 \
 --language_out=ECMASCRIPT5 \
---js_output_file ./xplain.min.js \
+--js_output_file ./build/xplain.min.js \
 --js \
 ./src/xplain_core.js \
 ./src/utils_system.js \
