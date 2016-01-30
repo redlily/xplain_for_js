@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="200px" height="200px" viewPort="0 0 200 200">
+    <g>
+        <circle cx="100" cy="30" r="15" fill="rgba(255,255,255,1.0)"/>
+        <circle cx="50.5025253169" cy="50.5025253169" r="15" fill="rgba(255,255,255,0.875)"/>
+        <circle cx="30" cy="100" r="15" fill="rgba(255,255,255,0.75)"/>
+        <circle cx="50.5025253169" cy="149.497474683" r="15" fill="rgba(255,255,255,0.625)"/>
+        <circle cx="100" cy="170" r="15" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="149.497474683" cy="149.497474683" r="15" fill="rgba(255,255,255,0.375)"/>
+        <circle cx="170" cy="100" r="15" fill="rgba(255,255,255,0.25)"/>
+        <circle cx="149.497474683" cy="50.5025253169" r="15" fill="rgba(255,255,255,0.125)"/>
+        <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="0 100 100"
+            to="360 100 100"
+            dur="2s"
+            repeatCount="indefinite"/>
+    </g>
+</svg>

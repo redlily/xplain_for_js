@@ -1,0 +1,6 @@
+out/
+doc/
+tool/
+.DS_store
+.swp
+.swo

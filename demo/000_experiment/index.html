@@ -1,0 +1,155 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <title>xPlain Test</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+
+    <script type="text/javascript" src="../../src/xplain_core.js"></script>
+    <script type="text/javascript" src="../../src/utils_system.js"></script>
+    <script type="text/javascript" src="../../src/utils_array.js"></script>
+    <script type="text/javascript" src="../../src/utils_string.js"></script>
+    <script type="text/javascript" src="../../src/utils_math.js"></script>
+    <script type="text/javascript" src="../../src/utils_opengl.js"></script>
+    <script type="text/javascript" src="../../src/math_geometry.js"></script>
+    <script type="text/javascript" src="../../src/math_quaternion.js"></script>
+    <script type="text/javascript" src="../../src/math_quaternion_dim.js"></script>
+    <script type="text/javascript" src="../../src/math_matrix4x4.js"></script>
+    <script type="text/javascript" src="../../src/math_matrix4x4_dim.js"></script>
+    <script type="text/javascript" src="../../src/math_vector3.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_types.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_codec.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_decoder.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_transform.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_material.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_mesh.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_skin.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_node.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_kinematics.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_animation.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_container.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_utils_wrapper.js"></script>
+    <!--
+    <script type="text/javascript" src="../../bin/xplain.min.js"></script>
+    -->
+    <script type="text/javascript" src="./script/main.js"></script>
+
+    <!-- model vertex shader. -->
+    <script id="model_vertex_shader" type="x-shader/x-vertex">
+
+    uniform mat4 u_projection_transform;
+    uniform mat4 u_view_transform;
+    uniform mat4 u_model_transform;
+
+    uniform vec3 u_light_diffuse_direction;
+    uniform vec4 u_light_diffuse_color;
+
+    uniform vec4 u_color;
+    uniform vec4 u_diffuse_color;
+
+    attribute vec4 a_position;
+    attribute vec3 a_normal;
+    attribute vec4 a_color;
+    attribute vec2 a_tex_coord;
+
+    varying vec4 v_color;
+    varying vec2 v_tex_coord;
+
+    mat3 mat4_to_mat3(mat4 m) {
+        return mat3(m[0].xyz, m[1].xyz, m[2].xyz);
+    }
+
+    void main() {
+        gl_Position =
+            u_projection_transform * u_view_transform * u_model_transform *
+            a_position;
+        mat3 normal_transform = mat4_to_mat3(u_view_transform * u_model_transform);
+        vec3 normal = normalize(normal_transform * a_normal);
+        float cs =
+            max(dot(u_light_diffuse_direction, normal), 0.0) * (1.0 - u_light_diffuse_color.w) +
+            u_light_diffuse_color.w;
+        v_color = u_diffuse_color * vec4(u_light_diffuse_color.xyz * cs, 1.0);
+        v_tex_coord = a_tex_coord;
+    }
+
+    </script>
+
+    <!-- model fragment shader. -->
+    <script id="model_fragment_shader" type="x-shader/x-fragment">
+
+    precision highp float;
+    precision highp int;
+
+    varying vec4 v_color;
+    varying vec2 v_tex_coord;
+
+    uniform sampler2D u_diffuse_map;
+
+    void main() {
+        gl_FragColor = v_color * texture2D(u_diffuse_map, v_tex_coord);
+    }
+
+    </script>
+
+    <!-- guide vertex shader code. -->
+    <script id="guide_vertex_shader" type="x-shader/x-vertex">
+
+    uniform mat4 u_view_transform;
+    uniform mat4 u_model_transform;
+
+    attribute vec4 a_position;
+    attribute vec4 a_color;
+    attribute vec2 a_tex_coord;
+
+    varying vec4 v_color;
+    varying vec2 v_tex_coord;
+
+    void main() {
+        gl_Position = u_view_transform * u_model_transform * a_position;
+        v_color = vec4(1.0, 1.0, 1.0, 1.0);
+        v_tex_coord = a_tex_coord;
+    }
+
+    </script>
+
+    <!-- guide fragment shader code. -->
+    <script id="guide_fragment_shader" type="x-shader/x-fragment">
+
+    precision highp float;
+    precision highp int;
+
+    varying vec4 v_color;
+    varying vec2 v_tex_coord;
+
+    uniform sampler2D u_color_map;
+
+    void main() {
+        gl_FragColor = v_color * texture2D(u_color_map, v_tex_coord);
+    }
+
+    </script>
+</head>
+<body>
+    <div id="screen_element" style="position:relative;">
+        <canvas id="main_canvas" class="main_canvas"></canvas>
+        <span id="load_spinner" class="load_spinner">
+            <img src="./image/spin.svg" width="100px" height="100px"/>
+        </span>
+        <div id="play_controller" class="play_controller">
+            <span id="play_button" class="control-button">
+                <img src="./image/start.svg" width="24px" height="24px"/>
+            </span>
+            <span id="next_button" class="control-button">
+                <img src="./image/prev.svg" width="24px" height="24px"/>
+            </span>
+            <span id="prev_button" class="control-button">
+                <img src="./image/next.svg" width="24px" height="24px"/>
+            </span>
+            <span id="screen_mode_button" class="control-button">
+                <img src="./image/full.svg" width="24px" height="24px"/>
+            </span>
+        </div>
+        <div class="fps_text" id="fps_textfield" style="">FPS:0</div>
+    </div>
+</body>
+</html>

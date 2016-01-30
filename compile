@@ -1,0 +1,33 @@
+#!/bin/sh
+
+COMPILER='java -jar ./tool/compiler-latest/compiler.jar' # Google Closure Compiler.
+
+${COMPILER} \
+--language_in=ECMASCRIPT6 \
+--language_out=ECMASCRIPT5 \
+--js_output_file ./xplain.min.js \
+--js \
+./src/xplain_core.js \
+./src/utils_system.js \
+./src/utils_math.js \
+./src/utils_array.js \
+./src/utils_string.js \
+./src/math_geometry.js \
+./src/math_matrix4x4.js \
+./src/math_matrix4x4_dim.js \
+./src/math_quaternion.js \
+./src/math_quaternion_dim.js \
+./src/math_vector3.js \
+./src/utils_opengl.js \
+./src/xmodel_types.js \
+./src/xmodel_codec.js \
+./src/xmodel_decoder.js \
+./src/xmodel_utils_material.js \
+./src/xmodel_utils_mesh.js \
+./src/xmodel_utils_skin.js \
+./src/xmodel_utils_transform.js \
+./src/xmodel_utils_kinematics.js \
+./src/xmodel_utils_animation.js \
+./src/xmodel_utils_node.js \
+./src/xmodel_utils_container.js \
+./src/xmodel_utils_wrapper.js

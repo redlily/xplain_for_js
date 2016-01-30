@@ -1,0 +1,29 @@
+{
+  "name": "xplain",
+  "homepage": "http://redlily.github.io",
+  "authors": [
+    "Syuuhei Kuno <circular.nine@gmail.com>"
+  ],
+  "description": "3D rendering utilities with WebGL.",
+  "main": "bin/xplain.min.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "WebGL",
+    "Geometry"
+    "3DModel",
+    "3DAnimation",
+  ],
+  "license": "BSD 3-clause license",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "compile",
+    "blender",
+    "demo"
+  ]
+}

@@ -1,0 +1,43 @@
+body, html {
+    padding: 0px;
+    margin: 0px;
+}
+
+.main_canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 0;
+}
+
+.load_spinner {
+    position: absolute;
+    z-index: 1;
+}
+
+.title_header {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+
+.play_controller {
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+    text-align: center;
+    background-size: contain;
+}
+
+.control-button {
+    display: inline-block;
+    margin: 16px;
+    cursor: pointer;
+}
+
+.fps_text {
+    position: absolute;
+    z-index: 4;
+    font-size: 8pt;
+    color: rgb(255, 0, 0);
+}
