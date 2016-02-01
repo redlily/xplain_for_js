@@ -1,3 +1,3 @@
 [submodule "demo/test_resources"]
-	path = demo/test_resources
+	path = example/test_resources
 	url = https://github.com/redlily/test_resources
