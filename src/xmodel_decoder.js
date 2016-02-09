@@ -407,7 +407,7 @@
     };
 
     /**
-     * Get the xModel structure.
+     * Get the xModel structure as instance owner.
      *
      * @protected
      * @instance
@@ -422,19 +422,24 @@
             return null;
         }
 
+        // type.
+        var type = this._getInt32();
+
         // search structure.
         var value = this.__inst_map[inst_id];
         if (value != null) {
             return value;
         }
 
-        // type.
-        var type = this._getInt32();
-
         // structure.
-        value = this._createStructureProcedure(type);
+        value = this.__weak_inst_map[inst_id];
+        if (value != null) {
+            delete this.__weak_inst_map[inst_id];
+        } else {
+            value = this._createStructureProcedure(type);
+        }
 
-        // add the structure.
+        // add a created structure.
         this.__inst_map[inst_id] = value;
 
         // initialize structure.
@@ -443,7 +448,7 @@
     };
 
     /**
-     * Get the xModel structure array.
+     * Get the xModel structure array as instance owner.
      *
      * @protected
      * @instance
@@ -468,8 +473,27 @@
      * @function _getStructureWeekRef
      * @returns {xpl.XModelStructure} The read xModel structure.
      */
-    ns.XModelDecoder.prototype._getStructureWeakRef = function() {
-        return null;
+    ns.XModelDecoder.prototype._getStructureRef = function() {
+        // identifier.
+        var inst_id = this._getInt32();
+        if (inst_id == 0) {
+            return null;
+        }
+
+        // type.
+        var type = this._getInt32();
+
+        // search structure.
+        var value = this.__inst_map[inst_id] | this.__weak_inst_map[inst_id];
+        if (value != null) {
+            return value;
+        }
+
+        // structure.
+        value = this._createStructureProcedure(type);
+
+        // add a created structure.
+        this.__weak_inst_map[inst_id] = value;
     };
 
     /**
@@ -478,14 +502,14 @@
      * @protected
      * @instance
      * @memberof xpl.XModelDecoder
-     * @function _getStructureWeakRefArray
+     * @function _getStructRefArray
      * @param {Array.<xpl.XModelStructure>} buf - The destination array of the xModel structures.
      * @param {xpl.size_t} off - Starting position in the destination array.
      * @param {xpl.size_t} len - Number of the array elements.
      */
-    ns.XModelDecoder.prototype._getStructureWeakRefArray = function(buf, off, len) {
+    ns.XModelDecoder.prototype._getStructureRefArray = function(buf, off, len) {
         for (var i = 0; i < len; ++i) {
-            buf[off++] = this._getStructureWeakRef();
+            buf[off++] = this._getStructRef();
         }
     };
 
@@ -664,7 +688,7 @@
             obj.data_size = size;
 
             // data.
-            obj.data = new Int32Array(obj.data_size);
+            obj.data = new Int8Array(obj.data_size);
             this._getInt8Array(obj.data, 0, obj.data_size);
             return obj;
         }
@@ -914,8 +938,8 @@
         }
 
         // skin (inline).
-        var has_skin_weights = this._getBool();
-        if (has_skin_weights) {
+        var has_skinning = this._getBool();
+        if (has_skinning) {
             inst.skin = new ns.XModelSkin();
             this._getSkin(inst.skin);
         }
@@ -932,7 +956,7 @@
                     inst.num_normals,
                     inst.num_colors,
                     inst.num_tex_coords,
-                    has_skin_weights);
+                    has_skinning);
                 inst.vertices[i] = vertex;
             }
         }
@@ -1044,7 +1068,7 @@
      * @param {xpl.int32_t} has_tex_coords -
      *          Specified 0 < x if has the texture coordinates,
      *          specified x <= 0 if not has the texture coordinates.
-     * @param {xpl.int32_t} has_skin_weights -
+     * @param {xpl.int32_t} has_skinning -
      *          Specified the true if has the skin weights,
      *          specified false if not has the skin weights.
      */
@@ -1053,7 +1077,7 @@
                                                      has_normals,
                                                      has_colors,
                                                      has_tex_coords,
-                                                     has_skin_weights) {
+                                                     has_skinning) {
         // position.
         if (0 < has_positions) {
             inst.position = this._getInt32();
@@ -1075,8 +1099,8 @@
         }
 
         // skin weight.
-        if (has_skin_weights) {
-           inst.skin_weight = this._getInt32();
+        if (has_skinning) {
+           inst.skinning = this._getInt32();
         }
     };
 

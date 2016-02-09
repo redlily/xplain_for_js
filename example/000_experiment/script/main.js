@@ -123,8 +123,9 @@
             gl, vs, fs, ATTRIBUTE_MAP, failed_callback);
         inst.attributes = ATTRIBUTE_MAP;
         inst.uniforms = {};
-        for (var key of UNIFORM_NAMES) {
-            inst.uniforms[key] = gl.getUniformLocation(inst.program, key);
+        for (var key in UNIFORM_NAMES) {
+            var value = UNIFORM_NAMES[key];
+            inst.uniforms[value] = gl.getUniformLocation(inst.program, value);
         }
         return inst;
     };

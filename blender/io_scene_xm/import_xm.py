@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012 - 2015, Syuuhei Kuno
+# Copyright (c) 2015, Syuuhei Kuno
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification,

@@ -1438,6 +1438,22 @@
     "use strict";
 
     /**
+     * Subset mesh of the xModel.
+     *
+     * @class
+     * @alias xpl.XModelSubsetMesh
+     * @author Syuuhei Kuno
+     */
+    ns.XModelSubsetMesh = function() {
+    };
+
+})(xpl);
+
+(function(ns) {
+
+    "use strict";
+
+    /**
      * Skin data structure of the xModel.
      *
      * @class
@@ -1579,13 +1595,13 @@
         this.tex_coord = -1;
 
         /**
-         * uint32_t : The skinning weight index.
+         * uint32_t : The skin weight.
          *
          * @instance
          * @memberof xpl.XModelVertex
          * @member {xpl.uint32_t} skin_weight
          */
-        this.skin_weight = -1;
+        this.skinning = -1;
     };
 
     /**
@@ -1601,7 +1617,7 @@
                this.normal ^
                this.color ^
                this.tex_coord ^
-               this.skin_weight;
+               this.skinning;
     };
 
     /**
@@ -1618,11 +1634,11 @@
             return true;
         }
         if (other != null && other instanceof ns.XModelVertex) {
-            return this.position    == other.position &&
-                   this.normal      == other.normal &&
-                   this.color       == other.color &&
-                   this.tex_coord   == other.tex_coord &&
-                   this.skin_weight == other.skin_weight;
+            return this.position == other.position &&
+                   this.normal == other.normal &&
+                   this.color == other.color &&
+                   this.tex_coord == other.tex_coord &&
+                   this.skinning == other.skinning;
         }
         return false;
     };
@@ -2219,7 +2235,7 @@
     Object.setPrototypeOf(ns.XModelAnimationKey.prototype, ns.XModelStructure.prototype);
 
     Object.defineProperties(ns.XModelAnimationKey, {
-        
+
         /**
          * Interpolate by unknown.
          *

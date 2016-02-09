@@ -214,7 +214,7 @@
      */
     ns.XModelMeshUtils.getPositions = function(mesh, size, stride, buf, off) {
         var count = 0;
-        if (mesh.positions != null && 0 < mesh.position_size) {
+        if (mesh != null && mesh.positions != null && 0 < mesh.position_size) {
             if (stride < size) {
                 stride = size;
             }
@@ -262,7 +262,7 @@
      */
     ns.XModelMeshUtils.getNormals = function(mesh, size, stride, buf, off) {
         var count = 0;
-        if (mesh.normals != null && 0 < mesh.normal_size) {
+        if (mesh != null && mesh.normals != null && 0 < mesh.normal_size) {
             if (stride < size) {
                 stride = size;
             }
@@ -311,7 +311,7 @@
      */
     ns.XModelMeshUtils.getColors = function(mesh, size, stride, buf, off) {
         var count = 0;
-        if (mesh.colors != null && 0 < mesh.color_size) {
+        if (mesh != null && mesh.colors != null && 0 < mesh.color_size) {
             if (stride < size) {
                 stride = size;
             }
@@ -364,7 +364,7 @@
      */
     ns.XModelMeshUtils.getTexCoords = function(mesh, size, stride, buf, off) {
         var count = 0;
-        if (mesh.tex_coords != null && 0 < mesh.tex_coord_size) {
+        if (mesh != null && mesh.tex_coords != null && 0 < mesh.tex_coord_size) {
             if (stride < size) {
                 stride = size;
             }
@@ -413,8 +413,7 @@
      */
     ns.XModelMeshUtils.getSkinBoneLengths = function(mesh, stride, buf, off) {
         var count = 0;
-        var skin = mesh.skin;
-        if (skin != null && 1 < skin.weighted_index_stride) {
+        if (mesh != null && mesh.skin != null && 1 < mesh.skin.weighted_index_stride) {
             if (stride < 1) {
                 stride = 1;
             }
@@ -422,9 +421,9 @@
             // scanning the all vertex.
             for (var i = 0; i < mesh.num_vertices; ++i) {
                 var v = mesh.vertices[i];
-                if (v.skin_weight != -1) {
+                if (v.skinning != -1) {
                     // exist the element.
-                    buf[off] = skin.weighted_index_sizes[v.skin_weight];
+                    buf[off] = mesh.skin.weighted_index_sizes[v.skinning];
                 } else {
                     // the element is not exist.
                     buf[off] = 0;
@@ -448,8 +447,7 @@
      */
     ns.XModelMeshUtils.getSkinBoneIndices = function(mesh, size, stride, buf, off) {
         var count = 0;
-        var skin = mesh.skin;
-        if (skin != null && 0 < skin.weighted_index_stride) {
+        if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (stride < size) {
                 stride = size;
             }
@@ -459,12 +457,12 @@
                 var v = mesh.vertices[i];
 
                 // the element is exist.
-                if (v.skin_weight != -1) {
-                    var len = skin.weighted_index_sizes[v.skin_weight];
-                    var ind = skin.weighted_index_stride * v.skin_weight;
+                if (v.skinning != -1) {
+                    var len = mesh.skin.weighted_index_sizes[v.skinning];
+                    var ind = mesh.skin.weighted_index_stride * v.skinning;
                     var j = 0;
-                    for (; j < size && j < len && skin.weighted_index_stride; ++j) {
-                        buf[off + j] = skin.indices[ind++];
+                    for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
+                        buf[off + j] = mesh.skin.indices[ind++];
                         count++;
                     }
 
@@ -500,8 +498,7 @@
      */
     ns.XModelMeshUtils.getSkinBoneWeights = function(mesh, size, stride, buf, off) {
         var count = 0;
-        var skin = mesh.skin;
-        if (skin != null && 0 < skin.weighted_index_stride) {
+        if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (stride < size) {
                 stride = size;
             }
@@ -509,13 +506,13 @@
             // scanning the all vertex.
             for (var i = 0; i < mesh.num_vertices; ++i) {
                 var v = mesh.vertices[i];
-                if (v.skin_weight != -1) {
+                if (v.skinning != -1) {
                     // the element is exist.
-                    var len = skin.weighted_index_sizes[v.skin_weight];
-                    var ind = skin.weighted_index_stride * v.skin_weight;
+                    var len = mesh.skin.weighted_index_sizes[v.skinning];
+                    var ind = mesh.skin.weighted_index_stride * v.skinning;
                     var j = 0;
-                    for (; j < size && j < len && skin.weighted_index_stride; ++j) {
-                        buf[off + j] = skin.weights[ind++];
+                    for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
+                        buf[off + j] = mesh.skin.weights[ind++];
                         count++;
                     }
 
@@ -576,93 +573,95 @@
         if (attrs != null) {
             ns.ArrayUtils.fill(attrs, off, off + ns.XModelMeshUtils.MAX_ATTRIBUTE, -1);
         }
-        var size = 0;
-        var num_vertices = is_structured ? 1 : mesh.num_vertices;
+        if (mesh != null) {
+            var size = 0;
+            var num_vertices = is_structured ? 1 : mesh.num_vertices;
 
-        // position.
-        if (0 < position_size && 0 < mesh.position_size) {
-            if (attrs != null) {
-                attrs[off + ns.XModelMeshUtils.ATTRIBUTE_POSITION] = size;
-            }
-            size += num_vertices * mesh.position_size * position_size;
-            size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
-        }
-
-        // normal.
-        if (0 < normal_size && 0 < mesh.normal_size) {
-            if (attrs != null) {
-                attrs[off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL] = size;
-            }
-            size += num_vertices* mesh.normal_size * normal_size;
-            size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
-        }
-
-        // color.
-        if (0 < color_size && 0 < mesh.color_size) {
-            if (attrs != null) {
-                attrs[off + ns.XModelMeshUtils.ATTRIBUTE_COLOR] = size;
-            }
-            size += num_vertices * mesh.color_size * color_size;
-            size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
-        }
-
-        // texture coordinate.
-        if (0 < tex_coord_size && 0 < mesh.tex_coord_size) {
-            if (attrs != null) {
-                attrs[off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD] = size;
-            }
-            size += num_vertices * mesh.tex_coord_size * tex_coord_size;
-            size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
-        }
-
-        if (mesh.skin != null) {
-            // has the skin.
-            if (1 < mesh.skin.weighted_index_stride) {
-                // weighted indices of the bones.
-                if (0 < bone_length_size) {
-                    if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
-                    }
-                    size += num_vertices * bone_length_size;
-                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            // position.
+            if (0 < position_size && 0 < mesh.position_size) {
+                if (attrs != null) {
+                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_POSITION] = size;
                 }
+                size += num_vertices * mesh.position_size * position_size;
+                size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            }
 
-                // indices of the bones.
-                if (0 < bone_indices_size) {
-                    if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
-                    }
-                    size += num_vertices * mesh.skin.weighted_index_stride * bone_indices_size;
-                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            // normal.
+            if (0 < normal_size && 0 < mesh.normal_size) {
+                if (attrs != null) {
+                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL] = size;
                 }
+                size += num_vertices* mesh.normal_size * normal_size;
+                size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            }
 
-                // weights of the bones.
-                if (0 < bone_weights_size) {
-                    if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
-                    }
-                    size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
-                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            // color.
+            if (0 < color_size && 0 < mesh.color_size) {
+                if (attrs != null) {
+                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_COLOR] = size;
                 }
-            } else if (0 < mesh.skin.weighted_index_stride) {
-                // indices of bones.
-                if (0 < bone_indices_size) {
-                    if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
+                size += num_vertices * mesh.color_size * color_size;
+                size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            }
+
+            // texture coordinate.
+            if (0 < tex_coord_size && 0 < mesh.tex_coord_size) {
+                if (attrs != null) {
+                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD] = size;
+                }
+                size += num_vertices * mesh.tex_coord_size * tex_coord_size;
+                size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+            }
+
+            if (mesh.skin != null) {
+                // has the skin.
+                if (1 < mesh.skin.weighted_index_stride) {
+                    // weighted indices of the bones.
+                    if (0 < bone_length_size) {
+                        if (attrs != null) {
+                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
+                        }
+                        size += num_vertices * bone_length_size;
+                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
                     }
-                    size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
-                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+
+                    // indices of the bones.
+                    if (0 < bone_indices_size) {
+                        if (attrs != null) {
+                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
+                        }
+                        size += num_vertices * mesh.skin.weighted_index_stride * bone_indices_size;
+                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                    }
+
+                    // weights of the bones.
+                    if (0 < bone_weights_size) {
+                        if (attrs != null) {
+                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
+                        }
+                        size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
+                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                    }
+                } else if (0 < mesh.skin.weighted_index_stride) {
+                    // indices of bones.
+                    if (0 < bone_indices_size) {
+                        if (attrs != null) {
+                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
+                        }
+                        size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
+                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                    }
                 }
             }
-        }
 
-        // structured size.
-        if (is_structured) {
-            attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
-            return mesh.num_vertices * size;
-        } else {
-            attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
-            return size;
+            // structured size.
+            if (is_structured) {
+                attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
+                return mesh.num_vertices * size;
+            } else {
+                attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
+                return size;
+            }
         }
     };
 
@@ -694,143 +693,145 @@
                                               bone_weights_type,
                                               attrs, attrs_off,
                                               buf, buf_off) {
-        var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
-        var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
-        
-        // write the positions.
-        if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]) {
-            switch(position_type) {
-                case ns.XModelMeshUtils.TYPE_FLOAT:
-                    ns.XModelMeshUtils.getPositions(
-                        mesh,
-                        mesh.position_size,
-                        stride / 4,
-                        new Float32Array(
-                            buf,
-                            buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]),
-                        0);
-                    break;
-            }
-        }
+        if (mesh != null) {
+            var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
+            var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
 
-        // write the normals.
-        if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
-            switch(normal_type) {
-                case ns.XModelMeshUtils.TYPE_FLOAT:
-                    ns.XModelMeshUtils.getNormals(
-                        mesh,
-                        mesh.normal_size,
-                        stride / 4,
-                        new Float32Array(
-                            buf,
-                            buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]),
-                        0);
-                    break;
-            }
-        }
-
-        // write the colors.
-        if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]) {
-            switch(color_type) {
-                case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                    ns.XModelMeshUtils.getColors(
-                        mesh,
-                        mesh.color_size,
-                        stride,
-                        new Uint8Array(
-                            buf,
-                            buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
-                        0);
-                    break;
-
-                case ns.XModelMeshUtils.TYPE_FLOAT:
-                    ns.XModelMeshUtils.getColors(
-                        mesh,
-                        mesh.color_size,
-                        stride / 4,
-                        new Float32Array(
-                            buf,
-                            buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
-                        0);
-                    break;
-            }
-        }
-
-        // write the texture coordnates.
-        if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
-            switch(tex_coord_type) {
-                case ns.XModelMeshUtils.TYPE_FLOAT:
-                    ns.XModelMeshUtils.getTexCoords(
-                        mesh,
-                        mesh.tex_coord_size,
-                        stride / 4,
-                        new Float32Array(
-                            buf,
-                            buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]),
-                        0);
-                    break;
-            }
-        }
-
-        if (mesh.skin) {
-            // has the skin.
-
-            // write the number of bones.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
-                switch(bone_length_type) {
-                    case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                        ns.XModelMeshUtils.getSkinBoneLengths(
-                            mesh,
-                            stride,
-                            new Uint8Array(
-                                buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]),
-                            0);
-                        break;
-                }
-            }
-
-            // write the bone indices.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
-                switch(bone_indices_type) {
-                    case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                        ns.XModelMeshUtils.getSkinBoneIndices(
-                            mesh,
-                            mesh.skin.weighted_index_stride,
-                            stride,
-                            new Uint8Array(
-                                buf,
-                                buf_off +
-                                attrs[attrs_off + ns.XModelMeshUtils.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
-                            0);
-                        break;
-                    case ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT:
-                        ns.XModelMeshUtils.getSkinBoneIndices(
-                            mesh,
-                            mesh.skin.weighted_index_stride,
-                            stride / 2,
-                            new Uint16Array(
-                                buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
-                            0);
-                        break;
-                }
-            }
-
-            // write the bone weights.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
-                switch(bone_weights_type) {
+            // write the positions.
+            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]) {
+                switch(position_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
-                        ns.XModelMeshUtils.getSkinBoneWeights(
+                        ns.XModelMeshUtils.getPositions(
                             mesh,
-                            mesh.skin.weighted_index_stride,
+                            mesh.position_size,
                             stride / 4,
                             new Float32Array(
                                 buf,
-                                buf_off +
-                                attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]),
+                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]),
                             0);
                         break;
+                }
+            }
+
+            // write the normals.
+            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
+                switch(normal_type) {
+                    case ns.XModelMeshUtils.TYPE_FLOAT:
+                        ns.XModelMeshUtils.getNormals(
+                            mesh,
+                            mesh.normal_size,
+                            stride / 4,
+                            new Float32Array(
+                                buf,
+                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]),
+                            0);
+                        break;
+                }
+            }
+
+            // write the colors.
+            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]) {
+                switch(color_type) {
+                    case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                        ns.XModelMeshUtils.getColors(
+                            mesh,
+                            mesh.color_size,
+                            stride,
+                            new Uint8Array(
+                                buf,
+                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
+                            0);
+                        break;
+
+                    case ns.XModelMeshUtils.TYPE_FLOAT:
+                        ns.XModelMeshUtils.getColors(
+                            mesh,
+                            mesh.color_size,
+                            stride / 4,
+                            new Float32Array(
+                                buf,
+                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
+                            0);
+                        break;
+                }
+            }
+
+            // write the texture coordnates.
+            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
+                switch(tex_coord_type) {
+                    case ns.XModelMeshUtils.TYPE_FLOAT:
+                        ns.XModelMeshUtils.getTexCoords(
+                            mesh,
+                            mesh.tex_coord_size,
+                            stride / 4,
+                            new Float32Array(
+                                buf,
+                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]),
+                            0);
+                        break;
+                }
+            }
+
+            if (mesh.skin) {
+                // has the skin.
+
+                // write the number of bones.
+                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
+                    switch(bone_length_type) {
+                        case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                            ns.XModelMeshUtils.getSkinBoneLengths(
+                                mesh,
+                                stride,
+                                new Uint8Array(
+                                    buf,
+                                    buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]),
+                                0);
+                            break;
+                    }
+                }
+
+                // write the bone indices.
+                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
+                    switch(bone_indices_type) {
+                        case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                            ns.XModelMeshUtils.getSkinBoneIndices(
+                                mesh,
+                                mesh.skin.weighted_index_stride,
+                                stride,
+                                new Uint8Array(
+                                    buf,
+                                    buf_off +
+                                    attrs[attrs_off + ns.XModelMeshUtils.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
+                                0);
+                            break;
+                        case ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT:
+                            ns.XModelMeshUtils.getSkinBoneIndices(
+                                mesh,
+                                mesh.skin.weighted_index_stride,
+                                stride / 2,
+                                new Uint16Array(
+                                    buf,
+                                    buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
+                                0);
+                            break;
+                    }
+                }
+
+                // write the bone weights.
+                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
+                    switch(bone_weights_type) {
+                        case ns.XModelMeshUtils.TYPE_FLOAT:
+                            ns.XModelMeshUtils.getSkinBoneWeights(
+                                mesh,
+                                mesh.skin.weighted_index_stride,
+                                stride / 4,
+                                new Float32Array(
+                                    buf,
+                                    buf_off +
+                                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]),
+                                0);
+                            break;
+                    }
                 }
             }
         }
@@ -847,7 +848,7 @@
      */
     ns.XModelMeshUtils.getNumTriangledFaceIndices = function(mesh, material) {
         var count = 0;
-        if (mesh.elements != null) {
+        if (mesh != null && mesh.elements != null) {
             for (var i = 0; i < mesh.num_elements; ++i) {
                 var f = mesh.elements[i];
                 if (f.material == material) {
@@ -886,7 +887,7 @@
                                                                 offs, offs_off,
                                                                 sizes, sizes_off) {
         var count = 0;
-        if (mesh.elements != null) {
+        if (mesh != null && mesh.elements != null) {
             // listed the materials.
             for (var i = 0; i < mesh.num_materials; ++i) {
                 if (offs != null) {
@@ -928,7 +929,7 @@
      */
     ns.XModelMeshUtils.getTriangledFaceIndices = function(mesh, material, reverse, buf, off) {
         var count = 0;
-        if (mesh.elements != null) {
+        if (mesh != null && mesh.elements != null) {
             // triangle order.
             var sq0, sq1, sq2;
             if (reverse) {
@@ -974,7 +975,7 @@
                                                              offs, offs_off,
                                                              buf, buf_off) {
         var count = 0;
-        if (mesh.elements != null) {
+        if (mesh != null && mesh.elements != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
                 count += ns.XModelMeshUtils.getTriangledFaceIndices(
                     mesh, i, reverse, buf, buf_off + offs[offs_off + i]);

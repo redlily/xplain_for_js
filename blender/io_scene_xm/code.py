@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012 - 2015, Syuuhei Kuno
+# Copyright (c) 2015, Syuuhei Kuno
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification,
@@ -137,12 +137,12 @@ class XModelBinaryEncoder:
     # write boolean
     def _putBool(self, value):
         self._putInt8(1 if value else 0)
-        
+
     # write boolean array
     def _putBoolArray(self, array, offset, length):
         for i in range(offset, offset + length):
             self._putBool(array[i])
-        
+
     # write string
     def _putString(self, value):
         if value is None:
@@ -163,7 +163,7 @@ class XModelBinaryEncoder:
             self._putInt8(1)
         else:
             self._putInt8(0)
-            
+
     # write boolean array
     def _putBoolArray(self, array, offset, length):
         for i in range(offset, offset + length):
@@ -175,6 +175,7 @@ class XModelBinaryEncoder:
             self._putInt32(0)
         elif value in self.__inst_map:
             self._putInt32(self.__inst_map[value])
+            self._putInt32(value.structure_type)
         else:
             self.__inst_map[value] = self.__inst_id_cnt
             self._putInt32(self.__inst_id_cnt)
@@ -251,7 +252,7 @@ class XModelBinaryEncoder:
         # node
         elif obj.structure_type == XModelStructure.TYPE_NODE:
             self._putNode(obj)
-            
+
         # kinematic
         elif obj.structure_type == XModelStructure.TYPE_KINEMATIC:
             self._putKinematic(obj)
@@ -412,14 +413,14 @@ class XModelBinaryEncoder:
             self._putFloat32Array(obj.tex_coords, 0, obj.tex_coord_size * obj.num_tex_coords)
 
         # skin weights (inline)
-        has_skin_weight = None
+        has_skinning = None
         if obj.skin is not None:
-            has_skin_weight = 1
-            self._putInt8(has_skin_weight)
+            has_skinning = 1
+            self._putInt8(has_skinning)
             self._putSkin(obj.skin)
         else:
-            has_skin_weight = 0
-            self._putInt8(has_skin_weight)
+            has_skinning = 0
+            self._putInt8(has_skinning)
 
         # vertices (inline)
         self._putInt32(obj.num_vertices)
@@ -429,7 +430,7 @@ class XModelBinaryEncoder:
                             obj.num_normals,
                             obj.num_colors,
                             obj.num_tex_coords,
-                            has_skin_weight)
+                            has_skinning)
 
         # materials
         self._putInt16(obj.num_materials)
@@ -492,7 +493,7 @@ class XModelBinaryEncoder:
                    has_normal,
                    has_color,
                    has_tex_coord,
-                   has_skin_weight):
+                   has_skinning):
         # position
         if 0 < has_position:
             self._putInt32(obj.position)
@@ -510,8 +511,8 @@ class XModelBinaryEncoder:
             self._putInt32(obj.tex_coord)
 
         # skin weight
-        if 0 < has_skin_weight:
-            self._putInt32(obj.skin_weight)
+        if 0 < has_skinning:
+            self._putInt32(obj.skinning)
 
     # write element
     def _putElement(self, obj):
@@ -530,13 +531,13 @@ class XModelBinaryEncoder:
 
         # connected
         self._putBool(obj.connected)
-        
+
         # inverse kinematics
         self._putBoolArray(obj.ik_lock_axis, 0, XModelStructure.SIZE_VECTOR_3)
         self._putBoolArray(obj.ik_limit_angle, 0, XModelStructure.SIZE_VECTOR_3)
         self._putFloat32Array(obj.ik_min_angle, 0, XModelStructure.SIZE_VECTOR_3)
         self._putFloat32Array(obj.ik_max_angle, 0, XModelStructure.SIZE_VECTOR_3)
-        
+
         # bone tail
         self._putFloat32Array(obj.bone_tail, 0, XModelStructure.SIZE_VECTOR_3)
 
@@ -560,18 +561,18 @@ class XModelBinaryEncoder:
 
         # user data
         self._putUserData(obj.user_data)
-        
+
     # write kinematic
     def _putKinematic(self, obj):
         # target
         self._putXModelStructure(obj.target)
-        
+
         # maxinum number of iterations
         self._putInt16(obj.max_iterations)
-        
+
         # chain length
         self._putInt16(obj.chain_length)
-        
+
         # influence
         self._putFloat32(obj.influence)
 
@@ -579,23 +580,23 @@ class XModelBinaryEncoder:
     def _putAnimation(self, obj):
         # name
         self._putString(obj.name)
-        
+
         # target
         self._putXModelStructure(obj.target)
-        
+
         # index
         self._putInt16(obj.index)
-        
+
         # keys
         self._putInt16(obj.num_keys)
         if 0 < obj.num_keys:
             self._putStructureArray(obj.keys, 0, obj.num_keys)
-            
+
         # animations
         self._putInt16(obj.num_children)
         if 0 < obj.num_children:
             self._putStructureArray(obj.children, 0, obj.num_children)
-            
+
         # user data
         self._putUserData(obj.user_data)
 
@@ -603,10 +604,10 @@ class XModelBinaryEncoder:
     def _putAnimationKey(self, obj):
         # interpolate
         self._putInt8(obj.interpolate)
-        
+
         # time
         self._putFloat64(obj.time)
-        
+
         # value
         self._putInt16(obj.value_size)
         if 0 < obj.value_size:
@@ -616,11 +617,11 @@ class XModelBinaryEncoder:
     def _putAnimationSet(self, obj):
         # name
         self._putString(obj.name)
-        
+
         # animations
         self._putInt16(obj.num_animations)
         if 0 < obj.num_animations:
             self._putStructureArray(obj.animations, 0, obj.num_animations)
-            
+
         # user data
         self._putUserData(obj.user_data)

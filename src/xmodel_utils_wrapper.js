@@ -429,6 +429,8 @@
                     this._container = new ns.XModelDecoder().decode(event.target.response);
                     if (this._container != null) {
                         ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, arg) {
+                            xpl.XModelOptimizeUtils.optimizeMeshSkinning(mesh, 32);
+
                             var is_structure =
                                 !config[stc_fld.CONFIG_USE_SKINNING] ||
                                 config[stc_fld.CONFIG_GPU_SKINNING];

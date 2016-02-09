@@ -44,16 +44,28 @@
     };
 
     /**
-     * Element of the comparator.
+     * Element of the comparator for magnitude relation.
      *
      * @callback xpl.ArrayUtils~comparator
      * @param {Object} v1 - The left-hand side value.
      * @param {Object} v2 - The right-hand side value.
      * @returns {Number}
-     *              Returns value is comparison result,
+     *              Returns value is comparator result,
      *              the zero if equal then left side and right side,
      *              the positive value if the left side is less then right side,
      *              the negative value if the left side is greater then right side.
+     */
+
+    /**
+     * Element of the Collection for magnitude relation.
+     *
+     * @callback xpl.ArrayUtils~collection
+     * @param {Object} v1 - The left-hand side value.
+     * @param {Object} v2 - The right-hand side value.
+     * @returns {Number}
+     *              Returns value is comparison result,
+     *              the true if equal then left side and right side,
+     *              the false if not equal then left side and right side.
      */
 
     /**
@@ -132,7 +144,7 @@
      * @param {Array} ary - The array.
      * @param {Number} from - The index of the first element.
      * @param {Number} to - The index of the last element.
-     * @param {xpl.ArrayUtils.comparator} comparator -
+     * @param {xpl.ArrayUtils.collection} collection -
      *              The comparison function. Can specified the null if not needed it.
      * @returns {Array} The new array.
      */
@@ -141,13 +153,53 @@
         loop: for (var i = from; i < to; ++i) {
             var value = ary[i];
             for (var j = 0; j < dest.length; ++j) {
-                if (comparator != null ? comparator(dest[j], value) : dest[j] == value) {
+                if (comparator != null ?
+                    dest[j] == value || comparator(dest[j], value) :
+                    dest[j] == value) {
                     continue loop;
                 }
             }
             dest.push(value);
         }
         return dest;
+    };
+
+    /**
+     * Check that the subset contained in the superset.
+     *
+     * @memberof xpl.ArrayUtils
+     * @function isContained
+     * @param {Array} superset - The superset.
+     * @param {Number} superset_from - The index of the first element at superset.
+     * @param {Number} superset_to - The index of the last element at superset.
+     * @param {Array} subset - The subset.
+     * @param {Number} subset_from - The index of the first element at subset.
+     * @param {Number} subset_to - The index of the last element at subset.
+     * @param {xpl.ArrayUtils.collection} collection -
+     *              The comparison function. Can specified the null if not needed it.
+     * @return {Boolean}
+     *              Returns value is check result,
+     *              the if subset contained all elements in superset,
+     *              false if subset not contained all elements in superset.
+     */
+    ns.ArrayUtils.isContained = function(superset, superset_from, superset_to,
+                                         subset, subset_from, subset_to,
+                                         comparator) {
+        //if (superset_to - superset_from < subset_to - subset_from) {
+        //    return false;
+        //}
+        loop: for (var i = subset_from; i < subset_to; ++i) {
+            var value = subset[i];
+            for (var j = superset_from; j < superset_to; ++j) {
+                if (comparator != null ?
+                    superset[j] == value || comparator(superset[j], value) :
+                    superset[j] == value) {
+                    continue loop;
+                }
+            }
+            return false;
+        }
+        return true;
     };
 
 })(xpl);
