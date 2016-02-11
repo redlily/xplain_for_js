@@ -224,10 +224,19 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.position != -1) {
                     // exist the element.
                     var ind = mesh.position_size * v.position;
@@ -278,10 +287,19 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.normal != -1) {
                     // exist the element.
                     var ind = mesh.normal_size * v.normal;
@@ -333,14 +351,23 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scaling.
             var value_scale =
                 (buf instanceof Uint8Array || buf instanceof Int8Array) ? 255 : 1;
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.color != -1) {
                     // exist the element.
                     var ind = mesh.color_size * v.color;
@@ -392,10 +419,19 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.tex_coord != -1) {
                     // exist the element.
                     var ind = mesh.tex_coord_size * v.tex_coord;
@@ -447,10 +483,19 @@
             if (stride < 1) {
                 stride = 1;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.skinning != -1) {
                     // exist the element.
                     buf[off] = mesh.skin.weighted_index_sizes[v.skinning];
@@ -487,10 +532,19 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
 
                 // the element is exist.
                 if (v.skinning != -1) {
@@ -544,10 +598,19 @@
             if (stride < size) {
                 stride = size;
             }
+            var sub;
+            var num_vertices;
+            if (subset != -1) {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            } else {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            }
 
             // scanning the all vertex.
-            for (var i = 0; i < mesh.num_vertices; ++i) {
-                var v = mesh.vertices[i];
+            for (var i = 0; i < num_vertices; ++i) {
+                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.skinning != -1) {
                     // the element is exist.
                     var len = mesh.skin.weighted_index_sizes[v.skinning];

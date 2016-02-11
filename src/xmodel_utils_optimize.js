@@ -143,35 +143,35 @@
             }
 
             // build a sorted skinning set.
-            var sorted_skinning_set = [];
+            var sorted_skinning_list = [];
             for (var key in skinning_map) {
-                sorted_skinning_set.push(skinning_map[key]);
+                sorted_skinning_list.push(skinning_map[key]);
             }
-            sorted_skinning_set.sort(function(a, b) { return b.bones.length - a.bones.length; });
+            sorted_skinning_list.sort(function(a, b) { return b.bones.length - a.bones.length; });
 
             // build a optimized skinning set.
-            for (var i = skinning_set.length - 1; 0 <= i; --i) {
-                var skinning_set_i = sorted_skinning_set[i];
+            for (var i = sorted_skinning_list.length - 1; 0 <= i; --i) {
+                var skinning_set_i = sorted_skinning_list[i];
                 for (var j = 0; j < i; ++j) {
-                    var skinning_set_j = sorted_skinning_set[j];
+                    var skinning_set_j = sorted_skinning_list[j];
                     if (ns.ArrayUtils.isContained(
                             skinning_set_j.bones, 0, skinning_set_j.bones.length,
                             skinning_set_i.bones, 0, skinning_set_i.bones.length)) {
                         skinning_set_j.merge(skinning_set_i, false, true, true);
-                        delete sorted_skinning_set[i];
+                        delete sorted_skinning_list[i];
                         break;
                     }
                 }
             }
             for (var i = 0; i < skinning_set.length - 1; ++i) {
-                var skinning_set_i = sorted_skinning_set[i];
+                var skinning_set_i = sorted_skinning_list[i];
                 if (skinning_set_i !== undefined &&
                     skinning_set_i.bones.length <= max_matrix_pallet) {
                     for (var j = i + 1;
                         j < skinning_set.length &&
                             skinning_set_i.bones.length <= max_matrix_pallet;
                         ++j) {
-                        var skinning_set_j = sorted_skinning_set[j];
+                        var skinning_set_j = sorted_skinning_list[j];
                         if (skinning_set_j !== undefined &&
                             skinning_set_i.bones.length + skinning_set_j.bones.length <=
                                 max_matrix_pallet) {
@@ -181,21 +181,17 @@
                     }
                 }
             }
-            sorted_skinning_set =
-                sorted_skinning_set.filter(function (a) { return a !== undefined; });
+            sorted_skinning_list =
+                sorted_skinning_list.filter(function (a) { return a !== undefined; });
 
             // copy the optimized skinning set to the mesh subsets.
-            mesh.num_subsets = skinning_set.length;
+            mesh.num_subsets = sorted_skinning_list.length;
             mesh.subsets = new Array(mesh.num_subsets);
             for (var i = 0; i < mesh.num_subsets; ++i) {
-                var skinning_set = skinning_set.length;
-                var mesh_subset = new XModelMeshSubset();
+                var skinning_set = sorted_skinning_list[i];
+                var mesh_subset = new ns.XModelMeshSubset();
                 mesh_subset.num_vertices = skinning_set.vertices.length;
                 mesh_subset.vertices = skinning_set.vertices;
-                mesh_subset.num_elements = skinning_set.element.length;
-                mesh_subset.elements = skinning_set.elements;
-                mesh_subset.num_bones = skinning_set.bones.length;
-                mesh_subset.bones = skinning_set.bones;
                 mesh.subsets[i] = mesh_subset;
             }
         }
