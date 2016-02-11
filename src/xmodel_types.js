@@ -1370,7 +1370,7 @@
         this.materials = null;
 
         /**
-         * uint32_t : The number of element.
+         * uint32_t : The number of elements.
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -1397,6 +1397,24 @@
          * @member {xpl.XModelNode} parent
          */
         this.parent = null; // weak reference.
+
+        /**
+         * int16_t : The number of subset meshs of this mesh.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {xpl.int16_t} num_subset
+         */
+        this.num_subsets = 0;
+
+        /**
+         * XModelMeshSubset[num_subset] : The subset mesh array of this mesh.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Array.<XModelMeshSubset>} subset
+         */
+        this.subsets = null;
 
         /**
          * Object : The vertex buffer object.
@@ -1444,7 +1462,69 @@
      * @alias xpl.XModelSubsetMesh
      * @author Syuuhei Kuno
      */
-    ns.XModelSubsetMesh = function() {
+    ns.XModelMeshSubset = function() {
+        /**
+         * uint32_t : The number of vertices.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {xpl.uint32_t} num_vertices
+         */
+        this.num_vertices = 0;
+
+        /**
+         * uint32_t[num_vertices] : The vertices
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Uint32Array} vertices
+         */
+        this.vertices = null;
+
+        /**
+         * uint32_t : The number of elements.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {xpl.uint32_t} num_elements
+         */
+        this.num_elements = 0;
+
+        /**
+         * uint32_t[num_elements] : The elements.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Uint32Array} elements
+         */
+        this.elements = null;
+
+        /**
+         * uint32_t : The number of bone indices.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {xpl.uint32_t} num_bones
+         */
+        this.num_bones = 0;
+
+        /**
+         * uint32_t[num_bones] : The bone indices.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Uint32Array} bones
+         */
+        this.bones = null;
+
+        /**
+         * Object : The temporary user object.
+         *
+         * @instance
+         * @memberof xpl.XModelExtensible
+         * @member {Object} user_object
+         */
+        this.user_object = null
     };
 
 })(xpl);

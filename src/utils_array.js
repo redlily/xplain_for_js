@@ -185,9 +185,9 @@
     ns.ArrayUtils.isContained = function(superset, superset_from, superset_to,
                                          subset, subset_from, subset_to,
                                          comparator) {
-        //if (superset_to - superset_from < subset_to - subset_from) {
-        //    return false;
-        //}
+        if (superset_to - superset_from < subset_to - subset_from) {
+            return false;
+        }
         loop: for (var i = subset_from; i < subset_to; ++i) {
             var value = subset[i];
             for (var j = superset_from; j < superset_to; ++j) {
