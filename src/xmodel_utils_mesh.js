@@ -210,17 +210,17 @@
      * @param {xpl.size_t} stride - Size of the position structure.
      * @param {Float32Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getPositions = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.positions != null && 0 < mesh.position_size) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -273,17 +273,17 @@
      * @param {xpl.size_t} size - Size of the normal structure.
      * @param {xpl.size_t} stride - Size of the normal structure.
      * @param {Float32Array} buf - The destination buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getNormals = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.normals != null && 0 < mesh.normal_size) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -337,17 +337,17 @@
      * @param {xpl.size_t} stride - Size of the color structure.
      * @param {Uint8Array|Float32Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getColors = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.colors != null && 0 < mesh.color_size) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -405,17 +405,17 @@
      * @param {xpl.size_t} stride - Size of the texture coordinate structure.
      * @param {Float32Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getTexCoords = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.tex_coords != null && 0 < mesh.tex_coord_size) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -469,17 +469,17 @@
      * @param {xpl.size_t} stride - Size of the bone lengths structure.
      * @param {Uint16Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneLengths = function(mesh, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.skin != null && 1 < mesh.skin.weighted_index_stride) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < 1) {
                 stride = 1;
             }
@@ -518,17 +518,17 @@
      * @param {xpl.size_t} stride - Size of the bone indices structure.
      * @param {Uint8Array|Uint16Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneIndices = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -552,7 +552,14 @@
                     var ind = mesh.skin.weighted_index_stride * v.skinning;
                     var j = 0;
                     for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
-                        buf[off + j] = mesh.skin.indices[ind++];
+                        if (sub == null) {
+                            // superset.
+                            buf[off + j] = mesh.skin.indices[ind++];
+                        } else {
+                            // subset.
+                            var index = ns.ArrayUtils.search(sub.bones, 0, sub.num_bones);
+                            buf[off + j] = 0 <= index ? index : 0;
+                        }
                         count++;
                     }
 
@@ -584,17 +591,17 @@
      * @param {xpl.size_t} stride - Size of the bone weights structure.
      * @param {Float32Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneWeights = function(mesh, size, stride, buf, off, subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
+            if (subset === undefined) {
+                subset = -1;
+            }
             if (stride < size) {
                 stride = size;
             }
@@ -662,7 +669,7 @@
      *              The destination byte size of each attribute.
      *              -1 set if it attribute is not exit the index.
      * @param {xpl.size_t} off - Starting position in the destination attribute indices.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} byte size of the all attributes.
@@ -679,13 +686,13 @@
                                                   bone_weights_size,
                                                   attrs, off,
                                                   subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
-        if (attrs != null) {
-            ns.ArrayUtils.fill(attrs, off, off + ns.XModelMeshUtils.MAX_ATTRIBUTE, -1);
-        }
-        if (mesh != null) {
+        if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
+            if (subset === undefined) {
+                subset = -1;
+            }
+            if (attrs != null) {
+                ns.ArrayUtils.fill(attrs, off, off + ns.XModelMeshUtils.MAX_ATTRIBUTE, -1);
+            }
             var size = 0;
             var num_vertices = is_structured ?
                 1 : (subset == -1 ? mesh.num_vertices : mesh.subset[subset].num_vertices);
@@ -726,44 +733,34 @@
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
             }
 
-            if (mesh.skin != null) {
+            if (mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
                 // has the skin.
-                if (1 < mesh.skin.weighted_index_stride) {
-                    // weighted indices of the bones.
-                    if (0 < bone_length_size) {
-                        if (attrs != null) {
-                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
-                        }
-                        size += num_vertices * bone_length_size;
-                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
-                    }
 
-                    // indices of the bones.
-                    if (0 < bone_indices_size) {
-                        if (attrs != null) {
-                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
-                        }
-                        size += num_vertices * mesh.skin.weighted_index_stride * bone_indices_size;
-                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                // weighted indices of the bones.
+                if (0 < bone_length_size) {
+                    if (attrs != null) {
+                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
                     }
+                    size += num_vertices * bone_length_size;
+                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                }
 
-                    // weights of the bones.
-                    if (0 < bone_weights_size) {
-                        if (attrs != null) {
-                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
-                        }
-                        size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
-                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                // indices of the bones.
+                if (0 < bone_indices_size) {
+                    if (attrs != null) {
+                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
                     }
-                } else if (0 < mesh.skin.weighted_index_stride) {
-                    // indices of bones.
-                    if (0 < bone_indices_size) {
-                        if (attrs != null) {
-                            attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
-                        }
-                        size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
-                        size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                    size += num_vertices * mesh.skin.weighted_index_stride * bone_indices_size;
+                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
+                }
+
+                // weights of the bones.
+                if (0 < bone_weights_size) {
+                    if (attrs != null) {
+                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
                     }
+                    size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
+                    size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
                 }
             }
 
@@ -777,6 +774,7 @@
                 return size;
             }
         }
+        return 0;
     };
 
     /**
@@ -796,7 +794,7 @@
      * @param {xpl.size_t} attrs_off - Starting position in the attribute indices.
      * @param {ArrayBuffer} buf - The array buffer.
      * @param {xpl.size_t} buf_off - The offset of array buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      */
@@ -811,7 +809,7 @@
                                               attrs, attrs_off,
                                               buf, buf_off,
                                               subset) {
-        if (mesh != null) {
+        if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
             var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
             var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
 
@@ -895,7 +893,7 @@
                 }
             }
 
-            if (mesh.skin) {
+            if (mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
                 // has the skin.
 
                 // write the number of bones.
@@ -929,6 +927,7 @@
                                 0,
                                 subset);
                             break;
+
                         case ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT:
                             ns.XModelMeshUtils.getSkinBoneIndices(
                                 mesh,
@@ -971,22 +970,34 @@
      * @function getNumTriangledFaceIndices
      * @param {xpl.XModelMesh} mesh - The mesh instance.
      * @param {xpl.size_t} material - The index of material.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t} The number of elements.
      */
     ns.XModelMeshUtils.getNumTriangledFaceIndices = function(mesh, material, subset) {
-        if (subset === undefined) {
-            subset = -1
-        }
         var count = 0;
-        if (mesh != null && mesh.elements != null) {
-            for (var i = 0; i < mesh.num_elements; ++i) {
-                var f = mesh.elements[i];
-                if (f.material == material) {
-                    if (3 <= f.num_vertices) {
-                        count += (f.num_vertices - 2) * 3;
+        if (mesh != null) {
+            if (subset === undefined) {
+                subset = -1
+            }
+            var num_elements;
+            var elements;
+            if (subset != -1) {
+                var sub = mesh.subsets[subset];
+                num_elements = sub.num_elements;
+                elements = sub.elements;
+            } else {
+                num_elements = mesh.num_elements;
+                elements = mesh.elements;
+            }
+
+            // count the triangle faces.
+            for (var i = 0; i < num_elements; ++i) {
+                var element = elements[i];
+                if (element.material == material) {
+                    if (3 <= element.num_vertices) {
+                        count += (element.num_vertices - 2) * 3;
                     }
                 }
             }
@@ -1013,7 +1024,7 @@
      * @param {xpl.size_t} sizes_off -
      *              Starting position in the the destination
      *              array of each size.
-     * @param {xpl.int16_t} subset -
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
      * @returns {xpl.size_t}
@@ -1024,7 +1035,7 @@
                                                                 sizes, sizes_off,
                                                                 subset) {
         var count = 0;
-        if (mesh != null && mesh.elements != null) {
+        if (mesh != null) {
             // listed the materials.
             for (var i = 0; i < mesh.num_materials; ++i) {
                 if (offs != null) {
@@ -1056,25 +1067,37 @@
      * @memberof xpl.XModelMesh
      * @function getTriangledFaceIndices
      * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {Number} material - The index of material.
+     * @param {xpl.int16_t} material - The index of material.
      * @param {Boolean} reverse -
      *              Set the true if reverse the faces,
      *              Set the false if not reverse the faces.
-     * @param {Array} buf - The destination buffer.
-     * @param {Number} off - Starting position in the buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {Uint16Array|Uint32Array} buf - The destination buffer.
+     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
-     * @returns {Number} The number of elements.
+     * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getTriangledFaceIndices = function(mesh, material, reverse,
+    ns.XModelMeshUtils.getTriangledFaceIndices = function(mesh,
+                                                          material, reverse,
                                                           buf, off,
                                                           subset) {
-        if (subset === undefined) {
-            subset = -1;
-        }
         var count = 0;
-        if (mesh != null && mesh.elements != null) {
+        if (mesh != null) {
+            if (subset === undefined) {
+                subset = -1;
+            }
+            var num_elements;
+            var elements;
+            if (subset != -1) {
+                var sub = mesh.subsets[subset];
+                num_elements = sub.num_elements;
+                elements = sub.elements;
+            } else {
+                num_elements = mesh.num_elements;
+                elements = mesh.elements;
+            }
+
             // triangle order.
             var sq0, sq1, sq2;
             if (reverse) {
@@ -1084,13 +1107,13 @@
             }
 
             // write the vertex indices of face to the buffer.
-            for (var i = 0; i < mesh.num_elements; ++i) {
-                var f = mesh.elements[i];
-                if (f.material == material) {
-                    for (var j = 0, j_end = f.num_vertices - 2; j < j_end; ++j) {
-                        buf[off + sq0] = f.vertices[0];
-                        buf[off + sq1] = f.vertices[j + 1];
-                        buf[off + sq2] = f.vertices[j + 2];
+            for (var i = 0; i < num_elements; ++i) {
+                var element = elements[i];
+                if (element.material == material) {
+                    for (var j = 0, j_end = element.num_vertices - 2; j < j_end; ++j) {
+                        buf[off + sq0] = element.vertices[0];
+                        buf[off + sq1] = element.vertices[j + 1];
+                        buf[off + sq2] = element.vertices[j + 2];
                         off += 3;
                         count += 3;
                     }
@@ -1109,14 +1132,14 @@
      * @param {Boolean} reverse -
      *              Set the true if reverse the faces,
      *              Set the false if not reverse the faces.
-     * @param {Array} offs - The offset of array.
-     * @param {Number} offs_off - Thew offset of offset array.
-     * @param {Array} buf - The buffer of writing destination.
-     * @param {Number} buf_off - The offset of buffer.
-     * @param {xpl.int16_t} subset -
+     * @param {Array.<xpl.size_t>} offs - The offset of array.
+     * @param {xpl.size_t} offs_off - The offset of offset array.
+     * @param {Uint16Array|Uint32Array} buf - The buffer of writing destination.
+     * @param {xpl.size_t} buf_off - The offset of buffer.
+     * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argment).
-     * @returns {Number} The number of elements.
+     * @returns {xpl.size_t} The number of elements.
      */
     ns.XModelMeshUtils.getAllTriangledFaceIndices = function(mesh,
                                                              reverse,
@@ -1124,7 +1147,7 @@
                                                              buf, buf_off,
                                                              subset) {
         var count = 0;
-        if (mesh != null && mesh.elements != null) {
+        if (mesh != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
                 count += ns.XModelMeshUtils.getTriangledFaceIndices(
                     mesh, i, reverse, buf, buf_off + offs[offs_off + i], subset);
@@ -1153,12 +1176,12 @@
                 mesh.skin.weights = null;
             }
             mesh.elements = null;
-            if (0 < mesh.num_subsets && mesh.subsets != null) {
+            if (mesh.subsets != null) {
                 for (var i = 0; i < mesh.num_subsets; ++i) {
                     var subset = mesh.subsets[i];
+                    subset.bones = null;
                     subset.vertices = null;
                     subset.elements = null;
-                    subset.bones = null;
                 }
             }
         }
@@ -1173,7 +1196,7 @@
      * @param {Array.<xpl.XModelTexture>} dest -
      *              The destination array for texture.
      *              Can specified the null if not needed it.
-     * @param {xpl.size_t} off - Starting position the in the destination array.
+     * @param {xpl.size_t} off - Starting position in the destination array.
      * @param {xpl.size_t} len - maximum number of the elements to be copied.
      * @returns {xpl.size_t} Number of the texture.
      */
@@ -1181,7 +1204,8 @@
         var count = 0;
         if (mesh != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
-                var num = ns.XModelMaterialUtils.getTextures(mesh.materials[i], dest, off, len);
+                var num = ns.XModelMaterialUtils.getTextures(
+                    mesh.materials[i], dest, off, len);
                 off += num;
                 len -= num;
                 count += num;

@@ -50,7 +50,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} VX
+         * @member {xpl.size_t} VX
          */
         "VX": {
             value: 0,
@@ -61,7 +61,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} VY
+         * @member {xpl.size_t} VY
          */
         "VY": {
             value: 1,
@@ -72,7 +72,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} VZ
+         * @member {xpl.size_t} VZ
          */
         "VZ": {
             value: 2,
@@ -83,29 +83,18 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} VW
+         * @member {xpl.size_t} VW
          */
         "VW": {
             value: 3,
         },
 
         /**
-         * Size of the 2D vector.
+         * Size of the threet elements vector.
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} SIZE_VECTOR_2
-         */
-        "SIZE_VECTOR_2": {
-            value: 2,
-        },
-
-        /**
-         * Size of the 3D vector.
-         *
-         * @constant
-         * @memberof xpl.Geometry
-         * @member {Number} SIZE_VECTOR_3
+         * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
             value: 3,
@@ -116,7 +105,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} CR
+         * @member {xpl.size_t} CR
          */
         "CR": {
             value: 0,
@@ -127,7 +116,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} CI
+         * @member {xpl.size_t} CI
          */
         "CI": {
             value: 1,
@@ -138,7 +127,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} CJ
+         * @member {xpl.size_t} CJ
          */
         "CJ": {
             value: 2,
@@ -149,21 +138,10 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} CK
+         * @member {xpl.size_t} CK
          */
         "CK": {
             value: 3,
-        },
-
-        /**
-         * Size of the complex number.
-         *
-         * @constant
-         * @memberof xpl.Geometry
-         * @member {Number} SIZE_COMPLEX
-         */
-        "SIZE_COMPLEX": {
-            value: 2,
         },
 
         /**
@@ -171,7 +149,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} SIZE_QUATERNION
+         * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
             value: 4,
@@ -182,7 +160,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_00
+         * @member {xpl.size_t} M4X4_00
          */
         "M4X4_00": {
             value: 0,
@@ -193,7 +171,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_10
+         * @member {xpl.size_t} M4X4_10
          */
         "M4X4_10": {
             value: 1,
@@ -204,7 +182,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_20
+         * @member {xpl.size_t} M4X4_20
          */
         "M4X4_20": {
             value: 2,
@@ -215,7 +193,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_30
+         * @member {xpl.size_t} M4X4_30
          */
         "M4X4_30": {
             value: 3,
@@ -226,7 +204,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_01
+         * @member {xpl.size_t} M4X4_01
          */
         "M4X4_01": {
             value: 4,
@@ -237,7 +215,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_11
+         * @member {xpl.size_t} M4X4_11
          */
         "M4X4_11": {
             value: 5,
@@ -248,7 +226,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_21
+         * @member {xpl.size_t} M4X4_21
          */
         "M4X4_21": {
             value: 6,
@@ -259,7 +237,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_31
+         * @member {xpl.size_t} M4X4_31
          */
         "M4X4_31": {
             value: 7,
@@ -270,7 +248,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_02
+         * @member {xpl.size_t} M4X4_02
          */
         "M4X4_02": {
             value: 8,
@@ -281,7 +259,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_12
+         * @member {xpl.size_t} M4X4_12
          */
         "M4X4_12": {
             value: 9,
@@ -292,7 +270,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_22
+         * @member {xpl.size_t} M4X4_22
          */
         "M4X4_22": {
             value: 10,
@@ -303,7 +281,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_32
+         * @member {xpl.size_t} M4X4_32
          */
         "M4X4_32": {
             value: 11,
@@ -314,7 +292,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_03
+         * @member {xpl.size_t} M4X4_03
          */
         "M4X4_03": {
             value: 12,
@@ -325,7 +303,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_13
+         * @member {xpl.size_t} M4X4_13
          */
         "M4X4_13": {
             value: 13,
@@ -336,7 +314,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_23
+         * @member {xpl.size_t} M4X4_23
          */
         "M4X4_23": {
             value: 14,
@@ -347,7 +325,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} M4X4_33
+         * @member {xpl.size_t} M4X4_33
          */
         "M4X4_33": {
             value: 15,
@@ -358,7 +336,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {Number} SIZE_MATRIX_4X4
+         * @member {xpl.size_t} SIZE_MATRIX_4X4
          */
         "SIZE_MATRIX_4X4": {
             value: 16,

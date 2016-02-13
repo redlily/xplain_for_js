@@ -33,40 +33,59 @@
 
     "use strict";
 
+    /**
+     *
+     * @namespace xpl.XModelOptimizeUtils
+     * @see xpl.XModelMesh
+     * @see xpl.XModelMeshSubset
+     * @see xpl.XModelSkin
+     * @author Syuuhei Kuno
+     */
     ns.XModelOptimizeUtils = function() {
     };
 
+    /**
+     *
+     * @memberof xpl.XModelOptimizeUtils
+     * @function optimizeMeshVertices
+     * @param {xpl.XModelMesh} mesh -
+     */
     ns.XModelOptimizeUtils.optimizeMeshVertices = function(mesh) {
         if (mesh != null) {
+            // TODO
         }
     };
 
+    /**
+     *
+     * @memberof xpl.XModelOptimizeUtils
+     * @function optimizeMeshElements
+     * @param {xpl.XModelMesh} mesh -
+     */
     ns.XModelOptimizeUtils.optimizeMeshElements = function(mesh) {
         if (mesh != null) {
-            // fix the order of elements.
-            for (var i = 0; i < mesh.num_elements; ++i) {
-                var element = mesh.elements[i];
-                var min_index = 0;
-                var min_vertex = 0;
-                for (var j = element.num_vertices - 1; 0 <= j; --j) {
-                    var vertex = element.vertices[j];
-                    if (vertex < min_vertex) {
-                        min_vertex = vertex;
-                        min_index = j;
-                    }
-                }
-                if (min_index != 0) {
-                }
-            }
+            // TODO 
         }
     };
 
+    /**
+     *
+     * @private
+     * @class
+     * @alias xpl.XModelKinematicsUtils.BoneInformation
+     */
     var SkinningSubset = function() {
         this.bones = [];
         this.vertices = [];
         this.elements = [];
     };
 
+    /**
+     *
+     * @memberof xpl.XModelOptimizeUtils.SkinningSubset
+     * @function addBone
+     * @param {xpl.uint16_t} bone -
+     */
     SkinningSubset.prototype.addBone = function(bone) {
         var index = ns.ArrayUtils.binarySearch(
             this.bones, 0, this.bones.length, bone);
@@ -75,6 +94,13 @@
         }
     };
 
+    /**
+     *
+     * @instance
+     * @memberof xpl.XModelOptimizeUtils.SkinningSubset
+     * @function addVertex
+     * @param {xpl.uint32_t} vertex -
+     */
     SkinningSubset.prototype.addVertex = function(vertex) {
         var index = ns.ArrayUtils.binarySearch(
             this.vertices, 0, this.vertices.length, vertex);
@@ -83,6 +109,13 @@
         }
     };
 
+    /**
+     *
+     * @instance
+     * @memberof xpl.XModelOptimizeUtils.SkinningSubset
+     * @function addElement
+     * @param {xpl.uint32_t} element -
+     */
     SkinningSubset.prototype.addElement = function(element) {
         var index = ns.ArrayUtils.binarySearch(
             this.elements, 0, this.elements.length, element);
@@ -91,34 +124,51 @@
         }
     };
 
-    SkinningSubset.prototype.merge = function(set,
+    /**
+     *
+     * @instance
+     * @memberof xpl.XModelOptimizeUtils.SkinningSubset
+     * @function merge
+     * @param {SkinningSubset} subset -
+     * @param {Boolean} enable_bones -
+     * @param {Boolean} enable_vertices -
+     * @param {Boolean} enable_elements -
+     */
+    SkinningSubset.prototype.merge = function(subset,
                                               enable_bones,
                                               enable_vertices,
                                               enable_elements) {
         if (enable_bones) {
-            for (var i = 0; i < set.bones.length; ++i) {
-                this.addBone(set.bones[i]);
+            for (var i = 0; i < subset.bones.length; ++i) {
+                this.addBone(subset.bones[i]);
             }
         }
         if (enable_vertices) {
-            for (var i = 0; i < set.vertices.length; ++i) {
-                this.addVertex(set.vertices[i]);
+            for (var i = 0; i < subset.vertices.length; ++i) {
+                this.addVertex(subset.vertices[i]);
             }
         }
         if (enable_elements) {
-            for (var i = 0; i < set.elements.length; ++i) {
-                this.addElement(set.elements[i]);
+            for (var i = 0; i < subset.elements.length; ++i) {
+                this.addElement(subset.elements[i]);
             }
         }
     };
 
-    ns.XModelOptimizeUtils.optimizeMeshSkinning = function(mesh, max_matrix_pallet) {
+    /**
+     *
+     * @memberof xpl.XModelOptimizeUtils
+     * @function
+     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.size_t} [max_matrix_pallet=16] -
+     */
+    ns.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet = function(mesh, max_matrix_pallet) {
         if (mesh != null && mesh.skin != null && max_matrix_pallet < mesh.skin.num_nodes) {
             if (max_matrix_pallet === undefined || max_matrix_pallet < 16) {
                 max_matrix_pallet = 16;
             }
 
-            // build a skinning maps.
+            // build the skinning maps.
             var skinning_map = {};
             for (var i = 0; i < mesh.num_elements; ++i) {
                 var skinning_set = new SkinningSubset();
@@ -142,14 +192,15 @@
                 }
             }
 
-            // build a sorted skinning set.
+            // build the sorted skinning set.
             var sorted_skinning_list = [];
             for (var key in skinning_map) {
                 sorted_skinning_list.push(skinning_map[key]);
             }
-            sorted_skinning_list.sort(function(a, b) { return b.bones.length - a.bones.length; });
+            sorted_skinning_list.sort(
+                function(a, b) { return b.bones.length - a.bones.length; });
 
-            // build a optimized skinning set.
+            // build the optimized skinning set.
             for (var i = sorted_skinning_list.length - 1; 0 <= i; --i) {
                 var skinning_set_i = sorted_skinning_list[i];
                 for (var j = 0; j < i; ++j) {
@@ -163,20 +214,22 @@
                     }
                 }
             }
-            for (var i = 0; i < skinning_set.length - 1; ++i) {
+
+            // concat the skinning set.
+            for (var i = 0; i < sorted_skinning_list.length - 1; ++i) {
                 var skinning_set_i = sorted_skinning_list[i];
                 if (skinning_set_i !== undefined &&
                     skinning_set_i.bones.length <= max_matrix_pallet) {
                     for (var j = i + 1;
-                        j < skinning_set.length &&
-                            skinning_set_i.bones.length <= max_matrix_pallet;
+                        j < sorted_skinning_list.length &&
+                            skinning_set_i.bones.length < max_matrix_pallet;
                         ++j) {
                         var skinning_set_j = sorted_skinning_list[j];
                         if (skinning_set_j !== undefined &&
                             skinning_set_i.bones.length + skinning_set_j.bones.length <=
                                 max_matrix_pallet) {
                             skinning_set_i.merge(skinning_set_j, true, true, true);
-                            delete sorted_skinning_set[j];
+                            delete sorted_skinning_list[j];
                         }
                     }
                 }
@@ -190,17 +243,51 @@
             for (var i = 0; i < mesh.num_subsets; ++i) {
                 var skinning_set = sorted_skinning_list[i];
                 var mesh_subset = new ns.XModelMeshSubset();
-                mesh_subset.num_vertices = skinning_set.vertices.length;
-                mesh_subset.vertices = skinning_set.vertices;
                 mesh.subsets[i] = mesh_subset;
+
+                // copy the bone set.
+                mesh_subset.num_bones = skinning_set.bones.length;
+                mesh_subset.bones = new Uint16Array(skinning_set.bones);
+
+                // copy vertex indices.
+                mesh_subset.num_vertices = skinning_set.vertices.length;
+                mesh_subset.vertices = new Uint32Array(skinning_set.vertices);
+
+                // build the elements for subset.
+                mesh_subset.num_elements = skinning_set.elements.length;
+                mesh_subset.elements = new Array(mesh_subset.num_elements);
+                for (var j = 0; j < skinning_set.elements.length; ++j) {
+                    var superset_element = mesh.elements[skinning_set.elements[j]];
+                    var subset_element = new ns.XModelElement();
+                    mesh_subset.elements[j] = subset_element;
+
+                    // copy element information from superset's element.
+                    subset_element.material = superset_element.material;
+                    subset_element.num_vertices = superset_element.num_vertices;
+                    subset_element.vertices = new Uint32Array(subset_element.num_vertices);
+                    for (var k = 0; k < subset_element.num_vertices; ++k) {
+                        var index = ns.ArrayUtils.binarySearch(
+                            mesh_subset.vertices,
+                            0, mesh_subset.num_vertices,
+                            superset_element.vertices[k]);
+                        subset_element.vertices[k] = 0 <= index ? index : 0;
+                    }
+                }
             }
         }
     };
 
-    ns.XModelOptimizeUtils.optimizeBoneWeightedIndices = function(skin, limit_weighted_indices) {
+    /**
+     *
+     * @memberof xpl.XModelOptimizeUtils
+     * @function
+     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.size_t} [max_weighted_indices=4] -
+     */
+    ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function(skin, max_weighted_indices) {
         if (skin != null) {
-            if (limit_weighted_indices === undefined || limit_weighted_indices <= 0) {
-                limit_weighted_indices = 4;
+            if (max_weighted_indices === undefined || max_weighted_indices <= 0) {
+                max_weighted_indices = 4;
             }
         }
     };

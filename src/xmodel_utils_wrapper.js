@@ -429,7 +429,7 @@
                     this._container = new ns.XModelDecoder().decode(event.target.response);
                     if (this._container != null) {
                         ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, arg) {
-                            xpl.XModelOptimizeUtils.optimizeMeshSkinning(mesh, 32);
+                            xpl.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet(mesh, 16);
 
                             var is_structure =
                                 !config[stc_fld.CONFIG_USE_SKINNING] ||
@@ -747,7 +747,19 @@
                 var material = mesh.materials[i];
 
                 // set the ambient.
-                // TODO:
+                if (uniforms.u_ambient_map != null) {
+                    gl.activeTexture(gl.TEXTURE1);
+                    gl.uniform1i(uniforms.u_ambient_map, 0);
+                    if (material.ambient_map != null && material.ambient_map.texture != null) {
+                        gl.uniform4fv(uniforms.u_ambient_map, material.ambient);
+                        gl.bindTexture(gl.TEXTURE_2D, material.ambient_map.texture);
+                    } else {
+                        gl.uniform4f(uniforms.u_ambient_color, 1, 1, 1, 1);
+                        gl.bindTexture(gl.TEXTURE_2D, this.__white_texture);
+                    }
+                } else if (uniforms.u_ambient_color != null) {
+                    gl.uniform4f(uniforms.u_ambient_color, 1, 1, 1, 1);
+                }
 
                 // set the diffuse.
                 if (uniforms.u_diffuse_map != null) {

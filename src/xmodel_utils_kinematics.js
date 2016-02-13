@@ -66,8 +66,6 @@
      * @class
      * @alias xpl.XModelKinematicsUtils.BoneInformation
      * @param {xpl.XModelNode} node - The node.
-     * @param {Float32Array} matrix - The combined matrix.
-     * @param {Float32Array} rotate - The rotation quaternion.
      */
     var BoneInformation = function(node) {
 

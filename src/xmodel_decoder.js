@@ -998,7 +998,7 @@
         inst.weighted_index_stride = this._getInt8();
         if (0 < inst.num_weighted_indices) {
             // size of weighted indices array.
-            inst.weighted_index_sizes = new Int8Array(inst.num_weighted_indices);
+            inst.weighted_index_sizes = new Uint8Array(inst.num_weighted_indices);
 
             // array of weighted indices.
             var num = inst.weighted_index_stride * inst.num_weighted_indices;
@@ -1120,7 +1120,7 @@
         // vertices.
         inst.num_vertices = this._getInt8();
         if (0 < inst.num_vertices) {
-            inst.vertices = new Int32Array(inst.num_vertices);
+            inst.vertices = new Uint32Array(inst.num_vertices);
             this._getInt32Array(inst.vertices, 0, inst.num_vertices);
         }
     };

@@ -245,7 +245,7 @@ if (typeof module == "object") {
     };
 
     /**
-     * Convert to the enumerate type.
+     * Convert to the enumeration type.
      *
      * @class
      * @alias xpl.enum_t

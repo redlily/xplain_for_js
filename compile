@@ -30,4 +30,5 @@ ${COMPILER} \
 ./src/xmodel_utils_animation.js \
 ./src/xmodel_utils_node.js \
 ./src/xmodel_utils_container.js \
+./src/xmodel_utils_optimize.js \
 ./src/xmodel_utils_wrapper.js

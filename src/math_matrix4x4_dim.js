@@ -43,8 +43,8 @@
         return;
     }
 
-    var X = 0, Y = 1, Z = 2;
-    var R = 0, I = 1, J = 2, K = 3;
+    var VX = 0, VY = 1, VZ = 2;
+    var CR = 0, CI = 1, CJ = 2, CK = 3;
     var M00 = 0, M01 = 4, M02 = 8,  M03 = 12,
         M10 = 1, M11 = 5, M12 = 9,  M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
@@ -82,8 +82,8 @@
      * @param {Number} y - Y element of the axis.
      * @param {Number} z - Z element of the axis.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadTranslate = function(d, d_off, x, y, z, column) {
         if (column == null) {
@@ -95,7 +95,7 @@
             0, 1, 0, y,
             0, 0, 1, z,
             0, 0, 0, 1,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -107,8 +107,8 @@
      * @param {Number} d_off - Starting position in the destination matrix.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateXAxis = function(d, d_off, rad, column) {
         if (column == null) {
@@ -122,7 +122,7 @@
             0, cs, -sn, 0,
             0, sn,  cs, 0,
             0, 0,   0,  1,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -134,8 +134,8 @@
      * @param {Number} d_off - Starting position in the destination matrix.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateYAxis = function(d, d_off, rad, column) {
         if (column == null) {
@@ -149,7 +149,7 @@
              0,  1, 0,  0,
             -sn, 0, cs, 0,
              0,  0, 0,  1,
-             column ? false : true);
+             !column);
     };
 
     /**
@@ -161,8 +161,8 @@
      * @param {Number} d_off - Starting position in the destination matrix.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateZAxis = function(d, d_off, rad, column) {
         if (column == null) {
@@ -176,7 +176,7 @@
             sn,  cs, 0, 0,
             0,   0,  1, 0,
             0,   0,  0, 1,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -191,11 +191,11 @@
      * @param {Number} z - Z element of the axis vector.
      * @param {Number} rad - The rotation value.
      * @param {Number} [normalize=true] -
-     *              Set true if normalized axis vector,
-     *              set false if not normalized axis vector.
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotate = function(d, d_off, x, y, z, rad, normalize, column) {
         if (normalize == null) {
@@ -231,7 +231,7 @@
             xycs1 + zsn,   cs + y * ycs1, yzcs1 - xsn,      0,
             xzcs1 - ysn,   yzcs1 + xsn,   cs + z * z * cs1, 0,
             0,             0,             0,                1,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -251,8 +251,8 @@
      * @param {Number} upper_y - Y element of the upper vector.
      * @param {Number} upper_z - Z element of the upper vector.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadLookAt = function(d, d_off,
                                        eye_x, eye_y, eye_z,
@@ -310,7 +310,7 @@
             yx, yy, yz, ty,
             zx, zy, zz, tz,
             0,  0,  0,  1,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -329,8 +329,8 @@
      * @param {Number} device_near - The near coordinate of the device dimension. Default value is 0.0.
      * @param {Number} device_far - The far coordinate of the device dimension. Default value is 1.0.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadPerspective = function(d, d_off,
                                             view_width,   view_height,
@@ -349,7 +349,7 @@
             0,                                       (view_near * device_height) / view_height, 0,                                     0,
             0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth,
             0,                                       0,                                         1,                                     0,
-            column ? false : true);
+            !column);
     };
 
     /**
@@ -362,8 +362,8 @@
      * @param {Array.<Number>} m - The source matrix.
      * @param {Number} m_off - Starting position in the source matrix.
      * @param {Boolean} [transpose=false] -
-     *              Set true if transpose the matrix,
-     *              set false if don't transpose the matrix.
+     *              Set the true if transpose the matrix,
+     *              set the false if don't transpose the matrix.
      */
     ns.Matrix4x4.loadAxisv = function(d, d_off, m, m_off, transpose) {
         ns.Matrix4x4.load(
@@ -404,8 +404,8 @@
      * @param {Number} y - Y element of the axis.
      * @param {Number} z - Z element of the axis.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulTranslate = function(m, m_off, x, y, z, column) {
         if (column == null) {
@@ -437,8 +437,8 @@
      * @param {Number} m_off - Starting position in the matrix of push target.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateXAxis = function(m, m_off, rad, column) {
         if (column == null) {
@@ -471,8 +471,8 @@
      * @param {Number} m_off - Starting position in the matrix of push target.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateYAxis = function(m, m_off, rad, column) {
         if (column == null) {
@@ -505,8 +505,8 @@
      * @param {Number} m_off - Starting position in the matrix of push target.
      * @param {Number} rad - The rotation value.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateZAxis = function(m, m_off, rad, column) {
         if (column == null) {
@@ -542,11 +542,11 @@
      * @param {Number} z - Z element of the axis vector.
      * @param {Number} rad - The rotation value.
      * @param {Number} [normalize=true] -
-     *              Set true if normalized axis vector,
-     *              set false if not normalized axis vector.
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotate = function(m, m_off, x, y, z, rad, normalize, column) {
         if (normalize == true) {
@@ -620,8 +620,8 @@
      * @param {Number} upper_y - Y element of the upper vector.
      * @param {Number} upper_z - Z element of the upper vector.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulLookAt = function(m, m_off,
                                       eye_x, eye_y, eye_z,
@@ -659,7 +659,8 @@
         }
 
         // calculate the Y-axis vector.
-        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because it's normalized and vertical.
+        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because
+        // it's normalized and vertical.
         var yx = zy * xz - zz * xy;
         var yy = zz * xx - zx * xz;
         var yz = zx * xy - zy * xx;
@@ -730,8 +731,8 @@
      * @param {Number} device_near - The near coordinate of the device dimension. Default value is 0.0.
      * @param {Number} device_far - The far coordinate of the device dimension. Default value is 1.0.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulPerspective = function(m, m_off,
                                            view_width, view_height,
@@ -780,8 +781,8 @@
      * @param {Array.<Number>} m - The source matrix.
      * @param {Number} m_off - Starting position in the source matrix.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.normalizeAxisv = function(d, d_off, m, m_off, column) {
         if (column == null) {
@@ -856,8 +857,8 @@
      * @param {Array.<Number>} b - The end matrix.
      * @param {Number} b_off - Starting position in the end matrix.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.slrepAxisAndLrepOtherv = function(d, d_off, a, a_off, b, b_off, t, column) {
         if (column == null) {
@@ -985,7 +986,8 @@
             var len  = axlen * t1 + bxlen * t;
 
             // spherical linear interpolate the direction.
-            // slerp(p0, p1; t) = (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
+            // slerp(p0, p1; t) =
+            // (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
             var rad1 = Math.acos(xcs);
             var rad2 = rad1 * t1;
             var rad3 = rad1 * t;
@@ -1022,7 +1024,8 @@
             var len  = aylen * t1 + bylen * t;
 
             // spherical linear interpolate the direction.
-            // slerp(p0, p1; t) = (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
+            // slerp(p0, p1; t) =
+            // (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
             var rad1 = Math.acos(ycs);
             var rad2 = rad1 * t1;
             var rad3 = rad1 * t;
@@ -1059,7 +1062,8 @@
             var len  = azlen * t1 + bzlen * t;
 
             // spherical linear interpolate the direction.
-            // slerp(p0, p1; t) = (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
+            // slerp(p0, p1; t) =
+            // (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
             var rad1 = Math.acos(zcs);
             var rad2 = rad1 * t1;
             var rad3 = rad1 * t;
@@ -1081,13 +1085,12 @@
             rxy,                ryy,                rzy,                aty * t1 + bty * t,
             rxz,                ryz,                rzz,                atz * t1 + btz * t,
             axw * t1 + bxw * t, ayw * t1 + byw * t, azw * t1 + bzw * t, atw * t1 + btw * t,
-            column ? false : true);
+            !column);
     };
 
     /**
-     * Convert to the information of rotation, then
-     * destinate axis vector to the specified vector and
-     * returns the rotation value.
+     * Convert to the information of rotation, then destinate axis vector to
+     * the specified vector and returns the rotation value.
      *
      * @memberof xpl.Matrix4x4
      * @function toRotateAxisv
@@ -1096,8 +1099,8 @@
      * @param {Array.<Number>} m - The source matrix.
      * @param {Number} m_off - Starting position of the source matrix.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      * @returns {Number} The rotation value.
      */
     ns.Matrix4x4.toRotateAxisv = function(v, v_off, m, m_off, column) {
@@ -1143,22 +1146,22 @@
             cs /= Math.sqrt(norm);
         }
         if (1.0 <= cs) {
-            v[v_off + X] = 0;
-            v[v_off + Y] = 0;
-            v[v_off + Z] = 0;
+            v[v_off + VX] = 0;
+            v[v_off + VY] = 0;
+            v[v_off + VZ] = 0;
             return 0;
         }
 
         // calculate the rotation angle.
         if (0 < sn) {
             sn = Math.sqrt(sn);
-            v[v_off + X] = -xsn / sn;
-            v[v_off + Y] = -ysn / sn;
-            v[v_off + Z] = -zsn / sn;
+            v[v_off + VX] = -xsn / sn;
+            v[v_off + VY] = -ysn / sn;
+            v[v_off + VZ] = -zsn / sn;
         } else {
-            v[v_off + X] = 0;
-            v[v_off + Y] = 0;
-            v[v_off + Z] = 0;
+            v[v_off + VX] = 0;
+            v[v_off + VY] = 0;
+            v[v_off + VZ] = 0;
         }
         return Math.acos(cs);
     };
@@ -1173,8 +1176,8 @@
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.fromQuaternionv = function(m, m_off, q, q_off, column) {
         if (column == null) {
@@ -1184,10 +1187,10 @@
         // X-axis = q * (0, (1, 0, 0)) * q→
         // Y-axis = q * (0, (0, 1, 0)) * q→
         // Z-axis = q * (0, (0, 0, 1)) * q→
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + CR];
+        var ip = q[q_off + CI];
+        var jp = q[q_off + CJ];
+        var kp = q[q_off + CK];
 
         // calculate the common denominator.
         var rr = rp * rp, ii  = ip * ip, jj  = jp * jp, kk = kp * kp;
@@ -1214,8 +1217,8 @@
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulQuaternionv = function(m, m_off, q, q_off, column) {
         if (column == null) {
@@ -1225,10 +1228,10 @@
         // X-axis = q * (0, (1, 0, 0)) * q→
         // Y-axis = q * (0, (0, 1, 0)) * q→
         // Z-axis = q * (0, (0, 0, 1)) * q→
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + CR];
+        var ip = q[q_off + CI];
+        var jp = q[q_off + CJ];
+        var kp = q[q_off + CK];
 
         // calculate the common denominator.
         var rr = rp * rp, ii  = ip * ip, jj  = jp * jp, kk = kp * kp;
@@ -1275,8 +1278,8 @@
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulQuaternionAxisv = function(m, m_off, q, q_off, column) {
         if (column == null) {
@@ -1286,10 +1289,10 @@
         // X-axis = q * (0, (1, 0, 0)) * q→
         // Y-axis = q * (0, (0, 1, 0)) * q→
         // Z-axis = q * (0, (0, 0, 1)) * q→
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + CR];
+        var ip = q[q_off + CI];
+        var jp = q[q_off + CJ];
+        var kp = q[q_off + CK];
 
         // calculate the common denominator.
         var rr = rp * rp, ii  = ip * ip, jj  = jp * jp, kk = kp * kp;
@@ -1331,10 +1334,10 @@
      * @param {Number} q_off - Starting position of the destination quaternion.
      * @param {Array.<Number>} m - The source matrix.
      * @param {Number} m_off - Starting position of the source matrix.
-     * @param {Number} reverse - Set true if reverse the sign to the imaginary part.
+     * @param {Number} reverse - Set the true if reverse the sign to the imaginary part.
      * @param {Boolean} [column=true] -
-     *              Set true if use specified matrix to the column vector,
-     *              set false if use specified matrix to the row vector.
+     *              Set the true if use specified matrix to the column vector,
+     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.toQuaternionv = function(q, q_off, m, m_off, reverse, column) {
         if (column == null) {
@@ -1427,15 +1430,15 @@
 
         // load on the quaternion.
         if (!reverse) {
-            q[q_off + R] = scale * -cs;
-            q[q_off + I] = scale * -sn * ip;
-            q[q_off + J] = scale * -sn * jp;
-            q[q_off + K] = scale * -sn * kp;
+            q[q_off + CR] = scale * -cs;
+            q[q_off + CI] = scale * -sn * ip;
+            q[q_off + CJ] = scale * -sn * jp;
+            q[q_off + CK] = scale * -sn * kp;
         } else {
-            q[q_off + R] = scale * cs;
-            q[q_off + I] = scale * sn * ip;
-            q[q_off + J] = scale * sn * jp;
-            q[q_off + K] = scale * sn * kp;
+            q[q_off + CR] = scale * cs;
+            q[q_off + CI] = scale * sn * ip;
+            q[q_off + CJ] = scale * sn * jp;
+            q[q_off + CK] = scale * sn * kp;
         }
     };
 

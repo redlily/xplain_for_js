@@ -917,7 +917,7 @@
          *
          * @instance
          * @memberof xpl.XModelTexture
-         * @member {uint32_t} data_size
+         * @member {xpl.uint32_t} data_size
          */
         this.data_size = 0;
 
@@ -1464,6 +1464,24 @@
      */
     ns.XModelMeshSubset = function() {
         /**
+         * uint32_t : The number of bone indices.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {xpl.uint32_t} num_bones
+         */
+        this.num_bones = 0;
+
+        /**
+         * uint32_t[num_bones] : The indices of bone indices that are sorted in ascending order.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Uint16Array} bones
+         */
+        this.bones = null;
+
+        /**
          * uint32_t : The number of vertices.
          *
          * @instance
@@ -1473,7 +1491,7 @@
         this.num_vertices = 0;
 
         /**
-         * uint32_t[num_vertices] : The vertices
+         * uint32_t[num_vertices] : The indices of vertices that are sorted in ascending order.
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -1491,31 +1509,31 @@
         this.num_elements = 0;
 
         /**
-         * uint32_t[num_elements] : The elements.
+         * XModelElement[num_elements] : The indices of element that are sorted in ascending order.
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Uint32Array} elements
+         * @member {xpl.XModelElement} elements
          */
         this.elements = null;
 
         /**
-         * uint32_t : The number of bone indices.
+         * Object : The vertex buffer object.
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {xpl.uint32_t} num_bones
+         * @member {Object} vertex_buffer
          */
-        this.num_bones = 0;
+        this.vertex_buffer = null;
 
         /**
-         * uint32_t[num_bones] : The bone indices.
+         * Object : The element buffer object.
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Uint32Array} bones
+         * @member {Object} element_buffer
          */
-        this.bones = null;
+        this.element_buffer = null;
 
         /**
          * Object : The temporary user object.
@@ -1573,7 +1591,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Uint16Array} indices
+         * @member {Int16Array} indices
          */
         this.indices = null;
 
@@ -1802,7 +1820,7 @@
                     return false;
                 }
             }
-            return this.material     == other.material &&
+            return this.material == other.material &&
                    this.num_vertices == other.num_vertices;
         }
         return false;
