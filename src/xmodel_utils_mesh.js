@@ -226,12 +226,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -289,12 +289,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -353,12 +353,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scaling.
@@ -421,12 +421,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -485,12 +485,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -534,12 +534,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -607,12 +607,12 @@
             }
             var sub;
             var num_vertices;
-            if (subset != -1) {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
-            } else {
+            if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // scanning the all vertex.
@@ -981,15 +981,14 @@
             if (subset === undefined) {
                 subset = -1
             }
-            var num_elements;
-            var elements;
-            if (subset != -1) {
-                var sub = mesh.subsets[subset];
-                num_elements = sub.num_elements;
-                elements = sub.elements;
+            var sub;
+            var num_vertices;
+            if (subset == -1) {
+                sub = null;
+                num_vertices = mesh.num_vertices;
             } else {
-                num_elements = mesh.num_elements;
-                elements = mesh.elements;
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // count the triangle faces.
@@ -1087,15 +1086,14 @@
             if (subset === undefined) {
                 subset = -1;
             }
-            var num_elements;
-            var elements;
-            if (subset != -1) {
-                var sub = mesh.subsets[subset];
-                num_elements = sub.num_elements;
-                elements = sub.elements;
+            var sub;
+            var num_vertices;
+            if (subset == -1) {
+                sub = null;
+                num_vertices = mesh.num_vertices;
             } else {
-                num_elements = mesh.num_elements;
-                elements = mesh.elements;
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
             }
 
             // triangle order.

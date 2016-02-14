@@ -238,35 +238,35 @@
     });
 
     // alias of the class name.
-    var stc_fld = ns.XModelWrapperGL;
+    var cls = ns.XModelWrapperGL;
 
     ns.XModelWrapperGL.defaultConfig = function() {
         var config = {};
-        config[stc_fld.CONFIG_MEMORY_ALIGNMENT_SIZE] = 4;
-        config[stc_fld.CONFIG_USE_VERTEX_ARRAY_OBJECT] = false;
-        config[stc_fld.CONFIG_USE_MIPMAP_TEXTURE] = false;
-        config[stc_fld.CONFIG_USE_SKINNING] = false;
-        config[stc_fld.CONFIG_GPU_SKINNING] = false;
-        config[stc_fld.CONFIG_MAX_BONE_MATRICES] = 32;
-        config[stc_fld.CONFIG_MAX_BONE_WEIGHTED_INDICES] = 4;
-        config[stc_fld.CONFIG_USE_MORFING] = false;
-        config[stc_fld.CONFIG_GPU_MORFING] = false;
-        config[stc_fld.CONFIG_PATH_ALIAS] = null;
+        config[cls.CONFIG_MEMORY_ALIGNMENT_SIZE] = 4;
+        config[cls.CONFIG_USE_VERTEX_ARRAY_OBJECT] = false;
+        config[cls.CONFIG_USE_MIPMAP_TEXTURE] = false;
+        config[cls.CONFIG_USE_SKINNING] = false;
+        config[cls.CONFIG_GPU_SKINNING] = false;
+        config[cls.CONFIG_MAX_BONE_MATRICES] = 32;
+        config[cls.CONFIG_MAX_BONE_WEIGHTED_INDICES] = 4;
+        config[cls.CONFIG_USE_MORFING] = false;
+        config[cls.CONFIG_GPU_MORFING] = false;
+        config[cls.CONFIG_PATH_ALIAS] = null;
         return config;
     };
 
     ns.XModelWrapperGL.copyConfig = function(src) {
         var members = [
-            stc_fld.CONFIG_MEMORY_ALIGNMENT_SIZE,
-            stc_fld.CONFIG_USE_VERTEX_ARRAY_OBJECT,
-            stc_fld.CONFIG_USE_MIPMAP_TEXTURE,
-            stc_fld.CONFIG_USE_SKINNING,
-            stc_fld.CONFIG_GPU_SKINNING,
-            stc_fld.CONFIG_MAX_BONE_MATRICES,
-            stc_fld.CONFIG_MAX_BONE_WEIGHTED_INDICES,
-            stc_fld.CONFIG_USE_MORFING,
-            stc_fld.CONFIG_GPU_MORFING,
-            stc_fld.CONFIG_PATH_ALIAS,
+            cls.CONFIG_MEMORY_ALIGNMENT_SIZE,
+            cls.CONFIG_USE_VERTEX_ARRAY_OBJECT,
+            cls.CONFIG_USE_MIPMAP_TEXTURE,
+            cls.CONFIG_USE_SKINNING,
+            cls.CONFIG_GPU_SKINNING,
+            cls.CONFIG_MAX_BONE_MATRICES,
+            cls.CONFIG_MAX_BONE_WEIGHTED_INDICES,
+            cls.CONFIG_USE_MORFING,
+            cls.CONFIG_GPU_MORFING,
+            cls.CONFIG_PATH_ALIAS,
         ];
         var config = {};
         for (var key of members) {
@@ -277,25 +277,29 @@
 
     ns.XModelWrapperGL.defaultUniforms = function() {
         var uniforms = {};
-        uniforms[stc_fld.UNIFORM_DIFFUSE] = 0;
-        uniforms[stc_fld.UNIFORM_DIFFUSE_MAP] = 0;
+        uniforms[cls.UNIFORM_DIFFUSE] = 0;
+        uniforms[cls.UNIFORM_DIFFUSE_MAP] = 0;
         return uniforms;
     };
 
     ns.XModelWrapperGL.defaultAttributes = function() {
         var attributes = {};
-        attributes[stc_fld.ATTRIBUTE_POSITION] = -1;
-        attributes[stc_fld.ATTRIBUTE_NORMAL] = -1;
-        attributes[stc_fld.ATTRIBUTE_COLOR] = -1;
-        attributes[stc_fld.ATTRIBUTE_TEXCOORD] = -1;
-        attributes[stc_fld.ATTRIBUTE_BONEINDICES] = -1;
-        attributes[stc_fld.ATTRIBUTE_BONEWEIGHTS] = -1;
+        attributes[cls.ATTRIBUTE_POSITION] = -1;
+        attributes[cls.ATTRIBUTE_NORMAL] = -1;
+        attributes[cls.ATTRIBUTE_COLOR] = -1;
+        attributes[cls.ATTRIBUTE_TEXCOORD] = -1;
+        attributes[cls.ATTRIBUTE_BONEINDICES] = -1;
+        attributes[cls.ATTRIBUTE_BONEWEIGHTS] = -1;
         return attributes;
     };
 
-    var attachVertexAttributes = function(self, gl, mesh, attributes) {
+    var attachVertexAttributes = function(self, gl, mesh, attributes, use_vao, subset) {
+        var user_object =
+        var vertex_buffer = subset != -1 ? mesh.subsets[subset].vertex_buffer : mesh.vertex_buffer;
+        if (subset != -1) {}
+
         // bind the vertex buffer.
-        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vertex_buffer);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 
         var stride =
             mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
@@ -357,7 +361,7 @@
         }
 
         // set skinning.
-        if (mesh.skin != null && self.__config[stc_fld.CONFIG_USE_SKINNING]) {
+        if (mesh.skin != null && self.__config[cls.CONFIG_USE_SKINNING]) {
             // set the bone indices.
             var bone_indices_off =
                 mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
@@ -428,151 +432,185 @@
                 if (event.target.status == 200) {
                     this._container = new ns.XModelDecoder().decode(event.target.response);
                     if (this._container != null) {
-                        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, arg) {
-                            xpl.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet(mesh, 16);
-
-                            var is_structure =
-                                !config[stc_fld.CONFIG_USE_SKINNING] ||
-                                config[stc_fld.CONFIG_GPU_SKINNING];
+                        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, gl) {
+                            var use_skinning =
+                                config[cls.CONFIG_USE_SKINNING] &&
+                                mesh.skin != null && 0 < mesh.skin.num_nodes;
+                            var use_cpu_skinning =
+                                use_skinning && !config[cls.CONFIG_GPU_SKINNING];
+                            var use_gpu_skinning =
+                                use_skinning && config[cls.CONFIG_GPU_SKINNING];
+                            var is_structure = !use_skinning || use_gpu_skinning;
                             var index_size, index_type;
                             var weight_size, weight_type;
-                            if (config[stc_fld.CONFIG_USE_SKINNING] &&
-                                config[stc_fld.CONFIG_GPU_SKINNING]) {
+                            if (use_gpu_skinning) {
+                                // use the GPU skinning.
                                 index_size = 2;
                                 index_type = ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT;
                                 weight_size = 4;
                                 weight_type = ns.XModelMeshUtils.TYPE_FLOAT;
                             } else {
+                                // not use the GPU skinning.
                                 index_size = 0;
                                 index_type = ns.XModelMeshUtils.TYPE_VOID;
                                 weight_size = 0;
                                 weight_type = ns.XModelMeshUtils.TYPE_VOID;
                             }
 
-                            // get the vertices information.
-                            var vertices_offsets =
-                                new Int32Array(ns.XModelMeshUtils.MAX_ATTRIBUTE);
-                            var vertices_size = ns.XModelMeshUtils.getVerticesSize(
-                                mesh,
-                                is_structure,
-                                config[stc_fld.CONFIG_MEMORY_ALIGNMENT_SIZE],
-                                4, 4, 1, 4,
-                                0, index_size, weight_size,
-                                vertices_offsets, 0);
-                            var vertices = new ArrayBuffer(vertices_size);
-                            ns.XModelMeshUtils.getVertices(
-                                mesh,
-                                ns.XModelMeshUtils.TYPE_FLOAT,
-                                ns.XModelMeshUtils.TYPE_FLOAT,
-                                ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE,
-                                ns.XModelMeshUtils.TYPE_FLOAT,
-                                ns.XModelMeshUtils.TYPE_VOID,
-                                index_type,
-                                weight_type,
-                                vertices_offsets, 0,
-                                vertices, 0);
-
-                            // update size of the matrix pallet.
-                            if (mesh.skin != null) {
-                                max_bones = Math.max(mesh.skin.num_nodes, max_bones);
+                            // optimize the mesh.
+                            if (use_gpu_skinning) {
+                                ns.XModelOptimizeUtils.
+                                    optimizeMeshSkinForMatrixPallet(mesh, 16);
                             }
 
-                            // the buffer for CPU skinning.
-                            var src_vertices;
-                            var src_positions;
-                            var src_normals;
-                            var src_bone_indices;
-                            var src_bone_weights;
-                            var dest_vertices;
-                            var dest_positions;
-                            var dest_normals;
-                            var is_cpu_skinning =
-                                config[stc_fld.CONFIG_USE_SKINNING] &&
-                                !config[stc_fld.CONFIG_GPU_SKINNING] &&
-                                mesh.skin != null && 0 < mesh.skin.num_nodes;
-                            if (is_cpu_skinning) {
-                                var work_vertices_offsets =
+                            // define that the GPU buffer building closure.
+                            var makeGPUBuffer = function(subset) {
+                                // get the vertices information.
+                                var vertices_offsets =
                                     new Int32Array(ns.XModelMeshUtils.MAX_ATTRIBUTE);
-                                var work_vertices_size = ns.XModelMeshUtils.getVerticesSize(
+                                var vertices_size = ns.XModelMeshUtils.getVerticesSize(
                                     mesh,
-                                    false,
-                                    config[stc_fld.CONFIG_MEMORY_ALIGNMENT_SIZE],
-                                    4, 4, 0, 0,
-                                    0, 2, 4,
-                                    work_vertices_offsets, 0);
-                                src_vertices = new ArrayBuffer(work_vertices_size);
-                                src_positions = new Float32Array(
-                                    src_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION]);
-                                src_normals = new Float32Array(
-                                    src_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL]);
-                                src_bone_indices = new Uint16Array(
-                                    src_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]);
-                                src_bone_weights = new Float32Array(
-                                    src_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]);
+                                    is_structure,
+                                    config[cls.CONFIG_MEMORY_ALIGNMENT_SIZE],
+                                    4, 4, 1, 4,
+                                    0, index_size, weight_size,
+                                    vertices_offsets, 0,
+                                    subset);
+                                var vertices = new ArrayBuffer(vertices_size);
                                 ns.XModelMeshUtils.getVertices(
                                     mesh,
                                     ns.XModelMeshUtils.TYPE_FLOAT,
                                     ns.XModelMeshUtils.TYPE_FLOAT,
-                                    ns.XModelMeshUtils.TYPE_VOID,
-                                    ns.XModelMeshUtils.TYPE_VOID,
-                                    ns.XModelMeshUtils.TYPE_VOID,
-                                    ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT,
+                                    ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE,
                                     ns.XModelMeshUtils.TYPE_FLOAT,
-                                    work_vertices_offsets, 0,
-                                    src_vertices, 0);
-                                dest_vertices = new ArrayBuffer(
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]);
-                                dest_positions = new Float32Array(
-                                    dest_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION]);
-                                dest_normals = new Float32Array(
-                                    dest_vertices,
-                                    work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL]);
-                            } else {
-                                src_vertices = null;
-                                src_positions = null;
-                                src_normals = null;
-                                src_bone_indices = null;
-                                src_bone_weights = null;
-                                dest_vertices = null;
-                                dest_positions = null;
-                                dest_normals = null;
-                            }
+                                    ns.XModelMeshUtils.TYPE_VOID,
+                                    index_type, weight_type,
+                                    vertices_offsets, 0,
+                                    vertices, 0,
+                                    subset);
 
-                            // get the faces information.
-                            var elements_offsets = new Int32Array(mesh.num_materials + 1);
-                            var elements_sizes = new Uint32Array(mesh.num_materials + 1);
-                            var elements_size = ns.XModelMeshUtils.getNumAllTriangledFaceIndices(
-                                mesh, elements_offsets, 0, elements_sizes, 0);
-                            var elements = new Uint32Array(elements_size);
-                            ns.XModelMeshUtils.getAllTriangledFaceIndices(
-                                mesh, true, elements_offsets, 0, elements, 0);
+                                // the buffer for CPU skinning.
+                                var src_vertices;
+                                var src_positions;
+                                var src_normals;
+                                var src_bone_indices;
+                                var src_bone_weights;
+                                var dest_vertices;
+                                var dest_positions;
+                                var dest_normals;
+                                if (use_cpu_skinning) {
+                                    // use the CPU skinning.
+                                    var work_vertices_offsets =
+                                        new Int32Array(ns.XModelMeshUtils.MAX_ATTRIBUTE);
+                                    var work_vertices_size = ns.XModelMeshUtils.getVerticesSize(
+                                        mesh,
+                                        false,
+                                        config[cls.CONFIG_MEMORY_ALIGNMENT_SIZE],
+                                        4, 4, 0, 0,
+                                        0, 2, 4,
+                                        work_vertices_offsets, 0,
+                                        subset);
+                                    src_vertices = new ArrayBuffer(work_vertices_size);
+                                    src_positions = new Float32Array(
+                                        src_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION]);
+                                    src_normals = new Float32Array(
+                                        src_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL]);
+                                    src_bone_indices = new Uint16Array(
+                                        src_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]);
+                                    src_bone_weights = new Float32Array(
+                                        src_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]);
+                                    ns.XModelMeshUtils.getVertices(
+                                        mesh,
+                                        ns.XModelMeshUtils.TYPE_FLOAT,
+                                        ns.XModelMeshUtils.TYPE_FLOAT,
+                                        ns.XModelMeshUtils.TYPE_VOID,
+                                        ns.XModelMeshUtils.TYPE_VOID,
+                                        ns.XModelMeshUtils.TYPE_VOID,
+                                        ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT,
+                                        ns.XModelMeshUtils.TYPE_FLOAT,
+                                        work_vertices_offsets, 0,
+                                        src_vertices, 0,
+                                        subset);
+                                    dest_vertices = new ArrayBuffer(
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]);
+                                    dest_positions = new Float32Array(
+                                        dest_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION]);
+                                    dest_normals = new Float32Array(
+                                        dest_vertices,
+                                        work_vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL]);
+                                } else {
+                                    // not use the CPU skinning.
+                                    src_vertices = null;
+                                    src_positions = null;
+                                    src_normals = null;
+                                    src_bone_indices = null;
+                                    src_bone_weights = null;
+                                    dest_vertices = null;
+                                    dest_positions = null;
+                                    dest_normals = null;
+                                }
 
-                            // generate the GPU buffer.
-                            mesh.vertex_buffer = ns.GLUtils.createBuffer(
-                                gl, gl.ARRAY_BUFFER, vertices, is_cpu_skinning ? gl.STREAM_DRAW : gl.STATIC_DRAW);
-                            mesh.element_buffer = ns.GLUtils.createBuffer(
-                                gl, gl.ELEMENT_ARRAY_BUFFER, elements.buffer, gl.STATIC_DRAW);
+                                // get the faces information.
+                                var elements_offsets = new Int32Array(mesh.num_materials + 1);
+                                var elements_sizes = new Uint32Array(mesh.num_materials + 1);
+                                var elements_size = ns.XModelMeshUtils.getNumAllTriangledFaceIndices(
+                                    mesh, elements_offsets, 0, elements_sizes, 0, subset);
+                                var elements = new Uint32Array(elements_size);
+                                ns.XModelMeshUtils.getAllTriangledFaceIndices(
+                                    mesh, true, elements_offsets, 0, elements, 0, subset);
 
-                            // user object.
-                            mesh.user_object = {
-                                "vertices_offsets": vertices_offsets,
-                                "src_vertices": src_vertices,
-                                "src_positions": src_positions,
-                                "src_normals": src_normals,
-                                "src_bone_indices": src_bone_indices,
-                                "src_bone_weights": src_bone_weights,
-                                "dest_vertices": dest_vertices,
-                                "dest_positions": dest_positions,
-                                "dest_normals": dest_normals,
-                                "elements_offsets": elements_offsets,
-                                "elements_sizes": elements_sizes,
+                                // generate the GPU buffer.
+                                mesh.vertex_buffer = ns.GLUtils.createBuffer(
+                                    gl, gl.ARRAY_BUFFER, vertices,
+                                    use_cpu_skinning ? gl.STREAM_DRAW : gl.STATIC_DRAW);
+                                mesh.element_buffer = ns.GLUtils.createBuffer(
+                                    gl, gl.ELEMENT_ARRAY_BUFFER, elements.buffer, gl.STATIC_DRAW);
+
+                                // user object.
+                                var user_object = {
+                                    "vertices_offsets": vertices_offsets,
+                                    "src_vertices": src_vertices,
+                                    "src_positions": src_positions,
+                                    "src_normals": src_normals,
+                                    "src_bone_indices": src_bone_indices,
+                                    "src_bone_weights": src_bone_weights,
+                                    "dest_vertices": dest_vertices,
+                                    "dest_positions": dest_positions,
+                                    "dest_normals": dest_normals,
+                                    "elements_offsets": elements_offsets,
+                                    "elements_sizes": elements_sizes,
+                                };
+                                if (subset == -1) {
+                                    mesh.user_object = user_object;
+                                } else {
+                                    mesh.subsets[subset].user_object = user_object;
+                                }
                             };
-                        }, null);
+
+                            // make the GPU buffer.
+                            if (mesh.subset != null && 0 < mesh.num_subsets) {
+                                // has the subsets.
+                                if (mesh.skin != null) {
+                                    for (var i = 0; i < mesh.num_subsets; ++i) {
+                                        max_bones = Math.max(mesh.subsets[i].num_bones, max_bones);
+                                    }
+                                }
+                                for (var i = 0; i < mesh.num_subsets; ++i) {
+                                    makeGPUBuffer(i);
+                                }
+                            } else {
+                                // has not the subsets.
+                                if (mesh.skin != null) {
+                                    max_bones = Math.max(mesh.skin.num_nodes, max_bones);
+                                }
+                                makeGPUBuffer(-1);
+                            }
+                        }, gl);
 
                         // create the matrix pallet.
                         if (0 < max_bones) {
@@ -610,8 +648,8 @@
 
     var loadTextureWithUrl = function(self, gl, texture, prefix, config) {
         var request = new XMLHttpRequest();
-        if (config[stc_fld.CONFIG_PATH_ALIAS] != null && config[stc_fld.CONFIG_PATH_ALIAS][texture.ref] != null) {
-            request.open("GET", config[stc_fld.CONFIG_PATH_ALIAS][texture.ref], true);
+        if (config[cls.CONFIG_PATH_ALIAS] != null && config[cls.CONFIG_PATH_ALIAS][texture.ref] != null) {
+            request.open("GET", config[cls.CONFIG_PATH_ALIAS][texture.ref], true);
         } else {
             request.open("GET", prefix + texture.ref, true);
         }
@@ -625,7 +663,7 @@
                         texture.texture = ns.GLUtils.createTexture2DFromImage(
                             gl, gl.RGBA, gl.UNSIGNED_BYTE, img);
                         gl.bindTexture(gl.TEXTURE_2D, texture.texture);
-                        if (config[stc_fld.CONFIG_USE_MIPMAP_TEXTURE]) {
+                        if (config[cls.CONFIG_USE_MIPMAP_TEXTURE]) {
                             gl.generateMipmap(gl.TEXTURE_2D);
                         }
                         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
@@ -671,10 +709,10 @@
         // draw meshs.
         ns.XModelContainerUtils.forEachMesh(this._container, (function(mesh, args) {
             // attach the vertex attributes.
-            attachVertexAttributes(this, gl, mesh, attributes, false);
+            attachVertexAttributes(this, gl, mesh, attributes, false, -1);
 
             // set the skinning.
-            if (mesh.skin != null && this.__config[stc_fld.CONFIG_USE_SKINNING]) {
+            if (mesh.skin != null && this.__config[cls.CONFIG_USE_SKINNING]) {
                 if (mesh.user_object.src_vertices != null && this.__is_update_anim) {
                     // update the matrix pallet.
                     ns.XModelSkinUtils.updateMatrixPallet(
@@ -777,10 +815,22 @@
                 }
 
                 // set specular.
-                // TODO:
+                if (uniforms.u_specular_map != null) {
+                    gl.activeTexture(gl.TEXTURE1);
+                    gl.uniform1i(uniforms.u_specular_map, 0);
+                    if (material.specular_map != null && material.specular_map.texture != null) {
+                        gl.uniform4fv(uniforms.u_specular_map, material.specular);
+                        gl.bindTexture(gl.TEXTURE_2D, material.specular_map.texture);
+                    } else {
+                        gl.uniform4f(uniforms.u_specular_color, 1, 1, 1, 1);
+                        gl.bindTexture(gl.TEXTURE_2D, this.__white_texture);
+                    }
+                } else if (uniforms.u_specular_color != null) {
+                    gl.uniform4f(uniforms.u_specular_color, 1, 1, 1, 1);
+                }
 
                 // set bumpmap.
-                // TODO:
+                // TODO
 
                 // draw.
                 gl.drawElements(
@@ -799,7 +849,7 @@
         ns.XModelWrapper.prototype.dispose.call(this);
 
         // release the shape memory.
-        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, args) {
+        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, gl) {
             if (mesh.vertex_buffer != null) {
                 gl.deleteBuffer(mesh.vertex_buffer);
                 mesh.vertex_buffer = null;
@@ -808,7 +858,7 @@
                 gl.deleteBuffer(mesh.element_buffer);
                 mesh.element_buffer = null;
             }
-        }, null);
+        }, gl);
 
         // release the textures memory.
         gl.deleteTexture(this.__white_texture);
