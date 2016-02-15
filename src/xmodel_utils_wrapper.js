@@ -293,20 +293,29 @@
         return attributes;
     };
 
-    var attachVertexAttributes = function(self, gl, mesh, attributes, use_vao, subset) {
-        var user_object =
-        var vertex_buffer = subset != -1 ? mesh.subsets[subset].vertex_buffer : mesh.vertex_buffer;
-        if (subset != -1) {}
+    var attachVertexAttributes = function(self, gl, mesh, attributes, subset) {
+        var vertex_buffer;
+        var user_object;
+        if (subset == -1) {
+            // superset.
+            vertex_buffer = mesh.vertex_buffer;
+            user_object = mesh.user_object;
+        } else {
+            // subset.
+            var sub = mesh.subsets[subset]
+            vertex_buffer = sub.vertex_buffer;
+            user_object = sub.user_object;
+        }
 
         // bind the vertex buffer.
         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 
         var stride =
-            mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
+            user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
 
         // set the position information.
         var position_off =
-            mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION];
+            user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION];
         if (attributes.a_position != -1 && position_off != -1) {
             gl.enableVertexAttribArray(attributes.a_position);
             gl.vertexAttribPointer(
@@ -320,7 +329,7 @@
 
         // set the normal information.
         var normal_off =
-            mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
+            user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
         if (attributes.a_normal != -1 && normal_off != -1) {
             gl.enableVertexAttribArray(attributes.a_normal);
             gl.vertexAttribPointer(
@@ -334,7 +343,7 @@
 
         // set the color information.
         var color_off =
-            mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_COLOR];
+            user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_COLOR];
         if (attributes.a_color != -1 && color_off != -1) {
             gl.enableVertexAttribArray(attributes.a_color);
             gl.vertexAttribPointer(
@@ -348,7 +357,7 @@
 
         // set the texture coordinate information.
         var tex_coord_off =
-            mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
+            user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
         if (attributes.a_tex_coord != -1 && tex_coord_off != -1) {
             gl.enableVertexAttribArray(attributes.a_tex_coord);
             gl.vertexAttribPointer(
@@ -364,7 +373,7 @@
         if (mesh.skin != null && self.__config[cls.CONFIG_USE_SKINNING]) {
             // set the bone indices.
             var bone_indices_off =
-                mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
+                user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
             if (attributes.a_bone_indices != -1 && bone_indices_off != -1) {
                 gl.enableVertexAttribArray(attributes.a_bone_indices);
                 gl.vertexAttribPointer(
@@ -378,7 +387,7 @@
 
             // set the bone indices.
             var bone_weights_off =
-                mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
+                user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
             if (attributes.a_bone_weights != -1 && bone_weights_off != -1) {
                 gl.enableVertexAttribArray(attributes.a_bone_weights);
                 gl.vertexAttribPointer(
@@ -491,13 +500,10 @@
 
                                 // the buffer for CPU skinning.
                                 var src_vertices;
-                                var src_positions;
-                                var src_normals;
-                                var src_bone_indices;
-                                var src_bone_weights;
+                                var src_positions, src_normals;
+                                var src_bone_indices, src_bone_weights;
                                 var dest_vertices;
-                                var dest_positions;
-                                var dest_normals;
+                                var dest_positions, dest_normals;
                                 if (use_cpu_skinning) {
                                     // use the CPU skinning.
                                     var work_vertices_offsets =
@@ -593,7 +599,7 @@
                             };
 
                             // make the GPU buffer.
-                            if (mesh.subset != null && 0 < mesh.num_subsets) {
+                            if (mesh.subsets != null && 0 < mesh.num_subsets) {
                                 // has the subsets.
                                 if (mesh.skin != null) {
                                     for (var i = 0; i < mesh.num_subsets; ++i) {
@@ -709,7 +715,7 @@
         // draw meshs.
         ns.XModelContainerUtils.forEachMesh(this._container, (function(mesh, args) {
             // attach the vertex attributes.
-            attachVertexAttributes(this, gl, mesh, attributes, false, -1);
+            attachVertexAttributes(this, gl, mesh, attributes, -1);
 
             // set the skinning.
             if (mesh.skin != null && this.__config[cls.CONFIG_USE_SKINNING]) {

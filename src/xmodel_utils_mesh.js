@@ -981,14 +981,15 @@
             if (subset === undefined) {
                 subset = -1
             }
-            var sub;
-            var num_vertices;
+            var num_elements;
+            var elements;
             if (subset == -1) {
-                sub = null;
-                num_vertices = mesh.num_vertices;
+                num_elements = mesh.num_elements;
+                elements = mesh.elements;
             } else {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
+                var sub = mesh.subsets[subset];
+                num_elements = sub.num_elements;
+                elements = sub.elements;
             }
 
             // count the triangle faces.
@@ -1086,14 +1087,15 @@
             if (subset === undefined) {
                 subset = -1;
             }
-            var sub;
-            var num_vertices;
+            var num_elements;
+            var elements;
             if (subset == -1) {
-                sub = null;
-                num_vertices = mesh.num_vertices;
+                num_elements = mesh.num_elements;
+                elements = mesh.elements;
             } else {
-                sub = mesh.subsets[subset];
-                num_vertices = sub.num_vertices;
+                var sub = mesh.subsets[subset];
+                num_elements = sub.num_elements;
+                elements = sub.elements;
             }
 
             // triangle order.

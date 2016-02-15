@@ -237,6 +237,17 @@
         },
 
         /**
+         * Structure of the mesh subset.
+         *
+         * @constant
+         * @memberof xpl.XModelStructure
+         * @member {xpl.enum_t} TYPE_MESH_SUBSET
+         */
+        "TYPE_MESH_SUBSET": {
+            value: 15,
+        },
+
+        /**
          * Structure of the node.
          *
          * @constant
@@ -1426,6 +1437,15 @@
         this.vertex_buffer = null;
 
         /**
+         * Object : The vertex array object.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Object} vertex_array.
+         */
+        this.vertex_array = null;
+
+        /**
          * Object : The element buffer object.
          *
          * @instance
@@ -1463,11 +1483,13 @@
      * @author Syuuhei Kuno
      */
     ns.XModelMeshSubset = function() {
+        ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
+
         /**
          * uint32_t : The number of bone indices.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {xpl.uint32_t} num_bones
          */
         this.num_bones = 0;
@@ -1476,7 +1498,7 @@
          * uint32_t[num_bones] : The indices of bone indices that are sorted in ascending order.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {Uint16Array} bones
          */
         this.bones = null;
@@ -1485,7 +1507,7 @@
          * uint32_t : The number of vertices.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {xpl.uint32_t} num_vertices
          */
         this.num_vertices = 0;
@@ -1494,7 +1516,7 @@
          * uint32_t[num_vertices] : The indices of vertices that are sorted in ascending order.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {Uint32Array} vertices
          */
         this.vertices = null;
@@ -1503,7 +1525,7 @@
          * uint32_t : The number of elements.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {xpl.uint32_t} num_elements
          */
         this.num_elements = 0;
@@ -1512,7 +1534,7 @@
          * XModelElement[num_elements] : The indices of element that are sorted in ascending order.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {xpl.XModelElement} elements
          */
         this.elements = null;
@@ -1521,29 +1543,31 @@
          * Object : The vertex buffer object.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {Object} vertex_buffer
          */
         this.vertex_buffer = null;
 
         /**
+         * Object : The vertex array object.
+         *
+         * @instance
+         * @memberof xpl.XModelMeshSubset
+         * @member {Object} vertex_array.
+         */
+        this.vertex_array = null;
+
+        /**
          * Object : The element buffer object.
          *
          * @instance
-         * @memberof xpl.XModelMesh
+         * @memberof xpl.XModelMeshSubset
          * @member {Object} element_buffer
          */
         this.element_buffer = null;
-
-        /**
-         * Object : The temporary user object.
-         *
-         * @instance
-         * @memberof xpl.XModelExtensible
-         * @member {Object} user_object
-         */
-        this.user_object = null
     };
+
+    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelExtensible.prototype);
 
 })(xpl);
 
