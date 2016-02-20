@@ -46,6 +46,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelTransformUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     /**

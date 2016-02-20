@@ -109,11 +109,11 @@
     };
 
     ns.XModelWrapper.prototype.setAnimation = function(index, time, loop, kinematics) {
-        if (kinematics == undefined) {
-            kinematics = false;
-        }
         if (loop == undefined) {
             loop = false;
+        }
+        if (kinematics == undefined) {
+            kinematics = false;
         }
         if (this.__prev_anim_index != index) {
             this.__prev_anim_index = index;
@@ -714,17 +714,44 @@
     ns.XModelWrapperGL.prototype.draw = function(gl, uniforms, attributes) {
         // draw meshs.
         ns.XModelContainerUtils.forEachMesh(this._container, (function(mesh, args) {
+            // set the skinning.
+            if (mesh.skin != null && this.__config[cls.CONFIG_USE_SKINNING]) {
+                ns.XModelSkinUtils.updateMatrixPallet(
+                    mesh.skin, mesh.skin.num_nodes, this.__matrix_pallet, 0);
+            }
             // attach the vertex attributes.
             attachVertexAttributes(this, gl, mesh, attributes, -1);
+
+            var draw = function(subset) {
+
+                var vertex_buffer;
+                var element_buffer;
+                var user_object;
+                if (subset == -1) {
+                    // superset.
+                    vertex_buffer = mesh.vertex_buffer;
+                    element_buffer = mesh.element_buffer;
+                    user_object = mesh.user_object;
+                } else {
+                    // subset.
+                    var sub = mesh.subsets[subset]
+                    vertex_buffer = sub.vertex_buffer;
+                    element_buffer = sub.element_buffer;
+                    user_object = sub.user_object;
+                }
+            };
+
+            draw(-1);
+
+
 
             // set the skinning.
             if (mesh.skin != null && this.__config[cls.CONFIG_USE_SKINNING]) {
                 if (mesh.user_object.src_vertices != null && this.__is_update_anim) {
-                    // update the matrix pallet.
-                    ns.XModelSkinUtils.updateMatrixPallet(
-                        mesh.skin, mesh.skin.num_nodes, this.__matrix_pallet, 0);
-
                     // CPU skinning.
+                    // update the matrix pallet.
+
+
                     var bone_indices_off =
                         mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] / 4;
                     var bone_weights_off =
@@ -774,7 +801,6 @@
                     this.__is_update_anim = false;
                 } else {
                     // GPU skinning.
-
                     // update the matrix pallet.
                     ns.XModelSkinUtils.updateMatrixPallet(
                         mesh.skin, mesh.skin.num_nodes, this.__matrix_pallet, 0);
@@ -782,6 +808,13 @@
                     // TODO:
                 }
             }
+
+
+
+
+
+
+
 
             // bind the element buffer.
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.element_buffer);

@@ -1208,6 +1208,55 @@
     "use strict";
 
     /**
+     * Extensible mesh structure of the xModel.
+     *
+     * @class
+     * @alias xpl.XModelMeshBase
+     * @augments xpl.XModelStructure
+     * @author Syuuhei Kuno
+     */
+    ns.XModelMeshBase = function(structure_type) {
+        ns.XModelExtensible.call(this, structure_type);
+
+        // work variable.
+
+        /**
+         * Object : The vertex buffer object.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Object} vertex_buffer
+         */
+        this.vertex_buffer = null;
+
+        /**
+         * Object : The vertex array object.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Object} vertex_array.
+         */
+        this.vertex_array = null;
+
+        /**
+         * Object : The element buffer object.
+         *
+         * @instance
+         * @memberof xpl.XModelMesh
+         * @member {Object} element_buffer
+         */
+        this.element_buffer = null;
+    };
+
+    Object.setPrototypeOf(ns.XModelMeshBase.prototype, ns.XModelExtensible.prototype);
+
+})(xpl);
+
+(function(ns) {
+
+    "use strict";
+
+    /**
      * Mesh structure of the xModel.
      *
      * @class
@@ -1216,7 +1265,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelMesh = function() {
-        ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_MESH);
+        ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH);
 
         /**
          * string : The mesh name.
@@ -1398,17 +1447,6 @@
          */
         this.elements = null;
 
-        // work variable.
-
-        /**
-         * XModelNode : The parent of this mesh.
-         *
-         * @instance
-         * @memberof xpl.XModelMesh
-         * @member {xpl.XModelNode} parent
-         */
-        this.parent = null; // weak reference.
-
         /**
          * int16_t : The number of subset meshs of this mesh.
          *
@@ -1427,35 +1465,19 @@
          */
         this.subsets = null;
 
-        /**
-         * Object : The vertex buffer object.
-         *
-         * @instance
-         * @memberof xpl.XModelMesh
-         * @member {Object} vertex_buffer
-         */
-        this.vertex_buffer = null;
+        // work variable.
 
         /**
-         * Object : The vertex array object.
+         * XModelNode : The parent of this mesh.
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Object} vertex_array.
+         * @member {xpl.XModelNode} parent
          */
-        this.vertex_array = null;
-
-        /**
-         * Object : The element buffer object.
-         *
-         * @instance
-         * @memberof xpl.XModelMesh
-         * @member {Object} element_buffer
-         */
-        this.element_buffer = null;
+        this.parent = null; // weak reference.
     };
 
-    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelExtensible.prototype);
+    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelMeshBase.prototype);
 
     /**
      * Get the name of this mesh.
@@ -1483,7 +1505,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelMeshSubset = function() {
-        ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
+        ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
 
         /**
          * uint32_t : The number of bone indices.
@@ -1538,36 +1560,9 @@
          * @member {xpl.XModelElement} elements
          */
         this.elements = null;
-
-        /**
-         * Object : The vertex buffer object.
-         *
-         * @instance
-         * @memberof xpl.XModelMeshSubset
-         * @member {Object} vertex_buffer
-         */
-        this.vertex_buffer = null;
-
-        /**
-         * Object : The vertex array object.
-         *
-         * @instance
-         * @memberof xpl.XModelMeshSubset
-         * @member {Object} vertex_array.
-         */
-        this.vertex_array = null;
-
-        /**
-         * Object : The element buffer object.
-         *
-         * @instance
-         * @memberof xpl.XModelMeshSubset
-         * @member {Object} element_buffer
-         */
-        this.element_buffer = null;
     };
 
-    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelExtensible.prototype);
+    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelMeshBase.prototype);
 
 })(xpl);
 

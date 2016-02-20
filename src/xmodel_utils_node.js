@@ -41,6 +41,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelNodeUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     /**

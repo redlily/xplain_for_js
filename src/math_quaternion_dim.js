@@ -39,12 +39,12 @@
 
     "use strict";
 
-    if (!ns.Quaternion) {
+    if (ns.Quaternion === undefined) {
         return;
     }
 
-    var X = 0, Y = 1, Z = 2;
-    var R = 0, I = 1, J = 2, K = 3;
+    var VX = 0, VY = 1, VZ = 2;
+    var QR = 0, QI = 1, QJ = 2, QK = 3;
 
     /**
      * Load the rotation values of i imaginary part axis at the elements of the quaternion.
@@ -104,7 +104,7 @@
      *              set false if not normalized axis vector.
      */
     ns.Quaternion.loadRotate = function(d, d_off, ip, jp, kp, rad, normalize) {
-        if (normalize == null) {
+        if (normalize === undefined) {
             normalize = true;
         }
 
@@ -132,21 +132,25 @@
      * @function loadRotateVector3
      * @param {Array.<Number>} d - The destination quaternion.
      * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} f1 -
-     * @param {Number} f1 -
-     * @param {Number} f1 -
+     * @param {Number} fx - X element of the from vector.
+     * @param {Number} fy - Y element of the from vector.
+     * @param {Number} fz - Z element of the from vector.
      * @param {Boolean} fv_normalize -
-     * @param {Number} t2 -
-     * @param {Number} t2 -
-     * @param {Number} t2 -
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
+     * @param {Number} tx - X element of the to vector.
+     * @param {Number} ty - Y element of the to vector.
+     * @param {Number} tz - Z element of the to vector.
      * @param {Boolean} tv_normalize -
-     * @param {Number} [t=1] -
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
+     * @param {Number} [t=1] - The interpolation coefficient.
      */
     ns.Quaternion.loadRotateVector3 = function(d, d_off,
                                                fx, fy, fz, fv_normalize,
                                                tx, ty, tz, tv_normalize,
                                                t) {
-        if (t == null) {
+        if (t === undefined) {
             t = 1.0;
         }
 
@@ -215,21 +219,25 @@
      * @function loadRotateVector3v
      * @param {Array.<Number>} d - The destination quaternion.
      * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Array.<Number>} fv -
-     * @param {Number} fv_off -
+     * @param {Array.<Number>} fv - The from vector.
+     * @param {Number} fv_off - Starting position in the from vector.
      * @param {Boolean} fv_normalize -
-     * @param {Array.<Number>} tv -
-     * @param {Number} tv_off -
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
+     * @param {Array.<Number>} tv - The to vector.
+     * @param {Number} tv_off - Starting position in the to vector.
      * @param {Boolean} tv_normalize -
-     * @param {Number} [t=1] -
+     *              Set the true if normalized axis vector,
+     *              set the false if not normalized axis vector.
+     * @param {Number} [t=1] - The interpolation coefficient.
      */
     ns.Quaternion.loadRotateVector3v = function(d, d_off,
                                                 fv, fv_off, fv_normalize,
                                                 tv, tv_off, tv_normalize) {
         ns.Quaternion.loadRotateVector3(
             d, d_off,
-            fv[fv_off + X], fv[fv_off + Y], fv[fv_off + Z], fv_normalize,
-            tv[tv_off + X], tv[tv_off + Y], tv[tv_off + Z], tv_normalize,
+            fv[fv_off + VX], fv[fv_off + VY], fv[fv_off + VZ], fv_normalize,
+            tv[tv_off + VX], tv[tv_off + VY], tv[tv_off + VZ], tv_normalize,
             t);
     };
 
@@ -251,10 +259,10 @@
         // load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - ip * sn,
@@ -281,10 +289,10 @@
         // load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - jp * sn,
@@ -311,10 +319,10 @@
         // multiplication then load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - kp * sn,
@@ -340,7 +348,7 @@
      *              set false if not normalized axis vector.
      */
     ns.Quaternion.mulRotate = function(q, q_off, ip, jp, kp, rad, normalize) {
-        if (normalize == null) {
+        if (normalize === undefined) {
             normalize = true;
         }
 
@@ -364,10 +372,10 @@
         // multiplication then load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var trp = q[q_off + R];
-        var tip = q[q_off + I];
-        var tjp = q[q_off + J];
-        var tkp = q[q_off + K];
+        var trp = q[q_off + QR];
+        var tip = q[q_off + QI];
+        var tjp = q[q_off + QJ];
+        var tkp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             trp * cs - (tip * ip  +  tjp * jp + tkp * kp),

@@ -41,6 +41,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelMeshUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     Object.defineProperties(ns.XModelMeshUtils, {

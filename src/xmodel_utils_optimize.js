@@ -42,6 +42,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelOptimizeUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     /**
@@ -64,7 +65,7 @@
      */
     ns.XModelOptimizeUtils.optimizeMeshElements = function(mesh) {
         if (mesh != null) {
-            // TODO 
+            // TODO
         }
     };
 

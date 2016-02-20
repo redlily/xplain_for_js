@@ -40,6 +40,7 @@
      * @author Syuuhei Kuno
      */
     ns.GLUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     Object.defineProperties(ns.GLUtils, {

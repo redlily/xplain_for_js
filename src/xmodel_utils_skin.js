@@ -33,7 +33,7 @@
 
     "use strict";
 
-    var SIZE_VECTOR3 = ns.Geometry.SIZE_VECTOR_3;
+    var SIZE_VECTOR_3 = ns.Geometry.SIZE_VECTOR_3;
     var SIZE_MATRIX_4X4 = ns.Geometry.SIZE_MATRIX_4X4;
 
     /**
@@ -45,6 +45,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelSkinUtils = function () {
+        throw new Error("Unsupported operation");
     };
 
     /**
@@ -106,11 +107,11 @@
                                                   weighted_indices_stride,
                                                   indices, indices_off, indices_stride,
                                                   weights, weights_off, weights_stride) {
-        if (src_stride < SIZE_VECTOR3) {
-            src_stride = SIZE_VECTOR3;
+        if (src_stride < SIZE_VECTOR_3) {
+            src_stride = SIZE_VECTOR_3;
         }
-        if (dest_stride < SIZE_VECTOR3) {
-            dest_stride = SIZE_VECTOR3;
+        if (dest_stride < SIZE_VECTOR_3) {
+            dest_stride = SIZE_VECTOR_3;
         }
         if (weights_stride < weighted_indices_stride) {
             weights_stride = weighted_indices_stride;
@@ -132,7 +133,7 @@
             }
         } else if (1 < weighted_indices_stride) {
             // number of bones affected is multiple.
-            var vector = new Float32Array(SIZE_VECTOR3);
+            var vector = new Float32Array(SIZE_VECTOR_3);
             for (var i = 0; i < num_vertices; ++i) {
                 ns.Vector3.loadZero(dest, dest_off);
                 for (var j = 0; j < weighted_indices_stride; ++j) {
@@ -185,11 +186,11 @@
                                                 weighted_indices_stride,
                                                 indices, indices_off, indices_stride,
                                                 weights, weights_off, weights_stride) {
-        if (src_stride < SIZE_VECTOR3) {
-            src_stride = SIZE_VECTOR3;
+        if (src_stride < SIZE_VECTOR_3) {
+            src_stride = SIZE_VECTOR_3;
         }
-        if (dest_stride < SIZE_VECTOR3) {
-            dest_stride = SIZE_VECTOR3;
+        if (dest_stride < SIZE_VECTOR_3) {
+            dest_stride = SIZE_VECTOR_3;
         }
         if (weights_stride < weighted_indices_stride) {
             weights_stride = weighted_indices_stride;
@@ -210,7 +211,7 @@
             }
         } else if (1 < weighted_indices_stride) {
             // number of bones affected is multiple.
-            var vector = new Float32Array(SIZE_VECTOR3);
+            var vector = new Float32Array(SIZE_VECTOR_3);
             for (var i = 0; i < num_vertices; ++i) {
                 ns.Vector3.loadZero(dest, dest_off);
                 for (var j = 0; j < weighted_indices_stride; ++j) {

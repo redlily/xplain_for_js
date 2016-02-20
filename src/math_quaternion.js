@@ -33,7 +33,7 @@
 
     "use strict";
 
-    var R = 0, I = 1, J = 2, K = 3;
+    var QR = 0, QI = 1, QJ = 2, QK = 3;
 
     /**
      * Quaternion utilities.
@@ -58,10 +58,10 @@
      * @param {Number} kp - The tertiary imaginary part in the source quaternion.
      */
     ns.Quaternion.load = function(d, d_off, rp, ip, jp, kp) {
-        d[d_off + R] = rp;
-        d[d_off + I] = ip;
-        d[d_off + J] = jp;
-        d[d_off + K] = kp;
+        d[d_off + QR] = rp;
+        d[d_off + QI] = ip;
+        d[d_off + QJ] = jp;
+        d[d_off + QK] = kp;
     };
 
     /**
@@ -75,7 +75,7 @@
      * @param {Number} q_off - The source quaternion.
      */
     ns.Quaternion.loadv = function(d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + R], q[q_off + I], q[q_off + J], q[q_off + K]);
+        ns.Quaternion.load(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
     /**
@@ -112,10 +112,10 @@
      * @returns {Number} The square of the absolute value of the target quaternion.
      */
     ns.Quaternion.absSq = function(q, q_off) {
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         return rp * rp + ip * ip + jp * jp + kp * kp;
     };
 
@@ -143,10 +143,10 @@
      * @param {Number} q_off - Starting position in the target quaternion.
      */
     ns.Quaternion.normalizev = function(d, d_off, q, q_off) {
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         var len = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < len) {
             len = Math.sqrt(len);
@@ -190,7 +190,7 @@
      * @param {Number} q_off - Starting position in the quaternion.
      */
     ns.Quaternion.expv = function(d, d_off, q, q_off) {
-        ns.Quaternion.exp(d, d_off, q[q_off + R], q[q_off + I], q[q_off + J], q[q_off + K]);
+        ns.Quaternion.exp(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
     /**
@@ -260,7 +260,7 @@
      * @param {Number} q_off - Starting position in the quaternion.
      */
     ns.Quaternion.logv = function(d, d_off, q, q_off) {
-        ns.Quaternion.log(d, d_off, q[q_off + R], q[q_off + I], q[q_off + J], q[q_off + K]);
+        ns.Quaternion.log(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
     /**
@@ -307,8 +307,8 @@
     ns.Quaternion.lerpv = function(d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.lerp(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K],
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK],
             t);
     };
 
@@ -351,22 +351,18 @@
 
         // calculate the cosine value from two vectors.
         var cs = rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
-
         if (1.0 <= cs) {
             // two quaternions are the same direction.
-
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             var abs = abs1 * (1.0 - t) + abs2 * t;
             ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else if (cs <= -1.0) {
             // two quaternions are the reverse direction.
-
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             var abs = abs1 * (1.0 - t) - abs2 * t;
             ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else {
             // other conditions.
-
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             var abs  = abs1 * (1.0 - t) + abs2 * t;
@@ -406,8 +402,8 @@
     ns.Quaternion.slerpv = function(d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.slerp(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K],
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK],
             t);
     };
 
@@ -442,10 +438,10 @@
      * @returns {Number} The dot value.
      */
     ns.Quaternion.dotv = function(q1, q1_off, q2, q2_off) {
-        return q1[q1_off + R]*q2[q2_off + R] +
-               q1[q1_off + I]*q2[q2_off + I] +
-               q1[q1_off + J]*q2[q2_off + J] +
-               q1[q1_off + K]*q2[q2_off + K];
+        return q1[q1_off + QR]*q2[q2_off + QR] +
+               q1[q1_off + QI]*q2[q2_off + QI] +
+               q1[q1_off + QJ]*q2[q2_off + QJ] +
+               q1[q1_off + QK]*q2[q2_off + QK];
     };
 
     /**
@@ -459,7 +455,7 @@
      * @param {Number} q_off - Starting position in the target quaternion.
      */
     ns.Quaternion.conjugatev = function(d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + R], -q[q_off + I], -q[q_off + J], -q[q_off + K]);
+        ns.Quaternion.load(d, d_off, q[q_off + QR], -q[q_off + QI], -q[q_off + QJ], -q[q_off + QK]);
     };
 
     /**
@@ -473,10 +469,10 @@
      * @param {Number} q_off - Starting position in the target quaternion.
      */
     ns.Quaternion.inversev = function(d, d_off, q, q_off) {
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
         var det = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < det) {
             det = Math.sqrt(det);
@@ -523,8 +519,8 @@
     ns.Quaternion.addv = function(d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.add(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K]);
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
     };
 
     /**
@@ -562,8 +558,8 @@
     ns.Quaternion.subv = function(d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.sub(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K]);
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
     };
 
     /**
@@ -608,8 +604,8 @@
     ns.Quaternion.mulv = function(d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.mul(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K]);
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
     };
 
     /**
@@ -641,7 +637,7 @@
      * @param {Number} s - The target scalar.
      */
     ns.Quaternion.mulScalarv = function(d, d_off, q, q_off, s) {
-        ns.Quaternion.mulScalar(d, d_off, q[q_off + R], q[q_off + I], q[q_off + J], q[q_off + K], s);
+        ns.Quaternion.mulScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
     };
 
     /**
@@ -666,7 +662,7 @@
         var det = rp2 * rp2 +  ip2 * ip2 +  jp2 * jp2 + kp2 * kp2;
         ns.Quaternion.load(
             d, d_off,
-            (rp1 * rp2 + (ip1 * ip2 +  jp1 * jp2 + kp1 * kp2)) / det,
+            (  rp1 * rp2 + (ip1 * ip2 +  jp1 * jp2 + kp1 * kp2)) / det,
             (- rp1 * ip2 +  ip1 * rp2 - (jp1 * kp2 - kp1 * jp2)) / det,
             (- rp1 * jp2 +  jp1 * rp2 - (kp1 * ip2 - ip1 * kp2)) / det,
             (- rp1 * kp2 +  kp1 * rp2 - (ip1 * jp2 - jp1 * ip2)) / det);
@@ -687,8 +683,8 @@
     ns.Quaternion.divv = function(d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.div(
             d, d_off,
-            q1[q1_off + R], q1[q1_off + I], q1[q1_off + J], q1[q1_off + K],
-            q2[q2_off + R], q2[q2_off + I], q2[q2_off + J], q2[q2_off + K]);
+            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
+            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
     };
 
     /**
@@ -720,7 +716,7 @@
      * @param {Number} s - The target scalar.
      */
     ns.Quaternion.divScalarv = function(d, d_off, q, q_off, s) {
-        ns.Quaternion.divScalar(d, d_off, q[q_off + R], q[q_off + I], q[q_off + J], q[q_off + K], s);
+        ns.Quaternion.divScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
     };
 
     /**
@@ -733,7 +729,7 @@
      * @returns {String} The converted quaternion to string.
      */
     ns.Quaternion.convertToString = function(q, off) {
-        return "Quaternion(" + q[off + R] + ", " + q[off + I] + ", " + q[off + J] + ", " + q[off + K] + ")";
+        return "Quaternion(" + q[off + QR] + ", " + q[off + QI] + ", " + q[off + QJ] + ", " + q[off + QK] + ")";
     };
 
 })(xpl);

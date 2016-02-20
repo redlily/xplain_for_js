@@ -33,8 +33,8 @@
 
     "use strict";
 
-    var X = 0, Y = 1, Z = 2;
-    var R = 0, I = 1, J = 2, K = 3;
+    var VX = 0, VY = 1, VZ = 2;
+    var QR = 0, QI = 1, QJ = 2, QK = 3;
     var M00 = 0, M01 = 4, M02 = 8,  M03 = 12,
         M10 = 1, M11 = 5, M12 = 9,  M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
@@ -62,9 +62,9 @@
      * @param {Number} z - Z element of the source vector.
      */
     ns.Vector3.load = function(d, d_off, x, y, z) {
-        d[d_off + X] = x;
-        d[d_off + Y] = y;
-        d[d_off + Z] = z;
+        d[d_off + VX] = x;
+        d[d_off + VY] = y;
+        d[d_off + VZ] = z;
     };
 
     /**
@@ -78,7 +78,7 @@
      * @param {Number} v_off - Starting position in the source vector.
      */
     ns.Vector3.loadv = function(d, d_off, v, v_off) {
-        ns.Vector3.load(d, d_off, v[v_off + X], v[v_off + Y], v[v_off + Z]);
+        ns.Vector3.load(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
     };
 
     /**
@@ -103,9 +103,9 @@
      * @returns {Number} The squared length of the target vector.
      */
     ns.Vector3.lenSq = function(v, v_off) {
-        var x = v[v_off + X];
-        var y = v[v_off + Y];
-        var z = v[v_off + Z];
+        var x = v[v_off + VX];
+        var y = v[v_off + VY];
+        var z = v[v_off + VZ];
         return x * x + y * y + z * z;
     };
 
@@ -133,9 +133,9 @@
      * @param {Number} v_off - Starting position in the target vector.
      */
     ns.Vector3.normalizev = function(d, d_off, v, v_off) {
-        var x = v[v_off + X];
-        var y = v[v_off + Y];
-        var z = v[v_off + Z];
+        var x = v[v_off + VX];
+        var y = v[v_off + VY];
+        var z = v[v_off + VZ];
         var len = x * x + y * y + z * z;
         if (0 < len) {
             len = Math.sqrt(len);
@@ -181,8 +181,8 @@
     ns.Vector3.lerpv = function(d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.lerp(
             d, d_off,
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z],
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ],
             t);
     };
 
@@ -272,8 +272,8 @@
     ns.Vector3.slerpv = function(d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.slerp(
             d, d_off,
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z],
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ],
             t);
     };
 
@@ -306,7 +306,7 @@
      * @returns {Number} The inner product value of the vectors.
      */
     ns.Vector3.dotv = function(v1, v1_off, v2, v2_off) {
-        return v1[v1_off + X] * v2[v2_off + X] + v1[v1_off + Y] * v2[v2_off + Y] + v1[v1_off + Z] * v2[v2_off + Z];
+        return v1[v1_off + VX] * v2[v2_off + VX] + v1[v1_off + VY] * v2[v2_off + VY] + v1[v1_off + VZ] * v2[v2_off + VZ];
     };
 
     /**
@@ -342,8 +342,8 @@
     ns.Vector3.crossv = function(d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.cross(
             d, d_off,
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z]);
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ]);
     };
 
     /**
@@ -394,8 +394,8 @@
      */
     ns.Vector3.cosv = function(v1, v1_off, v2, v2_off) {
         return ns.Vector3.cos(
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z]);
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ]);
     };
 
     /**
@@ -409,7 +409,7 @@
      * @param {Number} v_off - Starting position in the target vector.
      */
     ns.Vector3.reversev = function(d, d_off, v, v_off) {
-        ns.Vector3.load(d, d_off, -v[v_off + X], -v[v_off + Y], -v[v_off + Z]);
+        ns.Vector3.load(d, d_off, -v[v_off + VX], -v[v_off + VY], -v[v_off + VZ]);
     };
 
     /**
@@ -445,8 +445,8 @@
     ns.Vector3.addv = function(d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.add(
             d, d_off,
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z]);
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ]);
     };
 
     /**
@@ -482,8 +482,8 @@
     ns.Vector3.subv = function(d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.sub(
             d, d_off,
-            v1[v1_off + X], v1[v1_off + Y], v1[v1_off + Z],
-            v2[v2_off + X], v2[v2_off + Y], v2[v2_off + Z]);
+            v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
+            v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ]);
     };
 
     /**
@@ -514,7 +514,7 @@
      * @param {Number} s - The target scalar.
      */
     ns.Vector3.mulv = function(d, d_off, v, v_off, s) {
-        ns.Vector3.mul(d, d_off, v[v_off + X], v[v_off + Y], v[v_off + Z], s);
+        ns.Vector3.mul(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
     };
 
     /**
@@ -530,13 +530,13 @@
      * @param {Number} v_off - Starting position in the target vector.
      */
     ns.Vector3.mulQuaternionv = function(d, d_off, q, q_off, v, v_off) {
-        var rp = q[q_off + R];
-        var ip = q[q_off + I];
-        var jp = q[q_off + J];
-        var kp = q[q_off + K];
-        var x = v[v_off + X];
-        var y = v[v_off + Y];
-        var z = v[v_off + Z];
+        var rp = q[q_off + QR];
+        var ip = q[q_off + QI];
+        var jp = q[q_off + QJ];
+        var kp = q[q_off + QK];
+        var x = v[v_off + VX];
+        var y = v[v_off + VY];
+        var z = v[v_off + VZ];
 
         // q * (0 + xi + yj + zk)
         var rp1 = /*rp * 0*/ - (ip * x   +  jp * y + kp * z);
@@ -578,9 +578,9 @@
         }
         if (column) {
             // calculate as the column vector.
-            var x = a2[a2_off + X];
-            var y = a2[a2_off + Y];
-            var z = a2[a2_off + Z];
+            var x = a2[a2_off + VX];
+            var y = a2[a2_off + VY];
+            var z = a2[a2_off + VZ];
             var w = a1[a1_off + M30] * x + a1[a1_off + M31] * y + a1[a1_off + M32] * z + a1[a1_off + M33];
             ns.Vector3.load(
                 d, d_off,
@@ -626,9 +626,9 @@
         }
         if (column) {
             // calculate as the column vector.
-            var x = a2[a2_off + X];
-            var y = a2[a2_off + Y];
-            var z = a2[a2_off + Z];
+            var x = a2[a2_off + VX];
+            var y = a2[a2_off + VY];
+            var z = a2[a2_off + VZ];
             ns.Vector3.load(
                 d, d_off,
                 a1[a1_off + M00] * x + a1[a1_off + M01] * y + a1[a1_off + M02] * z,
@@ -675,7 +675,7 @@
      * @param {Number} s - The target scalar.
      */
     ns.Vector3.divv = function(d, d_off, v, v_off, s) {
-        ns.Vector3.div(d, d_off, v[v_off + X], v[v_off + Y], v[v_off + Z], s);
+        ns.Vector3.div(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
     };
 
     /**
@@ -688,7 +688,7 @@
      * @returns {String} The converted vector to string.
      */
     ns.Vector3.convertToString = function(v, off) {
-        return "Vector3(" + v[off + X] + ", " + v[off + Y] + ", " + v[off + Z] + ")";
+        return "Vector3(" + v[off + VX] + ", " + v[off + VY] + ", " + v[off + VZ] + ")";
     };
 
 })(xpl);

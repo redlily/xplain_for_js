@@ -39,7 +39,7 @@
 
     "use strict";
 
-    if (!ns.Matrix4x4) {
+    if (ns.Matrix4x4 === undefined) {
         return;
     }
 
@@ -86,9 +86,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadTranslate = function(d, d_off, x, y, z, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         ns.Matrix4x4.load(
             d, d_off,
             1, 0, 0, x,
@@ -111,9 +112,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateXAxis = function(d, d_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs = Math.cos(rad);
         var sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -138,9 +140,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateYAxis = function(d, d_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs = Math.cos(rad);
         var sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -165,9 +168,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateZAxis = function(d, d_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs = Math.cos(rad);
         var sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -198,12 +202,13 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotate = function(d, d_off, x, y, z, rad, normalize, column) {
-        if (normalize == null) {
+        if (normalize === undefined) {
             normalize = true;
         }
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs = Math.cos(rad);
         var sn = Math.sin(rad);
 
@@ -259,7 +264,7 @@
                                        center_x, center_y, center_z,
                                        upper_x, upper_y, upper_z,
                                        column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -290,7 +295,8 @@
         }
 
         // calculate the Y-axis vector.
-        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because it's normalized and vertical.
+        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because
+        // it's normalized and vertical.
         var yx = zy * xz - zz * xy;
         var yy = zz * xx - zx * xz;
         var yz = zx * xy - zy * xx;
@@ -338,17 +344,22 @@
                                             device_width, device_height,
                                             device_near,  device_far,
                                             column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var view_depth = view_far - view_near;
         var scaled_far = view_far * (device_far - device_near);
+        var xx = (view_near * device_width) / view_width;
+        var yy = (view_near * device_height) / view_height;
+        var zz = scaled_far / view_depth + device_near;
+        var wz = (view_near * scaled_far) / -view_depth;
         ns.Matrix4x4.load(
             d, d_off,
-            (view_near * device_width) / view_width, 0,                                         0,                                     0,
-            0,                                       (view_near * device_height) / view_height, 0,                                     0,
-            0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth,
-            0,                                       0,                                         1,                                     0,
+            xs, 0,  0,  0,
+            0,  ys, 0,  0,
+            0,  0,  zs, wz,
+            0,  0,  1,  0,
             !column);
     };
 
@@ -408,9 +419,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulTranslate = function(m, m_off, x, y, z, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         if (column) {
             m[m_off + M03] += m[m_off + M00] * x + m[m_off + M01] * y + m[m_off + M02] * z;
             m[m_off + M13] += m[m_off + M10] * x + m[m_off + M11] * y + m[m_off + M12] * z;
@@ -441,9 +453,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateXAxis = function(m, m_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -475,9 +488,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateYAxis = function(m, m_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -509,9 +523,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateZAxis = function(m, m_off, rad, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -552,9 +567,10 @@
         if (normalize == true) {
             normalize = true;
         }
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -628,7 +644,7 @@
                                       center_x, center_y, center_z,
                                       upper_x, upper_y, upper_z,
                                       column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -740,7 +756,7 @@
                                            device_width, device_height,
                                            device_near, device_far,
                                            column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -785,9 +801,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.normalizeAxisv = function(d, d_off, m, m_off, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var xx, xy, xz, yx, yy, yz, zx, zy, zz;
         xx = m[m_off + M00];
         yy = m[m_off + M11];
@@ -861,9 +878,10 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.slrepAxisAndLrepOtherv = function(d, d_off, a, a_off, b, b_off, t, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
+
         var t1 = 1.0 - t;
         var rxx, rxy, rxz, ryx, ryy, ryz, rzx, rzy, rzz;
 
@@ -1104,7 +1122,7 @@
      * @returns {Number} The rotation value.
      */
     ns.Matrix4x4.toRotateAxisv = function(v, v_off, m, m_off, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -1180,7 +1198,7 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.fromQuaternionv = function(m, m_off, q, q_off, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -1221,7 +1239,7 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulQuaternionv = function(m, m_off, q, q_off, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -1282,7 +1300,7 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulQuaternionAxisv = function(m, m_off, q, q_off, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 
@@ -1340,7 +1358,7 @@
      *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.toQuaternionv = function(q, q_off, m, m_off, reverse, column) {
-        if (column == null) {
+        if (column === undefined) {
             column = true;
         }
 

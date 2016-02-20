@@ -130,7 +130,7 @@
         return inst;
     };
 
-    // initialize the OpenGL
+    // initialize the OpenGL.
     var onInitializeGL = function() {
         onRestoreGL();
     };

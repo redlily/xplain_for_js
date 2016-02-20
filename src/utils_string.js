@@ -40,6 +40,7 @@
      * @namespace xpl.StringUtils
      */
     ns.StringUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     /**

@@ -48,6 +48,7 @@
      * @author Syuuhei Kuno
      */
     ns.XModelKinematicsUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     /**

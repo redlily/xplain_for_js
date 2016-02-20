@@ -40,6 +40,7 @@
      * @namespace xpl.StringUtils
      */
     ns.SystemUtils = function() {
+        throw new Error("Unsupported operation");
     };
 
     // initialize the utilities with window.
