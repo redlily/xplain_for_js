@@ -56,6 +56,8 @@
         "u_color",
         "u_diffuse_color",
         "u_diffuse_map",
+        "u_bone_matrices",
+        "u_max_bones",
     ];
 
     // screen element.
@@ -176,7 +178,7 @@
         model = new xpl.XModelWrapperGL();
         var config = xpl.XModelWrapperGL.defaultConfig();
         config[xpl.XModelWrapperGL.CONFIG_USE_SKINNING] = true;
-        config[xpl.XModelWrapperGL.CONFIG_GPU_SKINNING] = false;
+        config[xpl.XModelWrapperGL.CONFIG_GPU_SKINNING] = true;
         model.initializeWithUrl(gl, MODEL_NAME, MODEL_PREFIX, config);
     };
 
@@ -256,15 +258,22 @@
                     anim_time += delta;
                 }
             }
+            
             // set the named argments.
             var uniforms = xpl.XModelWrapperGL.defaultUniforms();
             uniforms.u_diffuse_color = model_shader.uniforms.u_diffuse_color;
             uniforms.u_diffuse_map = model_shader.uniforms.u_diffuse_map;
+            uniforms.u_bone_matrices = model_shader.uniforms.u_bone_matrices;
+            uniforms.u_max_bones = model_shader.uniforms.u_max_bones;
+
             var attributes = xpl.XModelWrapperGL.defaultAttributes();
             attributes.a_position = model_shader.attributes.a_position;
             attributes.a_normal = model_shader.attributes.a_normal;
             attributes.a_color = model_shader.attributes.a_color;
             attributes.a_tex_coord = model_shader.attributes.a_tex_coord;
+            attributes.a_bone_indices = model_shader.attributes.a_bone_indices;
+            attributes.a_bone_weights = model_shader.attributes.a_bone_weights;
+
             model.draw(gl, uniforms, attributes);
         } else {
             gl.clearColor(0.25, 0.25, 0.25, 1.0);
@@ -330,6 +339,10 @@
         if (gl.getExtension("OES_element_index_uint") == null) {
             alert("Unsupported the OES_element_index_uint.");
             return;
+        }
+        var ctx = main_canvas.getContext("experimental-webgl");
+        if (window.WebGLDebugUtils) {
+          ctx = WebGLDebugUtils.makeDebugContext(ctx);
         }
 
         // initialize the OpenGL.

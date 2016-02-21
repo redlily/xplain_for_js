@@ -558,7 +558,7 @@
                             buf[off + j] = mesh.skin.indices[ind++];
                         } else {
                             // subset.
-                            var index = ns.ArrayUtils.search(sub.bones, 0, sub.num_bones);
+                            var index = ns.ArrayUtils.binarySearch(sub.bones, 0, sub.num_bones);
                             buf[off + j] = 0 <= index ? index : 0;
                         }
                         count++;
@@ -696,7 +696,7 @@
             }
             var size = 0;
             var num_vertices = is_structured ?
-                1 : (subset == -1 ? mesh.num_vertices : mesh.subset[subset].num_vertices);
+                1 : (subset == -1 ? mesh.num_vertices : mesh.subsets[subset].num_vertices);
 
             // position.
             if (0 < position_size && 0 < mesh.position_size) {
@@ -768,8 +768,8 @@
             // structured size.
             if (is_structured) {
                 attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
-                return subset == -1 ?
-                    mesh.num_vertices * size : mesh.subset[subset].num_vertices;
+                return (subset == -1 ?
+                    mesh.num_vertices : mesh.subsets[subset].num_vertices) * size;
             } else {
                 attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
                 return size;
@@ -813,9 +813,12 @@
         if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
             var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
             var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
+            var offset;
 
             // write the positions.
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]) {
+                offset = buf_off +
+                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION];
                 switch(position_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getPositions(
@@ -824,7 +827,8 @@
                             stride / 4,
                             new Float32Array(
                                 buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]),
+                                offset,
+                                Math.floor((buf.byteLength - offset) / 4)),
                             0,
                             subset);
                         break;
@@ -833,6 +837,8 @@
 
             // write the normals.
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
+                offset = buf_off +
+                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
                 switch(normal_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getNormals(
@@ -841,7 +847,8 @@
                             stride / 4,
                             new Float32Array(
                                 buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]),
+                                offset,
+                                Math.floor((buf.byteLength - offset) / 4)),
                             0,
                             subset);
                         break;
@@ -850,6 +857,8 @@
 
             // write the colors.
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]) {
+                offset = buf_off +
+                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR];
                 switch(color_type) {
                     case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                         ns.XModelMeshUtils.getColors(
@@ -858,7 +867,7 @@
                             stride,
                             new Uint8Array(
                                 buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
+                                offset),
                             0,
                             subset);
                         break;
@@ -870,7 +879,8 @@
                             stride / 4,
                             new Float32Array(
                                 buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]),
+                                offset,
+                                Math.floor((buf.byteLength - offset) / 4)),
                             0,
                             subset);
                         break;
@@ -879,6 +889,8 @@
 
             // write the texture coordnates.
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
+                offset = buf_off +
+                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
                 switch(tex_coord_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getTexCoords(
@@ -887,7 +899,8 @@
                             stride / 4,
                             new Float32Array(
                                 buf,
-                                buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]),
+                                offset,
+                                Math.floor((buf.byteLength - offset) / 4)),
                             0,
                             subset);
                         break;
@@ -896,9 +909,10 @@
 
             if (mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
                 // has the skin.
-
                 // write the number of bones.
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
+                    offset = buf_off +
+                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH];
                     switch(bone_length_type) {
                         case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                             ns.XModelMeshUtils.getSkinBoneLengths(
@@ -906,7 +920,7 @@
                                 stride,
                                 new Uint8Array(
                                     buf,
-                                    buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]),
+                                    offset),
                                 0,
                                 subset);
                             break;
@@ -915,6 +929,8 @@
 
                 // write the bone indices.
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
+                    offset = buf_off +
+                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
                     switch(bone_indices_type) {
                         case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                             ns.XModelMeshUtils.getSkinBoneIndices(
@@ -923,8 +939,7 @@
                                 stride,
                                 new Uint8Array(
                                     buf,
-                                    buf_off +
-                                    attrs[attrs_off + ns.XModelMeshUtils.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
+                                    offset),
                                 0,
                                 subset);
                             break;
@@ -936,7 +951,8 @@
                                 stride / 2,
                                 new Uint16Array(
                                     buf,
-                                    buf_off + attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]),
+                                    offset,
+                                    Math.floor((buf.byteLength - offset) / 2)),
                                 0,
                                 subset);
                             break;
@@ -945,6 +961,8 @@
 
                 // write the bone weights.
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
+                    offset = buf_off +
+                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
                     switch(bone_weights_type) {
                         case ns.XModelMeshUtils.TYPE_FLOAT:
                             ns.XModelMeshUtils.getSkinBoneWeights(
@@ -953,8 +971,8 @@
                                 stride / 4,
                                 new Float32Array(
                                     buf,
-                                    buf_off +
-                                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]),
+                                    offset,
+                                    Math.floor((buf.byteLength - offset) / 4)),
                                 0,
                                 subset);
                             break;

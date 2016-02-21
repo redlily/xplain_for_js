@@ -34,6 +34,7 @@
     "use strict";
 
     /**
+     * Optimize utilities for the xModel skin structure.
      *
      * @namespace xpl.XModelOptimizeUtils
      * @see xpl.XModelMesh
@@ -49,7 +50,7 @@
      *
      * @memberof xpl.XModelOptimizeUtils
      * @function optimizeMeshVertices
-     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.XModelMesh} mesh - The terget mesh.
      */
     ns.XModelOptimizeUtils.optimizeMeshVertices = function(mesh) {
         if (mesh != null) {
@@ -61,7 +62,7 @@
      *
      * @memberof xpl.XModelOptimizeUtils
      * @function optimizeMeshElements
-     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.XModelMesh} mesh - The target mesh.
      */
     ns.XModelOptimizeUtils.optimizeMeshElements = function(mesh) {
         if (mesh != null) {
@@ -70,6 +71,7 @@
     };
 
     /**
+     * Skinning subset for optimiaze of the xModel mesh.
      *
      * @private
      * @class
@@ -82,10 +84,11 @@
     };
 
     /**
+     * Add the bone index to the set.
      *
      * @memberof xpl.XModelOptimizeUtils.SkinningSubset
      * @function addBone
-     * @param {xpl.uint16_t} bone -
+     * @param {xpl.uint16_t} bone - The bone index.
      */
     SkinningSubset.prototype.addBone = function(bone) {
         var index = ns.ArrayUtils.binarySearch(
@@ -96,11 +99,12 @@
     };
 
     /**
+     * Add the vector index to the set.
      *
      * @instance
      * @memberof xpl.XModelOptimizeUtils.SkinningSubset
      * @function addVertex
-     * @param {xpl.uint32_t} vertex -
+     * @param {xpl.uint32_t} vertex - The vertex index.
      */
     SkinningSubset.prototype.addVertex = function(vertex) {
         var index = ns.ArrayUtils.binarySearch(
@@ -111,11 +115,12 @@
     };
 
     /**
+     * Add the element index to the set.
      *
      * @instance
      * @memberof xpl.XModelOptimizeUtils.SkinningSubset
      * @function addElement
-     * @param {xpl.uint32_t} element -
+     * @param {xpl.uint32_t} element - The element index.
      */
     SkinningSubset.prototype.addElement = function(element) {
         var index = ns.ArrayUtils.binarySearch(
@@ -126,14 +131,15 @@
     };
 
     /**
+     * Merge bone, vector and element indices to the set in this instance.
      *
      * @instance
      * @memberof xpl.XModelOptimizeUtils.SkinningSubset
      * @function merge
-     * @param {SkinningSubset} subset -
-     * @param {Boolean} enable_bones -
-     * @param {Boolean} enable_vertices -
-     * @param {Boolean} enable_elements -
+     * @param {SkinningSubset} subset - The terget subset.
+     * @param {Boolean} enable_bones - Enable the merge for the bone index set.
+     * @param {Boolean} enable_vertices - Enable the merge for the vertex index set.
+     * @param {Boolean} enable_elements - Enable the merge for the element index set.
      */
     SkinningSubset.prototype.merge = function(subset,
                                               enable_bones,
@@ -160,7 +166,7 @@
      *
      * @memberof xpl.XModelOptimizeUtils
      * @function
-     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.XModelMesh} mesh - The target mesh.
      * @param {xpl.size_t} [max_matrix_pallet=16] -
      */
     ns.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet = function(mesh, max_matrix_pallet) {
@@ -172,24 +178,24 @@
             // build the skinning maps.
             var skinning_map = {};
             for (var i = 0; i < mesh.num_elements; ++i) {
-                var skinning_set = new SkinningSubset();
-                skinning_set.addElement(i);
+                var subset = new SkinningSubset();
+                subset.addElement(i);
                 var element = mesh.elements[i];
                 for (var j = 0; j < element.num_vertices; ++j) {
                     var vertex_index = element.vertices[j];
-                    skinning_set.addVertex(vertex_index);
+                    subset.addVertex(vertex_index);
                     var vertex = mesh.vertices[vertex_index];
                     var bone_off = mesh.skin.weighted_index_stride * vertex.skinning;
                     var bone_len = mesh.skin.weighted_index_sizes[vertex.skinning];
                     for (var k = 0; k < bone_len; ++k) {
-                        skinning_set.addBone(mesh.skin.indices[bone_off + k]);
+                        subset.addBone(mesh.skin.indices[bone_off + k]);
                     }
                 }
-                var key = "[" + skinning_set.bones.toString() + "]";
+                var key = "[" + subset.bones.toString() + "]";
                 if (skinning_map[key] !== undefined) {
-                    skinning_map[key].merge(skinning_set, false, true, true);
+                    skinning_map[key].merge(subset, false, true, true);
                 } else {
-                    skinning_map[key] = skinning_set;
+                    skinning_map[key] = subset;
                 }
             }
 
@@ -203,13 +209,13 @@
 
             // build the optimized skinning set.
             for (var i = sorted_skinning_list.length - 1; 0 <= i; --i) {
-                var skinning_set_i = sorted_skinning_list[i];
+                var subset_i = sorted_skinning_list[i];
                 for (var j = 0; j < i; ++j) {
-                    var skinning_set_j = sorted_skinning_list[j];
+                    var subset_j = sorted_skinning_list[j];
                     if (ns.ArrayUtils.isContained(
-                            skinning_set_j.bones, 0, skinning_set_j.bones.length,
-                            skinning_set_i.bones, 0, skinning_set_i.bones.length)) {
-                        skinning_set_j.merge(skinning_set_i, false, true, true);
+                            subset_j.bones, 0, subset_j.bones.length,
+                            subset_i.bones, 0, subset_i.bones.length)) {
+                        subset_j.merge(subset_i, false, true, true);
                         delete sorted_skinning_list[i];
                         break;
                     }
@@ -218,18 +224,18 @@
 
             // concat the skinning set.
             for (var i = 0; i < sorted_skinning_list.length - 1; ++i) {
-                var skinning_set_i = sorted_skinning_list[i];
-                if (skinning_set_i !== undefined &&
-                    skinning_set_i.bones.length <= max_matrix_pallet) {
+                var subset_i = sorted_skinning_list[i];
+                if (subset_i !== undefined &&
+                    subset_i.bones.length <= max_matrix_pallet) {
                     for (var j = i + 1;
                         j < sorted_skinning_list.length &&
-                            skinning_set_i.bones.length < max_matrix_pallet;
+                            subset_i.bones.length < max_matrix_pallet;
                         ++j) {
-                        var skinning_set_j = sorted_skinning_list[j];
-                        if (skinning_set_j !== undefined &&
-                            skinning_set_i.bones.length + skinning_set_j.bones.length <=
+                        var subset_j = sorted_skinning_list[j];
+                        if (subset_j !== undefined &&
+                            subset_i.bones.length + subset_j.bones.length <=
                                 max_matrix_pallet) {
-                            skinning_set_i.merge(skinning_set_j, true, true, true);
+                            subset_i.merge(subset_j, true, true, true);
                             delete sorted_skinning_list[j];
                         }
                     }
@@ -242,23 +248,23 @@
             mesh.num_subsets = sorted_skinning_list.length;
             mesh.subsets = new Array(mesh.num_subsets);
             for (var i = 0; i < mesh.num_subsets; ++i) {
-                var skinning_set = sorted_skinning_list[i];
+                var subset = sorted_skinning_list[i];
                 var mesh_subset = new ns.XModelMeshSubset();
                 mesh.subsets[i] = mesh_subset;
 
                 // copy the bone set.
-                mesh_subset.num_bones = skinning_set.bones.length;
-                mesh_subset.bones = new Uint16Array(skinning_set.bones);
+                mesh_subset.num_bones = subset.bones.length;
+                mesh_subset.bones = new Uint16Array(subset.bones);
 
                 // copy vertex indices.
-                mesh_subset.num_vertices = skinning_set.vertices.length;
-                mesh_subset.vertices = new Uint32Array(skinning_set.vertices);
+                mesh_subset.num_vertices = subset.vertices.length;
+                mesh_subset.vertices = new Uint32Array(subset.vertices);
 
                 // build the elements for subset.
-                mesh_subset.num_elements = skinning_set.elements.length;
+                mesh_subset.num_elements = subset.elements.length;
                 mesh_subset.elements = new Array(mesh_subset.num_elements);
-                for (var j = 0; j < skinning_set.elements.length; ++j) {
-                    var superset_element = mesh.elements[skinning_set.elements[j]];
+                for (var j = 0; j < subset.elements.length; ++j) {
+                    var superset_element = mesh.elements[subset.elements[j]];
                     var subset_element = new ns.XModelElement();
                     mesh_subset.elements[j] = subset_element;
 
@@ -285,8 +291,8 @@
      * @param {xpl.XModelMesh} mesh -
      * @param {xpl.size_t} [max_weighted_indices=4] -
      */
-    ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function(skin, max_weighted_indices) {
-        if (skin != null) {
+    ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function(mesh, max_weighted_indices) {
+        if (mesh != null && mesh.skin != null) {
             if (max_weighted_indices === undefined || max_weighted_indices <= 0) {
                 max_weighted_indices = 4;
             }

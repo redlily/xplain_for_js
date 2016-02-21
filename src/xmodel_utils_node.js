@@ -34,7 +34,7 @@
     "use strict";
 
     /**
-     * Utilities for thens.XModel node structure.
+     * Utilities for the Model node structure.
      *
      * @namespace xpl.XModelNodeUtils
      * @see xpl.XModelNode
