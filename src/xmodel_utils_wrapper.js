@@ -33,6 +33,9 @@
 
     "use strict";
 
+    /**
+     *
+     */
     ns.XModelWrapper = function() {
         this._container = null;
         this.__prev_anim_index = -1;
@@ -44,24 +47,36 @@
 
     Object.defineProperties(ns.XModelWrapper.prototype, {
 
+        /**
+         *
+         */
         "container": {
             get: function() {
                 return this._container;
             }
         },
 
+        /**
+         *
+         */
         "isCompleted": {
             get: function() {
                 return this.__is_completed;
             },
         },
 
+        /**
+         *
+         */
         "isCanceled": {
             get: function() {
                 return this.__is_canseled;
             },
         },
 
+        /**
+         *
+         */
         "numAnimationSets": {
             get: function() {
                 return this._container != null ? this._container.num_animation_sets : 0;
@@ -69,6 +84,9 @@
         },
     });
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype._complete = function() {
         this.__is_completed = true;
         ns.XModelContainerUtils.forEachMesh(this._container, (function (mesh, arg) {
@@ -83,31 +101,52 @@
         }).bind(this), null);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.cancel = function() {
         this.__is_canseled = true;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.getMinBound = function(index) {
         return this.__min_bounds[index];
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.getMaxBound = function(index) {
         return this.__max_bounds[index];
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.getSize = function(index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
     }
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.getCenter = function(index) {
         return (this.__min_bounds[index] + this.__max_bounds[index]) * 0.5;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.resetPose = function() {
         ns.XModelContainerUtils.resetTransforms(this._container);
         ns.XModelContainerUtils.updateCombination(this._container);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.setAnimation = function(index, time, loop, kinematics) {
         if (loop == undefined) {
             loop = false;
@@ -129,6 +168,9 @@
         ns.XModelContainerUtils.updateCombination(this._container);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapper.prototype.dispose = function() {
         this.cancel();
         this.__is_completed = false;
@@ -140,110 +182,184 @@
 
     "use strict";
 
+    /**
+     *
+     */
     ns.XModelWrapperGL = function() {
         ns.XModelWrapper.call(this);
         this.__config = null;
         this.__white_texture = null;
         this.__remain_textures = 0;
         this.__is_update_anim = false;
+        this.__matrix_pallet = null;
+        this.__subset_matrix_pallet = null;
     };
 
     Object.setPrototypeOf(ns.XModelWrapperGL.prototype, ns.XModelWrapper.prototype);
 
     Object.defineProperties(ns.XModelWrapperGL, {
 
+        /**
+         *
+         */
         "CONFIG_MEMORY_ALIGNMENT_SIZE": {
             value: "memory_alignment_size",
         },
 
+        /**
+         *
+         */
         "CONFIG_USE_VERTEX_ARRAY_OBJECT": {
             value: "use_vertex_array_object",
         },
 
+        /**
+         *
+         */
         "CONFIG_USE_MIPMAP_TEXTURE": {
             value: "use_mipmap_texture",
         },
 
+        /**
+         *
+         */
         "CONFIG_USE_SKINNING": {
             value: "use_skinning",
         },
 
+        /**
+         *
+         */
         "CONFIG_GPU_SKINNING": {
             value: "gpu_skinning",
         },
 
+        /**
+         *
+         */
         "CONFIG_MAX_BONE_WEIGHTED_INDICES": {
             value: "max_bone_weighted_indices",
         },
 
+        /**
+         *
+         */
         "CONFIG_MAX_BONE_MATRICES": {
             value: "max_bone_matrices",
         },
 
+        /**
+         *
+         */
         "CONFIG_PATH_ALIAS": {
             value: "path_alias",
         },
 
+        /**
+         *
+         */
         "CONFIG_USE_MORFING": {
             value: "use_mofing",
         },
 
+        /**
+         *
+         */
         "CONFIG_GPU_MORFING": {
             value: "gpu_morfing",
         },
 
+        /**
+         *
+         */
         "UNIFORM_DIFFUSE": {
             value: "u_diffuse",
         },
 
+        /**
+         *
+         */
         "UNIFORM_DIFFUSE_MAP": {
             value: "u_diffuse_map",
         },
 
+        /**
+         *
+         */
         "UNIFORM_SPECULAR": {
             value: "u_specular",
         },
 
+        /**
+         *
+         */
         "UNIFORM_SPECULAR_MAP": {
             value: "u_specular_map",
         },
 
+        /**
+         *
+         */
         "UNIFORM_BONE_MATRICES": {
             value: "u_bone_matrices",
         },
 
+        /**
+         *
+         */
         "UNIFORM_MAX_BONES": {
             value: "u_max_bones",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_POSITION": {
             value: "a_position",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_NORMAL": {
             value: "a_normal",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_COLOR": {
             value: "a_color",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_TEXCOORD": {
             value: "a_tex_coord",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_BONEINDICES": {
             value: "a_bone_indices",
         },
 
+        /**
+         *
+         */
         "ATTRIBUTE_BONEWEIGHTS": {
             value: "a_bone_weights",
         },
     });
 
-    // alias of the class name.
+    // alias of this class name.
     var cls = ns.XModelWrapperGL;
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.defaultConfig = function() {
         var config = {};
         config[cls.CONFIG_MEMORY_ALIGNMENT_SIZE] = 4;
@@ -251,7 +367,7 @@
         config[cls.CONFIG_USE_MIPMAP_TEXTURE] = false;
         config[cls.CONFIG_USE_SKINNING] = false;
         config[cls.CONFIG_GPU_SKINNING] = false;
-        config[cls.CONFIG_MAX_BONE_MATRICES] = 32;
+        config[cls.CONFIG_MAX_BONE_MATRICES] = 16;
         config[cls.CONFIG_MAX_BONE_WEIGHTED_INDICES] = 4;
         config[cls.CONFIG_USE_MORFING] = false;
         config[cls.CONFIG_GPU_MORFING] = false;
@@ -259,6 +375,9 @@
         return config;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.copyConfig = function(src) {
         var members = [
             cls.CONFIG_MEMORY_ALIGNMENT_SIZE,
@@ -279,14 +398,21 @@
         return config;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.defaultUniforms = function() {
         var uniforms = {};
         uniforms[cls.UNIFORM_DIFFUSE] = null;
         uniforms[cls.UNIFORM_DIFFUSE_MAP] = null;
+        uniforms[cls.UNIFORM_BONE_MATRICES] = null;
         uniforms[cls.UNIFORM_MAX_BONES] = null;
         return uniforms;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.defaultAttributes = function() {
         var attributes = {};
         attributes[cls.ATTRIBUTE_POSITION] = -1;
@@ -298,6 +424,9 @@
         return attributes;
     };
 
+    /**
+     *
+     */
     var attachVertexAttributes = function(self, gl, mesh, attributes, subset) {
         var base = subset == -1 ? mesh : mesh.subsets[subset];
 
@@ -371,7 +500,6 @@
                 base.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
             if (attributes.a_bone_indices != -1 && bone_indices_off != -1) {
                 gl.enableVertexAttribArray(attributes.a_bone_indices);
-                gl.vertexAttrib4f(attributes.a_bone_indices, 0, -1, -1, -1);
                 gl.vertexAttribPointer(
                     attributes.a_bone_indices,
                     mesh.skin.weighted_index_stride,
@@ -385,7 +513,6 @@
             var bone_weights_off =
                 base.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
             if (attributes.a_bone_weights != -1 && bone_weights_off != -1) {
-                gl.vertexAttrib4f(attributes.a_bone_weights, 1, 0, 0, 0);
                 gl.enableVertexAttribArray(attributes.a_bone_weights);
                 gl.vertexAttribPointer(
                     attributes.a_bone_weights,
@@ -398,8 +525,16 @@
         }
     };
 
+    /**
+     *
+     */
     var detachVertexAttributes = function(self, gl, mesh, attributes, subset) {
-        // dispose attribute.
+        var base = subset == -1 ? mesh : mesh.subsets[subset];
+
+        // bind the vertex buffer.
+        gl.bindBuffer(gl.ARRAY_BUFFER, base.vertex_buffer);
+
+        // dispose attributes.
         if (attributes.a_position != -1) {
             gl.disableVertexAttribArray(attributes.a_position);
         }
@@ -420,6 +555,9 @@
         }
     };
 
+    /**
+     *
+     */
     var loadModelWithUrl = function(self, gl, name, prefix, config) {
         // check the supported extensions.
         if (gl.getExtension("OES_element_index_uint") == null) {
@@ -429,8 +567,9 @@
         if (prefix == null) {
             prefix = "";
         }
-        var request = new XMLHttpRequest();
+
         var max_bones = 0;
+        var request = new XMLHttpRequest();
         request.open("GET", prefix + name, true);
         request.responseType = "arraybuffer";
         request.onload = (function (event) {
@@ -456,7 +595,7 @@
                                 index_type = ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT;
                                 weight_type = ns.XModelMeshUtils.TYPE_FLOAT;
                             } else {
-                                // not use the GPU skinning.
+                                // don't use the GPU skinning.
                                 index_size = 0;
                                 weight_size = 0;
                                 index_type = ns.XModelMeshUtils.TYPE_VOID;
@@ -466,7 +605,8 @@
                             // optimize the mesh.
                             if (use_gpu_skinning) {
                                 ns.XModelOptimizeUtils.
-                                    optimizeMeshSkinForMatrixPallet(mesh, 32);
+                                    optimizeMeshSkinForMatrixPallet(
+                                        mesh, config[cls.CONFIG_MAX_BONE_MATRICES]);
                             }
 
                             // define that the GPU buffer building closure.
@@ -498,7 +638,7 @@
                                     vertices, 0,
                                     subset);
 
-                                // the buffer for CPU skinning.
+                                // make the buffers for CPU skinning.
                                 var src_vertices;
                                 var src_positions, src_normals;
                                 var src_bone_indices, src_bone_weights;
@@ -558,7 +698,7 @@
                                         work_vertices_offsets[
                                             ns.XModelMeshUtils.ATTRIBUTE_NORMAL]);
                                 } else {
-                                    // not use the CPU skinning.
+                                    // don't use the CPU skinning.
                                     src_vertices = null;
                                     src_positions = null;
                                     src_normals = null;
@@ -604,23 +744,18 @@
                                 };
                             };
 
-                            // make the GPU buffer.
+                            // setup the GPU buffers.
                             if (mesh.subsets != null && 0 < mesh.num_subsets) {
-                                // has the subsets.
-                                if (mesh.skin != null) {
-                                    for (var i = 0; i < mesh.num_subsets; ++i) {
-                                        max_bones = Math.max(mesh.subsets[i].num_bones, max_bones);
-                                    }
-                                }
                                 for (var i = 0; i < mesh.num_subsets; ++i) {
                                     makeGPUBuffer(i);
                                 }
                             } else {
-                                // has not the subsets.
-                                if (mesh.skin != null) {
-                                    max_bones = Math.max(mesh.skin.num_nodes, max_bones);
-                                }
                                 makeGPUBuffer(-1);
+                            }
+
+                            // update max number of the bones.
+                            if (mesh.skin != null) {
+                                max_bones = Math.max(mesh.skin.num_nodes, max_bones);
                             }
                         }, gl);
 
@@ -628,6 +763,11 @@
                         if (0 < max_bones) {
                             this.__matrix_pallet = new Float32Array(
                                 ns.Geometry.SIZE_MATRIX_4X4 * max_bones);
+                            this.__subset_matrix_pallet = new Float32Array(
+                                Math.max(
+                                    ns.Geometry.SIZE_MATRIX_4X4 * max_bones,
+                                    ns.Geometry.SIZE_MATRIX_4X4 *
+                                    config[cls.CONFIG_MAX_BONE_MATRICES]));
                             this.resetPose();
                         }
 
@@ -661,6 +801,9 @@
         request.send();
     };
 
+    /**
+     *
+     */
     var loadTextureWithUrl = function(self, gl, texture, prefix, config) {
         var request = new XMLHttpRequest();
         if (config[cls.CONFIG_PATH_ALIAS] != null && config[cls.CONFIG_PATH_ALIAS][texture.ref] != null) {
@@ -697,6 +840,9 @@
         request.send();
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.prototype.initializeWithUrl = function(gl, name, prefix, config) {
         this.__white_texture = ns.GLUtils.createTexture2D(
             gl,
@@ -710,30 +856,47 @@
         loadModelWithUrl(this, gl, name, prefix, this.__config);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.prototype.setAnimation = function(index, time, loop, kinematics) {
         ns.XModelWrapper.prototype.setAnimation.call(this, index, time, loop, kinematics);
         this.__is_update_anim = true;
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.prototype._complete = function() {
         ns.XModelWrapper.prototype._complete.call(this);
         ns.XModelContainerUtils.releaseShapes(this._container);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.prototype.draw = function(gl, uniforms, attributes) {
         // draw meshs.
         ns.XModelContainerUtils.forEachMesh(this._container, (function(mesh, gl) {
             var use_skinning = this.__config[cls.CONFIG_USE_SKINNING];
             var gpu_skinning = this.__config[cls.CONFIG_GPU_SKINNING];
 
-            // set the skinning.
+            // update the matrix pallet.
             if (mesh.skin != null && use_skinning) {
                 ns.XModelSkinUtils.updateMatrixPallet(
                     mesh.skin, mesh.skin.num_nodes, this.__matrix_pallet, 0);
             }
 
             var drawMesh = (function(subset) {
-                var base = subset == -1 ? mesh : mesh.subsets[subset];
+                var mesh_subset;
+                var base;
+                if (subset == -1) {
+                    mesh_subset = null;
+                    base = mesh;
+                } else {
+                    mesh_subset = mesh.subsets[subset];
+                    base = mesh_subset;
+                }
 
                 // attach the vertex attributes.
                 attachVertexAttributes(this, gl, mesh, attributes, subset);
@@ -742,19 +905,35 @@
                 if (use_skinning && mesh.skin != null) {
                     // use skinning.
                     if (this.__config[cls.CONFIG_GPU_SKINNING]) {
-                        // GPU skinning.
+                        // apply the GPU skinning.
                         if (uniforms.u_bone_matrices != null) {
+                            if (uniforms.u_max_bones != null) {
+                                gl.uniform1i(uniforms.u_max_bones, mesh.skin.weighted_index_stride);
+                            }
                             if (subset == -1) {
-
+                                // set the matrix pallet for superset.
+                                gl.uniformMatrix4fv(
+                                    uniforms.u_bone_matrices,
+                                    false,
+                                    this.__matrix_pallet);
                             } else {
-
+                                // set the matrix pallet for subset.
+                                for (var i = 0; i < mesh_subset.num_bones; ++i) {
+                                    ns.Matrix4x4.loadv(
+                                        this.__subset_matrix_pallet,
+                                        ns.Geometry.SIZE_MATRIX_4X4 * i,
+                                        this.__matrix_pallet,
+                                        ns.Geometry.SIZE_MATRIX_4X4 * mesh_subset.bones[i],
+                                        false);
+                                }
+                                gl.uniformMatrix4fv(
+                                    uniforms.u_bone_matrices,
+                                    false,
+                                    this.__subset_matrix_pallet);
                             }
                         }
-                        if (uniforms.u_max_bones != null) {
-                            gl.uniform1i(uniforms.u_max_bones, mesh.skin.weighted_index_stride);
-                        }
                     } else if (this.__is_update_anim) {
-                        // CPU skinning.
+                        // apply the CPU skinning.
                         if (uniforms.u_max_bones != null) {
                             gl.uniform1i(uniforms.u_max_bones, 0);
                         }
@@ -917,6 +1096,9 @@
         }).bind(this), gl);
     };
 
+    /**
+     *
+     */
     ns.XModelWrapperGL.prototype.dispose = function(gl) {
         ns.XModelWrapper.prototype.dispose.call(this);
 

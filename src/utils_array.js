@@ -110,7 +110,7 @@
      * @param {Number} from - The index of the first element.
      * @param {Number} to - The index of the last element.
      * @param {Number} key - The key value.
-     * @param {xpl.ArrayUtils.comparator} comparator -
+     * @param {xpl.ArrayUtils.comparator} [comparator=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @returns {Number} The index to element.
      */
@@ -144,7 +144,7 @@
      * @param {Array} ary - The array.
      * @param {Number} from - The index of the first element.
      * @param {Number} to - The index of the last element.
-     * @param {xpl.ArrayUtils.collection} collection -
+     * @param {xpl.ArrayUtils.collection} [collection=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @returns {Array} The new array.
      */
@@ -175,7 +175,7 @@
      * @param {Array} subset - The subset.
      * @param {Number} subset_from - The index of the first element at subset.
      * @param {Number} subset_to - The index of the last element at subset.
-     * @param {xpl.ArrayUtils.collection} collection -
+     * @param {xpl.ArrayUtils.collection} [collection=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @return {Boolean}
      *              Returns value is check result,

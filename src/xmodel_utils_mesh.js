@@ -554,11 +554,12 @@
                     var j = 0;
                     for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
                         if (sub == null) {
-                            // superset.
+                            // use the superset.
                             buf[off + j] = mesh.skin.indices[ind++];
                         } else {
-                            // subset.
-                            var index = ns.ArrayUtils.binarySearch(sub.bones, 0, sub.num_bones);
+                            // use the subset.
+                            var index = ns.ArrayUtils.binarySearch(
+                                sub.bones, 0, sub.num_bones, mesh.skin.indices[ind++]);
                             buf[off + j] = 0 <= index ? index : 0;
                         }
                         count++;
@@ -1198,7 +1199,6 @@
             if (mesh.subsets != null) {
                 for (var i = 0; i < mesh.num_subsets; ++i) {
                     var subset = mesh.subsets[i];
-                    subset.bones = null;
                     subset.vertices = null;
                     subset.elements = null;
                 }

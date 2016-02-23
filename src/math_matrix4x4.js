@@ -84,7 +84,6 @@
         if (transpose === undefined) {
             transpose = false;
         }
-
         if (transpose) {
             d[d_off + M00] = m00; d[d_off + M01] = m10; d[d_off + M02] = m20; d[d_off + M03] = m30;
             d[d_off + M10] = m01; d[d_off + M11] = m11; d[d_off + M12] = m21; d[d_off + M13] = m31;

@@ -255,6 +255,7 @@
                 // copy the bone set.
                 mesh_subset.num_bones = subset.bones.length;
                 mesh_subset.bones = new Uint16Array(subset.bones);
+                console.log(mesh_subset.bones);
 
                 // copy vertex indices.
                 mesh_subset.num_vertices = subset.vertices.length;

@@ -179,6 +179,7 @@
         var config = xpl.XModelWrapperGL.defaultConfig();
         config[xpl.XModelWrapperGL.CONFIG_USE_SKINNING] = true;
         config[xpl.XModelWrapperGL.CONFIG_GPU_SKINNING] = true;
+        config[xpl.XModelWrapperGL.CONFIG_MAX_BONE_MATRICES] = 32;
         model.initializeWithUrl(gl, MODEL_NAME, MODEL_PREFIX, config);
     };
 
@@ -192,7 +193,7 @@
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             // hide a load spinner.
-            load_spinner.style.visibility="hidden";
+            load_spinner.style.visibility = "hidden";
 
             gl.useProgram(model_shader.program);
 
@@ -258,7 +259,7 @@
                     anim_time += delta;
                 }
             }
-            
+
             // set the named argments.
             var uniforms = xpl.XModelWrapperGL.defaultUniforms();
             uniforms.u_diffuse_color = model_shader.uniforms.u_diffuse_color;
@@ -339,10 +340,6 @@
         if (gl.getExtension("OES_element_index_uint") == null) {
             alert("Unsupported the OES_element_index_uint.");
             return;
-        }
-        var ctx = main_canvas.getContext("experimental-webgl");
-        if (window.WebGLDebugUtils) {
-          ctx = WebGLDebugUtils.makeDebugContext(ctx);
         }
 
         // initialize the OpenGL.

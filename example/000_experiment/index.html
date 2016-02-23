@@ -48,7 +48,7 @@
     uniform vec4 u_color;
     uniform vec4 u_diffuse_color;
 
-    uniform vec4 u_bone_matrices[16];
+    uniform mat4 u_bone_matrices[16];
     uniform int u_max_bones;
 
     attribute vec4 a_position;
@@ -66,30 +66,31 @@
     }
 
     void main() {
-        float aaa = 0.0;
+        vec4 position;
         if (0 < u_max_bones && 0.0 < a_bone_weights.x) {
-            aaa += 0.25;
+            position = (u_bone_matrices[int(a_bone_indices.x)] * a_position) * a_bone_weights.x;
             if (1 < u_max_bones && 0.0 < a_bone_weights.y) {
-                aaa += 0.25;
+                position += (u_bone_matrices[int(a_bone_indices.y)] * a_position) * a_bone_weights.y;
                 if (2 < u_max_bones && 0.0 < a_bone_weights.z) {
-                    aaa += 0.25;
+                    position += (u_bone_matrices[int(a_bone_indices.z)] * a_position) * a_bone_weights.z;
                     if (3 < u_max_bones && 0.0 < a_bone_weights.w) {
-
+                        position += (u_bone_matrices[int(a_bone_indices.w)] * a_position) * a_bone_weights.w;
                     }
                 }
             }
+        } else {
+            position = a_position;
         }
 
         gl_Position =
             u_projection_transform * u_view_transform * u_model_transform *
-            a_position;
+            position;
         mat3 normal_transform = mat4_to_mat3(u_view_transform * u_model_transform);
         vec3 normal = normalize(normal_transform * a_normal);
         float cs =
             max(dot(u_light_diffuse_direction, normal), 0.0) * (1.0 - u_light_diffuse_color.w) +
             u_light_diffuse_color.w;
-        v_color = u_diffuse_color * vec4(u_light_diffuse_color.xyz * cs, 1.0) * vec4(a_bone_weights.xyz, 1.0);
-        v_color = vec4(aaa, aaa, aaa, 1.0);
+        v_color = u_diffuse_color * vec4(u_light_diffuse_color.xyz * cs, 1.0);
         v_tex_coord = a_tex_coord;
     }
 
@@ -107,7 +108,7 @@
     uniform sampler2D u_diffuse_map;
 
     void main() {
-        gl_FragColor = v_color;// * texture2D(u_diffuse_map, v_tex_coord);
+        gl_FragColor = v_color * texture2D(u_diffuse_map, v_tex_coord);
     }
 
     </script>
