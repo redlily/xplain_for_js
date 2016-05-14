@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -40,11 +40,11 @@
      * @alias xpl.XModelCodec
      * @author Syuuhei Kuno
      */
-    ns.XModelCodec = function() {
+    ns.XModelCodec = function () {
     };
 
     Object.defineProperties(ns.XModelCodec, {
-        
+
         /** Code name.
          *
          * @constant
@@ -52,7 +52,8 @@
          * @member {String} CODE_NAME
          */
         "CODE_NAME": {
-            value: "EX-MACHINA",
+
+            value: "EX-MACHINA"
         },
 
         /**
@@ -63,24 +64,26 @@
          * @member {xpl.uint32_t} MAGIC_NUMBER
          */
         "MAGIC_NUMBER": {
-            value: ((0xff & "x".charCodeAt(0)) <<  0) |
-                   ((0xff & "m".charCodeAt(0)) <<  8) |
-                   ((0xff & "d".charCodeAt(0)) << 16) |
-                   ((0xff & "a".charCodeAt(0)) << 24),
+
+            value: ((0xff & "x".charCodeAt(0)) << 0) |
+            ((0xff & "m".charCodeAt(0)) << 8) |
+            ((0xff & "d".charCodeAt(0)) << 16) |
+            ((0xff & "a".charCodeAt(0)) << 24)
         },
 
         /**
-         * Data terminator (End Of Xmodel Data).
+         * Data terminator (End Of xModel Data).
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {xpl.uint32_t} END_OF_DATA
          */
         "END_OF_DATA": {
-            value: ((0xff & "e".charCodeAt(0)) <<  0) |
-                   ((0xff & "o".charCodeAt(0)) <<  8) |
-                   ((0xff & "x".charCodeAt(0)) << 16) |
-                   ((0xff & "d".charCodeAt(0)) << 24),
+
+            value: ((0xff & "e".charCodeAt(0)) << 0) |
+            ((0xff & "o".charCodeAt(0)) << 8) |
+            ((0xff & "x".charCodeAt(0)) << 16) |
+            ((0xff & "d".charCodeAt(0)) << 24)
         },
 
         /**
@@ -91,7 +94,8 @@
          * @member {xpl.uint32_t} VERSION
          */
         "VERSION": {
-            value: 35,
+
+            value: 35
         },
 
         /**
@@ -102,7 +106,8 @@
          * @member {xpl.uint32_t} COMPATIBILITY_VERSION
          */
         "COMPATIBILITY_VERSION": {
-            value: 35,
+
+            value: 35
         },
 
         /**
@@ -113,6 +118,7 @@
          * @member {String} VERSION_NAME
          */
         "VERSION_NAME": {
+
             value: "0.9.90"
         },
 
@@ -124,8 +130,9 @@
          * @member {String} COMPATIBILITY_VERSION_NAME
          */
         "COMPATIBILITY_VERSION_NAME": {
+
             value: "0.9.90"
-        },
+        }
     });
 
 })(xpl);

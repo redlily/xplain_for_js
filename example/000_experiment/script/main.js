@@ -35,7 +35,7 @@
     // model's URL.
     var MODEL_NAME = "model.xm";
     // model's prefix.
-    var MODEL_PREFIX = "../test_resources/3d_model/hackadoll_no2/";
+    var MODEL_PREFIX = "../test_resources/3d_model/kashima/";
 
     // attribute index map.
     var ATTRIBUTE_MAP = {

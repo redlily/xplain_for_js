@@ -62,7 +62,7 @@
         "isCompleted": {
             get: function() {
                 return this.__is_completed;
-            },
+            }
         },
 
         /**
@@ -71,7 +71,7 @@
         "isCanceled": {
             get: function() {
                 return this.__is_canseled;
-            },
+            }
         },
 
         /**
@@ -80,8 +80,8 @@
         "numAnimationSets": {
             get: function() {
                 return this._container != null ? this._container.num_animation_sets : 0;
-            },
-        },
+            }
+        }
     });
 
     /**
@@ -127,7 +127,7 @@
      */
     ns.XModelWrapper.prototype.getSize = function(index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
-    }
+    };
 
     /**
      *
@@ -203,155 +203,155 @@
          *
          */
         "CONFIG_MEMORY_ALIGNMENT_SIZE": {
-            value: "memory_alignment_size",
+            value: "memory_alignment_size"
         },
 
         /**
          *
          */
         "CONFIG_USE_VERTEX_ARRAY_OBJECT": {
-            value: "use_vertex_array_object",
+            value: "use_vertex_array_object"
         },
 
         /**
          *
          */
         "CONFIG_USE_MIPMAP_TEXTURE": {
-            value: "use_mipmap_texture",
+            value: "use_mipmap_texture"
         },
 
         /**
          *
          */
         "CONFIG_USE_SKINNING": {
-            value: "use_skinning",
+            value: "use_skinning"
         },
 
         /**
          *
          */
         "CONFIG_GPU_SKINNING": {
-            value: "gpu_skinning",
+            value: "gpu_skinning"
         },
 
         /**
          *
          */
         "CONFIG_MAX_BONE_WEIGHTED_INDICES": {
-            value: "max_bone_weighted_indices",
+            value: "max_bone_weighted_indices"
         },
 
         /**
          *
          */
         "CONFIG_MAX_BONE_MATRICES": {
-            value: "max_bone_matrices",
+            value: "max_bone_matrices"
         },
 
         /**
          *
          */
         "CONFIG_PATH_ALIAS": {
-            value: "path_alias",
+            value: "path_alias"
         },
 
         /**
          *
          */
         "CONFIG_USE_MORFING": {
-            value: "use_mofing",
+            value: "use_mofing"
         },
 
         /**
          *
          */
         "CONFIG_GPU_MORFING": {
-            value: "gpu_morfing",
+            value: "gpu_morfing"
         },
 
         /**
          *
          */
         "UNIFORM_DIFFUSE": {
-            value: "u_diffuse",
+            value: "u_diffuse"
         },
 
         /**
          *
          */
         "UNIFORM_DIFFUSE_MAP": {
-            value: "u_diffuse_map",
+            value: "u_diffuse_map"
         },
 
         /**
          *
          */
         "UNIFORM_SPECULAR": {
-            value: "u_specular",
+            value: "u_specular"
         },
 
         /**
          *
          */
         "UNIFORM_SPECULAR_MAP": {
-            value: "u_specular_map",
+            value: "u_specular_map"
         },
 
         /**
          *
          */
         "UNIFORM_BONE_MATRICES": {
-            value: "u_bone_matrices",
+            value: "u_bone_matrices"
         },
 
         /**
          *
          */
         "UNIFORM_MAX_BONES": {
-            value: "u_max_bones",
+            value: "u_max_bones"
         },
 
         /**
          *
          */
         "ATTRIBUTE_POSITION": {
-            value: "a_position",
+            value: "a_position"
         },
 
         /**
          *
          */
         "ATTRIBUTE_NORMAL": {
-            value: "a_normal",
+            value: "a_normal"
         },
 
         /**
          *
          */
         "ATTRIBUTE_COLOR": {
-            value: "a_color",
+            value: "a_color"
         },
 
         /**
          *
          */
         "ATTRIBUTE_TEXCOORD": {
-            value: "a_tex_coord",
+            value: "a_tex_coord"
         },
 
         /**
          *
          */
         "ATTRIBUTE_BONEINDICES": {
-            value: "a_bone_indices",
+            value: "a_bone_indices"
         },
 
         /**
          *
          */
         "ATTRIBUTE_BONEWEIGHTS": {
-            value: "a_bone_weights",
-        },
+            value: "a_bone_weights"
+        }
     });
 
     // alias of this class name.
@@ -389,11 +389,11 @@
             cls.CONFIG_MAX_BONE_WEIGHTED_INDICES,
             cls.CONFIG_USE_MORFING,
             cls.CONFIG_GPU_MORFING,
-            cls.CONFIG_PATH_ALIAS,
+            cls.CONFIG_PATH_ALIAS
         ];
         var config = {};
-        for (var key of members) {
-            config[key] = src[key];
+        for (var value of members) {
+            config[value] = src[value];
         }
         return config;
     };
@@ -493,7 +493,7 @@
                 tex_coord_off);
         }
 
-        // set skinning.
+        // set the skinning.
         if (mesh.skin != null && self.__config[cls.CONFIG_USE_SKINNING]) {
             // set the bone indices.
             var bone_indices_off =
@@ -740,7 +740,7 @@
                                     "dest_positions": dest_positions,
                                     "dest_normals": dest_normals,
                                     "elements_offsets": elements_offsets,
-                                    "elements_sizes": elements_sizes,
+                                    "elements_sizes": elements_sizes
                                 };
                             };
 
@@ -772,7 +772,7 @@
                         }
 
                         // get the texture information.
-                        var num_textures =　ns.XModelContainerUtils.getTextures(
+                        var num_textures = ns.XModelContainerUtils.getTextures(
                             this._container, null, 0, 0);
                         var textures = new Array(num_textures);
                         ns.XModelContainerUtils.getTextures(
@@ -815,7 +815,7 @@
         request.onload = (function (event) {
             if (!self.isCanceled) {
                 if (event.target.status == 200) {
-                    var blob = event.target.response
+                    var blob = event.target.response;
                     var img = new Image();
                     img.onload = function () {
                         texture.texture = ns.GLUtils.createTexture2DFromImage(
@@ -904,7 +904,7 @@
                 // set the skinning.
                 if (use_skinning && mesh.skin != null) {
                     // use skinning.
-                    if (this.__config[cls.CONFIG_GPU_SKINNING]) {
+                    if (gpu_skinning) {
                         // apply the GPU skinning.
                         if (uniforms.u_bone_matrices != null) {
                             if (uniforms.u_max_bones != null) {
@@ -938,17 +938,8 @@
                             gl.uniform1i(uniforms.u_max_bones, 0);
                         }
 
-                        var bone_indices_off =
-                            base.user_object.vertices_offsets[
-                                ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] / 4;
-                        var bone_weights_off =
-                            base.user_object.vertices_offsets[
-                                ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] / 4;
-
                         // update the positions.
-                        var position_off =
-                            mesh.user_object.vertices_offsets[
-                                ns.XModelMeshUtils.ATTRIBUTE_POSITION];
+                        var position_off = mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION];
                         if (position_off != -1) {
                             ns.XModelSkinUtils.updatePositions(
                                 this.__matrix_pallet, 0,
@@ -961,9 +952,7 @@
                         }
 
                         // update the normals.
-                        var normal_off =
-                            base.user_object.vertices_offsets[
-                                ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
+                        var normal_off = base.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
                         if (normal_off != -1) {
                             for (var i = 0; i < mesh.skin.num_nodes; ++i) {
                                 var matrix_index = ns.Geometry.SIZE_MATRIX_4X4 * i;

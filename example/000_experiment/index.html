@@ -48,7 +48,7 @@
     uniform vec4 u_color;
     uniform vec4 u_diffuse_color;
 
-    uniform mat4 u_bone_matrices[16];
+    uniform mat4 u_bone_matrices[32];
     uniform int u_max_bones;
 
     attribute vec4 a_position;
@@ -61,32 +61,47 @@
     varying vec4 v_color;
     varying vec2 v_tex_coord;
 
+    // convert from mat4 to mat3.
     mat3 mat4_to_mat3(mat4 m) {
         return mat3(m[0].xyz, m[1].xyz, m[2].xyz);
     }
 
     void main() {
+        // the bone transforming.
+        mat4 bone_matrix;
         vec4 position;
+        vec3 normal;
         if (0 < u_max_bones && 0.0 < a_bone_weights.x) {
-            position = (u_bone_matrices[int(a_bone_indices.x)] * a_position) * a_bone_weights.x;
+            bone_matrix = u_bone_matrices[int(a_bone_indices.x)];
+            position = (bone_matrix * a_position) * a_bone_weights.x;
+            normal = (mat4_to_mat3(bone_matrix) * a_normal) * a_bone_weights.x;
+
             if (1 < u_max_bones && 0.0 < a_bone_weights.y) {
-                position += (u_bone_matrices[int(a_bone_indices.y)] * a_position) * a_bone_weights.y;
+                bone_matrix = u_bone_matrices[int(a_bone_indices.y)];
+                position += (bone_matrix * a_position) * a_bone_weights.y;
+                normal += (mat4_to_mat3(bone_matrix) * a_normal) * a_bone_weights.y;
+
                 if (2 < u_max_bones && 0.0 < a_bone_weights.z) {
-                    position += (u_bone_matrices[int(a_bone_indices.z)] * a_position) * a_bone_weights.z;
+                    bone_matrix = u_bone_matrices[int(a_bone_indices.z)];
+                    position += (bone_matrix * a_position) * a_bone_weights.z;
+                    normal += (mat4_to_mat3(bone_matrix) * a_normal) * a_bone_weights.z;
+
                     if (3 < u_max_bones && 0.0 < a_bone_weights.w) {
-                        position += (u_bone_matrices[int(a_bone_indices.w)] * a_position) * a_bone_weights.w;
+                        bone_matrix = u_bone_matrices[int(a_bone_indices.w)];
+                        position += (bone_matrix * a_position) * a_bone_weights.w;
+                        normal += (mat4_to_mat3(bone_matrix) * a_normal) * a_bone_weights.w;
                     }
                 }
             }
         } else {
             position = a_position;
+            normal = a_normal;
         }
 
         gl_Position =
             u_projection_transform * u_view_transform * u_model_transform *
             position;
-        mat3 normal_transform = mat4_to_mat3(u_view_transform * u_model_transform);
-        vec3 normal = normalize(normal_transform * a_normal);
+        normal = mat4_to_mat3(u_view_transform * u_model_transform) * normal;
         float cs =
             max(dot(u_light_diffuse_direction, normal), 0.0) * (1.0 - u_light_diffuse_color.w) +
             u_light_diffuse_color.w;

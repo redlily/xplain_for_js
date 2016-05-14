@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,11 +30,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
-    var QR = 0, QI = 1, QJ = 2, QK = 3;
+    let VX = 0, VY = 1, VZ = 2;
+    let QR = 0, QI = 1, QJ = 2, QK = 3;
 
     /**
      * Quaternion utilities.
@@ -41,8 +43,8 @@
      * @namespace xpl.Quaternion
      * @author Syuuhei Kuno
      */
-    ns.Quaternion = function() {
-        throw new Error("Unsupported operation");
+    ns.Quaternion = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -57,7 +59,7 @@
      * @param {Number} jp - J imaginary part in the source quaternion.
      * @param {Number} kp - The tertiary imaginary part in the source quaternion.
      */
-    ns.Quaternion.load = function(d, d_off, rp, ip, jp, kp) {
+    ns.Quaternion.load = function (d, d_off, rp, ip, jp, kp) {
         d[d_off + QR] = rp;
         d[d_off + QI] = ip;
         d[d_off + QJ] = jp;
@@ -74,7 +76,7 @@
      * @param {Array.<Number>} q - Starting position in the source quaternion.
      * @param {Number} q_off - The source quaternion.
      */
-    ns.Quaternion.loadv = function(d, d_off, q, q_off) {
+    ns.Quaternion.loadv = function (d, d_off, q, q_off) {
         ns.Quaternion.load(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
@@ -86,19 +88,19 @@
      * @param {Array.<Number>} d - The destination quaternion.
      * @param {Number} d_off - The Starting position in the destination quaternion.
      */
-    ns.Quaternion.loadZero = function(d, d_off) {
+    ns.Quaternion.loadZero = function (d, d_off) {
         ns.Quaternion.load(d, d_off, 0, 0, 0, 0);
     };
 
     /**
-     * Load the identiry values at the all elements of the quaternion.
+     * Load the identity values at the all elements of the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function loadIdentity
      * @param {Array.<Number>} d - The destination quaternion.
      * @param {Number} d_off - Starting position in the destination quaternion.
      */
-    ns.Quaternion.loadIdentity = function(d, d_off) {
+    ns.Quaternion.loadIdentity = function (d, d_off) {
         ns.Quaternion.load(d, d_off, 1, 0, 0, 0);
     };
 
@@ -111,11 +113,11 @@
      * @param {Number} q_off - Starting position in the quaternion.
      * @returns {Number} The square of the absolute value of the target quaternion.
      */
-    ns.Quaternion.absSq = function(q, q_off) {
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
+    ns.Quaternion.absSq = function (q, q_off) {
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
         return rp * rp + ip * ip + jp * jp + kp * kp;
     };
 
@@ -128,7 +130,7 @@
      * @param {Number} q_off - Starting position in the quaternion.
      * @returns {Number} The absolute value of the target quaternion.
      */
-    ns.Quaternion.abs = function(q, q_off) {
+    ns.Quaternion.abs = function (q, q_off) {
         return Math.sqrt(ns.Quaternion.absSq(q, q_off));
     };
 
@@ -142,12 +144,12 @@
      * @param {Array.<Number>} q - The target quaternion.
      * @param {Number} q_off - Starting position in the target quaternion.
      */
-    ns.Quaternion.normalizev = function(d, d_off, q, q_off) {
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
-        var len = rp * rp + ip * ip + jp * jp + kp * kp;
+    ns.Quaternion.normalizev = function (d, d_off, q, q_off) {
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
+        let len = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < len) {
             len = Math.sqrt(len);
             ns.Quaternion.load(d, d_off, rp / len, ip / len, jp / len, kp / len);
@@ -168,11 +170,11 @@
      * @param {Number} jp - J imaginary part in the target quaternion.
      * @param {Number} kp - K imaginary part in the target quaternion.
      */
-    ns.Quaternion.exp = function(d, d_off, rp, ip, jp, kp) {
+    ns.Quaternion.exp = function (d, d_off, rp, ip, jp, kp) {
         // e^(a + bi + cj + dk) = e^(a + v) = e^a * (cos||v|| + (v / ||v||) * sin||v||)
-        var aexp = Math.exp(rp);                            // e^a
-        var vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
-        var vscale = aexp * Math.sin(vnorm) / vnorm;        // e^a * sin||v|| / ||v||
+        let aexp = Math.exp(rp);                            // e^a
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
+        let vscale = aexp * Math.sin(vnorm) / vnorm;        // e^a * sin||v|| / ||v||
         ns.Quaternion.load(
             d, d_off,
             aexp * Math.cos(vnorm),                         // e^2 * cos||v||
@@ -189,7 +191,7 @@
      * @param {Array.<Number>} q - The target quaternion.
      * @param {Number} q_off - Starting position in the quaternion.
      */
-    ns.Quaternion.expv = function(d, d_off, q, q_off) {
+    ns.Quaternion.expv = function (d, d_off, q, q_off) {
         ns.Quaternion.exp(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
@@ -204,10 +206,10 @@
      * @param {Number} jp - J imaginary part in the target quaternion.
      * @param {Number} kp - K imaginary part in the target quaternion.
      */
-    ns.Quaternion.cis = function(d, d_off, ip, jp, kp) {
+    ns.Quaternion.cis = function (d, d_off, ip, jp, kp) {
         // e^(bi + cj + dk) = e^v = cos||v|| + (v / ||v||) * sin||v||
-        var vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
-        var vscale = Math.sin(vnorm) / vnorm;               // e^a * sin||v|| / ||v||
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
+        let vscale = Math.sin(vnorm) / vnorm;               // e^a * sin||v|| / ||v||
         ns.Quaternion.load(
             d, d_off,
             Math.cos(vnorm),                                // cos||v||
@@ -224,7 +226,7 @@
      * @param v - The target imaginary vector.
      * @param v_off - Starting position in the target imaginary vector.
      */
-    ns.Quaternion.cisv = function(d, d_off, v, v_off) {
+    ns.Quaternion.cisv = function (d, d_off, v, v_off) {
         ns.Quaternion.cis(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
     };
 
@@ -240,12 +242,12 @@
      * @param {Number} jp - J imaginary part in the target quaternion.
      * @param {Number} kp - K imaginary part in the target quaternion.
      */
-    ns.Quaternion.log = function(d, d_off, rp, ip, jp, kp) {
+    ns.Quaternion.log = function (d, d_off, rp, ip, jp, kp) {
         // ln(a + bi + cj + dk) = ln(a + v) = ln(q) = ln||q|| + v / ||v|| * cos^-1 (a / ||q||)
-        var qnorm = Math.sqrt(rp * rp + ip * ip + jp * jp + kp * kp); // ||q|| = √(a^2 + bi^2 + cj^2 + dk^2)
-        var qln = Math.log(qnorm);                                    // ln||q||
-        var vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp);           // ||v|| = √(bi^2 + cj^2 + dk^2)
-        var vscale = Math.acos(rp / qnorm) / vnorm;                   // cos^-1 (a / ||q||) / ||v||
+        let qnorm = Math.sqrt(rp * rp + ip * ip + jp * jp + kp * kp); // ||q|| = √(a^2 + bi^2 + cj^2 + dk^2)
+        let qln = Math.log(qnorm);                                    // ln||q||
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp);           // ||v|| = √(bi^2 + cj^2 + dk^2)
+        let vscale = Math.acos(rp / qnorm) / vnorm;                   // cos^-1 (a / ||q||) / ||v||
         ns.Quaternion.load(d, d_off, qln, ip * vscale, jp * vscale, kp * vscale);
     };
 
@@ -259,7 +261,7 @@
      * @param {Array.<Number>} q - The target quaternion.
      * @param {Number} q_off - Starting position in the quaternion.
      */
-    ns.Quaternion.logv = function(d, d_off, q, q_off) {
+    ns.Quaternion.logv = function (d, d_off, q, q_off) {
         ns.Quaternion.log(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
     };
 
@@ -280,9 +282,9 @@
      * @param {Number} kp2 - K imaginary part element of the end point quaternion.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Quaternion.lerp = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
+    ns.Quaternion.lerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-        var t1 = 1.0 - t;
+        let t1 = 1.0 - t;
         ns.Quaternion.load(
             d, d_off,
             rp1 * t1 + rp2 * t,
@@ -304,7 +306,7 @@
      * @param {Number} q2_off - Starting position in the end point quaternion.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Quaternion.lerpv = function(d, d_off, q1, q1_off, q2, q2_off, t) {
+    ns.Quaternion.lerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.lerp(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -319,18 +321,19 @@
      * @function slerp
      * @param {Array.<Number>} d - The destination quaternion.
      * @param {Number} d_off - Starting position in the destination quaternion.
+     * @param {Number} rp1 - R real part element of the end point quaternion.
      * @param {Number} ip1 - I imaginary part element of the start point quaternion.
      * @param {Number} jp1 - J imaginary part element of the start point quaternion.
      * @param {Number} kp1 - K imaginary part element of the start point quaternion.
-     * @param {Number} rp2 - I imaginary part element of the end point quaternion.
+     * @param {Number} rp2 - R real part element of the end point quaternion.
      * @param {Number} ip2 - I imaginary part element of the end point quaternion.
      * @param {Number} jp2 - J imaginary part element of the end point quaternion.
      * @param {Number} kp2 - K imaginary part element of the end point quaternion.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Quaternion.slerp = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
+    ns.Quaternion.slerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
         // normalize the starting quaternion.
-        var abs1 = rp1 * rp1 + ip1 * ip1 + jp1 * jp1 + kp1 * kp1;
+        let abs1 = rp1 * rp1 + ip1 * ip1 + jp1 * jp1 + kp1 * kp1;
         if (0 < abs1) {
             abs1 = Math.sqrt(abs1);
             rp1 /= abs1;
@@ -340,7 +343,7 @@
         }
 
         // normalize the ending quaternion.
-        var abs2 = rp2 * rp2 + ip2 * ip2 + jp2 * jp2 + kp2 * kp2;
+        let abs2 = rp2 * rp2 + ip2 * ip2 + jp2 * jp2 + kp2 * kp2;
         if (0 < abs2) {
             abs2 = Math.sqrt(abs2);
             rp2 /= abs2;
@@ -350,31 +353,31 @@
         }
 
         // calculate the cosine value from two vectors.
-        var cs = rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
+        let cs = rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
         if (1.0 <= cs) {
             // two quaternions are the same direction.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-            var abs = abs1 * (1.0 - t) + abs2 * t;
+            let abs = abs1 * (1.0 - t) + abs2 * t;
             ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else if (cs <= -1.0) {
             // two quaternions are the reverse direction.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-            var abs = abs1 * (1.0 - t) - abs2 * t;
+            let abs = abs1 * (1.0 - t) - abs2 * t;
             ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else {
             // other conditions.
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-            var abs  = abs1 * (1.0 - t) + abs2 * t;
+            let abs = abs1 * (1.0 - t) + abs2 * t;
 
             // spherical linear interpolate the direction.
             // slerp(p0, p1; t) = (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
-            var rad1 = Math.acos(cs);
-            var rad2 = rad1 * (1.0 - t);
-            var rad3 = rad1*      t;
-            var sn   = Math.sin(rad1);
-            var sn1  = Math.sin(rad2) / sn;
-            var sn2  = Math.sin(rad3) / sn;
+            let rad1 = Math.acos(cs);
+            let rad2 = rad1 * (1.0 - t);
+            let rad3 = rad1 * t;
+            let sn = Math.sin(rad1);
+            let sn1 = Math.sin(rad2) / sn;
+            let sn2 = Math.sin(rad3) / sn;
 
             // load on the quaternion.
             ns.Quaternion.load(
@@ -399,7 +402,7 @@
      * @param {Number} q2_off - Starting position in the end point quaternion.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Quaternion.slerpv = function(d, d_off, q1, q1_off, q2, q2_off, t) {
+    ns.Quaternion.slerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.slerp(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -422,7 +425,7 @@
      * @param {Number} kp2 - K imaginary part element in the right-hand side quaternion of the operator.
      * @returns {Number} The dot value.
      */
-    ns.Quaternion.dot = function(rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    ns.Quaternion.dot = function (rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         return rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
     };
 
@@ -437,11 +440,11 @@
      * @param {Number} q2_off - Starting position in the right-hand side quaternion of the operator.
      * @returns {Number} The dot value.
      */
-    ns.Quaternion.dotv = function(q1, q1_off, q2, q2_off) {
-        return q1[q1_off + QR]*q2[q2_off + QR] +
-               q1[q1_off + QI]*q2[q2_off + QI] +
-               q1[q1_off + QJ]*q2[q2_off + QJ] +
-               q1[q1_off + QK]*q2[q2_off + QK];
+    ns.Quaternion.dotv = function (q1, q1_off, q2, q2_off) {
+        return q1[q1_off + QR] * q2[q2_off + QR] +
+            q1[q1_off + QI] * q2[q2_off + QI] +
+            q1[q1_off + QJ] * q2[q2_off + QJ] +
+            q1[q1_off + QK] * q2[q2_off + QK];
     };
 
     /**
@@ -454,7 +457,7 @@
      * @param {Array.<Number>} q - The target quaternion.
      * @param {Number} q_off - Starting position in the target quaternion.
      */
-    ns.Quaternion.conjugatev = function(d, d_off, q, q_off) {
+    ns.Quaternion.conjugatev = function (d, d_off, q, q_off) {
         ns.Quaternion.load(d, d_off, q[q_off + QR], -q[q_off + QI], -q[q_off + QJ], -q[q_off + QK]);
     };
 
@@ -468,15 +471,15 @@
      * @param {Array.<Number>} q - The target quaternion.
      * @param {Number} q_off - Starting position in the target quaternion.
      */
-    ns.Quaternion.inversev = function(d, d_off, q, q_off) {
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
-        var det = rp * rp + ip * ip + jp * jp + kp * kp;
+    ns.Quaternion.inversev = function (d, d_off, q, q_off) {
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
+        let det = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < det) {
             det = Math.sqrt(det);
-            rp /=  det;
+            rp /= det;
             ip /= -det;
             jp /= -det;
             kp /= -det;
@@ -500,7 +503,7 @@
      * @param {Number} jp2 - J imaginary part element in the right-hand side quaternion of the operator.
      * @param {Number} kp2 - K imaginary part element in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.add = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    ns.Quaternion.add = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         ns.Quaternion.load(d, d_off, rp1 + rp2, ip1 + ip2, jp1 + jp2, kp1 + kp2);
     };
 
@@ -516,7 +519,7 @@
      * @param {Array.<Number>} q2 - The right-hand side quaternion of the operator.
      * @param {Number} q2_off - Starting position in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.addv = function(d, d_off, q1, q1_off, q2, q2_off) {
+    ns.Quaternion.addv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.add(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -539,7 +542,7 @@
      * @param {Number} jp2 - J imaginary part element in the right-hand side quaternion of the operator.
      * @param {Number} kp2 - K imaginary part element in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.sub = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    ns.Quaternion.sub = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         ns.Quaternion.load(d, d_off, rp1 - rp2, ip1 - ip2, jp1 - jp2, kp1 - kp2);
     };
 
@@ -555,7 +558,7 @@
      * @param {Array.<Number>} q2 - The right-hand side quaternion of the operator.
      * @param {Number} q2_off - Starting position in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.subv = function(d, d_off, q1, q1_off, q2, q2_off) {
+    ns.Quaternion.subv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.sub(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -578,15 +581,15 @@
      * @param {Number} jp2 - J imaginary part element in the right-hand side quaternion of the operator.
      * @param {Number} kp2 - K imaginary part element in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.mul = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    ns.Quaternion.mul = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
         ns.Quaternion.load(
             d, d_off,
-            rp1 * rp2 - (ip1 * ip2 +  jp1 * jp2 + kp1 * kp2),
-            rp1 * ip2 +  ip1 * rp2 + (jp1 * kp2 - kp1 * jp2),
-            rp1 * jp2 +  jp1 * rp2 + (kp1 * ip2 - ip1 * kp2),
-            rp1 * kp2 +  kp1 * rp2 + (ip1 * jp2 - jp1 * ip2));
+            rp1 * rp2 - (ip1 * ip2 + jp1 * jp2 + kp1 * kp2),
+            rp1 * ip2 + ip1 * rp2 + (jp1 * kp2 - kp1 * jp2),
+            rp1 * jp2 + jp1 * rp2 + (kp1 * ip2 - ip1 * kp2),
+            rp1 * kp2 + kp1 * rp2 + (ip1 * jp2 - jp1 * ip2));
     };
 
     /**
@@ -601,7 +604,7 @@
      * @param {Array.<Number>} q2 - The right-hand side quaternion of the operator.
      * @param {Number} q2_off - Starting position in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.mulv = function(d, d_off, q1, q1_off, q2, q2_off) {
+    ns.Quaternion.mulv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.mul(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -621,7 +624,7 @@
      * @param {Number} kp - K imaginary part element in the target quaternion.
      * @param {Number} s - The target scalar.
      */
-    ns.Quaternion.mulScalar = function(d, d_off, rp, ip, jp, kp, s) {
+    ns.Quaternion.mulScalar = function (d, d_off, rp, ip, jp, kp, s) {
         ns.Quaternion.load(d, d_off, rp * s, ip * s, jp * s, kp * s);
     };
 
@@ -636,7 +639,7 @@
      * @param {Number} q_off - Starting position in the target quaternion.
      * @param {Number} s - The target scalar.
      */
-    ns.Quaternion.mulScalarv = function(d, d_off, q, q_off, s) {
+    ns.Quaternion.mulScalarv = function (d, d_off, q, q_off, s) {
         ns.Quaternion.mulScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
     };
 
@@ -656,16 +659,16 @@
      * @param {Number} jp2 - J imaginary part element in the right-hand side quaternion of the operator.
      * @param {Number} kp2 - K imaginary part element in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.div = function(d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    ns.Quaternion.div = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = (r1r2 - i1 ・ i2) / (r2^2 + i2^2), ip = (r1i2 + r2i1 + i1 × i2) / (r2^2 + i2^2)
-        var det = rp2 * rp2 +  ip2 * ip2 +  jp2 * jp2 + kp2 * kp2;
+        let det = rp2 * rp2 + ip2 * ip2 + jp2 * jp2 + kp2 * kp2;
         ns.Quaternion.load(
             d, d_off,
-            (  rp1 * rp2 + (ip1 * ip2 +  jp1 * jp2 + kp1 * kp2)) / det,
-            (- rp1 * ip2 +  ip1 * rp2 - (jp1 * kp2 - kp1 * jp2)) / det,
-            (- rp1 * jp2 +  jp1 * rp2 - (kp1 * ip2 - ip1 * kp2)) / det,
-            (- rp1 * kp2 +  kp1 * rp2 - (ip1 * jp2 - jp1 * ip2)) / det);
+            (  rp1 * rp2 + (ip1 * ip2 + jp1 * jp2 + kp1 * kp2)) / det,
+            (-rp1 * ip2 + ip1 * rp2 - (jp1 * kp2 - kp1 * jp2)) / det,
+            (-rp1 * jp2 + jp1 * rp2 - (kp1 * ip2 - ip1 * kp2)) / det,
+            (-rp1 * kp2 + kp1 * rp2 - (ip1 * jp2 - jp1 * ip2)) / det);
     };
 
     /**
@@ -680,7 +683,7 @@
      * @param {Array.<Number>} q2 - The right-hand side quaternion of the operator.
      * @param {Number} q2_off - Starting position in the right-hand side quaternion of the operator.
      */
-    ns.Quaternion.divv = function(d, d_off, q1, q1_off, q2, q2_off) {
+    ns.Quaternion.divv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.div(
             d, d_off,
             q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
@@ -700,7 +703,7 @@
      * @param {Number} kp - K imaginary part element in the target quaternion.
      * @param {Number} s - The target scalar.
      */
-    ns.Quaternion.divScalar = function(d, d_off, rp, ip, jp, kp, s) {
+    ns.Quaternion.divScalar = function (d, d_off, rp, ip, jp, kp, s) {
         ns.Quaternion.load(d, d_off, rp / s, ip / s, jp / s, kp / s);
     };
 
@@ -715,7 +718,7 @@
      * @param {Number} q_off - Starting position in the target quaternion.
      * @param {Number} s - The target scalar.
      */
-    ns.Quaternion.divScalarv = function(d, d_off, q, q_off, s) {
+    ns.Quaternion.divScalarv = function (d, d_off, q, q_off, s) {
         ns.Quaternion.divScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
     };
 
@@ -728,7 +731,7 @@
      * @param {Number} off - Starting position in the target quaternion.
      * @returns {String} The converted quaternion to string.
      */
-    ns.Quaternion.convertToString = function(q, off) {
+    ns.Quaternion.convertToString = function (q, off) {
         return "Quaternion(" + q[off + QR] + ", " + q[off + QI] + ", " + q[off + QJ] + ", " + q[off + QK] + ")";
     };
 

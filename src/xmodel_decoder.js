@@ -106,26 +106,26 @@
         this.__weak_inst_map = {};
 
         // magic number.
-        var magicNumber = this._getInt32();
+        let magicNumber = this._getInt32();
         if (magicNumber != ns.XModelCodec.MAGIC_NUMBER) {
             this._recycle();
             return null;
         }
 
         // version.
-        var version = this._getInt32();
+        let version = this._getInt32();
         if (version < ns.XModelCodec.COMPATIBILITY_VERSION) {
             this._recycle();
             return null;
         }
 
         // read the structure.
-        var type = this._getInt32();
-        var inst = this._createStructureProcedure(type);
+        let type = this._getInt32();
+        let inst = this._createStructureProcedure(type);
         this._getStructureProcedure(inst);
 
         // terminator.
-        var end = this._getInt32();
+        let end = this._getInt32();
         if (end != ns.XModelCodec.END_OF_DATA) {
             console.error("Warning! This data doesn't has a terminator in the binary!")
         }
@@ -159,7 +159,7 @@
      * @returns {xpl.int8_t} The integer value of 8 bits.
      */
     ns.XModelDecoder.prototype._getInt8 = function() {
-        var value = this.__data_view.getInt8(this.__data_offset);
+        let value = this.__data_view.getInt8(this.__data_offset);
         this.__data_offset += 1;
         return value;
     };
@@ -174,7 +174,7 @@
      * @returns {xpl.uint8_t} The integer value of 8 bits.
      */
     ns.XModelDecoder.prototype._getUint8 = function() {
-        var value = this.__data_view.getUint8(this.__data_offset);
+        let value = this.__data_view.getUint8(this.__data_offset);
         this.__data_offset += 1;
         return value;
     };
@@ -189,7 +189,7 @@
      * @returns {xpl.int16_t} The integer value of 16 bits.
      */
     ns.XModelDecoder.prototype._getInt16 = function() {
-        var value = this.__data_view.getInt16(this.__data_offset, true);
+        let value = this.__data_view.getInt16(this.__data_offset, true);
         this.__data_offset += 2;
         return value;
     };
@@ -204,7 +204,7 @@
      * @returns {xpl.int32_t} The integer value of 32 bits.
      */
     ns.XModelDecoder.prototype._getInt32 = function() {
-        var value = this.__data_view.getInt32(this.__data_offset, true);
+        let value = this.__data_view.getInt32(this.__data_offset, true);
         this.__data_offset += 4;
         return value;
     };
@@ -219,7 +219,7 @@
      * @returns {xpl.float32_t} The float number of 32 bits.
      */
     ns.XModelDecoder.prototype._getFloat32 = function() {
-        var value = this.__data_view.getFloat32(this.__data_offset, true);
+        let value = this.__data_view.getFloat32(this.__data_offset, true);
         this.__data_offset += 4;
         return value;
     };
@@ -234,7 +234,7 @@
      * @returns {xpl.float64_t} The float number of 64 bits.
      */
     ns.XModelDecoder.prototype._getFloat64 = function() {
-        var value = this.__data_view.getFloat64(this.__data_offset, true);
+        let value = this.__data_view.getFloat64(this.__data_offset, true);
         this.__data_offset += 8;
         return value;
     };
@@ -251,7 +251,7 @@
      * @param {xpl.size_t} len - Number of array elements.
      */
     ns.XModelDecoder.prototype._getInt8Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt8();
         }
     };
@@ -268,7 +268,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getUint8Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getUint8();
         }
     };
@@ -285,7 +285,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getInt16Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt16();
         }
     };
@@ -302,7 +302,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getInt32Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt32();
         }
     };
@@ -319,7 +319,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getFloat32Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getFloat32();
         }
     };
@@ -336,7 +336,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getFloat64Array = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getFloat64();
         }
     };
@@ -366,7 +366,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getBoolArray = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getBool();
         }
     };
@@ -381,9 +381,9 @@
      * @returns {String} The string value.
      */
     ns.XModelDecoder.prototype._getString = function() {
-        var len = this._getInt16();
+        let len = this._getInt16();
         if (0 < len) {
-            var str = Array(len);
+            let str = new Array(len);
             this._getUint8Array(str, 0, len);
             return ns.StringUtils.decodeUTF8(str);
         }
@@ -401,7 +401,7 @@
      * @param {Number} len - The number of array elements.
      */
     ns.XModelDecoder.prototype._getStringArray = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getString();
         }
     };
@@ -417,16 +417,16 @@
      */
     ns.XModelDecoder.prototype._getStructure = function() {
         // identifier.
-        var inst_id = this._getInt32();
+        let inst_id = this._getInt32();
         if (inst_id == 0) {
             return null;
         }
 
         // type.
-        var type = this._getInt32();
+        let type = this._getInt32();
 
         // search structure.
-        var value = this.__inst_map[inst_id];
+        let value = this.__inst_map[inst_id];
         if (value != null) {
             return value;
         }
@@ -459,7 +459,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getStructureArray = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off++] = this._getStructure();
         }
     };
@@ -475,16 +475,16 @@
      */
     ns.XModelDecoder.prototype._getStructureRef = function() {
         // identifier.
-        var inst_id = this._getInt32();
+        let inst_id = this._getInt32();
         if (inst_id == 0) {
             return null;
         }
 
         // type.
-        var type = this._getInt32();
+        let type = this._getInt32();
 
         // search structure.
-        var value = this.__inst_map[inst_id] | this.__weak_inst_map[inst_id];
+        let value = this.__inst_map[inst_id] | this.__weak_inst_map[inst_id];
         if (value != null) {
             return value;
         }
@@ -508,7 +508,7 @@
      * @param {xpl.size_t} len - Number of the array elements.
      */
     ns.XModelDecoder.prototype._getStructureRefArray = function(buf, off, len) {
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf[off++] = this._getStructRef();
         }
     };
@@ -679,10 +679,10 @@
      * @returns {xpl.XModelUserData} The user data.
      */
     ns.XModelDecoder.prototype._getUserData = function() {
-        var size = this._getInt32();
+        let size = this._getInt32();
         if (size < size) {
             // create structure.
-            var obj = new ns.XModelUserData();
+            let obj = new ns.XModelUserData();
 
             // data size.
             obj.data_size = size;
@@ -905,7 +905,7 @@
         inst.num_positions = this._getInt32();
         if (0 < inst.num_positions) {
             inst.position_size = this._getInt8();
-            var size = inst.position_size * inst.num_positions;
+            let size = inst.position_size * inst.num_positions;
             inst.positions = new Float32Array(size);
             this._getFloat32Array(inst.positions, 0, size);
         }
@@ -914,7 +914,7 @@
         inst.num_normals = this._getInt32();
         if (0 < inst.num_normals) {
             inst.normal_size = this._getInt8();
-            var size = inst.normal_size * inst.num_normals;
+            let size = inst.normal_size * inst.num_normals;
             inst.normals = new Float32Array(size);
             this._getFloat32Array(inst.normals, 0, size);
         }
@@ -923,7 +923,7 @@
         inst.num_colors = this._getInt32();
         if (0 < inst.num_colors) {
             inst.color_size = this._getInt8();
-            var size = inst.color_size * inst.num_colors;
+            let size = inst.color_size * inst.num_colors;
             inst.colors = new Float32Array(size);
             this._getFloat32Array(inst.colors, 0, size);
         }
@@ -932,13 +932,13 @@
         inst.num_tex_coords = this._getInt32();
         if (0 < inst.num_tex_coords) {
             inst.tex_coord_size = this._getInt8();
-            var size = inst.tex_coord_size * inst.num_tex_coords;
+            let size = inst.tex_coord_size * inst.num_tex_coords;
             inst.tex_coords = new Float32Array(size);
             this._getFloat32Array(inst.tex_coords, 0, size);
         }
 
         // skin (inline).
-        var has_skinning = this._getBool();
+        let has_skinning = this._getBool();
         if (has_skinning) {
             inst.skin = new ns.XModelSkin();
             this._getSkin(inst.skin);
@@ -948,8 +948,8 @@
         inst.num_vertices = this._getInt32();
         if (0 < inst.num_vertices) {
             inst.vertices = new Array(inst.num_vertices);
-            for (var i = 0; i < inst.num_vertices; ++i) {
-                var vertex = new ns.XModelVertex();
+            for (let i = 0; i < inst.num_vertices; ++i) {
+                let vertex = new ns.XModelVertex();
                 this._getVertex(
                     vertex,
                     inst.num_positions,
@@ -972,8 +972,8 @@
         inst.num_elements = this._getInt32();
         if (0 < inst.num_elements) {
             inst.elements = new Array(inst.num_elements);
-            for (var i = 0; i < inst.num_elements; ++i) {
-                var element = new ns.XModelElement();
+            for (let i = 0; i < inst.num_elements; ++i) {
+                let element = new ns.XModelElement();
                 this._getElement(element);
                 inst.elements[i] = element
             }
@@ -1001,23 +1001,23 @@
             inst.weighted_index_sizes = new Uint8Array(inst.num_weighted_indices);
 
             // array of weighted indices.
-            var num = inst.weighted_index_stride * inst.num_weighted_indices;
+            let num = inst.weighted_index_stride * inst.num_weighted_indices;
             inst.indices = new Int16Array(num);
             inst.weights = new Float32Array(num);
-            for (var i = 0; i < num; ++i) {
+            for (let i = 0; i < num; ++i) {
                 inst.indices[i] = -1;
                 inst.weights[i] = 0;
             }
             ns.ArrayUtils.fill(inst.indices, 0, num, -1);
             ns.ArrayUtils.fill(inst.weights, 0, num, 0);
 
-            for (var i = 0, index = 0; i < inst.num_weighted_indices; ++i, index += inst.weighted_index_stride) {
+            for (let i = 0, index = 0; i < inst.num_weighted_indices; ++i, index += inst.weighted_index_stride) {
                 // number of elements.
-                var size = this._getInt8();
+                let size = this._getInt8();
                 inst.weighted_index_sizes[i] = size;
 
-                for (var j = 0; j < size; ++j) {
-                    var ind = index + j;
+                for (let j = 0; j < size; ++j) {
+                    let ind = index + j;
 
                     // index.
                     inst.indices[ind] = this._getInt16();
@@ -1036,13 +1036,13 @@
             this._getStructureArray(inst.nodes, 0, inst.num_nodes);
 
             // offset transformation matrices.
-            var matrices_size = ns.XModelStructure.SIZE_MATRIX * inst.num_nodes;
+            let matrices_size = ns.XModelStructure.SIZE_MATRIX * inst.num_nodes;
             inst.offset_matrices = new Float32Array(matrices_size);
             this._getFloat32Array(inst.offset_matrices, 0, matrices_size);
 
             // offset rotate quaternions.
             // @deprecated
-            var quaternions_size = ns.XModelStructure.SIZE_QUATERNION * inst.num_nodes;
+            let quaternions_size = ns.XModelStructure.SIZE_QUATERNION * inst.num_nodes;
             inst.offset_quaternions = new Float32Array(quaternions_size);
             this._getFloat32Array(inst.offset_quaternions, 0, quaternions_size);
         }
@@ -1165,8 +1165,8 @@
         if (0 < inst.num_meshes) {
             inst.meshes = new Array(inst.num_meshes);
             this._getStructureArray(inst.meshes, 0, inst.num_meshes);
-            for (var i = 0; i < inst.num_meshes; ++i) {
-                var mesh = inst.meshes[i];
+            for (let i = 0; i < inst.num_meshes; ++i) {
+                let mesh = inst.meshes[i];
                 if (mesh != null) {
                     mesh.parent = inst;
                 }
@@ -1178,8 +1178,8 @@
         if (0 < inst.num_children) {
             inst.children = new Array(inst.num_children);
             this._getStructureArray(inst.children, 0, inst.num_children);
-            for (var i = 0; i < inst.num_children; ++i) {
-                var node = inst.children[i];
+            for (let i = 0; i < inst.num_children; ++i) {
+                let node = inst.children[i];
                 if (node != null) {
                     node.parent = inst;
                 }

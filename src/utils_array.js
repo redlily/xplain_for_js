@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -39,8 +40,8 @@
      * @namespace xpl.ArrayUtils
      * @author Syuuhei Kuno
      */
-    ns.ArrayUtils = function() {
-        throw new Error("Unsupported operation");
+    ns.ArrayUtils = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -79,8 +80,8 @@
      * @param {Number} dest_off - Starting position in the destination.
      * @param {Number} len - Number of the elements to be copied.
      */
-    ns.ArrayUtils.copy = function(src, src_off, dest, dest_off, len) {
-        for (var i = 0; i < len; ++i) {
+    ns.ArrayUtils.copy = function (src, src_off, dest, dest_off, len) {
+        for (let i = 0; i < len; ++i) {
             dest[dest_off + i] = src[src_off + i];
         }
     };
@@ -95,8 +96,8 @@
      * @param {Number} to - The index of the last element.
      * @param {Number} value - The value.
      */
-    ns.ArrayUtils.fill = function(ary, from, to, value) {
-        for (var i = from; i < to; ++i) {
+    ns.ArrayUtils.fill = function (ary, from, to, value) {
+        for (let i = from; i < to; ++i) {
             ary[i] = value;
         }
     };
@@ -110,16 +111,16 @@
      * @param {Number} from - The index of the first element.
      * @param {Number} to - The index of the last element.
      * @param {Number} key - The key value.
-     * @param {xpl.ArrayUtils.comparator} [comparator=null] -
+     * @param {xpl.ArrayUtils~comparator} [comparator=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @returns {Number} The index to element.
      */
-    ns.ArrayUtils.binarySearch = function(ary, from, to, key, comparator) {
+    ns.ArrayUtils.binarySearch = function (ary, from, to, key, comparator) {
         to--;
         while (from <= to) {
-            var mid = (from + to) >> 1;
-            var value = ary[mid];
-            var c;
+            let mid = (from + to) >> 1;
+            let value = ary[mid];
+            let c;
             if (comparator != null) {
                 c = comparator(value, key);
             } else {
@@ -144,17 +145,17 @@
      * @param {Array} ary - The array.
      * @param {Number} from - The index of the first element.
      * @param {Number} to - The index of the last element.
-     * @param {xpl.ArrayUtils.collection} [collection=null] -
+     * @param {xpl.ArrayUtils~collection} [comparator=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @returns {Array} The new array.
      */
-    ns.ArrayUtils.convertToSet = function(ary, from, to, comparator) {
-        var dest = [];
-        loop: for (var i = from; i < to; ++i) {
-            var value = ary[i];
-            for (var j = 0; j < dest.length; ++j) {
+    ns.ArrayUtils.convertToSet = function (ary, from, to, comparator) {
+        let dest = [];
+        loop: for (let i = from; i < to; ++i) {
+            let value = ary[i];
+            for (let j = 0; j < dest.length; ++j) {
                 if (comparator != null ?
-                    dest[j] == value || comparator(dest[j], value) :
+                        comparator(dest[j], value) :
                     dest[j] == value) {
                     continue loop;
                 }
@@ -175,24 +176,23 @@
      * @param {Array} subset - The subset.
      * @param {Number} subset_from - The index of the first element at subset.
      * @param {Number} subset_to - The index of the last element at subset.
-     * @param {xpl.ArrayUtils.collection} [collection=null] -
+     * @param {xpl.ArrayUtils~collection} [collection=null] -
      *              The comparison function. Can specified the null if not needed it.
      * @return {Boolean}
      *              Returns value is check result,
      *              the if subset contained all elements in superset,
      *              false if subset not contained all elements in superset.
      */
-    ns.ArrayUtils.isContained = function(superset, superset_from, superset_to,
-                                         subset, subset_from, subset_to,
-                                         comparator) {
+    ns.ArrayUtils.isContained = function (superset, superset_from, superset_to,
+                                          subset, subset_from, subset_to,
+                                          collection) {
         if (superset_to - superset_from < subset_to - subset_from) {
             return false;
         }
-        loop: for (var i = subset_from; i < subset_to; ++i) {
-            var value = subset[i];
-            for (var j = superset_from; j < superset_to; ++j) {
-                if (comparator != null ?
-                    superset[j] == value || comparator(superset[j], value) :
+        loop: for (let i = subset_from; i < subset_to; ++i) {
+            let value = subset[i];
+            for (let j = superset_from; j < superset_to; ++j) {
+                if (collection != null ? collection(superset[j], value) :
                     superset[j] == value) {
                     continue loop;
                 }

@@ -54,7 +54,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_STRUCTURE_SIZE
          */
         "ATTRIBUTE_STRUCTURE_SIZE": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -65,7 +66,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_POSITION
          */
         "ATTRIBUTE_POSITION": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -76,7 +78,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_NORMAL
          */
         "ATTRIBUTE_NORMAL": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -87,7 +90,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_COLOR
          */
         "ATTRIBUTE_COLOR": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -98,7 +102,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_TEXCOORD
          */
         "ATTRIBUTE_TEXCOORD": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -109,7 +114,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_BONELENGTH
          */
         "ATTRIBUTE_BONELENGTH": {
-            value: 5,
+
+            value: 5
         },
 
         /**
@@ -120,7 +126,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_BONEINDICES
          */
         "ATTRIBUTE_BONEINDICES": {
-            value: 6,
+
+            value: 6
         },
 
         /**
@@ -131,7 +138,8 @@
          * @member {xpl.enum_t} ATTRIBUTE_BONEWEIGHTS
          */
         "ATTRIBUTE_BONEWEIGHTS": {
-            value: 7,
+
+            value: 7
         },
 
         /**
@@ -142,7 +150,8 @@
          * @member {xpl.enum_t} MAX_ATTRIBUTE
          */
         "MAX_ATTRIBUTE": {
-            value: 8,
+
+            value: 8
         },
 
         /**
@@ -153,7 +162,8 @@
          * @member {xpl.enum_t} TYPE_VOID
          */
         "TYPE_VOID": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -164,7 +174,8 @@
          * @member {xpl.enum_t} TYPE_UNSIGNED_BYTE
          */
         "TYPE_UNSIGNED_BYTE": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -175,7 +186,8 @@
          * @member {xpl.enum_t} TYPE_UNSIGNED_SHORT
          */
         "TYPE_UNSIGNED_SHORT": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -186,7 +198,8 @@
          * @member {xpl.enum_t} TYPE_UNSIGNED_INT
          */
         "TYPE_UNSIGNED_INT": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -197,8 +210,9 @@
          * @member {xpl.enum_t} TYPE_FLOAT
          */
         "TYPE_FLOAT": {
-            value: 4,
-        },
+
+            value: 4
+        }
     });
 
     /**
@@ -213,7 +227,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getPositions = function(mesh, size, stride, buf, off, subset) {
@@ -274,9 +288,10 @@
      * @param {xpl.size_t} size - Size of the normal structure.
      * @param {xpl.size_t} stride - Size of the normal structure.
      * @param {Float32Array} buf - The destination buffer.
+     * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getNormals = function(mesh, size, stride, buf, off, subset) {
@@ -340,7 +355,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getColors = function(mesh, size, stride, buf, off, subset) {
@@ -408,7 +423,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getTexCoords = function(mesh, size, stride, buf, off, subset) {
@@ -466,13 +481,12 @@
      * @memberof xpl.XModelMesh
      * @function getSkinBoneLengths
      * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {xpl.size_t} size - Size of the bone lengths structure.
      * @param {xpl.size_t} stride - Size of the bone lengths structure.
      * @param {Uint16Array} buf - The destination buffer.
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneLengths = function(mesh, stride, buf, off, subset) {
@@ -521,7 +535,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneIndices = function(mesh, size, stride, buf, off, subset) {
@@ -595,7 +609,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
     ns.XModelMeshUtils.getSkinBoneWeights = function(mesh, size, stride, buf, off, subset) {
@@ -673,7 +687,7 @@
      * @param {xpl.size_t} off - Starting position in the destination attribute indices.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first arguments).
      * @returns {xpl.size_t} byte size of the all attributes.
      */
     ns.XModelMeshUtils.getVerticesSize = function(mesh,
@@ -798,7 +812,7 @@
      * @param {xpl.size_t} buf_off - The offset of array buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      */
     ns.XModelMeshUtils.getVertices = function(mesh,
                                               position_type,
@@ -992,7 +1006,7 @@
      * @param {xpl.size_t} material - The index of material.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
     ns.XModelMeshUtils.getNumTriangledFaceIndices = function(mesh, material, subset) {
@@ -1046,7 +1060,7 @@
      *              array of each size.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t}
      *              The number of elements.
      */
@@ -1095,7 +1109,7 @@
      * @param {xpl.size_t} off - Starting position in the buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
     ns.XModelMeshUtils.getTriangledFaceIndices = function(mesh,
@@ -1158,7 +1172,7 @@
      * @param {xpl.size_t} buf_off - The offset of buffer.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argment).
+     *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
     ns.XModelMeshUtils.getAllTriangledFaceIndices = function(mesh,
@@ -1173,7 +1187,7 @@
                     mesh, i, reverse, buf, buf_off + offs[offs_off + i], subset);
             }
         }
-        var count;
+        return count;
     };
 
     /**

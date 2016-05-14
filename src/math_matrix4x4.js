@@ -29,12 +29,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
-    var M00 = 0, M01 = 4, M02 = 8,  M03 = 12,
-        M10 = 1, M11 = 5, M12 = 9,  M13 = 13,
+    let M00 = 0, M01 = 4, M02 = 8, M03 = 12,
+        M10 = 1, M11 = 5, M12 = 9, M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
@@ -44,8 +44,8 @@
      * @namespace xpl.Matrix4x4
      * @author Syuuhei Kuno
      */
-    ns.Matrix4x4 = function() {
-        throw new Error("Unsupported operation");
+    ns.Matrix4x4 = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -75,25 +75,49 @@
      *              Set true if transpose the matrix,
      *              set false if don't transpose the matrix.
      */
-    ns.Matrix4x4.load = function(d, d_off,
-                                 m00, m01, m02, m03,
-                                 m10, m11, m12, m13,
-                                 m20, m21, m22, m23,
-                                 m30, m31, m32, m33,
-                                 transpose) {
+    ns.Matrix4x4.load = function (d, d_off,
+                                  m00, m01, m02, m03,
+                                  m10, m11, m12, m13,
+                                  m20, m21, m22, m23,
+                                  m30, m31, m32, m33,
+                                  transpose) {
         if (transpose === undefined) {
             transpose = false;
         }
         if (transpose) {
-            d[d_off + M00] = m00; d[d_off + M01] = m10; d[d_off + M02] = m20; d[d_off + M03] = m30;
-            d[d_off + M10] = m01; d[d_off + M11] = m11; d[d_off + M12] = m21; d[d_off + M13] = m31;
-            d[d_off + M20] = m02; d[d_off + M21] = m12; d[d_off + M22] = m22; d[d_off + M23] = m32;
-            d[d_off + M30] = m03; d[d_off + M31] = m13; d[d_off + M32] = m23; d[d_off + M33] = m33;
+            d[d_off + M00] = m00;
+            d[d_off + M01] = m10;
+            d[d_off + M02] = m20;
+            d[d_off + M03] = m30;
+            d[d_off + M10] = m01;
+            d[d_off + M11] = m11;
+            d[d_off + M12] = m21;
+            d[d_off + M13] = m31;
+            d[d_off + M20] = m02;
+            d[d_off + M21] = m12;
+            d[d_off + M22] = m22;
+            d[d_off + M23] = m32;
+            d[d_off + M30] = m03;
+            d[d_off + M31] = m13;
+            d[d_off + M32] = m23;
+            d[d_off + M33] = m33;
         } else {
-            d[d_off + M00] = m00; d[d_off + M01] = m01; d[d_off + M02] = m02; d[d_off + M03] = m03;
-            d[d_off + M10] = m10; d[d_off + M11] = m11; d[d_off + M12] = m12; d[d_off + M13] = m13;
-            d[d_off + M20] = m20; d[d_off + M21] = m21; d[d_off + M22] = m22; d[d_off + M23] = m23;
-            d[d_off + M30] = m30; d[d_off + M31] = m31; d[d_off + M32] = m32; d[d_off + M33] = m33;
+            d[d_off + M00] = m00;
+            d[d_off + M01] = m01;
+            d[d_off + M02] = m02;
+            d[d_off + M03] = m03;
+            d[d_off + M10] = m10;
+            d[d_off + M11] = m11;
+            d[d_off + M12] = m12;
+            d[d_off + M13] = m13;
+            d[d_off + M20] = m20;
+            d[d_off + M21] = m21;
+            d[d_off + M22] = m22;
+            d[d_off + M23] = m23;
+            d[d_off + M30] = m30;
+            d[d_off + M31] = m31;
+            d[d_off + M32] = m32;
+            d[d_off + M33] = m33;
         }
     };
 
@@ -110,7 +134,7 @@
      *              Set true if transpose the matrix,
      *              set false if don't transpose the matrix.
      */
-    ns.Matrix4x4.loadv = function(d, d_off, m, m_off, transpose) {
+    ns.Matrix4x4.loadv = function (d, d_off, m, m_off, transpose) {
         ns.Matrix4x4.load(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
@@ -128,7 +152,7 @@
      * @param {Array.<Number>} d - The destination matrix.
      * @param {Number} d_off - Starting position in the destination matrix.
      */
-    ns.Matrix4x4.loadZero = function(d, d_off) {
+    ns.Matrix4x4.loadZero = function (d, d_off) {
         ns.Matrix4x4.load(
             d, d_off,
             0, 0, 0, 0,
@@ -139,14 +163,14 @@
     };
 
     /**
-     * Load the identiry values at the all elements of the matrix.
+     * Load the identity values at the all elements of the matrix.
      *
      * @memberof xpl.Matrix4x4
      * @function loadIdentity
      * @param {Array.<Number>} d - The destination matrix.
      * @param {Number} d_off - Starting position in the destination matrix.
      */
-    ns.Matrix4x4.loadIdentity = function(d, d_off) {
+    ns.Matrix4x4.loadIdentity = function (d, d_off) {
         ns.Matrix4x4.load(
             d, d_off,
             1, 0, 0, 0,
@@ -169,9 +193,9 @@
      * @param {Number} b_off - Starting position in the end point matrix.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Matrix4x4.lrepv = function(d, d_off, a, a_off, b, b_off, t) {
+    ns.Matrix4x4.lrepv = function (d, d_off, a, a_off, b, b_off, t) {
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-        var t1 = 1.0 - t;
+        let t1 = 1.0 - t;
         ns.Matrix4x4.load(
             d, d_off,
             a[a_off + M00] * t1 + b[b_off + M00] * t,
@@ -203,15 +227,27 @@
      * @param {Array.<Number>} m - The target matrix.
      * @param {Number} m_off - Starting position in the target matrix.
      */
-    ns.Matrix4x4.transposev = function(d, d_off, m, m_off) {
-        var m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
-        var m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
-        var m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
-        var m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
-        d[d_off + M00] = m00; d[d_off + M01] = m10; d[d_off + M02] = m20; d[d_off + M03] = m30;
-        d[d_off + M10] = m01; d[d_off + M11] = m11; d[d_off + M12] = m21; d[d_off + M13] = m31;
-        d[d_off + M20] = m02; d[d_off + M21] = m12; d[d_off + M22] = m22; d[d_off + M23] = m32;
-        d[d_off + M30] = m03; d[d_off + M31] = m13; d[d_off + M32] = m23; d[d_off + M33] = m33;
+    ns.Matrix4x4.transposev = function (d, d_off, m, m_off) {
+        let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
+        let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
+        let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
+        let m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
+        d[d_off + M00] = m00;
+        d[d_off + M01] = m10;
+        d[d_off + M02] = m20;
+        d[d_off + M03] = m30;
+        d[d_off + M10] = m01;
+        d[d_off + M11] = m11;
+        d[d_off + M12] = m21;
+        d[d_off + M13] = m31;
+        d[d_off + M20] = m02;
+        d[d_off + M21] = m12;
+        d[d_off + M22] = m22;
+        d[d_off + M23] = m32;
+        d[d_off + M30] = m03;
+        d[d_off + M31] = m13;
+        d[d_off + M32] = m23;
+        d[d_off + M33] = m33;
     };
 
     /**
@@ -223,14 +259,14 @@
      * @param {Number} m_off - Starting position in the target matrix.
      * @returns {Number} The determinant value.
      */
-    ns.Matrix4x4.determinant = function(m, m_off) {
-        var m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
-        var m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
-        var m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
-        return m[m_off + M00] * (m11* (m22 * m33 - m23 * m32) + m12 * (m23 * m31 - m21 * m33) + m13 * (m21 * m32 - m22 * m31)) +
-               m[m_off + M01] * (m10* (m23 * m32 - m22 * m33) + m12 * (m20 * m33 - m23 * m30) + m13 * (m22 * m30 - m20 * m32)) +
-               m[m_off + M02] * (m10* (m21 * m33 - m23 * m31) + m11 * (m23 * m30 - m20 * m33) + m13 * (m20 * m31 - m21 * m30)) +
-               m[m_off + M03] * (m10* (m22 * m31 - m21 * m32) + m11 * (m20 * m32 - m22 * m30) + m12 * (m21 * m30 - m20 * m31));
+    ns.Matrix4x4.determinant = function (m, m_off) {
+        let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
+        let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
+        let m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
+        return m[m_off + M00] * (m11 * (m22 * m33 - m23 * m32) + m12 * (m23 * m31 - m21 * m33) + m13 * (m21 * m32 - m22 * m31)) +
+            m[m_off + M01] * (m10 * (m23 * m32 - m22 * m33) + m12 * (m20 * m33 - m23 * m30) + m13 * (m22 * m30 - m20 * m32)) +
+            m[m_off + M02] * (m10 * (m21 * m33 - m23 * m31) + m11 * (m23 * m30 - m20 * m33) + m13 * (m20 * m31 - m21 * m30)) +
+            m[m_off + M03] * (m10 * (m22 * m31 - m21 * m32) + m11 * (m20 * m32 - m22 * m30) + m12 * (m21 * m30 - m20 * m31));
     };
 
     /**
@@ -243,28 +279,28 @@
      * @param {Array.<Number>} m - The target matrix.
      * @param {Number} m_off - Starting position in the target matrix.
      */
-    ns.Matrix4x4.inversev = function(d, d_off, m, m_off) {
-        var m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
-        var m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
-        var m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
-        var m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
+    ns.Matrix4x4.inversev = function (d, d_off, m, m_off) {
+        let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
+        let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
+        let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
+        let m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
 
         // calculate the common denominator.
-        var m10_m21 = m10 * m21, m10_m22 = m10 * m22, m10_m23 = m10 * m23, m10_m31 = m10 * m31, m10_m32 = m10 * m32, m10_m33 = m10 * m33;
-        var m11_m20 = m11 * m20, m11_m22 = m11 * m22, m11_m23 = m11 * m23, m11_m30 = m11 * m30, m11_m32 = m11 * m32, m11_m33 = m11 * m33;
-        var m12_m20 = m12 * m20, m12_m21 = m12 * m21, m12_m23 = m12 * m23, m12_m30 = m12 * m30, m12_m31 = m12 * m31, m12_m33 = m12 * m33;
-        var m13_m20 = m13 * m20, m13_m21 = m13 * m21, m13_m22 = m13 * m22, m13_m30 = m13 * m30, m13_m31 = m13 * m31, m13_m32 = m13 * m32;
-        var m20_m31 = m20 * m31, m20_m32 = m20 * m32, m20_m33 = m20 * m33;
-        var m21_m30 = m21 * m30, m21_m32 = m21 * m32, m21_m33 = m21 * m33;
-        var m22_m30 = m22 * m30, m22_m31 = m22 * m31, m22_m33 = m22 * m33;
-        var m23_m30 = m23 * m30, m23_m31 = m23 * m31, m23_m32 = m23 * m32;
+        let m10_m21 = m10 * m21, m10_m22 = m10 * m22, m10_m23 = m10 * m23, m10_m31 = m10 * m31, m10_m32 = m10 * m32, m10_m33 = m10 * m33;
+        let m11_m20 = m11 * m20, m11_m22 = m11 * m22, m11_m23 = m11 * m23, m11_m30 = m11 * m30, m11_m32 = m11 * m32, m11_m33 = m11 * m33;
+        let m12_m20 = m12 * m20, m12_m21 = m12 * m21, m12_m23 = m12 * m23, m12_m30 = m12 * m30, m12_m31 = m12 * m31, m12_m33 = m12 * m33;
+        let m13_m20 = m13 * m20, m13_m21 = m13 * m21, m13_m22 = m13 * m22, m13_m30 = m13 * m30, m13_m31 = m13 * m31, m13_m32 = m13 * m32;
+        let m20_m31 = m20 * m31, m20_m32 = m20 * m32, m20_m33 = m20 * m33;
+        let m21_m30 = m21 * m30, m21_m32 = m21 * m32, m21_m33 = m21 * m33;
+        let m22_m30 = m22 * m30, m22_m31 = m22 * m31, m22_m33 = m22 * m33;
+        let m23_m30 = m23 * m30, m23_m31 = m23 * m31, m23_m32 = m23 * m32;
 
         // calculate the determinant.
-        var det00 = m11 * (m22_m33 - m23_m32) + m12 * (m23_m31 - m21_m33) + m13 * (m21_m32 - m22_m31);
-        var det01 = m10 * (m23_m32 - m22_m33) + m12 * (m20_m33 - m23_m30) + m13 * (m22_m30 - m20_m32);
-        var det02 = m10 * (m21_m33 - m23_m31) + m11 * (m23_m30 - m20_m33) + m13 * (m20_m31 - m21_m30);
-        var det03 = m10 * (m22_m31 - m21_m32) + m11 * (m20_m32 - m22_m30) + m12 * (m21_m30 - m20_m31);
-        var det = m00 * det00 + m01 * det01 + m02 * det02 + m03 * det03;
+        let det00 = m11 * (m22_m33 - m23_m32) + m12 * (m23_m31 - m21_m33) + m13 * (m21_m32 - m22_m31);
+        let det01 = m10 * (m23_m32 - m22_m33) + m12 * (m20_m33 - m23_m30) + m13 * (m22_m30 - m20_m32);
+        let det02 = m10 * (m21_m33 - m23_m31) + m11 * (m23_m30 - m20_m33) + m13 * (m20_m31 - m21_m30);
+        let det03 = m10 * (m22_m31 - m21_m32) + m11 * (m20_m32 - m22_m30) + m12 * (m21_m30 - m20_m31);
+        let det = m00 * det00 + m01 * det01 + m02 * det02 + m03 * det03;
 
         // inverse then load on the matrix.
         ns.Matrix4x4.load(
@@ -328,15 +364,15 @@
      * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
      * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.add = function(d, d_off,
-                                a00, a01, a02, a03,
-                                a10, a11, a12, a13,
-                                a20, a21, a22, a23,
-                                a30, a31, a32, a33,
-                                b00, b01, b02, b03,
-                                b10, b11, b12, b13,
-                                b20, b21, b22, b23,
-                                b30, b31, b32, b33) {
+    ns.Matrix4x4.add = function (d, d_off,
+                                 a00, a01, a02, a03,
+                                 a10, a11, a12, a13,
+                                 a20, a21, a22, a23,
+                                 a30, a31, a32, a33,
+                                 b00, b01, b02, b03,
+                                 b10, b11, b12, b13,
+                                 b20, b21, b22, b23,
+                                 b30, b31, b32, b33) {
         ns.Matrix4x4.load(
             d, d_off,
             a00 + b00, a01 + b01, a02 + b02, a03 + b03,
@@ -359,7 +395,7 @@
      * @param {Array.<Number>} b - The right-hand side matrix of operator.
      * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.addv = function(d, d_off, a, a_off, b, b_off) {
+    ns.Matrix4x4.addv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.add(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
@@ -412,15 +448,15 @@
      * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
      * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.sub = function(d, d_off,
-                                a00, a01, a02, a03,
-                                a10, a11, a12, a13,
-                                a20, a21, a22, a23,
-                                a30, a31, a32, a33,
-                                b00, b01, b02, b03,
-                                b10, b11, b12, b13,
-                                b20, b21, b22, b23,
-                                b30, b31, b32, b33) {
+    ns.Matrix4x4.sub = function (d, d_off,
+                                 a00, a01, a02, a03,
+                                 a10, a11, a12, a13,
+                                 a20, a21, a22, a23,
+                                 a30, a31, a32, a33,
+                                 b00, b01, b02, b03,
+                                 b10, b11, b12, b13,
+                                 b20, b21, b22, b23,
+                                 b30, b31, b32, b33) {
         ns.Matrix4x4.load(
             d, d_off,
             a00 - b00, a01 - b01, a02 - b02, a03 - b03,
@@ -442,7 +478,7 @@
      * @param {Array.<Number>} b - The right-hand side matrix of operator.
      * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.subv = function(d, d_off, a, a_off, b, b_off) {
+    ns.Matrix4x4.subv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.sub(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
@@ -495,15 +531,15 @@
      * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
      * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.mul = function(d, d_off,
-                                a00, a01, a02, a03,
-                                a10, a11, a12, a13,
-                                a20, a21, a22, a23,
-                                a30, a31, a32, a33,
-                                b00, b01, b02, b03,
-                                b10, b11, b12, b13,
-                                b20, b21, b22, b23,
-                                b30, b31, b32, b33) {
+    ns.Matrix4x4.mul = function (d, d_off,
+                                 a00, a01, a02, a03,
+                                 a10, a11, a12, a13,
+                                 a20, a21, a22, a23,
+                                 a30, a31, a32, a33,
+                                 b00, b01, b02, b03,
+                                 b10, b11, b12, b13,
+                                 b20, b21, b22, b23,
+                                 b30, b31, b32, b33) {
         ns.Matrix4x4.load(
             d, d_off,
             a00 * b00 + a01 * b10 + a02 * b20 + a03 * b30,
@@ -537,7 +573,7 @@
      * @param {Array.<Number>} b - The right-hand side matrix of operator.
      * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.mulv = function(d, d_off, a, a_off, b, b_off) {
+    ns.Matrix4x4.mulv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.mul(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
@@ -575,12 +611,12 @@
      * @param {Number} m33 - Element of 3-3 in the target matrix.
      * @param {Number} s - The target scalar.
      */
-    ns.Matrix4x4.mulScalar = function(d, d_off,
-                                      m00, m01, m02, m03,
-                                      m10, m11, m12, m13,
-                                      m20, m21, m22, m23,
-                                      m30, m31, m32, m33,
-                                      s) {
+    ns.Matrix4x4.mulScalar = function (d, d_off,
+                                       m00, m01, m02, m03,
+                                       m10, m11, m12, m13,
+                                       m20, m21, m22, m23,
+                                       m30, m31, m32, m33,
+                                       s) {
         ns.Matrix4x4.load(
             d, d_off,
             m00 * s, m01 * s, m02 * s, m03 * s,
@@ -601,7 +637,7 @@
      * @param {Number} m_off - Starting position in the target matrix.
      * @param {Number} s - The target scalar.
      */
-    ns.Matrix4x4.mulScalarv = function(d, d_off, m, m_off, s) {
+    ns.Matrix4x4.mulScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.mulScalar(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
@@ -651,31 +687,31 @@
      * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
      * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.div = function(d, d_off,
-                                a00, a01, a02, a03,
-                                a10, a11, a12, a13,
-                                a20, a21, a22, a23,
-                                a30, a31, a32, a33,
-                                b00, b01, b02, b03,
-                                b10, b11, b12, b13,
-                                b20, b21, b22, b23,
-                                b30, b31, b32, b33) {
+    ns.Matrix4x4.div = function (d, d_off,
+                                 a00, a01, a02, a03,
+                                 a10, a11, a12, a13,
+                                 a20, a21, a22, a23,
+                                 a30, a31, a32, a33,
+                                 b00, b01, b02, b03,
+                                 b10, b11, b12, b13,
+                                 b20, b21, b22, b23,
+                                 b30, b31, b32, b33) {
         // calculate the common denominator.
-        var m10_m21 = b10 * b21, m10_m22 = b10 * b22, m10_m23 = b10 * b23, m10_m31 = b10 * b31, m10_m32 = b10 * b32, m10_m33 = b10 * b33;
-        var m11_m20 = b11 * b20, m11_m22 = b11 * b22, m11_m23 = b11 * b23, m11_m30 = b11 * b30, m11_m32 = b11 * b32, m11_m33 = b11 * b33;
-        var m12_m20 = b12 * b20, m12_m21 = b12 * b21, m12_m23 = b12 * b23, m12_m30 = b12 * b30, m12_m31 = b12 * b31, m12_m33 = b12 * b33;
-        var m13_m20 = b13 * b20, m13_m21 = b13 * b21, m13_m22 = b13 * b22, m13_m30 = b13 * b30, m13_m31 = b13 * b31, m13_m32 = b13 * b32;
-        var m20_m31 = b20 * b31, m20_m32 = b20 * b32, m20_m33 = b20 * b33;
-        var m21_m30 = b21 * b30, m21_m32 = b21 * b32, m21_m33 = b21 * b33;
-        var m22_m30 = b22 * b30, m22_m31 = b22 * b31, m22_m33 = b22 * b33;
-        var m23_m30 = b23 * b30, m23_m31 = b23 * b31, m23_m32 = b23 * b32;
+        let m10_m21 = b10 * b21, m10_m22 = b10 * b22, m10_m23 = b10 * b23, m10_m31 = b10 * b31, m10_m32 = b10 * b32, m10_m33 = b10 * b33;
+        let m11_m20 = b11 * b20, m11_m22 = b11 * b22, m11_m23 = b11 * b23, m11_m30 = b11 * b30, m11_m32 = b11 * b32, m11_m33 = b11 * b33;
+        let m12_m20 = b12 * b20, m12_m21 = b12 * b21, m12_m23 = b12 * b23, m12_m30 = b12 * b30, m12_m31 = b12 * b31, m12_m33 = b12 * b33;
+        let m13_m20 = b13 * b20, m13_m21 = b13 * b21, m13_m22 = b13 * b22, m13_m30 = b13 * b30, m13_m31 = b13 * b31, m13_m32 = b13 * b32;
+        let m20_m31 = b20 * b31, m20_m32 = b20 * b32, m20_m33 = b20 * b33;
+        let m21_m30 = b21 * b30, m21_m32 = b21 * b32, m21_m33 = b21 * b33;
+        let m22_m30 = b22 * b30, m22_m31 = b22 * b31, m22_m33 = b22 * b33;
+        let m23_m30 = b23 * b30, m23_m31 = b23 * b31, m23_m32 = b23 * b32;
 
         // calculate the determinant.
-        var det00 = b11 * (m22_m33 - m23_m32) + b12 * (m23_m31 - m21_m33) + b13 * (m21_m32 - m22_m31);
-        var det01 = b10 * (m23_m32 - m22_m33) + b12 * (m20_m33 - m23_m30) + b13 * (m22_m30 - m20_m32);
-        var det02 = b10 * (m21_m33 - m23_m31) + b11 * (m23_m30 - m20_m33) + b13 * (m20_m31 - m21_m30);
-        var det03 = b10 * (m22_m31 - m21_m32) + b11 * (m20_m32 - m22_m30) + b12 * (m21_m30 - m20_m31);
-        var det = b00 * det00 + b01 * det01 + b02 * det02 + b03 * det03;
+        let det00 = b11 * (m22_m33 - m23_m32) + b12 * (m23_m31 - m21_m33) + b13 * (m21_m32 - m22_m31);
+        let det01 = b10 * (m23_m32 - m22_m33) + b12 * (m20_m33 - m23_m30) + b13 * (m22_m30 - m20_m32);
+        let det02 = b10 * (m21_m33 - m23_m31) + b11 * (m23_m30 - m20_m33) + b13 * (m20_m31 - m21_m30);
+        let det03 = b10 * (m22_m31 - m21_m32) + b11 * (m20_m32 - m22_m30) + b12 * (m21_m30 - m20_m31);
+        let det = b00 * det00 + b01 * det01 + b02 * det02 + b03 * det03;
 
         // inverse then multiplication and load on the matrix.
         ns.Matrix4x4.mul(
@@ -716,7 +752,7 @@
      * @param {Array.<Number>} b - The right-hand side matrix of operator.
      * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
      */
-    ns.Matrix4x4.divv = function(d, d_off, a, a_off, b, b_off) {
+    ns.Matrix4x4.divv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.div(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
@@ -754,12 +790,12 @@
      * @param {Number} m33 - Element of 3-3 in the target matrix.
      * @param {Number} s - The target scalar.
      */
-    ns.Matrix4x4.divScalar = function(d, d_off,
-                                      m00, m01, m02, m03,
-                                      m10, m11, m12, m13,
-                                      m20, m21, m22, m23,
-                                      m30, m31, m32, m33,
-                                      s) {
+    ns.Matrix4x4.divScalar = function (d, d_off,
+                                       m00, m01, m02, m03,
+                                       m10, m11, m12, m13,
+                                       m20, m21, m22, m23,
+                                       m30, m31, m32, m33,
+                                       s) {
         ns.Matrix4x4.load(
             d, d_off,
             m00 / s, m01 / s, m02 / s, m03 / s,
@@ -780,9 +816,9 @@
      * @param {Number} m_off - Starting position in the target matrix.
      * @param {Number} s - The target scalar.
      */
-    ns.Matrix4x4.divScalarv = function(d, off, m, m_off, s) {
+    ns.Matrix4x4.divScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.divScalar(
-            d, off,
+            d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
             m[m_off + M10], m[m_off + M11], m[m_off + M12], m[m_off + M13],
             m[m_off + M20], m[m_off + M21], m[m_off + M22], m[m_off + M23],
@@ -799,11 +835,12 @@
      * @param {Number} m_off - Starting position in the source matrix.
      * @returns {String} The converted matrix to string.
      */
-    ns.Matrix4x4.convertToString = function(m, off) {
-        return "Matrix4x4(" + m[off + M00] + ", " + m[off + M01] + ", " + m[off + M02] + ", " + m[off + M03] + ",\n" +
-               "          " + m[off + M10] + ", " + m[off + M11] + ", " + m[off + M12] + ", " + m[off + M13] + ",\n" +
-               "          " + m[off + M20] + ", " + m[off + M21] + ", " + m[off + M22] + ", " + m[off + M23] + ",\n" +
-               "          " + m[off + M30] + ", " + m[off + M31] + ", " + m[off + M32] + ", " + m[off + M33] + ")";
+    ns.Matrix4x4.convertToString = function (m, m_off) {
+        return "Matrix4x4(" + "\n" +
+            "   " + m[m_off + M00] + ", " + m[m_off + M01] + ", " + m[m_off + M02] + ", " + m[m_off + M03] + ",\n" +
+            "   " + m[m_off + M10] + ", " + m[m_off + M11] + ", " + m[m_off + M12] + ", " + m[m_off + M13] + ",\n" +
+            "   " + m[m_off + M20] + ", " + m[m_off + M21] + ", " + m[m_off + M22] + ", " + m[m_off + M23] + ",\n" +
+            "   " + m[m_off + M30] + ", " + m[m_off + M31] + ", " + m[m_off + M32] + ", " + m[m_off + M33] + ")";
     };
 
 })(xpl);

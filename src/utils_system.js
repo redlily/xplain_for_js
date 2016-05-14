@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- (function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -39,14 +40,14 @@
      * @author Syuuhei Kuno
      * @namespace xpl.StringUtils
      */
-    ns.SystemUtils = function() {
-        throw new Error("Unsupported operation");
+    ns.SystemUtils = function () {
+        throw new Error("Unsupported operation!");
     };
 
     // initialize the utilities with window.
     if (typeof window == "object") {
-        var requestAnimationFrame = null;
-        var cancelAnimationFrame = null;
+        let requestAnimationFrame = null;
+        let cancelAnimationFrame = null;
         if (typeof window.requestAnimationFrame == "function") {
             // HTML5 API.
             requestAnimationFrame = window.requestAnimationFrame;
@@ -57,33 +58,33 @@
             cancelAnimationFrame = window.mozCancelAnimationFrame;
         } else if (typeof window.webkitRequestAnimationFrame == "function") {
             // Webkit API.
-            requestAnimationFrame = function(callback) {
-                var timer = window.webkitRequestAnimationFrame(function() {
+            requestAnimationFrame = function (callback) {
+                let timer = window.webkitRequestAnimationFrame(function () {
                     if (!timer.__is_cancel) {
                         callback();
                     }
                 });
                 return timer;
             };
-            cancelAnimationFrame = function(timer) {
+            cancelAnimationFrame = function (timer) {
                 timer.__is_cancel = true;
             };
-        } else if (typeof window.msRequestAnimationFrame == "Function") {
+        } else if (typeof window.msRequestAnimationFrame == "function") {
             // Classic Microsoft API.
-            requestAnimationFrame = function(callback) {
-                var timer = window.msRequestAnimationFrame(function() {
+            requestAnimationFrame = function (callback) {
+                let timer = window.msRequestAnimationFrame(function () {
                     if (!timer.__is_cancel) {
                         callback();
                     }
                 });
                 return timer;
             };
-            cancelAnimationFrame = function(timer) {
+            cancelAnimationFrame = function (timer) {
                 timer.__is_cancel = true;
             };
         } else {
             // unknown.
-            requestAnimationFrame = function(callback) {
+            requestAnimationFrame = function (callback) {
                 return setTimeout(callback, 2);
             };
             cancelAnimationFrame = clearTimeout;
@@ -97,7 +98,7 @@
          * @param {Function} callback -
          * @returns {Object}
          */
-        ns.SystemUtils.requestAnimationFrame = function(callback) {
+        ns.SystemUtils.requestAnimationFrame = function (callback) {
             return requestAnimationFrame(callback);
         };
 
@@ -108,8 +109,8 @@
          * @function cancelAnimationFrame
          * @param {Object} timerId -
          */
-        ns.SystemUtils.cancelAnimationFrame = function(timerId) {
-            cancelAnimationFrame(timer);
+        ns.SystemUtils.cancelAnimationFrame = function (timerId) {
+            cancelAnimationFrame(timerId);
         };
     }
 
@@ -123,11 +124,11 @@
          *              True if supported the full screen mode, false if
          *              supported the full screen mode.
          */
-        ns.SystemUtils.isSupportedFullScreen = function(target_element) {
+        ns.SystemUtils.isSupportedFullScreen = function (target_element) {
             return (target_element.requestFullscreen ||
-                    target_element.mozRequestFullScreen ||
-                    target_element.webkitRequestFullscreen ||
-                    target_element.msRequestFullscreen) != null;
+                target_element.mozRequestFullScreen ||
+                target_element.webkitRequestFullscreen ||
+                target_element.msRequestFullscreen) != null;
         };
 
         /**
@@ -139,7 +140,7 @@
          * @returns {Boolean}
          *              True if requested successful, false if requested failed.
          */
-        ns.SystemUtils.requestFullScreen = function(target_element) {
+        ns.SystemUtils.requestFullScreen = function (target_element) {
             if (typeof target_element.requestFullscreen == "function") {
                 // HTML5 API.
                 target_element.requestFullscreen();
@@ -163,7 +164,7 @@
          *
          * @returns {Boolean} True if full screen mode, false if window mode.
          */
-        ns.SystemUtils.isFullScreen = function() {
+        ns.SystemUtils.isFullScreen = function () {
             return window.innerWidth == screen.width && window.innerHeight == screen.height;
         };
 
@@ -173,7 +174,7 @@
          * @memberof xpl.SystemUtils
          * @function cancelFullScreen
          */
-        ns.SystemUtils.cancelFullScreen = function() {
+        ns.SystemUtils.cancelFullScreen = function () {
             if (typeof document.exitFullscreen == "function") {
                 // HTML5 API.
                 document.exitFullscreen();
@@ -190,4 +191,4 @@
         };
     }
 
- })(xpl);
+})(xpl);

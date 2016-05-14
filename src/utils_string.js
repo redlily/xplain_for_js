@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -39,8 +40,8 @@
      * @author Syuuhei Kuno
      * @namespace xpl.StringUtils
      */
-    ns.StringUtils = function() {
-        throw new Error("Unsupported operation");
+    ns.StringUtils = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -51,14 +52,14 @@
      * @param {String} str - The target string.
      * @returns {Array} The encoded byte array to the UTF-8 codes.
      */
-    ns.StringUtils.encodeUTF8 = function(str) {
+    ns.StringUtils.encodeUTF8 = function (str) {
         var ary = [];
         for (var i = 0; i < str.length; ++i) {
             // convert from the UTF-16 codes to the UTF-8 codes.
             var code = str.charCodeAt(i);
             if ((0xd800 <= code && code <= 0xdfff) && i < str.length - 1) {
                 code = ((code & 0x3ff) << 10) | (str.charCodeAt(++i) & 0x3ff)
-                        + 0x10000;
+                    + 0x10000;
             }
             if (code < 0x80) {
                 // 7bit.
@@ -71,33 +72,33 @@
             } else if (code < 0x10000) {
                 // 16bit.
                 ary.push(
-                    ((code >> 12) & 0xf)  | 0xe0,
-                    ((code >> 6)  & 0x3f) | 0x80,
-                    ((code >> 0)  & 0x3f) | 0x80);
+                    ((code >> 12) & 0xf) | 0xe0,
+                    ((code >> 6) & 0x3f) | 0x80,
+                    ((code >> 0) & 0x3f) | 0x80);
             } else if (code < 0x200000) {
                 // 21bit.
                 ary.push(
-                    ((code >> 18) & 0x7)  | 0xf0,
+                    ((code >> 18) & 0x7) | 0xf0,
                     ((code >> 12) & 0x3f) | 0x80,
-                    ((code >> 6)  & 0x3f) | 0x80,
-                    ((code >> 0)  & 0x3f) | 0x80);
+                    ((code >> 6) & 0x3f) | 0x80,
+                    ((code >> 0) & 0x3f) | 0x80);
             } else if (code < 0x4000000) {
                 // 26bit.
                 ary.push(
-                    ((code >> 24) & 0x3)  | 0xf8,
+                    ((code >> 24) & 0x3) | 0xf8,
                     ((code >> 18) & 0x3f) | 0x80,
                     ((code >> 12) & 0x3f) | 0x80,
-                    ((code >> 6)  & 0x3f) | 0x80,
-                    ((code >> 0)  & 0x3f) | 0x80);
+                    ((code >> 6) & 0x3f) | 0x80,
+                    ((code >> 0) & 0x3f) | 0x80);
             } else if (code < 0x80000000) {
                 // 31bit.
                 ary.push(
-                    ((code >> 30) & 0x1)  | 0xfc,
+                    ((code >> 30) & 0x1) | 0xfc,
                     ((code >> 24) & 0x3f) | 0x80,
                     ((code >> 18) & 0x3f) | 0x80,
                     ((code >> 12) & 0x3f) | 0x80,
-                    ((code >> 6)  & 0x3f) | 0x80,
-                    ((code >> 0)  & 0x3f) | 0x80);
+                    ((code >> 6) & 0x3f) | 0x80,
+                    ((code >> 0) & 0x3f) | 0x80);
             }
         }
         return ary;
@@ -111,11 +112,11 @@
      * @param {Array} ary - The byte array of the UTF-8 codes.
      * @returns {String} The decoded string.
      */
-    ns.StringUtils.decodeUTF8 = function(ary) {
-        var str = "";
-        for (var i = 0; i < ary.length;) {
-            var code = 0xff & ary[i];
-            var remain = 0;
+    ns.StringUtils.decodeUTF8 = function (ary) {
+        let str = "";
+        for (let i = 0; i < ary.length;) {
+            let code = 0xff & ary[i];
+            let remain = 0;
 
             if (code < 0x80) {
                 // 7bit.
@@ -143,7 +144,7 @@
             }
             i++;
             while (0 < remain && i < ary.length) {
-                var c = ary[i];
+                let c = ary[i];
                 if (c < 0x80) {
                     break;
                 }
@@ -156,8 +157,8 @@
             } else {
                 // two unit the codes of UTF-16.
                 str += String.fromCharCode(
-                        0xd800 | (((code - 0x10000) >> 10) & 0x3ff),
-                        0xdc00 | (code & 0x3ff));
+                    0xd800 | (((code - 0x10000) >> 10) & 0x3ff),
+                    0xdc00 | (code & 0x3ff));
             }
         }
         return str;

@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -51,7 +51,7 @@
      * @param {xpl.enum_t} structure_type - The structure type.
      * @author Syuuhei Kuno
      */
-    ns.XModelStructure = function(structure_type) {
+    ns.XModelStructure = function (structure_type) {
 
         /**
          * uint32_t : Type of the structure.
@@ -82,7 +82,7 @@
          * @function valueOf
          * @returns {xpl.uint32_t} The identifier.
          */
-        this.valueOf = function() {
+        this.valueOf = function () {
             return identifier;
         };
 
@@ -95,7 +95,7 @@
          * @function hashCode
          * @returns {xpl.uint32_t} The hash code.
          */
-        this.hashCode = function() {
+        this.hashCode = function () {
             return identifier;
         };
     };
@@ -109,21 +109,22 @@
      * @param {xpl.XModelStructure} other - The other instance.
      * @returns {Boolean} Returns true if equivalent to the parameter.
      */
-    ns.XModelStructure.prototype.equals = function(other) {
+    ns.XModelStructure.prototype.equals = function (other) {
         return this == other;
     };
 
     Object.defineProperties(ns.XModelStructure, {
 
         /**
-         * Structure of the nudefined.
+         * Structure of the undefined.
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_UNDEFINED
          */
         "TYPE_UNDEFINED": {
-            value: -1,
+
+            "value": -1
         },
 
         /**
@@ -134,7 +135,8 @@
          * @member {xpl.enum_t} TYPE_NULL
          */
         "TYPE_NULL": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -145,7 +147,8 @@
          * @member {xpl.enum_t} TYPE_AXIS_ROTATE
          */
         "TYPE_AXIS_ROTATE": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -156,7 +159,8 @@
          * @member {xpl.enum_t} TYPE_QUATERNION
          */
         "TYPE_QUATERNION": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -167,7 +171,8 @@
          * @member {xpl.enum_t} TYPE_SCALE
          */
         "TYPE_SCALE": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -178,7 +183,8 @@
          * @member {xpl.enum_t} TYPE_TRANSLATE
          */
         "TYPE_TRANSLATE": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -189,7 +195,8 @@
          * @member {xpl.enum_t} TYPE_MATRIX
          */
         "TYPE_MATRIX": {
-            value: 5,
+
+            value: 5
         },
 
         /**
@@ -200,7 +207,8 @@
          * @member {xpl.enum_t} TYPE_CONTAINER
          */
         "TYPE_CONTAINER": {
-            value:6,
+
+            value: 6
         },
 
         /**
@@ -211,7 +219,8 @@
          * @member {xpl.enum_t} TYPE_TEXTURE
          */
         "TYPE_TEXTURE": {
-            value: 7,
+
+            value: 7
         },
 
         /**
@@ -222,7 +231,8 @@
          * @member {xpl.enum_t} TYPE_MATERIAL
          */
         "TYPE_MATERIAL": {
-            value: 8,
+
+            value: 8
         },
 
         /**
@@ -233,7 +243,8 @@
          * @member {xpl.enum_t} TYPE_MESH
          */
         "TYPE_MESH": {
-            value: 9,
+
+            value: 9
         },
 
         /**
@@ -244,7 +255,8 @@
          * @member {xpl.enum_t} TYPE_MESH_SUBSET
          */
         "TYPE_MESH_SUBSET": {
-            value: 15,
+
+            value: 15
         },
 
         /**
@@ -255,7 +267,8 @@
          * @member {xpl.enum_t} TYPE_NODE
          */
         "TYPE_NODE": {
-            value: 10,
+
+            value: 10
         },
 
         /**
@@ -266,7 +279,8 @@
          * @member {xpl.enum_t} TYPE_IK
          */
         "TYPE_IK": {
-            value: 11,
+
+            value: 11
         },
 
         /**
@@ -277,7 +291,8 @@
          * @member {xpl.enum_t} TYPE_ANIMATION
          */
         "TYPE_ANIMATION": {
-            value: 12,
+
+            value: 12
         },
 
         /**
@@ -288,7 +303,8 @@
          * @member {xpl.enum_t} TYPE_ANIMATION_KEY
          */
         "TYPE_ANIMATION_KEY": {
-            value: 13,
+
+            value: 13
         },
 
         /**
@@ -299,7 +315,8 @@
          * @member {xpl.enum_t} TYPE_ANIMATION_SET
          */
         "TYPE_ANIMATION_SET": {
-            value: 14,
+
+            value: 14
         },
 
         /**
@@ -310,7 +327,8 @@
          * @member {xpl.size_t} SIZE_RGBA
          */
         "SIZE_RGBA": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -321,7 +339,8 @@
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -333,7 +352,8 @@
          * @member {xpl.size_t} SIZE_AXIS_ROTATE
          */
         "SIZE_AXIS_ROTATE": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -344,7 +364,8 @@
          * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -355,7 +376,8 @@
          * @member {xpl.size_t} SIZE_SCALE
          */
         "SIZE_SCALE": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -366,7 +388,8 @@
          * @member {xpl.size_t} SIZE_TRANSLATE
          */
         "SIZE_TRANSLATE": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -377,7 +400,8 @@
          * @member {xpl.size_t} SIZE_MATRIX
          */
         "SIZE_MATRIX": {
-            value: 16,
+
+            value: 16
         },
 
         /**
@@ -388,13 +412,14 @@
          * @member {xpl.size_t} NUM_BLEND_SLOT
          */
         "NUM_BLEND_SLOT": {
-            value: 2,
-        },
+
+            value: 2
+        }
     });
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -405,7 +430,7 @@
      * @alias xpl.XModelUserData
      * @author Syuuhei Kuno
      */
-    ns.XModelUserData = function() {
+    ns.XModelUserData = function () {
 
         /**
          * uint32_t : The size of data.
@@ -428,7 +453,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -441,7 +466,7 @@
      * @param {xpl.enum_t} structure_type - The structure type.
      * @author Syuuhei Kuno
      */
-    ns.XModelTransform = function(structure_type) {
+    ns.XModelTransform = function (structure_type) {
         ns.XModelStructure.call(this, structure_type);
     };
 
@@ -449,7 +474,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -461,11 +486,11 @@
      * @augments xpl.XModelTransform
      * @author Syuuhei Kuno
      */
-    ns.XModelAxisRotate = function() {
+    ns.XModelAxisRotate = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_AXIS_ROTATE);
 
         /**
-         * float32_t[SIZE_ASIS_ROTATE] : The initial value.
+         * float32_t[SIZE_AXIS_ROTATE] : The initial value.
          *
          * @instance
          * @memberof xpl.XModelAxisRotate
@@ -482,8 +507,9 @@
          * @memberof xpl.XModelAxisRotate
          * @member {Float32Array} value
          */
-        this.value = new Float32Array([0.0, 0.0, 0.0, 1.0,
-                                       0.0, 0.0, 0.0, 1.0]);
+        this.value = new Float32Array([
+            0.0, 0.0, 0.0, 1.0,
+            0.0, 0.0, 0.0, 1.0]);
     };
 
     Object.setPrototypeOf(ns.XModelAxisRotate.prototype, ns.XModelTransform.prototype);
@@ -498,7 +524,8 @@
          * @member {xpl.size_t} ANGLE
          */
         "ANGLE": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -509,18 +536,20 @@
          * @member {xpl.size_t} X
          */
         "X": {
-            value: 1,
+
+            value: 1
         },
 
         /**
-         * Y-axis element of the roattion.
+         * Y-axis element of the rotation.
          *
          * @constant
          * @memberof xpl.XModelAxisRotate
          * @member {xpl.size_t} Y
          */
         "Y": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -531,13 +560,14 @@
          * @member {xpl.size_t} Z
          */
         "Z": {
-            value: 3,
-        },
+
+            value: 3
+        }
     });
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -549,7 +579,7 @@
      * @augments xpl.XModelTransform
      * @author Syuuhei Kuno
      */
-    ns.XModelQuaternion = function() {
+    ns.XModelQuaternion = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_QUATERNION);
 
         /**
@@ -570,15 +600,16 @@
          * @memberof xpl.XModelQuaternion
          * @member {Float32Array} value
          */
-        this.value = new Float32Array([1.0, 0.0, 0.0, 0.0,
-                                       1.0, 0.0, 0.0, 0.0]);
+        this.value = new Float32Array([
+            1.0, 0.0, 0.0, 0.0,
+            1.0, 0.0, 0.0, 0.0]);
     };
 
     Object.setPrototypeOf(ns.XModelQuaternion.prototype, ns.XModelTransform.prototype);
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -590,7 +621,7 @@
      * @augments xpl.XModelTransform
      * @author Syuuhei Kuno
      */
-    ns.XModelScale = function() {
+    ns.XModelScale = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_SCALE);
 
         /**
@@ -611,15 +642,16 @@
          * @memberof xpl.XModelScale
          * @member {Float32Array} value
          */
-        this.value = new Float32Array([1.0, 1.0, 1.0,
-                                       1.0, 1.0, 1.0]);
+        this.value = new Float32Array([
+            1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0]);
     };
 
     Object.setPrototypeOf(ns.XModelScale.prototype, ns.XModelTransform.prototype);
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -631,7 +663,7 @@
      * @augments xpl.XModelTransform
      * @author Syuuhei Kuno
      */
-    ns.XModelTranslate = function() {
+    ns.XModelTranslate = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_TRANSLATE);
 
         /**
@@ -652,15 +684,16 @@
          * @memberof xpl.XModelTranslate
          * @member {Float32Array} value
          */
-        this.value = new Float32Array([0.0, 0.0, 0.0,
-                                       0.0, 0.0, 0.0]);
+        this.value = new Float32Array([
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0]);
     };
 
     Object.setPrototypeOf(ns.XModelTranslate.prototype, ns.XModelTransform.prototype);
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -672,7 +705,7 @@
      * @augments xpl.XModelTransform
      * @author Syuuhei Kuno
      */
-    ns.XModelMatrix = function() {
+    ns.XModelMatrix = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_MATRIX);
 
         /**
@@ -682,10 +715,11 @@
          * @memberof xpl.XModelMatrix
          * @member {Float32Array} initial
          */
-        this.initial = new Float32Array([1.0, 0.0, 0.0, 0.0,
-                                         0.0, 1.0, 0.0, 0.0,
-                                         0.0, 0.0, 1.0, 0.0,
-                                         0.0, 0.0, 0.0, 1.0]);
+        this.initial = new Float32Array([
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]);
 
         // work variable.
 
@@ -696,21 +730,22 @@
          * @memberof xpl.XModelMatrix
          * @member {Float32Array} value
          */
-        this.value = new Float32Array([1.0, 0.0, 0.0, 0.0,
-                                       0.0, 1.0, 0.0, 0.0,
-                                       0.0, 0.0, 1.0, 0.0,
-                                       0.0, 0.0, 0.0, 1.0,
-                                       1.0, 0.0, 0.0, 0.0,
-                                       0.0, 1.0, 0.0, 0.0,
-                                       0.0, 0.0, 1.0, 0.0,
-                                       0.0, 0.0, 0.0, 1.0]);
+        this.value = new Float32Array([
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0,
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]);
     };
 
     Object.setPrototypeOf(ns.XModelMatrix.prototype, ns.XModelTransform.prototype);
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -722,7 +757,7 @@
      * @augments xpl.XModelStructure
      * @author Syuuhei Kuno
      */
-    ns.XModelExtensible = function(structure_type) {
+    ns.XModelExtensible = function (structure_type) {
         ns.XModelStructure.call(this, structure_type);
 
         /**
@@ -732,7 +767,7 @@
          * @memberof xpl.XModelExtensible
          * @member {xpl.XModelUserData} user_data
          */
-        this.user_data = null
+        this.user_data = null;
 
         // work variable.
 
@@ -750,7 +785,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -762,7 +797,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelContainer = function() {
+    ns.XModelContainer = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_CONTAINER);
 
         /**
@@ -802,7 +837,7 @@
         this.num_materials = 0;
 
         /**
-         * XModelMateria[num_materials] : The array of materials.
+         * XModelMaterial[num_materials] : The array of materials.
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -884,13 +919,13 @@
      * @function toString
      * @returns {String} The name of this container.
      */
-    ns.XModelContainer.prototype.toString = function() {
+    ns.XModelContainer.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -902,7 +937,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelTexture = function() {
+    ns.XModelTexture = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_TEXTURE);
 
         /**
@@ -950,7 +985,7 @@
          * @memberof xpl.XModelTexture
          * @member {Object} texture
          */
-        this.texture = null
+        this.texture = null;
 
         /**
          * uint32_t : X-axis size of the texture.
@@ -991,13 +1026,13 @@
      * @function toString
      * @returns {String} The name of this texture.
      */
-    ns.XModelTexture.prototype.toString = function() {
+    ns.XModelTexture.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1009,7 +1044,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelMaterial = function() {
+    ns.XModelMaterial = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_MATERIAL);
 
         /**
@@ -1028,7 +1063,7 @@
          * @memberof xpl.XModelMaterial
          * @member {Float32Array} emissive
          */
-        this.emissive = [ 0.0, 0.0, 0.0, 1.0 ];
+        this.emissive = [0.0, 0.0, 0.0, 1.0];
 
         /**
          * float32_t[SIZE_RGBA] : The ambient color.
@@ -1037,7 +1072,7 @@
          * @memberof xpl.XModelMaterial
          * @member {Float32Array} ambient
          */
-        this.ambient = [ 0.1, 0.1, 0.1, 1.0 ];
+        this.ambient = [0.1, 0.1, 0.1, 1.0];
 
         /**
          * float32_t[SIZE_RGBA] : The diffuse color.
@@ -1046,7 +1081,7 @@
          * @memberof xpl.XModelMaterial
          * @member {Float32Array} diffuse
          */
-        this.diffuse =  [ 1.0, 1.0, 1.0, 1.0 ];
+        this.diffuse = [1.0, 1.0, 1.0, 1.0];
 
         /**
          * float32_t[SIZE_RGBA] : The specular color.
@@ -1055,7 +1090,7 @@
          * @memberof xpl.XModelMaterial
          * @member {Float32Array} specular
          */
-        this.specular = [ 0.4, 0.4, 0.4, 1.0 ];
+        this.specular = [0.4, 0.4, 0.4, 1.0];
 
         /**
          * float32_t : The shininess power.
@@ -1151,7 +1186,8 @@
          * @member {xpl.uint32_t} DRAW_MODE_FACE_NONE_BITS
          */
         "DRAW_MODE_FACE_NONE_BITS": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -1162,7 +1198,8 @@
          * @member {xpl.uint32_t} DRAW_MODE_FACE_FRONT_BITS
          */
         "DRAW_MODE_FACE_FRONT_BITS": {
-            value: 0x1 << 0,
+
+            value: 0x1 << 0
         },
 
         /**
@@ -1173,7 +1210,8 @@
          * @member {xpl.uint32_t} DRAW_MODE_FACE_BACK_BITS
          */
         "DRAW_MODE_FACE_BACK_BITS": {
-            value: 0x1 << 1,
+
+            value: 0x1 << 1
         },
 
         /**
@@ -1184,9 +1222,9 @@
          * @member {xpl.uint32_t} DRAW_MODE_FACE_FRONT_AND_BACK_BITS
          */
         "DRAW_MODE_FACE_FRONT_AND_BACK_BITS": {
-            value: (ns.XModelMaterial.DRAW_MODE_FACE_FRONT_BITS |
-                    ns.XModelMaterial.DRAW_MODE_FACE_BACK_BITS),
-        },
+
+            value: ns.XModelMaterial.DRAW_MODE_FACE_FRONT_BITS | ns.XModelMaterial.DRAW_MODE_FACE_BACK_BITS
+        }
     });
 
     /**
@@ -1197,13 +1235,13 @@
      * @function toString
      * @returns {String} The name of this material.
      */
-    ns.XModelMaterial.prototype.toString = function() {
+    ns.XModelMaterial.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1215,7 +1253,7 @@
      * @augments xpl.XModelStructure
      * @author Syuuhei Kuno
      */
-    ns.XModelMeshBase = function(structure_type) {
+    ns.XModelMeshBase = function (structure_type) {
         ns.XModelExtensible.call(this, structure_type);
 
         // work variable.
@@ -1252,7 +1290,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1264,7 +1302,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelMesh = function() {
+    ns.XModelMesh = function () {
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH);
 
         /**
@@ -1487,13 +1525,13 @@
      * @function toString
      * @returns {String} The name of this mesh.
      */
-    ns.XModelMesh.prototype.toString = function() {
+    ns.XModelMesh.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1504,7 +1542,7 @@
      * @alias xpl.XModelSubsetMesh
      * @author Syuuhei Kuno
      */
-    ns.XModelMeshSubset = function() {
+    ns.XModelMeshSubset = function () {
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
 
         /**
@@ -1566,7 +1604,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1577,7 +1615,8 @@
      * @alias xpl.XModelMesh
      * @author Syuuhei Kuno
      */
-    ns.XModelSkin = function() {
+    ns.XModelSkin = function () {
+
         /**
          * uint32_t : The number of weighted indices.
          *
@@ -1663,7 +1702,7 @@
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1674,7 +1713,8 @@
      * @alias xpl.XModelVertex
      * @author Syuuhei Kuno
      */
-    ns.XModelVertex = function() {
+    ns.XModelVertex = function () {
+
         /**
          * uint32_t : The position index.
          *
@@ -1727,14 +1767,10 @@
      * @instance
      * @memberof xpl.XModelVertex
      * @function hashCode
-     * @returns {Boolean} The hash code.
+     * @returns {xpl.uint32_t} The hash code.
      */
-    ns.XModelVertex.prototype.hashCode = function() {
-        return this.position ^
-               this.normal ^
-               this.color ^
-               this.tex_coord ^
-               this.skinning;
+    ns.XModelVertex.prototype.hashCode = function () {
+        return this.position ^ this.normal ^ this.color ^ this.tex_coord ^ this.skinning;
     };
 
     /**
@@ -1746,23 +1782,23 @@
      * @param {xpl.XModelVertex} other - The other instance.
      * @returns {Boolean} Returns true if equivalent to the parameter.
      */
-    ns.XModelVertex.prototype.equals = function(other) {
+    ns.XModelVertex.prototype.equals = function (other) {
         if (this === other) {
             return true;
         }
         if (other != null && other instanceof ns.XModelVertex) {
             return this.position == other.position &&
-                   this.normal == other.normal &&
-                   this.color == other.color &&
-                   this.tex_coord == other.tex_coord &&
-                   this.skinning == other.skinning;
+                this.normal == other.normal &&
+                this.color == other.color &&
+                this.tex_coord == other.tex_coord &&
+                this.skinning == other.skinning;
         }
         return false;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1773,7 +1809,8 @@
      * @alias xpl.XModelElement
      * @author Syuuhei Kuno
      */
-    ns.XModelElement = function() {
+    ns.XModelElement = function () {
+
         /**
          * uint16_t : The material index.
          *
@@ -1808,16 +1845,14 @@
      * @instance
      * @memberof xpl.XModelElement
      * @function hashCode
-     * @returns {Boolean} The hash code.
+     * @returns {xpl.uint32_t} The hash code.
      */
-    ns.XModelElement.prototype.hashCode = function() {
+    ns.XModelElement.prototype.hashCode = function () {
         var vertices_hash_code = 0;
         for (var i = 0; i < this.num_vertices; ++i) {
             vertices_hash_code ^= this.vertices[i];
         }
-        return this.material ^
-               this.num_vertices ^
-               vertices_hash_code;
+        return this.material ^ this.num_vertices ^ vertices_hash_code;
     };
 
     /**
@@ -1829,7 +1864,7 @@
      * @param {xpl.XModelElement} other - The other instance.
      * @returns {Boolean} Returns true if equivalent to the parameter.
      */
-    ns.XModelElement.prototype.equals = function(other) {
+    ns.XModelElement.prototype.equals = function (other) {
         if (this === other) {
             return true;
         }
@@ -1839,15 +1874,14 @@
                     return false;
                 }
             }
-            return this.material == other.material &&
-                   this.num_vertices == other.num_vertices;
+            return this.material == other.material && this.num_vertices == other.num_vertices;
         }
         return false;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -1856,10 +1890,10 @@
      *
      * @class
      * @alias xpl.XModelNode
-     * @augments xpl.ModelExtensible
+     * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelNode = function() {
+    ns.XModelNode = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_NODE);
 
         /**
@@ -1959,7 +1993,7 @@
          * @memberof xpl.XModelNode
          * @member {xpl.uint16_t} num_meshes
          */
-        this.num_meshes = 0
+        this.num_meshes = 0;
 
         /**
          * XModelMesh[num_meshes] : The array of meshes.
@@ -1984,7 +2018,7 @@
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {Array.<xpl.XModelFrame>} children
+         * @member {Array.<xpl.XModelNode>} children
          */
         this.children = null;
 
@@ -2006,10 +2040,11 @@
          * @memberof xpl.XModelNode
          * @member {Float32Array} offset_matrix
          */
-        this.offset_matrix = new Float32Array([1.0, 0.0, 0.0, 0.0,
-                                               0.0, 1.0, 0.0, 0.0,
-                                               0.0, 0.0, 1.0, 0.0,
-                                               0.0, 0.0, 0.0, 1.0]);
+        this.offset_matrix = new Float32Array([
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]);
 
         /**
          * float32_t[SIZE_MATRIX] : The combined matrix.
@@ -2018,10 +2053,11 @@
          * @memberof xpl.XModelNode
          * @member {Float32Array} combined_matrix
          */
-        this.combined_matrix = new Float32Array([1.0, 0.0, 0.0, 0.0,
-                                                 0.0, 1.0, 0.0, 0.0,
-                                                 0.0, 0.0, 1.0, 0.0,
-                                                 0.0, 0.0, 0.0, 1.0]);
+        this.combined_matrix = new Float32Array([
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]);
     };
 
     Object.setPrototypeOf(ns.XModelNode.prototype, ns.XModelExtensible.prototype);
@@ -2036,7 +2072,8 @@
          * @member {xpl.size_t} TRANSFORM_MATRIX
          */
         "TRANSFORM_MATRIX": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -2047,7 +2084,8 @@
          * @member {xpl.size_t} TRANSFORM_TRANSLATE
          */
         "TRANSFORM_TRANSLATE": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -2058,7 +2096,8 @@
          * @member {xpl.size_t} TRANSFORM_SCALE
          */
         "TRANSFORM_SCALE": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -2069,7 +2108,8 @@
          * @member {xpl.size_t} TRANSFORM_ROTATE
          */
         "TRANSFORM_ROTATE": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -2080,8 +2120,9 @@
          * @member {xpl.size_t} NUM_TRANSFORMS
          */
         "NUM_TRANSFORMS": {
-            value: 4,
-        },
+
+            value: 4
+        }
     });
 
     /**
@@ -2092,13 +2133,13 @@
      * @function toString
      * @returns {String} The name of this node.
      */
-    ns.XModelNode.prototype.toString = function() {
+    ns.XModelNode.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -2110,7 +2151,7 @@
      * @augments xpl.XModelStructure
      * @author Syuuhei Kuno
      */
-    ns.XModelIK = function() {
+    ns.XModelIK = function () {
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_IK);
 
         /**
@@ -2160,13 +2201,13 @@
      * @function toString
      * @returns {String} The name of this inverse kinematics structure.
      */
-    ns.XModelIK.prototype.toString = function() {
+    ns.XModelIK.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -2178,7 +2219,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelAnimation = function() {
+    ns.XModelAnimation = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION);
 
         /**
@@ -2255,13 +2296,13 @@
      * @function toString
      * @returns {String} The name of this animation structure.
      */
-    ns.XModelAnimation.prototype.toString = function() {
+    ns.XModelAnimation.prototype.toString = function () {
         return this.name;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -2273,7 +2314,7 @@
      * @augments xpl.XModelStructure
      * @author Syuuhei Kuno
      */
-    ns.XModelAnimationKey = function() {
+    ns.XModelAnimationKey = function () {
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_ANIMATION_KEY);
 
         /**
@@ -2361,6 +2402,7 @@
          * @member {xpl.enum_t} INTERPOLATE_UNKNOWN
          */
         "INTERPOLATE_UNKNOWN": {
+
             value: -1
         },
 
@@ -2372,6 +2414,7 @@
          * @member {xpl.enum_t} INTERPOLATE_LINER
          */
         "INTERPOLATE_LINER": {
+
             value: 0
         },
 
@@ -2383,13 +2426,14 @@
          * @member {xpl.enum_t} INTERPOLATE_BEZIER
          */
         "INTERPOLATE_BEZIER": {
+
             value: 1
-        },
+        }
     });
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -2401,7 +2445,7 @@
      * @augments xpl.XModelExtensible
      * @author Syuuhei Kuno
      */
-    ns.XModelAnimationSet = function() {
+    ns.XModelAnimationSet = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION_SET);
 
         /**
@@ -2442,8 +2486,8 @@
      * @function toString
      * @returns {String} The name of this animation set.
      */
-    ns.XModelAnimationSet.prototype.toString = function() {
-        return this.name
+    ns.XModelAnimationSet.prototype.toString = function () {
+        return this.name;
     };
 
 })(xpl);

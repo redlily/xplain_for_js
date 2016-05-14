@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -35,7 +36,7 @@
  *
  * @author Syuuhei Kuno
  */
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -43,8 +44,8 @@
         return;
     }
 
-    var VX = 0, VY = 1, VZ = 2;
-    var QR = 0, QI = 1, QJ = 2, QK = 3;
+    let VX = 0, VY = 1, VZ = 2;
+    let QR = 0, QI = 1, QJ = 2, QK = 3;
 
     /**
      * Load the rotation values of i imaginary part axis at the elements of the quaternion.
@@ -55,7 +56,7 @@
      * @param {Number} d_off - Starting position in the destination quaternion.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.loadIAxisRotate = function(d, d_off, rad) {
+    ns.Quaternion.loadIAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
         ns.Quaternion.load(d, d_off, Math.cos(rad), Math.sin(rad), 0, 0);
     };
@@ -69,7 +70,7 @@
      * @param {Number} d_off - Starting position in the destination quaternion.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.loadJAxisRotate = function(d, d_off, rad) {
+    ns.Quaternion.loadJAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
         ns.Quaternion.load(d, d_off, Math.cos(rad), 0, Math.sin(rad), 0);
     };
@@ -83,7 +84,7 @@
      * @param {Number} d_off - Starting position in the destination quaternion.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.loadKAxisRotate = function(d, d_off, rad) {
+    ns.Quaternion.loadKAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
         ns.Quaternion.load(d, d_off, Math.cos(rad), 0, 0, Math.sin(rad));
     };
@@ -99,18 +100,18 @@
      * @param {Number} jp - J imaginary part element of the imaginary axis vector.
      * @param {Number} kp - K imaginary part element of the imaginary axis vector.
      * @param {Number} rad - The rotation value.
-     * @param {Number} [normalize=true] -
+     * @param {boolean} [normalize=true] -
      *              Set true if normalized axis vector,
      *              set false if not normalized axis vector.
      */
-    ns.Quaternion.loadRotate = function(d, d_off, ip, jp, kp, rad, normalize) {
+    ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, normalize) {
         if (normalize === undefined) {
             normalize = true;
         }
 
         // normalize the quaternion.
         if (normalize) {
-            var len = ip * ip + jp * jp + kp * kp;
+            let len = ip * ip + jp * jp + kp * kp;
             if (0 < len) {
                 len = Math.sqrt(len);
                 ip /= len;
@@ -121,7 +122,7 @@
 
         // load on the quaternion.
         rad *= 0.5;
-        var sn = Math.sin(rad);
+        let sn = Math.sin(rad);
         ns.Quaternion.load(d, d_off, Math.cos(rad), ip * sn, jp * sn, kp * sn);
     };
 
@@ -136,27 +137,25 @@
      * @param {Number} fy - Y element of the from vector.
      * @param {Number} fz - Z element of the from vector.
      * @param {Boolean} fv_normalize -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
      * @param {Number} tx - X element of the to vector.
      * @param {Number} ty - Y element of the to vector.
      * @param {Number} tz - Z element of the to vector.
      * @param {Boolean} tv_normalize -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
      * @param {Number} [t=1] - The interpolation coefficient.
      */
-    ns.Quaternion.loadRotateVector3 = function(d, d_off,
-                                               fx, fy, fz, fv_normalize,
-                                               tx, ty, tz, tv_normalize,
-                                               t) {
+    ns.Quaternion.loadRotateVector3 = function (d, d_off,
+                                                fx, fy, fz, fv_normalize,
+                                                tx, ty, tz, tv_normalize,
+                                                t) {
         if (t === undefined) {
             t = 1.0;
         }
 
         // normalize the start point vector.
         if (fv_normalize) {
-            var f_len = fx * fx + fy * fy + fz * fz;
+            let f_len = fx * fx + fy * fy + fz * fz;
             if (0 < f_len) {
                 f_len = Math.sqrt(f_len);
                 fx /= f_len;
@@ -170,7 +169,7 @@
 
         // normalize the end point vector.
         if (tv_normalize) {
-            var t_len = tx * tx + ty * ty + tz * tz;
+            let t_len = tx * tx + ty * ty + tz * tz;
             if (0 < t_len) {
                 t_len = Math.sqrt(t_len);
                 tx /= t_len;
@@ -183,19 +182,19 @@
         }
 
         // calculate the cosine and sine value from two vectors.
-        var cs = fx * tx + fy * ty + fz * tz;
+        let cs = fx * tx + fy * ty + fz * tz;
         if (1.0 <= cs) {
             ns.Quaternion.loadIdentity(d, d_off);
             return;
         }
 
         // calculate the axis vector for be rotation.
-        var ip = fy * tz - fz * ty;
-        var jp = fz * tx - fx * tz;
-        var kp = fx * ty - fy * tx;
+        let ip = fy * tz - fz * ty;
+        let jp = fz * tx - fx * tz;
+        let kp = fx * ty - fy * tx;
 
         // normalize the axis vector.
-        var axis_len = ip * ip + jp * jp + kp * kp;
+        let axis_len = ip * ip + jp * jp + kp * kp;
         if (0 < axis_len) {
             axis_len = Math.sqrt(axis_len);
             ip /= axis_len;
@@ -207,8 +206,8 @@
         }
 
         // load on the quaternion.
-        var rad = Math.acos(cs) * 0.5 * t;
-        var sn = Math.sin(rad);
+        let rad = Math.acos(cs) * 0.5 * t;
+        let sn = Math.sin(rad);
         ns.Quaternion.load(d, d_off, Math.cos(rad), ip * sn, jp * sn, kp * sn);
     };
 
@@ -222,18 +221,17 @@
      * @param {Array.<Number>} fv - The from vector.
      * @param {Number} fv_off - Starting position in the from vector.
      * @param {Boolean} fv_normalize -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
      * @param {Array.<Number>} tv - The to vector.
      * @param {Number} tv_off - Starting position in the to vector.
      * @param {Boolean} tv_normalize -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
      * @param {Number} [t=1] - The interpolation coefficient.
      */
-    ns.Quaternion.loadRotateVector3v = function(d, d_off,
-                                                fv, fv_off, fv_normalize,
-                                                tv, tv_off, tv_normalize) {
+    ns.Quaternion.loadRotateVector3v = function (d, d_off,
+                                                 fv, fv_off, fv_normalize,
+                                                 tv, tv_off, tv_normalize,
+                                                 t) {
         ns.Quaternion.loadRotateVector3(
             d, d_off,
             fv[fv_off + VX], fv[fv_off + VY], fv[fv_off + VZ], fv_normalize,
@@ -242,7 +240,7 @@
     };
 
     /**
-     * Multiplicate the i imaginary part axis rotation to the quaternion.
+     * Multiplication the i imaginary part axis rotation to the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function mulIAxisRotate
@@ -250,19 +248,19 @@
      * @param {Number} q_off - Starting position in the quaternion of push target.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.mulIAxisRotate = function(q, q_off, rad) {
+    ns.Quaternion.mulIAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = sn(rad * 0.5), j = 0, k = 0
         rad *= 0.5;
-        var sn = Math.sin(rad);
-        var cs = Math.cos(rad);
+        let sn = Math.sin(rad);
+        let cs = Math.cos(rad);
 
         // load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - ip * sn,
@@ -272,7 +270,7 @@
     };
 
     /**
-     * Multiplicate the j imaginary part axis rotation to the quaternion.
+     * Multiplication the j imaginary part axis rotation to the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function mulJAxisRotate
@@ -280,19 +278,19 @@
      * @param {Number} q_off - Starting position in the quaternion of push target.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.mulJAxisRotate = function(q, q_off, rad) {
+    ns.Quaternion.mulJAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = 0, j = sn(rad * 0.5), k = 0
         rad *= 0.5;
-        var sn = Math.sin(rad);
-        var cs = Math.cos(rad);
+        let sn = Math.sin(rad);
+        let cs = Math.cos(rad);
 
         // load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - jp * sn,
@@ -302,7 +300,7 @@
     };
 
     /**
-     * Multiplicate the k imaginary part axis rotation to the quaternion.
+     * Multiplication the k imaginary part axis rotation to the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function mulKAxisRotate
@@ -310,19 +308,19 @@
      * @param {Number} q_off - Starting position in the quaternion of push target.
      * @param {Number} rad - The rotation value.
      */
-    ns.Quaternion.mulKAxisRotate = function(q, q_off, rad) {
+    ns.Quaternion.mulKAxisRotate = function (q, q_off, rad) {
         // r = cs(rad), i = 0, j = 0, k = sn(rad)
         rad *= 0.5;
-        var sn = Math.sin(rad);
-        var cs = Math.cos(rad);
+        let sn = Math.sin(rad);
+        let cs = Math.cos(rad);
 
         // multiplication then load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - kp * sn,
@@ -332,7 +330,7 @@
     };
 
     /**
-     * Multiplicate the any imaginary axis vector rotation to the quaternion.
+     * Multiplication the any imaginary axis vector rotation to the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function mulRotate
@@ -342,19 +340,18 @@
      * @param {Number} jp - J imaginary part element of the imaginary axis vector.
      * @param {Number} kp - K imaginary part element of the imaginary axis vector.
      * @param {Number} rad - The rotation value.
-     * @param {Number} rad - The rotation value.
-     * @param {Number} [normalize=true] -
+     * @param {boolean} [normalize=true] -
      *              Set true if normalized axis vector,
      *              set false if not normalized axis vector.
      */
-    ns.Quaternion.mulRotate = function(q, q_off, ip, jp, kp, rad, normalize) {
+    ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, normalize) {
         if (normalize === undefined) {
             normalize = true;
         }
 
         // normalize the quaternion.
         if (normalize) {
-            var len = ip * ip + jp * jp + kp * kp;
+            let len = ip * ip + jp * jp + kp * kp;
             if (0 < len) {
                 len = Math.sqrt(len);
                 ip /= len;
@@ -363,8 +360,8 @@
             }
         }
         rad *= 0.5;
-        var sn = Math.sin(rad);
-        var cs = Math.cos(rad);
+        let sn = Math.sin(rad);
+        let cs = Math.cos(rad);
         ip *= sn;
         jp *= sn;
         kp *= sn;
@@ -372,16 +369,16 @@
         // multiplication then load on the quaternion.
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        var trp = q[q_off + QR];
-        var tip = q[q_off + QI];
-        var tjp = q[q_off + QJ];
-        var tkp = q[q_off + QK];
+        let trp = q[q_off + QR];
+        let tip = q[q_off + QI];
+        let tjp = q[q_off + QJ];
+        let tkp = q[q_off + QK];
         ns.Quaternion.load(
             q, q_off,
-            trp * cs - (tip * ip  +  tjp * jp + tkp * kp),
-            trp * ip  +  tip * cs + (tjp * kp - tkp * jp),
-            trp * jp  +  tjp * cs + (tkp * ip - tip * kp),
-            trp * kp  +  tkp * cs + (tip * jp - tjp * ip));
+            trp * cs - (tip * ip + tjp * jp + tkp * kp),
+            trp * ip + tip * cs + (tjp * kp - tkp * jp),
+            trp * jp + tjp * cs + (tkp * ip - tip * kp),
+            trp * kp + tkp * cs + (tip * jp - tjp * ip));
     };
 
 })(xpl);

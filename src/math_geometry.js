@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,18 +30,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
     /**
-     * Definition list that is used in the geometory utilities.
+     * Definition list that is used in the geometry utilities.
      *
      * @namespace xpl.Geometry
      * @author Syuuhei Kuno
      */
-    ns.Geometry = function() {
-        throw new Error("Unsupported operation");
+    ns.Geometry = function () {
+        throw new Error("Unsupported operation!");
     };
 
     Object.defineProperties(ns.Geometry, {
@@ -50,10 +51,11 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {xpl.size_t} VX
+         * @member {xpl.enum_t} VX
          */
         "VX": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -64,7 +66,8 @@
          * @member {xpl.size_t} VY
          */
         "VY": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -75,7 +78,8 @@
          * @member {xpl.size_t} VZ
          */
         "VZ": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -86,18 +90,20 @@
          * @member {xpl.size_t} VW
          */
         "VW": {
-            value: 3,
+
+            value: 3
         },
 
         /**
-         * Size of the threet elements vector.
+         * Size of the three elements vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -108,7 +114,8 @@
          * @member {xpl.size_t} CR
          */
         "CR": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -119,7 +126,8 @@
          * @member {xpl.size_t} CI
          */
         "CI": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -130,18 +138,20 @@
          * @member {xpl.size_t} CJ
          */
         "CJ": {
-            value: 2,
+
+            value: 2
         },
 
         /**
-         * Index of sard imaginary number element in the quaternion.
+         * Index of third imaginary number element in the quaternion.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} CK
          */
         "CK": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -152,7 +162,8 @@
          * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -163,7 +174,8 @@
          * @member {xpl.size_t} M4X4_00
          */
         "M4X4_00": {
-            value: 0,
+
+            value: 0
         },
 
         /**
@@ -174,7 +186,8 @@
          * @member {xpl.size_t} M4X4_10
          */
         "M4X4_10": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -185,7 +198,8 @@
          * @member {xpl.size_t} M4X4_20
          */
         "M4X4_20": {
-            value: 2,
+
+            value: 2
         },
 
         /**
@@ -196,7 +210,8 @@
          * @member {xpl.size_t} M4X4_30
          */
         "M4X4_30": {
-            value: 3,
+
+            value: 3
         },
 
         /**
@@ -207,7 +222,8 @@
          * @member {xpl.size_t} M4X4_01
          */
         "M4X4_01": {
-            value: 4,
+
+            value: 4
         },
 
         /**
@@ -218,7 +234,8 @@
          * @member {xpl.size_t} M4X4_11
          */
         "M4X4_11": {
-            value: 5,
+
+            value: 5
         },
 
         /**
@@ -229,7 +246,8 @@
          * @member {xpl.size_t} M4X4_21
          */
         "M4X4_21": {
-            value: 6,
+
+            value: 6
         },
 
         /**
@@ -240,7 +258,8 @@
          * @member {xpl.size_t} M4X4_31
          */
         "M4X4_31": {
-            value: 7,
+
+            value: 7
         },
 
         /**
@@ -251,7 +270,8 @@
          * @member {xpl.size_t} M4X4_02
          */
         "M4X4_02": {
-            value: 8,
+
+            value: 8
         },
 
         /**
@@ -262,7 +282,8 @@
          * @member {xpl.size_t} M4X4_12
          */
         "M4X4_12": {
-            value: 9,
+
+            value: 9
         },
 
         /**
@@ -273,7 +294,8 @@
          * @member {xpl.size_t} M4X4_22
          */
         "M4X4_22": {
-            value: 10,
+
+            value: 10
         },
 
         /**
@@ -284,7 +306,8 @@
          * @member {xpl.size_t} M4X4_32
          */
         "M4X4_32": {
-            value: 11,
+
+            value: 11
         },
 
         /**
@@ -295,7 +318,8 @@
          * @member {xpl.size_t} M4X4_03
          */
         "M4X4_03": {
-            value: 12,
+
+            value: 12
         },
 
         /**
@@ -306,7 +330,8 @@
          * @member {xpl.size_t} M4X4_13
          */
         "M4X4_13": {
-            value: 13,
+
+            value: 13
         },
 
         /**
@@ -317,7 +342,8 @@
          * @member {xpl.size_t} M4X4_23
          */
         "M4X4_23": {
-            value: 14,
+
+            value: 14
         },
 
         /**
@@ -328,7 +354,8 @@
          * @member {xpl.size_t} M4X4_33
          */
         "M4X4_33": {
-            value: 15,
+
+            value: 15
         },
 
         /**
@@ -339,7 +366,8 @@
          * @member {xpl.size_t} SIZE_MATRIX_4X4
          */
         "SIZE_MATRIX_4X4": {
-            value: 16,
+
+            value: 16
         }
     });
 

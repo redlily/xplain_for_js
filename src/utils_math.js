@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -39,8 +40,8 @@
      * @author Syuuhei Kuno
      * @namespace xpl.MathUtils
      */
-    ns.MathUtils = function() {
-        throw new Error("Unsupported operation");
+    ns.MathUtils = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -53,7 +54,7 @@
      * @param {Number} v3 - The value of third.
      * @returns {Number} The value.
      */
-    ns.MathUtils.min = function(v1, v2, v3) {
+    ns.MathUtils.min = function (v1, v2, v3) {
         return v1 < v2 ? (v1 < v3 ? v1 : v3) : (v2 < v3 ? v2 : v3);
     };
 
@@ -67,7 +68,7 @@
      * @param {Number} v3 - The value of third.
      * @returns {Number} The value.
      */
-    ns.MathUtils.mid = function(v1, v2, v3) {
+    ns.MathUtils.mid = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v2 : (v3 < v1 ? v1 : v3)) : (v1 < v3 ? v1 : (v3 < v2 ? v2 : v3));
     };
 
@@ -81,7 +82,7 @@
      * @param {Number} v3 - The value of third.
      * @returns {Number} The value.
      */
-    ns.MathUtils.max = function(v1, v2, v3) {
+    ns.MathUtils.max = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v3 : v2) : (v1 < v3 ? v3 : v1);
     };
 
@@ -94,7 +95,7 @@
      * @param {Number} index - The index.
      * @returns {Number} The value.
      */
-    ns.MathUtils.log = function(base, index) {
+    ns.MathUtils.log = function (base, index) {
         return Math.log(index) / Math.log(base);
     };
 
@@ -106,9 +107,9 @@
      * @param {Number} v - The target value.
      * @returns {Number} The value.
      */
-    ns.MathUtils.cqrt = function(v) {
+    ns.MathUtils.cqrt = function (v) {
         return 0 <= v ? Math.pow(v, 1.0 / 3.0) : -Math.pow(-v, 1.0 / 3.0);
-    }
+    };
 
     /**
      * Returns the round down value in the numbers of power of two.
@@ -118,15 +119,15 @@
      * @param {Number} value - The target value.
      * @returns {Number} the value.
      */
-    ns.MathUtils.floorPow2 = function(value) {
+    ns.MathUtils.floorPow2 = function (value) {
         value = Math.floor(value);
-        value = value | (value >>  1);
-        value = value | (value >>  2);
-        value = value | (value >>  4);
-        value = value | (value >>  8);
+        value = value | (value >> 1);
+        value = value | (value >> 2);
+        value = value | (value >> 4);
+        value = value | (value >> 8);
         value = value | (value >> 16);
         value = value | (value >> 32);
-        return  value ^ (value >>  1);
+        return value ^ (value >> 1);
     };
 
     /**
@@ -137,16 +138,16 @@
      * @param {Number} value - The target value.
      * @returns {Number} The value.
      */
-    ns.MathUtils.cailPow2 = function(value) {
+    ns.MathUtils.cailPow2 = function (value) {
         value = Math.floor(value);
         value = value - 1;
-        value = value | (value >>  1);
-        value = value | (value >>  2);
-        value = value | (value >>  4);
-        value = value | (value >>  8);
+        value = value | (value >> 1);
+        value = value | (value >> 2);
+        value = value | (value >> 4);
+        value = value | (value >> 8);
         value = value | (value >> 16);
         value = value | (value >> 32);
-        return  value + 1;
+        return value + 1;
     };
 
 })(xpl);

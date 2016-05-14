@@ -1,5 +1,6 @@
 /**
  * @license
+ *
  * Copyright (c) 2015, Syuuhei Kuno
  * All rights reserved.
  *
@@ -29,14 +30,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
-    var VX = 0, VY = 1, VZ = 2;
-    var QR = 0, QI = 1, QJ = 2, QK = 3;
-    var M00 = 0, M01 = 4, M02 = 8,  M03 = 12,
-        M10 = 1, M11 = 5, M12 = 9,  M13 = 13,
+    let VX = 0, VY = 1, VZ = 2;
+    let QR = 0, QI = 1, QJ = 2, QK = 3;
+    let M00 = 0, M01 = 4, M02 = 8, M03 = 12,
+        M10 = 1, M11 = 5, M12 = 9, M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
@@ -46,8 +47,8 @@
      * @namespace xpl.Vector3
      * @author Syuuhei Kuno
      */
-    ns.Vector3 = function() {
-        throw new Error("Unsupported operation");
+    ns.Vector3 = function () {
+        throw new Error("Unsupported operation!");
     };
 
     /**
@@ -61,7 +62,7 @@
      * @param {Number} y - Y element of the source vector.
      * @param {Number} z - Z element of the source vector.
      */
-    ns.Vector3.load = function(d, d_off, x, y, z) {
+    ns.Vector3.load = function (d, d_off, x, y, z) {
         d[d_off + VX] = x;
         d[d_off + VY] = y;
         d[d_off + VZ] = z;
@@ -77,7 +78,7 @@
      * @param {Array.<Number>} v - The source vector.
      * @param {Number} v_off - Starting position in the source vector.
      */
-    ns.Vector3.loadv = function(d, d_off, v, v_off) {
+    ns.Vector3.loadv = function (d, d_off, v, v_off) {
         ns.Vector3.load(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
     };
 
@@ -89,7 +90,7 @@
      * @param {Array.<Number>} d - The destination vector.
      * @param {Number} d_off - Starting position in the destination vector.
      */
-    ns.Vector3.loadZero = function(d, d_off) {
+    ns.Vector3.loadZero = function (d, d_off) {
         ns.Vector3.load(d, d_off, 0, 0, 0);
     };
 
@@ -102,10 +103,10 @@
      * @param {Number} v_off - Starting position in the target vector.
      * @returns {Number} The squared length of the target vector.
      */
-    ns.Vector3.lenSq = function(v, v_off) {
-        var x = v[v_off + VX];
-        var y = v[v_off + VY];
-        var z = v[v_off + VZ];
+    ns.Vector3.lenSq = function (v, v_off) {
+        let x = v[v_off + VX];
+        let y = v[v_off + VY];
+        let z = v[v_off + VZ];
         return x * x + y * y + z * z;
     };
 
@@ -118,7 +119,7 @@
      * @param {Number} v_off - Starting position in the target vector.
      * @returns {Number} The length of the target vector.
      */
-    ns.Vector3.len = function(v, v_off) {
+    ns.Vector3.len = function (v, v_off) {
         return Math.sqrt(ns.Vector3.lenSq(v, v_off));
     };
 
@@ -132,11 +133,11 @@
      * @param {Array.<Number>} v - The target vector.
      * @param {Number} v_off - Starting position in the target vector.
      */
-    ns.Vector3.normalizev = function(d, d_off, v, v_off) {
-        var x = v[v_off + VX];
-        var y = v[v_off + VY];
-        var z = v[v_off + VZ];
-        var len = x * x + y * y + z * z;
+    ns.Vector3.normalizev = function (d, d_off, v, v_off) {
+        let x = v[v_off + VX];
+        let y = v[v_off + VY];
+        let z = v[v_off + VZ];
+        let len = x * x + y * y + z * z;
         if (0 < len) {
             len = Math.sqrt(len);
             ns.Vector3.load(d, d_off, x / len, y / len, z / len);
@@ -160,8 +161,8 @@
      * @param {Number} z2 - Z-axis element of the end point vector.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Vector3.lerp = function(d, d_off, x1, y1, z1, x2, y2, z2, t) {
-        var t1 = 1.0 - t;
+    ns.Vector3.lerp = function (d, d_off, x1, y1, z1, x2, y2, z2, t) {
+        let t1 = 1.0 - t;
         ns.Vector3.load(d, d_off, x1 * t1 + x2 * t, y1 * t1 + y2 * t, z1 * t1 + z2 * t);
     };
 
@@ -178,7 +179,7 @@
      * @param {Number} v2_off - Starting position int the end point vector.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Vector3.lerpv = function(d, d_off, v1, v1_off, v2, v2_off, t) {
+    ns.Vector3.lerpv = function (d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.lerp(
             d, d_off,
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
@@ -201,9 +202,9 @@
      * @param {Number} z2 - Z-axis element of the end point vector.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Vector3.slerp = function(d, d_off, x1, y1, z1, x2, y2, z2, t) {
+    ns.Vector3.slerp = function (d, d_off, x1, y1, z1, x2, y2, z2, t) {
         // normalize the start point vector.
-        var len1 = x1 * x1 + y1 * y1 + z1 * z1;
+        let len1 = x1 * x1 + y1 * y1 + z1 * z1;
         if (0 < len1) {
             len1 = Math.sqrt(len1);
             x1 /= len1;
@@ -212,7 +213,7 @@
         }
 
         // normalize the end point vector.
-        var len2 = x2 * x2 + y2 * y2 + z2 * z2;
+        let len2 = x2 * x2 + y2 * y2 + z2 * z2;
         if (0 < len2) {
             len2 = Math.sqrt(len2);
             x2 /= len2;
@@ -221,31 +222,31 @@
         }
 
         // calculate the cosine value from two vectors.
-        var cs = x1 * x2 + y1 * y2 + z1 * z2;
+        let cs = x1 * x2 + y1 * y2 + z1 * z2;
 
         if (1.0 <= cs) {
             // two vectors are the same direction.
-            var len = len1 * (1.0 - t) + len2 * t;
+            let len = len1 * (1.0 - t) + len2 * t;
             ns.Vector3.load(d, d_off, x1 * len, y1 * len, z1 * len);
         } else if (cs <= -1.0) {
             // two vectors are the reverse direction.
-            var len = len1 * (1.0 - t) - len2 * t;
+            let len = len1 * (1.0 - t) - len2 * t;
             ns.Vector3.load(d, d_off, x1 * len, y1 * len, z1 * len);
         } else {
             // other conditions.
 
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
-            var len  = len1 * (1.0 - t) + len2 * t;
+            let len = len1 * (1.0 - t) + len2 * t;
 
             // spherical linear interpolate the direction.
             // slerp(p0, p1; t) = (sin((1.0 - t) * Ω) / sin(Ω)) * p0 + (sin(t * Ω) / sin(Ω)) * p1
-            var rad1 = Math.acos(cs);
-            var rad2 = rad1 * (1.0 - t);
-            var rad3 = rad1 *        t;
-            var sn   = Math.sin(rad1);
-            var sn1  = Math.sin(rad2) / sn;
-            var sn2  = Math.sin(rad3) / sn;
+            let rad1 = Math.acos(cs);
+            let rad2 = rad1 * (1.0 - t);
+            let rad3 = rad1 * t;
+            let sn = Math.sin(rad1);
+            let sn1 = Math.sin(rad2) / sn;
+            let sn2 = Math.sin(rad3) / sn;
 
             // load to the vector.
             ns.Vector3.load(
@@ -269,7 +270,7 @@
      * @param {Number} v2_off - Starting position int the end point vector.
      * @param {Number} t - The interpolation coefficient.
      */
-    ns.Vector3.slerpv = function(d, d_off, v1, v1_off, v2, v2_off, t) {
+    ns.Vector3.slerpv = function (d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.slerp(
             d, d_off,
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
@@ -290,7 +291,7 @@
      * @param {Number} z2 - Z-axis element of the right-hand side vector of operator.
      * @returns {Number} The inner product value of the vectors.
      */
-    ns.Vector3.dot = function(x1, y1, z1, x2, y2, z2) {
+    ns.Vector3.dot = function (x1, y1, z1, x2, y2, z2) {
         return x1 * x2 + y1 * y2 + z1 * z2;
     };
 
@@ -305,7 +306,7 @@
      * @param {Number} v2_off - Starting position in the right-hand side vector of operator.
      * @returns {Number} The inner product value of the vectors.
      */
-    ns.Vector3.dotv = function(v1, v1_off, v2, v2_off) {
+    ns.Vector3.dotv = function (v1, v1_off, v2, v2_off) {
         return v1[v1_off + VX] * v2[v2_off + VX] + v1[v1_off + VY] * v2[v2_off + VY] + v1[v1_off + VZ] * v2[v2_off + VZ];
     };
 
@@ -323,7 +324,7 @@
      * @param {Number} y2 - Y-axis element of the right-hand side vector of operator.
      * @param {Number} z2 - Z-axis element of the right-hand side vector of operator.
      */
-    ns.Vector3.cross = function(d, d_off, x1, y1, z1, x2, y2, z2) {
+    ns.Vector3.cross = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, y1 * z2 - z1 * y2, z1 * x2 - x1 * z2, x1 * y2 - y1 * x2);
     };
 
@@ -339,7 +340,7 @@
      * @param {Array.<Number>} v2 - The right-hand side vector of operator.
      * @param {Number} v2_off - Starting position in the right-hand side vector of operator.
      */
-    ns.Vector3.crossv = function(d, d_off, v1, v1_off, v2, v2_off) {
+    ns.Vector3.crossv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.cross(
             d, d_off,
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
@@ -359,9 +360,9 @@
      * @param {Number} z2 - Z-axis element of the right-hand side vector of operator.
      * @returns {Number} The cosine between specified two vectors.
      */
-    ns.Vector3.cos = function(x1, y1, z1, x2, y2, z2) {
+    ns.Vector3.cos = function (x1, y1, z1, x2, y2, z2) {
         // normalize the start point vector.
-        var len1 = x1 * x1 + y1 * y1 + z1 * z1;
+        let len1 = x1 * x1 + y1 * y1 + z1 * z1;
         if (0 < len1) {
             len1 = Math.sqrt(len1);
             x1 /= len1;
@@ -370,7 +371,7 @@
         }
 
         // normalize the end point vector.
-        var len2 = x2 * x2 + y2 * y2 + z2 * z2;
+        let len2 = x2 * x2 + y2 * y2 + z2 * z2;
         if (0 < len2) {
             len2 = Math.sqrt(len2);
             x2 /= len2;
@@ -391,8 +392,9 @@
      * @param {Number} v1_off - Starting position in the left-hand side vector of operator.
      * @param {Array.<Number>} v2 - The right-hand side vector of operator.
      * @param {Number} v2_off - Starting position in the right-hand side vector of operator.
+     * @returns {Number} The cosine between specified two vectors.
      */
-    ns.Vector3.cosv = function(v1, v1_off, v2, v2_off) {
+    ns.Vector3.cosv = function (v1, v1_off, v2, v2_off) {
         return ns.Vector3.cos(
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
             v2[v2_off + VX], v2[v2_off + VY], v2[v2_off + VZ]);
@@ -408,7 +410,7 @@
      * @param {Array.<Number>} v - The target vector.
      * @param {Number} v_off - Starting position in the target vector.
      */
-    ns.Vector3.reversev = function(d, d_off, v, v_off) {
+    ns.Vector3.reversev = function (d, d_off, v, v_off) {
         ns.Vector3.load(d, d_off, -v[v_off + VX], -v[v_off + VY], -v[v_off + VZ]);
     };
 
@@ -426,7 +428,7 @@
      * @param {Number} y2 - Y-axis element of the right-hand side vector of operator.
      * @param {Number} z2 - Z-axis element of the right-hand side vector of operator.
      */
-    ns.Vector3.add = function(d, d_off, x1, y1, z1, x2, y2, z2) {
+    ns.Vector3.add = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, x1 + x2, y1 + y2, z1 + z2);
     };
 
@@ -442,7 +444,7 @@
      * @param {Array.<Number>} v2 - The right-hand side vector of operator.
      * @param {Number} v2_off - Starting position in the right-hand side vector of operator.
      */
-    ns.Vector3.addv = function(d, d_off, v1, v1_off, v2, v2_off) {
+    ns.Vector3.addv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.add(
             d, d_off,
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
@@ -463,7 +465,7 @@
      * @param {Number} y2 - Y-axis element of the right-hand side vector of operator.
      * @param {Number} z2 - Z-axis element of the right-hand side vector of operator.
      */
-    ns.Vector3.sub = function(d, d_off, x1, y1, z1, x2, y2, z2) {
+    ns.Vector3.sub = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, x1 - x2, y1 - y2, z1 - z2);
     };
 
@@ -479,7 +481,7 @@
      * @param {Array.<Number>} v2 - The right-hand side vector of operator.
      * @param {Number} v2_off - Starting position in the right-hand side vector of operator.
      */
-    ns.Vector3.subv = function(d, d_off, v1, v1_off, v2, v2_off) {
+    ns.Vector3.subv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.sub(
             d, d_off,
             v1[v1_off + VX], v1[v1_off + VY], v1[v1_off + VZ],
@@ -498,7 +500,7 @@
      * @param {Number} z - Z element of the target vector.
      * @param {Number} s - The target scalar.
      */
-    ns.Vector3.mul = function(d, d_off, x, y, z, s) {
+    ns.Vector3.mul = function (d, d_off, x, y, z, s) {
         ns.Vector3.load(d, d_off, x * s, y * s, z * s);
     };
 
@@ -513,7 +515,7 @@
      * @param {Number} v_off - Starting position in the target vector.
      * @param {Number} s - The target scalar.
      */
-    ns.Vector3.mulv = function(d, d_off, v, v_off, s) {
+    ns.Vector3.mulv = function (d, d_off, v, v_off, s) {
         ns.Vector3.mul(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
     };
 
@@ -529,23 +531,23 @@
      * @param {Array.<Number>} v - The target vector.
      * @param {Number} v_off - Starting position in the target vector.
      */
-    ns.Vector3.mulQuaternionv = function(d, d_off, q, q_off, v, v_off) {
-        var rp = q[q_off + QR];
-        var ip = q[q_off + QI];
-        var jp = q[q_off + QJ];
-        var kp = q[q_off + QK];
-        var x = v[v_off + VX];
-        var y = v[v_off + VY];
-        var z = v[v_off + VZ];
+    ns.Vector3.mulQuaternionv = function (d, d_off, q, q_off, v, v_off) {
+        let rp = q[q_off + QR];
+        let ip = q[q_off + QI];
+        let jp = q[q_off + QJ];
+        let kp = q[q_off + QK];
+        let x = v[v_off + VX];
+        let y = v[v_off + VY];
+        let z = v[v_off + VZ];
 
         // q * (0 + xi + yj + zk)
-        var rp1 = /*rp * 0*/ - (ip * x   +  jp * y + kp * z);
-        var ip1 =   rp * x /*+  ip * 0*/ + (jp * z - kp * y);
-        var jp1 =   rp * y /*+  jp * 0*/ + (kp * x - ip * z);
-        var kp1 =   rp * z /*+  kp * 0*/ + (ip * y - jp * x);
+        let rp1 = /*rp * 0*/ -(ip * x + jp * y + kp * z);
+        let ip1 = rp * x /*+  ip * 0*/ + (jp * z - kp * y);
+        let jp1 = rp * y /*+  jp * 0*/ + (kp * x - ip * z);
+        let kp1 = rp * z /*+  kp * 0*/ + (ip * y - jp * x);
 
         // q * (0 + xi + yj + zk) * q→
-        // var rp2 =  rp1 * rp + (ip1 * ip +  jp1 * j1 + kp1 * kp);
+        // let rp2 =  rp1 * rp + (ip1 * ip +  jp1 * j1 + kp1 * kp);
         ns.Vector3.load(
             d, d_off,
             -rp1 * ip + ip1 * rp - (jp1 * kp - kp1 * jp),
@@ -572,16 +574,16 @@
      * @param {Number} a2_off - Starting position in the second elements.
      * @param {Boolean} [column=true] -
      */
-    ns.Vector3.mulMatrix4x4v = function(d, d_off, a1, a1_off, a2, a2_off, column) {
+    ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         if (column == null) {
             column = true;
         }
         if (column) {
             // calculate as the column vector.
-            var x = a2[a2_off + VX];
-            var y = a2[a2_off + VY];
-            var z = a2[a2_off + VZ];
-            var w = a1[a1_off + M30] * x + a1[a1_off + M31] * y + a1[a1_off + M32] * z + a1[a1_off + M33];
+            let x = a2[a2_off + VX];
+            let y = a2[a2_off + VY];
+            let z = a2[a2_off + VZ];
+            let w = a1[a1_off + M30] * x + a1[a1_off + M31] * y + a1[a1_off + M32] * z + a1[a1_off + M33];
             ns.Vector3.load(
                 d, d_off,
                 (a1[a1_off + M00] * x + a1[a1_off + M01] * y + a1[a1_off + M02] * z + a1[a1_off + M03]) / w,
@@ -589,10 +591,10 @@
                 (a1[a1_off + M20] * x + a1[a1_off + M21] * y + a1[a1_off + M22] * z + a1[a1_off + M23]) / w);
         } else {
             // calculate as the row vector.
-            var x = a1[a1_off + VX];
-            var y = a1[a1_off + VY];
-            var z = a1[a1_off + VZ];
-            var w = x * a2[a2_off + M03] + y * a2[a2_off + M13] + z * a2[a2_off + M23] + a2[a2_off + M33];
+            let x = a1[a1_off + VX];
+            let y = a1[a1_off + VY];
+            let z = a1[a1_off + VZ];
+            let w = x * a2[a2_off + M03] + y * a2[a2_off + M13] + z * a2[a2_off + M23] + a2[a2_off + M33];
             ns.Vector3.load(
                 d, d_off,
                 (x * a2[a2_off + M00] + y * a2[a2_off + M10] + z * a2[a2_off + M20] + a2[a2_off + M30]) / w,
@@ -620,15 +622,15 @@
      * @param {Number} a2_off - Starting position in the second elements.
      * @param {Boolean} [column=true] -
      */
-    ns.Vector3.mulMatrix4x4Axisv = function(d, d_off, a1, a1_off, a2, a2_off, column) {
+    ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         if (column == null) {
             column = true;
         }
         if (column) {
             // calculate as the column vector.
-            var x = a2[a2_off + VX];
-            var y = a2[a2_off + VY];
-            var z = a2[a2_off + VZ];
+            let x = a2[a2_off + VX];
+            let y = a2[a2_off + VY];
+            let z = a2[a2_off + VZ];
             ns.Vector3.load(
                 d, d_off,
                 a1[a1_off + M00] * x + a1[a1_off + M01] * y + a1[a1_off + M02] * z,
@@ -636,16 +638,16 @@
                 a1[a1_off + M20] * x + a1[a1_off + M21] * y + a1[a1_off + M22] * z);
         } else {
             // calculate as the row vector.
-            var x = a1[a1_off + VX];
-            var y = a1[a1_off + VY];
-            var z = a1[a1_off + VZ];
+            let x = a1[a1_off + VX];
+            let y = a1[a1_off + VY];
+            let z = a1[a1_off + VZ];
             ns.Vector3.load(
                 d, d_off,
                 x * a2[a2_off + M00] + y * a2[a2_off + M10] + z * a2[a2_off + M20],
                 x * a2[a2_off + M01] + y * a2[a2_off + M11] + z * a2[a2_off + M21],
                 x * a2[a2_off + M02] + y * a2[a2_off + M12] + z * a2[a2_off + M22]);
         }
-    }
+    };
 
     /**
      * Calculate the division any one vector and one scalar value then set the destination vector.
@@ -659,7 +661,7 @@
      * @param {Number} z - Z element of the vector.
      * @param {Number} s - The target scalar.
      */
-    ns.Vector3.div = function(d, off, x, y, z, s) {
+    ns.Vector3.div = function (d, off, x, y, z, s) {
         ns.Vector3.load(d, off, x * s, y * s, z * s);
     };
 
@@ -674,7 +676,7 @@
      * @param {Number} v_off - Starting position in the target vector.
      * @param {Number} s - The target scalar.
      */
-    ns.Vector3.divv = function(d, d_off, v, v_off, s) {
+    ns.Vector3.divv = function (d, d_off, v, v_off, s) {
         ns.Vector3.div(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
     };
 
@@ -687,7 +689,7 @@
      * @param {Number=0} off - Starting position in the target vector.
      * @returns {String} The converted vector to string.
      */
-    ns.Vector3.convertToString = function(v, off) {
+    ns.Vector3.convertToString = function (v, off) {
         return "Vector3(" + v[off + VX] + ", " + v[off + VY] + ", " + v[off + VZ] + ")";
     };
 

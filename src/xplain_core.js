@@ -36,22 +36,23 @@
  * @author Syuuhei Kuno
  */
 var xpl;
+
 if (typeof module == "object") {
     // for the Node.js.
     xpl = module.exports;
     xpl.running_type = "Node.js";
+
 } else if (typeof exports == "object") {
     // for the CommonJS.
     xpl = exports;
     xpl.running_type = "CommonJS";
 } else {
-    // for the direct link.
+    // for direct link.
     xpl = {};
-    xpl.running_type = "direct link"
+    xpl.running_type = "Direct Link"
 }
 
-// Initialize the xPlain namespace.
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -62,33 +63,36 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl
-         * @member RUNTYPE_NODE_JS
+         * @member {String} RUNTYPE_NODE_JS
          */
-         "RUNTYPE_NODE_JS": {
-             value: "Node.js",
-         },
+        "RUNTYPE_NODE_JS": {
 
-         /**
-          * Running type of the CommonJS.
-          *
-          * @constant
-          * @memberof xpl
-          * @member RUNTYPE_COMMON_JS
-          */
-         "RUNTYPE_COMMON_JS": {
-             value: "CommonJS"
-         },
+            value: "Node.js"
+        },
 
-         /**
-          * Running type of the direct link.
-          *
-          * @constant
-          * @memberof xpl
-          * @member RUNTYPE_DIRECT_LINK
-          */
-         "RUNTYPE_DIRECT_LINK": {
-             value: "direct link",
-         },
+        /**
+         * Running type of the CommonJS.
+         *
+         * @constant
+         * @memberof xpl
+         * @member {String} RUNTYPE_COMMON_JS
+         */
+        "RUNTYPE_COMMON_JS": {
+
+            value: "CommonJS"
+        },
+
+        /**
+         * Running type of the direct link.
+         *
+         * @constant
+         * @memberof xpl
+         * @member {String} RUNTYPE_DIRECT_LINK
+         */
+        "RUNTYPE_DIRECT_LINK": {
+
+            value: "Direct Link"
+        }
     });
 
     /**
@@ -105,10 +109,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member NAME
+         * @member {String} NAME
          */
         "NAME": {
-            value: "xPlain for JavaScript",
+
+            value: "xPlain for JavaScript"
         },
 
         /**
@@ -116,10 +121,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member CODE_NAME
+         * @member {String} CODE_NAME
          */
         "CODE_NAME": {
-            value: "DEUS",
+
+            value: "DEUS"
         },
 
         /**
@@ -127,10 +133,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member VERSION_CODE
+         * @member {Number} VERSION_CODE
          */
         "VERSION_CODE": {
-            value: 1,
+
+            value: 1
         },
 
         /**
@@ -138,10 +145,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member VERSION_NAME
+         * @member {String} VERSION_NAME
          */
         "VERSION_NAME": {
-            value: "0.9.0",
+
+            value: "0.9.0"
         },
 
         /**
@@ -149,10 +157,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member ABOUT
+         * @member {String} AUTHOR
          */
         "AUTHOR": {
-            value: "Syuuhei Kuno",
+
+            value: "Syuuhei Kuno"
         },
 
         /**
@@ -160,10 +169,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member COPYRIGHT
+         * @member {String} COPYRIGHT
          */
         "COPYRIGHT": {
-            value: "Copyright (c) 2015, Syuuhei Kuno All rights reserved.",
+
+            value: "Copyright (c) 2015, Syuuhei Kuno All rights reserved."
         },
 
         /**
@@ -171,10 +181,11 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member LICENSE
+         * @member {String} LICENSE
          */
         "LICENSE": {
-            value: "http://opensource.org/licenses/BSD-3-Clause",
+
+            value: "http://opensource.org/licenses/BSD-3-Clause"
         },
 
         /**
@@ -182,11 +193,12 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member REPOSITORY
+         * @member {String} REPOSITORY
          */
         "REPOSITORY": {
-            value: "git@github.com:redlily/xplain_for_js.git",
-        },
+
+            value: "git@github.com:redlily/xplain_for_js.git"
+        }
     });
 
     /**
@@ -196,14 +208,14 @@ if (typeof module == "object") {
      * @function getAbout
      * @returns {String} - The about information.
      */
-    ns.getAbout = function() {
-        return ns.about.name                             + "\n" +
-               "Version code:  " + ns.about.VERSION_CODE + "\n" +
-               "Version name:  " + ns.about.VERSION_NAME + "\n" +
-               "Author:        " + ns.about.AUTHOR       + "\n" +
-               "Copyright:     " + ns.about.COPYRIGHT    + "\n" +
-               "License:       " + ns.about.LICENSE      + "\n" +
-               "Repository:    " + ns.about.REPOSITORY
+    ns.getAbout = function () {
+        return ns.about.NAME + "\n" +
+            "Version code: " + ns.about.VERSION_CODE + "\n" +
+            "Version name: " + ns.about.VERSION_NAME + "\n" +
+            "Author:       " + ns.about.AUTHOR + "\n" +
+            "Copyright:    " + ns.about.COPYRIGHT + "\n" +
+            "License:      " + ns.about.LICENSE + "\n" +
+            "Repository:   " + ns.about.REPOSITORY
     };
 
     /**
@@ -212,11 +224,26 @@ if (typeof module == "object") {
      * @memberof xpl
      * @function printAbout
      */
-    ns.putAboutToStdout = function() {
+    ns.putAboutToStdout = function () {
         console.log(ns.getAbout);
     };
 
-    var workBuf = new ArrayBuffer(8);
+    // working buffer.
+    let workBuf = new DataView(new ArrayBuffer(8));
+
+    /**
+     * @typedef {Number} xpl.size_t
+     * @typedef {Number} xpl.ptrdiff_t
+     * @typedef {Number} xpl.int8_t
+     * @typedef {Number} xpl.uint8_t
+     * @typedef {Number} xpl.int16_t
+     * @typedef {Number} xpl.uint16_t
+     * @typedef {Number} xpl.int32_t
+     * @typedef {Number} xpl.uint32_t
+     * @typedef {Number} xpl.float32_t
+     * @typedef {Number} xpl.float64_t
+     * @typedef {Number} xpl.enum_t
+     */
 
     /**
      * Convert to unsigned integer of the pointer size type.
@@ -227,7 +254,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any value.
      * @returns {xpl.size_t} The converted value.
      */
-    ns.size_t = function() {
+    ns.size_t = function (value) {
         return Number.parseInt.apply(null, arguments);
     };
 
@@ -240,20 +267,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any value.
      * @returns {xpl.ptrdiff_t} The converted value.
      */
-    ns.ptrdiff_t = function() {
-        return Number.parseInt.apply(null, arguments);
-    };
-
-    /**
-     * Convert to the enumeration type.
-     *
-     * @class
-     * @alias xpl.enum_t
-     * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.enum_t} The converted value.
-     */
-    ns.enum_t = function() {
+    ns.ptrdiff_t = function (value) {
         return Number.parseInt.apply(null, arguments);
     };
 
@@ -264,9 +278,9 @@ if (typeof module == "object") {
      * @alias xpl.int8_t
      * @augments Number
      * @param {Object} value - The any value.
-     * @returns {xpl.int32_t} The converted value.
+     * @returns {xpl.int8_t} The converted value.
      */
-    ns.int8_t = function() {
+    ns.int8_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 24) >> 24;
     };
 
@@ -280,7 +294,8 @@ if (typeof module == "object") {
          * @member {xpl.int8_t} MIN_VALUE
          */
         "MIN_VALUE": {
-            value: -Math.pow(2, 7),
+
+            value: -Math.pow(2, 7)
         },
 
         /**
@@ -291,8 +306,49 @@ if (typeof module == "object") {
          * @member {xpl.int8_t} MIN_VALUE
          */
         "MAX_VALUE": {
-            value: Math.pow(2, 7) - 1,
+
+            value: Math.pow(2, 7) - 1
+        }
+    });
+
+    /**
+     * Convert to unsigned integer of the 8bits size type.
+     *
+     * @class
+     * @alias xpl.uint8_t
+     * @augments Number
+     * @param {Object} value - The any value.
+     * @returns {xpl.uint8_t} The converted value.
+     */
+    ns.uint8_t = function (value) {
+        return (Number.parseInt.apply(null, arguments) << 24) >>> 24;
+    };
+
+    Object.defineProperties(ns.uint8_t, {
+
+        /**
+         * The most minimum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint8_t
+         * @member {xpl.uint8_t} MIN_VALUE
+         */
+        "MIN_VALUE": {
+
+            value: 0
         },
+
+        /**
+         * The most maximum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint8_t
+         * @member {xpl.uint8_t} MIN_VALUE
+         */
+        "MAX_VALUE": {
+
+            value: Math.pow(2, 8) - 1
+        }
     });
 
     /**
@@ -304,7 +360,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any value.
      * @returns {xpl.int32_t} The converted value.
      */
-    ns.int16_t = function() {
+    ns.int16_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 16) >> 16;
     };
 
@@ -314,23 +370,65 @@ if (typeof module == "object") {
          * The most minimum value in this type.
          *
          * @constant
-         * @memberof xpl.int16_t
-         * @member {xpl.int16_t} MIN_VALUE
+         * @memberof xpl.uint16_t
+         * @member {xpl.uint16_t} MIN_VALUE
          */
         "MIN_VALUE": {
-            value: -Math.pow(2, 15),
+
+            value: 0
         },
 
         /**
          * The most maximum value in this type.
          *
          * @constant
-         * @memberof xpl.int16_t
-         * @member {xpl.int16_t} MIN_VALUE
+         * @memberof xpl.uint16_t
+         * @member {xpl.uint16_t} MIN_VALUE
          */
         "MAX_VALUE": {
-            value: Math.pow(2, 15) - 1,
+
+            value: Math.pow(2, 8) - 1
+        }
+    });
+
+    /**
+     * Convert to unsigned integer of the 16bits size type.
+     *
+     * @class
+     * @alias xpl.uint16_t
+     * @augments Number
+     * @param {Object} value - The any value.
+     * @returns {xpl.uint16_t} The converted value.
+     */
+    ns.uint16_t = function (value) {
+        return (Number.parseInt.apply(null, arguments) << 16) >>> 16;
+    };
+
+    Object.defineProperties(ns.uint16_t, {
+
+        /**
+         * The most minimum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint16_t
+         * @member {xpl.int16_t} MIN_VALUE
+         */
+        "MIN_VALUE": {
+
+            value: 0
         },
+
+        /**
+         * The most maximum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint16_t
+         * @member {xpl.uint16_t} MIN_VALUE
+         */
+        "MAX_VALUE": {
+
+            value: Math.pow(2, 16) - 1
+        }
     });
 
     /**
@@ -342,7 +440,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any value.
      * @returns {xpl.int32_t} The converted value.
      */
-    ns.int32_t = function() {
+    ns.int32_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 0) >> 0;
     };
 
@@ -356,7 +454,8 @@ if (typeof module == "object") {
          * @member {xpl.int32_t} MIN_VALUE
          */
         "MIN_VALUE": {
-            value: -Math.pow(2, 31),
+
+            value: -Math.pow(2, 31)
         },
 
         /**
@@ -367,8 +466,49 @@ if (typeof module == "object") {
          * @member {xpl.int32_t} MIN_VALUE
          */
         "MAX_VALUE": {
-            value: Math.pow(2, 31) - 1,
+
+            value: Math.pow(2, 31) - 1
+        }
+    });
+
+    /**
+     * Convert to signed integer of the 32bits size type.
+     *
+     * @class
+     * @alias xpl.uint32_t
+     * @augments Number
+     * @param {Object} value - The any value.
+     * @returns {xpl.uint32_t} The converted value.
+     */
+    ns.uint32_t = function (value) {
+        return (Number.parseInt.apply(null, arguments) << 0) >>> 0;
+    };
+
+    Object.defineProperties(ns.uint32_t, {
+
+        /**
+         * The most minimum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint32_t
+         * @member {xpl.uint32_t} MIN_VALUE
+         */
+        "MIN_VALUE": {
+
+            value: 0
         },
+
+        /**
+         * The most maximum value in this type.
+         *
+         * @constant
+         * @memberof xpl.uint32_t
+         * @member {xpl.uint32_t} MIN_VALUE
+         */
+        "MAX_VALUE": {
+
+            value: Math.pow(2, 32) - 1
+        }
     });
 
     /**
@@ -380,7 +520,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any type value.
      * @returns {xpl.float32_t} The converted value.
      */
-    ns.float32_t = function() {
+    ns.float32_t = function (value) {
         return Number.parseFloat.apply(null, arguments);
     };
 
@@ -392,10 +532,10 @@ if (typeof module == "object") {
      * @param {xpl.float32_t} value - The value.
      * @return {String} The hash code.
      */
-    ns.float32_t.hashCode = function(value) {
+    ns.float32_t.hashCode = function (value) {
         workBuf.setFloat64(value);
-        return workBuf.getUnit32(0).toString(16);
-    }
+        return workBuf.getUint32(0).toString(16);
+    };
 
     /**
      * Convert to float number of the 64bits size type.
@@ -406,7 +546,7 @@ if (typeof module == "object") {
      * @param {Object} value - The any type value.
      * @returns {xpl.float64_t} The converted value.
      */
-    ns.float64_t = function() {
+    ns.float64_t = function (value) {
         return Number.parseFloat.apply(null, arguments);
     };
 
@@ -418,9 +558,22 @@ if (typeof module == "object") {
      * @param {xpl.float64_t} value - The value.
      * @return {String} The hash code.
      */
-    ns.float64_t.hashCode = function(value) {
+    ns.float64_t.hashCode = function (value) {
         workBuf.setFloat64(value);
-        return workBuf.getUnit32(0).toString(16) + workBuf.getUnit32(1).toString(16);
-    }
+        return workBuf.getUint32(0).toString(16) + workBuf.getUint32(1).toString(16);
+    };
+
+    /**
+     * Convert to the enumeration type.
+     *
+     * @class
+     * @alias xpl.enum_t
+     * @augments Number
+     * @param {Object} value - The any value.
+     * @returns {xpl.enum_t} The converted value.
+     */
+    ns.enum_t = function (value) {
+        return Number.parseInt.apply(null, arguments);
+    };
 
 })(xpl);

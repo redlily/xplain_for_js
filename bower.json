@@ -11,9 +11,9 @@
   ],
   "keywords": [
     "WebGL",
-    "Geometry"
+    "Geometry",
     "3DModel",
-    "3DAnimation",
+    "3DAnimation"
   ],
   "license": "BSD 3-clause license",
   "ignore": [
