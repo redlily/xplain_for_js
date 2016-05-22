@@ -49,7 +49,7 @@
     };
 
     /**
-     * Load the any values at the elements of the matrix.
+     * Load the any values that to elements of the matrix.
      *
      * @memberof xpl.Matrix4x4
      * @function load
@@ -122,7 +122,7 @@
     };
 
     /**
-     * Load the any values at the elements of the matrix.
+     * Load the any values that to elements of the matrix.
      *
      * @memberof xpl.Matrix4x4
      * @function loadv

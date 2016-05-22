@@ -35,14 +35,14 @@
     "use strict";
 
     let VX = 0, VY = 1, VZ = 2;
-    let QR = 0, QI = 1, QJ = 2, QK = 3;
+    let CR = 0, CI = 1, CJ = 2, CK = 3;
     let M00 = 0, M01 = 4, M02 = 8, M03 = 12,
         M10 = 1, M11 = 5, M12 = 9, M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
-     * Vector utilities for the three dimensional.
+     * Vector utilities of three dimensions.
      *
      * @namespace xpl.Vector3
      * @author Syuuhei Kuno
@@ -52,7 +52,7 @@
     };
 
     /**
-     * Load the any values at the elements of the vector.
+     * Load the any values that to elements of a vector.
      *
      * @memberof xpl.Vector3
      * @function load
@@ -69,7 +69,7 @@
     };
 
     /**
-     * Load the any values at the elements of the vector.
+     * Load the any values that to elements of a vector.
      *
      * @memberof xpl.Vector3
      * @function loadv
@@ -83,7 +83,7 @@
     };
 
     /**
-     * Load the zero values at the elements of the vector.
+     * Load the zero values at elements of a vector.
      *
      * @memberof xpl.Vector3
      * @function loadZero
@@ -95,7 +95,7 @@
     };
 
     /**
-     * Calculate square length of the vector.
+     * Calculate square length of a vector.
      *
      * @memberof xpl.Vector3
      * @function lenSq
@@ -124,7 +124,7 @@
     };
 
     /**
-     * Normalize the vector.
+     * Normalize a vector.
      *
      * @memberof xpl.Vector3
      * @function normalizev
@@ -147,7 +147,7 @@
     };
 
     /**
-     * Linear interpolate any two the vector then set the destination vector.
+     * Linear interpolate any two vectors then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function lerp
@@ -167,7 +167,7 @@
     };
 
     /**
-     * Linear interpolate any two the vector then set the destination vector.
+     * Linear interpolate any two vectors then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function lerpv
@@ -188,7 +188,7 @@
     };
 
     /**
-     * Spherical linear interpolate any two the vector then set the destination vector.
+     * Spherical linear interpolate any two vectors then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function slerp
@@ -203,7 +203,7 @@
      * @param {Number} t - The interpolation coefficient.
      */
     ns.Vector3.slerp = function (d, d_off, x1, y1, z1, x2, y2, z2, t) {
-        // normalize the start point vector.
+        // normalize a start point vector.
         let len1 = x1 * x1 + y1 * y1 + z1 * z1;
         if (0 < len1) {
             len1 = Math.sqrt(len1);
@@ -212,7 +212,7 @@
             z1 /= len1;
         }
 
-        // normalize the end point vector.
+        // normalize a end point vector.
         let len2 = x2 * x2 + y2 * y2 + z2 * z2;
         if (0 < len2) {
             len2 = Math.sqrt(len2);
@@ -221,7 +221,7 @@
             z2 /= len2;
         }
 
-        // calculate the cosine value from two vectors.
+        // calculate cosine value from two vectors.
         let cs = x1 * x2 + y1 * y2 + z1 * z2;
 
         if (1.0 <= cs) {
@@ -248,7 +248,7 @@
             let sn1 = Math.sin(rad2) / sn;
             let sn2 = Math.sin(rad3) / sn;
 
-            // load to the vector.
+            // load to a destination vector.
             ns.Vector3.load(
                 d, d_off,
                 (x1 * sn1 + x2 * sn2) * len,
@@ -258,7 +258,7 @@
     };
 
     /**
-     * Spherical linear interpolate any two the vector then set the destination vector.
+     * Spherical linear interpolate any two vector then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function slerpv
@@ -279,7 +279,7 @@
     };
 
     /**
-     * Calculate the dot value.
+     * Calculate dot value.
      *
      * @memberof xpl.Vector3
      * @function dot
@@ -296,7 +296,7 @@
     };
 
     /**
-     * Calculate the dot value.
+     * Calculate dot value.
      *
      * @memberof xpl.Vector3
      * @function dotv
@@ -311,7 +311,7 @@
     };
 
     /**
-     * Calculate the cross value then set the destination vector.
+     * Calculate cross value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function cross
@@ -329,7 +329,7 @@
     };
 
     /**
-     * Calculate the cross value then set the destination vector.
+     * Calculate cross value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function crossv
@@ -348,7 +348,7 @@
     };
 
     /**
-     * Calculate the cosine value between two vectors.
+     * Calculate cosine value between two vectors.
      *
      * @memberof xpl.Vector3
      * @function cos
@@ -361,7 +361,7 @@
      * @returns {Number} The cosine between specified two vectors.
      */
     ns.Vector3.cos = function (x1, y1, z1, x2, y2, z2) {
-        // normalize the start point vector.
+        // normalize a start point vector.
         let len1 = x1 * x1 + y1 * y1 + z1 * z1;
         if (0 < len1) {
             len1 = Math.sqrt(len1);
@@ -370,7 +370,7 @@
             z1 /= len1;
         }
 
-        // normalize the end point vector.
+        // normalize a end point vector.
         let len2 = x2 * x2 + y2 * y2 + z2 * z2;
         if (0 < len2) {
             len2 = Math.sqrt(len2);
@@ -379,12 +379,12 @@
             z2 /= len2;
         }
 
-        // calculate the cosine value from two vectors.
+        // calculate cosine value from two vectors.
         return x1 * x2 + y1 * y2 + z1 * z2;
     };
 
     /**
-     * Calculate the cosine value between two vectors.
+     * Calculate cosine value between two vectors.
      *
      * @memberof xpl.Vector3
      * @function cosv
@@ -401,7 +401,7 @@
     };
 
     /**
-     * Calculate the cross value then set the destination vector.
+     * Calculate cross value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function reversev
@@ -415,7 +415,7 @@
     };
 
     /**
-     * Calculate the addition any two the vector then set the destination vector.
+     * Calculate addition any two the vector then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function add
@@ -433,7 +433,7 @@
     };
 
     /**
-     * Calculate the addition any two the vector then set the destination vector.
+     * Calculate addition any two the vector then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function addv
@@ -452,7 +452,7 @@
     };
 
     /**
-     * Calculate the subtraction any two the vector then set the destination vector.
+     * Calculate subtraction any two the vector then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function sub
@@ -470,7 +470,7 @@
     };
 
     /**
-     * Calculate the subtraction any two the vector then set the destination vector.
+     * Calculate subtraction any two the vector then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function subv
@@ -489,7 +489,7 @@
     };
 
     /**
-     * Calculate the multiplication any one vector and one scalar value then set the destination vector.
+     * Calculate multiplication any one vector and one scalar value then a the destination vector.
      *
      * @memberof xpl.Vector3
      * @function mul
@@ -505,7 +505,7 @@
     };
 
     /**
-     * Calculate the multiplication any one vector and one scalar value then set the destination vector.
+     * Calculate multiplication any one vector and one scalar value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function mulv
@@ -520,7 +520,7 @@
     };
 
     /**
-     * Calculate the multiplication any one vector and one quaternion then set the destination vector.
+     * Calculate multiplication any one vector and one quaternion then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function mulQuaternionv
@@ -532,10 +532,10 @@
      * @param {Number} v_off - Starting position in the target vector.
      */
     ns.Vector3.mulQuaternionv = function (d, d_off, q, q_off, v, v_off) {
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         let x = v[v_off + VX];
         let y = v[v_off + VY];
         let z = v[v_off + VZ];
@@ -556,7 +556,7 @@
     };
 
     /**
-     * Calculate the multiplication any one vector and one matrix then set the destination vector.
+     * Calculate multiplication any one vector and one matrix then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function mulMatrix4x4v
@@ -604,7 +604,7 @@
     };
 
     /**
-     * Calculate the multiplication any one vector and one matrix with only axis part then set the destination vector.
+     * Calculate multiplication any one vector and one matrix with only axis part then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function mulMatrix4x4Axisv
@@ -650,7 +650,7 @@
     };
 
     /**
-     * Calculate the division any one vector and one scalar value then set the destination vector.
+     * Calculate division any one vector and one scalar value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function div
@@ -666,7 +666,7 @@
     };
 
     /**
-     * Calculate the division any one vector and one scalar value then set the destination vector.
+     * Calculate division any one vector and one scalar value then set a destination vector.
      *
      * @memberof xpl.Vector3
      * @function divv
@@ -681,7 +681,7 @@
     };
 
     /**
-     * Convert to the string.
+     * Convert to string.
      *
      * @memberof xpl.Vector3
      * @function convertToString

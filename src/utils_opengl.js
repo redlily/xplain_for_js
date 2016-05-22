@@ -145,8 +145,8 @@
         let tex = gl.createTexture();
         if (tex != null) {
             gl.bindTexture(gl.TEXTURE_2D, tex);
-            let tex_width = ns.MathUtils.cailPow2(width);
-            let tex_height = ns.MathUtils.cailPow2(height);
+            let tex_width = ns.MathUtils.ceilPow2(width);
+            let tex_height = ns.MathUtils.ceilPow2(height);
             if (width == tex_width && height == tex_height) {
                 // size is number of power of two.
                 gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);

@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright (c) 2015, Syuuhei Kuno
+ * Copyright (c) 2016, Syuuhei Kuno
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * Definition list that is used in the geometry utilities.
+     * Geometric utilities.
      *
      * @namespace xpl.Geometry
      * @author Syuuhei Kuno
@@ -47,326 +47,299 @@
     Object.defineProperties(ns.Geometry, {
 
         /**
-         * Index of X element in the vector.
+         * Index of X element in vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} VX
          */
         "VX": {
-
             value: 0
         },
 
         /**
-         * Index of Y element in the vector.
+         * Index of Y element in vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} VY
          */
         "VY": {
-
             value: 1
         },
 
         /**
-         * Index of Z element in the vector.
+         * Index of Z element in vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} VZ
          */
         "VZ": {
-
             value: 2
         },
 
         /**
-         * Index of W element in the vector.
+         * Index of W element in vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} VW
          */
         "VW": {
-
             value: 3
         },
 
         /**
-         * Size of the three elements vector.
+         * Size of three elements vector.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
-
             value: 3
         },
 
         /**
-         * Index of real number element in the complex and quaternion.
+         * Index of real number element in complex and quaternion.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} CR
          */
         "CR": {
-
             value: 0
         },
 
         /**
-         * Index of first imaginary number element in the complex and quaternion.
+         * Index of first imaginary number element in complex and quaternion.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} CI
          */
         "CI": {
-
             value: 1
         },
 
         /**
-         * Index of second imaginary number element in the quaternion.
+         * Index of second imaginary number element in quaternion.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} CJ
          */
         "CJ": {
-
             value: 2
         },
 
         /**
-         * Index of third imaginary number element in the quaternion.
+         * Index of third imaginary number element in quaternion.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} CK
          */
         "CK": {
-
             value: 3
         },
 
         /**
-         * Size of the quaternion number.
+         * Size of quaternion number.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
-
             value: 4
         },
 
         /**
-         * Index of 0-0 element in the 4x4 matrix.
+         * Index of 0-0 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_00
          */
         "M4X4_00": {
-
             value: 0
         },
 
         /**
-         * Index of 1-0 element in the 4x4 matrix.
+         * Index of 1-0 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_10
          */
         "M4X4_10": {
-
             value: 1
         },
 
         /**
-         * Index of 2-0 element in the 4x4 matrix.
+         * Index of 2-0 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_20
          */
         "M4X4_20": {
-
             value: 2
         },
 
         /**
-         * Index of 3-0 element in the 4x4 matrix.
+         * Index of 3-0 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_30
          */
         "M4X4_30": {
-
             value: 3
         },
 
         /**
-         * Index of 0-1 element in the 4x4 matrix.
+         * Index of 0-1 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_01
          */
         "M4X4_01": {
-
             value: 4
         },
 
         /**
-         * Index of 1-1 element in the 4x4 matrix.
+         * Index of 1-1 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_11
          */
         "M4X4_11": {
-
             value: 5
         },
 
         /**
-         * Index of 2-1 element in the 4x4 matrix.
+         * Index of 2-1 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_21
          */
         "M4X4_21": {
-
             value: 6
         },
 
         /**
-         * Index of 3-1 element in the 4x4 matrix.
+         * Index of 3-1 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_31
          */
         "M4X4_31": {
-
             value: 7
         },
 
         /**
-         * Index of 0-2 element in the 4x4 matrix.
+         * Index of 0-2 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_02
          */
         "M4X4_02": {
-
             value: 8
         },
 
         /**
-         * Index of 1-2 element in the 4x4 matrix.
+         * Index of 1-2 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_12
          */
         "M4X4_12": {
-
             value: 9
         },
 
         /**
-         * Index of 2-2 element in the 4x4 matrix.
+         * Index of 2-2 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_22
          */
         "M4X4_22": {
-
             value: 10
         },
 
         /**
-         * Index of 3-2 element in the 4x4 matrix.
+         * Index of 3-2 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_32
          */
         "M4X4_32": {
-
             value: 11
         },
 
         /**
-         * Index of 0-3 element in the 4x4 matrix.
+         * Index of 0-3 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_03
          */
         "M4X4_03": {
-
             value: 12
         },
 
         /**
-         * Index of 1-3 element in the 4x4 matrix.
+         * Index of 1-3 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_13
          */
         "M4X4_13": {
-
             value: 13
         },
 
         /**
-         * Index of 2-3 element in the 4x4 matrix.
+         * Index of 2-3 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_23
          */
         "M4X4_23": {
-
             value: 14
         },
 
         /**
-         * Index of 3-3 element in the 4x4 matrix.
+         * Index of 3-3 element in 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} M4X4_33
          */
         "M4X4_33": {
-
             value: 15
         },
 
         /**
-         * Size of the 4x4 matrix.
+         * Size of 4x4 matrix.
          *
          * @constant
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_MATRIX_4X4
          */
         "SIZE_MATRIX_4X4": {
-
             value: 16
         }
     });

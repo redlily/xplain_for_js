@@ -48,7 +48,7 @@
     };
 
     /**
-     * Load the any values at the elements of the quaternion.
+     * Load the any values that to elements of the quaternion.
      *
      * @memberof xpl.Quaternion
      * @function load

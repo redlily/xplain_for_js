@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright (c) 2015, Syuuhei Kuno
+ * Copyright (c) 2016, Syuuhei Kuno
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -45,7 +45,7 @@
     };
 
     /**
-     * Returns the minimum value in the three arguments.
+     * Returns minimum value in three arguments.
      *
      * @memberof xpl.MathUtils
      * @function min
@@ -59,7 +59,7 @@
     };
 
     /**
-     * Returns the middle number in the three arguments.
+     * Returns middle number in three arguments.
      *
      * @memberof xpl.MathUtils
      * @function mid
@@ -73,7 +73,7 @@
     };
 
     /**
-     * Returns the maximum value in the three arguments.
+     * Returns maximum value in three arguments.
      *
      * @memberof xpl.MathUtils
      * @function max
@@ -87,7 +87,7 @@
     };
 
     /**
-     * Returns the logarithm value.
+     * Returns logarithm value.
      *
      * @memberof xpl.MathUtils
      * @function log
@@ -100,7 +100,7 @@
     };
 
     /**
-     * Returns the cube root value.
+     * Returns cube root value.
      *
      * @memberof xpl.MathUtils
      * @function cqrt
@@ -112,12 +112,12 @@
     };
 
     /**
-     * Returns the round down value in the numbers of power of two.
+     * Returns round down value in numbers of power of two.
      *
      * @memberof xpl.MathUtils
      * @function floorPow2
      * @param {Number} value - The target value.
-     * @returns {Number} the value.
+     * @returns {Number} The value.
      */
     ns.MathUtils.floorPow2 = function (value) {
         value = Math.floor(value);
@@ -131,14 +131,14 @@
     };
 
     /**
-     * Returns the round up value in the numbers of power of two.
+     * Returns round up value in numbers of power of two.
      *
      * @memberof xpl.MathUtils
-     * @function cailPow2
+     * @function ceilPow2
      * @param {Number} value - The target value.
      * @returns {Number} The value.
      */
-    ns.MathUtils.cailPow2 = function (value) {
+    ns.MathUtils.ceilPow2 = function (value) {
         value = Math.floor(value);
         value = value - 1;
         value = value | (value >> 1);
