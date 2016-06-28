@@ -10,12 +10,6 @@ This is the library of JavaScript for general utilities and rendering the 3D mod
 
 Copies the library or source codes to your html directory.
 
-Or install a library to use the bower.
-
-```sh
-$ bower install xplain
-```
-
 Import the script in html when copied the library.
 
 ```html
