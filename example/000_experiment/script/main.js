@@ -35,7 +35,7 @@
     // model's URL.
     var MODEL_NAME = "model.xm";
     // model's prefix.
-    var MODEL_PREFIX = "../test_resources/3d_model/kashima/";
+    var MODEL_PREFIX = "../common_resources/3d_model/hackadoll_no2/";
 
     // attribute index map.
     var ATTRIBUTE_MAP = {
@@ -192,7 +192,7 @@
             gl.clearColor(0.5, 0.5, 0.5, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            // hide a load spinner.
+            // hide the load spinner.
             load_spinner.style.visibility = "hidden";
 
             gl.useProgram(model_shader.program);
@@ -280,7 +280,7 @@
             gl.clearColor(0.25, 0.25, 0.25, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            // visible a load spinner.
+            // visible the load spinner.
             load_spinner.style.visibility="visible";
         }
 
