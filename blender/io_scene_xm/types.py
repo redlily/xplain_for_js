@@ -93,10 +93,10 @@ class XModelStructure:
     SIZE_TRANSLATE  = 3
     # size of matrix parameter
     SIZE_MATRIX     = 16
-
+    
     # number of slot for animation blend
     NUM_BLEND_SLOT = 2;
-
+    
     # initialize
     def __init__(self, structure_type):
         # const int32_t : type of structure
@@ -434,7 +434,7 @@ class XModelSkin:
 # Vertex data structure of xModel
 # @author Syuuhei Kuno
 class XModelVertex:
-
+    
     # initialize
     def __init__(self):
         # int32_t : position index
@@ -445,15 +445,15 @@ class XModelVertex:
         self.color = -1
         # int32_t : texture coordinate index
         self.tex_coord = -1
-        # int32_t : skin weight
-        self.skinning = -1
+        # int32_t : skinning weight index
+        self.skin_weight = -1
 
     def __hash__(self):
         return (self.position ^
                 self.normal ^
                 self.color ^
                 self.tex_coord ^
-                self.skinning)
+                self.skin_weight)
 
     def __eq__(self, other):
         if not isinstance(other, XModelVertex):
@@ -462,7 +462,7 @@ class XModelVertex:
                 self.normal == other.normal and
                 self.color == other.color and
                 self.tex_coord == other.tex_coord and
-                self.skinning == other.skinning)
+                self.skin_weight == other.skin_weight)
 
 # Element data structure of xModel
 # @author Syuuhei Kuno
@@ -510,10 +510,10 @@ class XModelNode(XModelExtensible):
 
         # string : node name
         self.name = None
-
+        
         # bool : connected parent
         self.connected = True
-
+        
         # bool[SIZE_VECTOR_3] : lock the rotation of axis by ik
         self.ik_lock_axis = [ False, False, False ]
         # bool[SIZE_VECTOR_3] : limit the angle of axis rotate by ik
@@ -522,13 +522,13 @@ class XModelNode(XModelExtensible):
         self.ik_min_angle = [ -math.pi, -math.pi, -math.pi  ]
         # float32_t[SIZE_VECTOR_3] : maximum angle for ik limits
         self.ik_max_angle = [ math.pi, math.pi, math.pi  ]
-
+        
         # float32_t[SIZE_VECTOR_3] : location of bone tail
         self.bone_tail = [ 0.0, 0.0, 0.0 ]
 
         # XModelTransform[NUM_TRANSFORMS] : array of transforms
         self.transforms = [ None, None, None, None ]
-
+        
         # int16_t : number of inverse kinematics
         self.num_inverse_kinematics = 0
         # XModelKinematic[] : array of inverse kinematics
@@ -558,15 +558,15 @@ class XModelNode(XModelExtensible):
         self.combined_matrix = _identity_matrix()
         # float32_t[] : combined quaternion
         self.combined_quaternion = _identity_quaternion()
-
+        
 # Kinematic structure of xModel
 # @author Syuuhei Kuno
 class XModelKinematic(XModelStructure):
-
+    
     # initialize
     def __init__(self):
         super(XModelKinematic, self).__init__(self.TYPE_KINEMATIC)
-
+        
         # XModelNode : target node
         self.target = None
         # int16 : max number of iterations
@@ -575,58 +575,58 @@ class XModelKinematic(XModelStructure):
         self.chain_length = 1
         # float32_t : influence on transform of bone
         self.influence = 1.0
-
+        
 # Animation structure of xModel
 # @author Syuuhei Kuno
 class XModelAnimation(XModelExtensible):
-
+    
     # initialize
     def __init__(self):
         super(XModelAnimation, self).__init__(self.TYPE_ANIMATION)
-
+        
         # string : animation name
         self.name = None
-
+        
         # XModelStructure : target
         self.target = None
         # int32_t : index in elements of target
         self.index = -1
-
+        
         # int16_t : number of keys
         self.num_keys = 0
         # XModelAnimationKey[] : array of keys
         self.keys = None
-
+        
         # int16_t : number of children
         self.num_children = 0
         # XModelAnimation[] : array of children
         self.children = None
-
+        
 # Animation key structure of xModel
 # @author Syuuhei Kuno
 class XModelAnimationKey(XModelStructure):
-
+    
     # interpolate by unknown
     INTERPOLATE_UNKNOWN = -1;
     # interpolate by liner
     INTERPOLATE_LINER   =  0
     # interpolate by bezier
     INTERPOLATE_BEZIER  =  1
-
+    
     # initialize
     def __init__(self):
         super(XModelAnimationKey, self).__init__(self.TYPE_ANIMATION_KEY)
-
+        
         # int8_t : interpolate
         self.interpolate = self.INTERPOLATE_UNKNOWN
-
+        
         # float64_t : time
         self.time = 0
         # float64_t : before control time
         self.before_time = 0
         # float64_t : after control time
         self.after_time = 0
-
+        
         # int32_t : value size
         self.value_size = 0
         # float32_t[] : value
@@ -635,19 +635,20 @@ class XModelAnimationKey(XModelStructure):
         self.before_value = None
         # float32_t[] : after control value
         self.after_value = None
-
+        
 # Animation set structure of xModel
 # @author Syuuhei Kuno
 class XModelAnimationSet(XModelExtensible):
-
+    
     # initialize
     def __init__(self):
         super(XModelAnimationSet, self).__init__(self.TYPE_ANIMATION_SET)
-
+        
         # string : animation set name
         self.name = None
-
+        
         # int16_t : number of animations
         self.num_animations = 0
         # XModelAnimation[] : array of animations
         self.animations = None
+        

@@ -95,15 +95,15 @@ class XModelExporter:
         root_meshs = []
         root_nodes = []
         for obj in self.context.scene.objects:
-            if obj.is_visible(self.context.scene) and self.output_visible_mesh:
-                if obj.type == "MESH":
+            if obj.type == "MESH":
+                if obj.is_visible(self.context.scene) and self.output_visible_mesh:
                     objects.append(obj)
                     mesh = self.__convertXModelMeshWithMesh(obj)
                     root_meshs.append(mesh)
-                elif obj.type == "ARMATURE":
-                    objects.append(obj)
-                    nodes = self.__convertXModelNodeWithArmature(obj)
-                    root_nodes.append(nodes)
+            elif obj.type == "ARMATURE":
+                objects.append(obj)
+                nodes = self.__convertXModelNodeWithArmature(obj)
+                root_nodes.append(nodes)
 
         # create the container
         container = XModelContainer()
@@ -298,15 +298,15 @@ class XModelExporter:
                 num_normals += 1
 
             # groups
-            skinning = tuple((group.group, group.weight)
-                             for group in value.groups
-                             if 0.0 < group.weight)
-            if skinning not in skin_weights:
-                skin_weight_len = len(skinning)
+            skin_weight = tuple((group.group, group.weight)
+                                for group in value.groups
+                                if 0.0 < group.weight)
+            if skin_weight not in skin_weights:
+                skin_weight_len = len(skin_weight)
                 if skin_weight_stride < skin_weight_len:
                     skin_weight_stride = skin_weight_len
 
-                skin_weights[skinning] = num_skin_weights
+                skin_weights[skin_weight] = num_skin_weights
                 num_skin_weights += 1
 
         # scan the colors
@@ -361,10 +361,10 @@ class XModelExporter:
 
                 skin_weight_index = -1
                 if 0 < num_skin_weights:
-                    skinning = tuple((group.group, group.weight)
-                                     for group in vertex.groups
-                                     if 0.0 < group.weight)
-                    skin_weight_index = skin_weights[skinning]
+                    skin_weight = tuple((group.group, group.weight)
+                                        for group in vertex.groups
+                                        if 0.0 < group.weight)
+                    skin_weight_index = skin_weights[skin_weight]
 
                 vertex_key = (position_index,
                               normal_index,
@@ -394,7 +394,7 @@ class XModelExporter:
             vertex.normal = key[1]
             vertex.color = key[2]
             vertex.tex_coord = key[3]
-            vertex.skinning = key[4]
+            vertex.skin_weight = key[4]
             dest_mesh.vertices[value] = vertex
 
         # build xModel positions

@@ -413,14 +413,14 @@ class XModelBinaryEncoder:
             self._putFloat32Array(obj.tex_coords, 0, obj.tex_coord_size * obj.num_tex_coords)
 
         # skin weights (inline)
-        has_skinning = None
+        has_skin_weight = None
         if obj.skin is not None:
-            has_skinning = 1
-            self._putInt8(has_skinning)
+            has_skin_weight = 1
+            self._putInt8(has_skin_weight)
             self._putSkin(obj.skin)
         else:
-            has_skinning = 0
-            self._putInt8(has_skinning)
+            has_skin_weight = 0
+            self._putInt8(has_skin_weight)
 
         # vertices (inline)
         self._putInt32(obj.num_vertices)
@@ -430,7 +430,7 @@ class XModelBinaryEncoder:
                             obj.num_normals,
                             obj.num_colors,
                             obj.num_tex_coords,
-                            has_skinning)
+                            has_skin_weight)
 
         # materials
         self._putInt16(obj.num_materials)
@@ -493,7 +493,7 @@ class XModelBinaryEncoder:
                    has_normal,
                    has_color,
                    has_tex_coord,
-                   has_skinning):
+                   has_skin_weight):
         # position
         if 0 < has_position:
             self._putInt32(obj.position)
@@ -511,8 +511,8 @@ class XModelBinaryEncoder:
             self._putInt32(obj.tex_coord)
 
         # skin weight
-        if 0 < has_skinning:
-            self._putInt32(obj.skinning)
+        if 0 < has_skin_weight:
+            self._putInt32(obj.skin_weight)
 
     # write element
     def _putElement(self, obj):
