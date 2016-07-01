@@ -4,7 +4,14 @@
 
 ## 概要
 
-This is the library of JavaScript for general utilities and rendering the 3D model.
+このライブラリはWebGLを使用して3Dを表示するためのライブラリです。
+
+このライブラリは下記の構成になります。
+
+- ベクトル、行列、四元数の数学的ユーティリティ
+- 独自形式の3Dモデルを書き出すためのBlenderのアドオンとJavaScriptで読み込むためのユーティリティ
+- 読み込み済みの3Dモデルを制御するためのユーティリティ
+- WebGL、ブラウザの動作をサポートするユーティリティ
 
 ## サンプルプログラムの実行の流れ
 
