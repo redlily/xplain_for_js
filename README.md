@@ -2,11 +2,25 @@
 
 <img src="readme_res/ss.png" width="256" height="256" alt=""/>
 
-## Discription
+## 概要
 
 This is the library of JavaScript for general utilities and rendering the 3D model.
 
-## How to use xPlain Library
+## サンプルプログラムの実行の流れ
+
+1. GitHubからリポジトリをクローンして下さい。  
+2. そしてクローンしたリポジトリのディレクトリをドキュメントルートとしてサーバを起動して下さい。
+3. 最後にブラウザを開き "http://localhost:8000/example/000_experiment/" とアドレスバーに入力してWebページに移動するとサンプルが表示されます。
+
+``` bash
+git clone https://github.com/redlily/xplain_for_js.git
+cd xplain_for_js
+python3 -m http.server 8000
+```
+
+最後の行はPython3を使用して簡易的なサーバを起動しています。サーバのアプリケーションやポートは任意のものを使用して頂いて構いません。
+
+## ライブラリの使い方
 
 Copies the library or source codes to your html directory.
 
@@ -45,16 +59,17 @@ Import the script in html when copied the source codes.
 <script type="text/javascript" src="lib/xmodel_utils_wrapper.js"></script>
 ```
 
-And load a moudel data.
+And load a model data.
 
 ```javascript
 var model = new xpl.XModelWrapperGL();
 var config = xpl.XModelWrapperGL.defaultConfig();
 config.use_skinning = true; // enable skinning by animation.
-model.loadModelWithUrl(gl, "moudel.xm", "./current_path", config);
+model.loadModelWithUrl(gl, "model.xm", "./current_path", config);
 ```
 
-And drawing a moudel finally.
+And drawing a model finally.
+
 ```javascript
 var uniform_map = xpl.XModelWrapperGL.defaultUniformMap();
 uniform_map.u_diffuse_color = u_diffuse_color;
@@ -67,7 +82,7 @@ attribute_map.a_tex_coord = a_tex_coord;
 model.draw(gl, uniform_map, attribute_map);
 ```
 
-## How to use Blender addons for xModel format
+## Blenderのプラグインを使うには
 
 1. Copy from io_scene_xm directory in xplain_for_js/blender to blender addons directory.
 
@@ -86,16 +101,16 @@ File > User Prefarences > Addons > Import-Export > Import-Export: xModel Format
 |0.9.0 Beta|Jan. 24, 2016|Init release.|
 |HEAD|-|-|
 
-## Authors
+## 開発者
 
 Name: Syuuhei Kuno
 
 E-Mail: circular.nine@gmail.com  
 Twitter: [@tabihato](https://twitter.com/tabihato)
 
-## Lincense
+## ライセンス
 
-### xPlain Library
+### xPlainのライセンス
 
 The BSD 3-Clause License
 
@@ -127,11 +142,11 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-### Moudel data of "Hackadoll" used in demonstrator
+### サンプルプログラム上で使用されている "ハッカドール" の3Dモデルのライセンス
 
 The Creative Commons license.
 
 (c) 2015 DeNA Co.,Ltd.
 
-Official Site: https://hackadoll.com/mmd  
-Terms of service: https://hackadoll.com/mmd/terms
+オフシャルサイト: [https://hackadoll.com/mmd]  
+利用規約: [https://hackadoll.com/mmd/terms]
