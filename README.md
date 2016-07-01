@@ -148,5 +148,5 @@ The Creative Commons license.
 
 (c) 2015 DeNA Co.,Ltd.
 
-オフシャルサイト: [https://hackadoll.com/mmd]  
-利用規約: [https://hackadoll.com/mmd/terms]
+オフシャルサイト: https://hackadoll.com/mmd  
+ガイドライン: https://hackadoll.com/mmd/terms
