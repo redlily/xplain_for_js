@@ -30,15 +30,15 @@ python3 -m http.server 8000
 
 ## ライブラリの使い方
 
-Copies the library or source codes to your html directory.
+ビルド済みのjsファイルかソースコードをHTMLが配置されているディレクトリにコピーしてください。
 
-Import the scAript in html when copied the library.
+そしてHTML上で、それらをインポートしてください。
 
 ```html
 <script type="text/javascript" src="lib/xplain.min.js"></script>
 ```
 
-Import the script in html when copied the source codes.
+もしくは
 
 ```html
 <script type="text/javascript" src="lib/xplain_core.js"></script>
@@ -67,7 +67,7 @@ Import the script in html when copied the source codes.
 <script type="text/javascript" src="lib/xmodel_utils_wrapper.js"></script>
 ```
 
-And load a model data.
+ライブラリをインポートしたのであればJavaScript上でモデルの読み込み処理を実装してください。
 
 ```javascript
 var model = new xpl.XModelWrapperGL();
@@ -76,17 +76,19 @@ config.use_skinning = true; // enable skinning by animation.
 model.loadModelWithUrl(gl, "model.xm", "./current_path", config);
 ```
 
-And drawing a model finally.
+そして最後に描画処理を実装してください。
 
 ```javascript
 var uniform_map = xpl.XModelWrapperGL.defaultUniformMap();
 uniform_map.u_diffuse_color = u_diffuse_color;
 uniform_map.u_diffuse_map = u_diffuse_map;
+
 var attribute_map = xpl.XModelWrapperGL.defaultAttributeMap();
 attribute_map.a_position = a_position;
 attribute_map.a_normal = a_normal;
 attribute_map.a_color = a_color;
 attribute_map.a_tex_coord = a_tex_coord;
+
 model.draw(gl, uniform_map, attribute_map);
 ```
 
@@ -94,8 +96,9 @@ model.draw(gl, uniform_map, attribute_map);
 
 1. blender/io_scene_xmをBlenderのアドオンディレクトリにコピーしてください。  
 細かい手順はBlenderのマニュアルを参照してください。
-2. Blenderを起動し File > User Prefarences > Addons > Import-ExModel > Import-Export: xModel の順に移動しアドオンを有効にしてください。
-3. そして File > Import/Export の項目に xModel model(.xm) が表示されれば導入は完了です。
+2. Blenderを起動してください。
+3. File > User Prefarences > Addons > Import-Export > Import-Export: xModel の順に移動しアドオンを有効にしてください。
+4. そして File > Import/Export の項目に xModel (.xm) が表示されれば導入は完了です。
 
 ### Blender用のサンプルプロジェクト
 
@@ -113,12 +116,12 @@ git clone git@github.com:redlily/test_resources.git
 
 ### サンプルデータについて
 
-ハッカドールのデータはxPlainの都合に合わせて下記のデータを調整してあります。
+ハッカドールの3Dモデルデータはライブラリの都合に合わせて下記のデータを調整してあります。
 
 - 画像形式の変換  
-すべてpngかbmpに変換してあります。
+すべてPNGかBMPに変換してあります。
 - 画像パスを絶対パスから相対パスに書き換え
-- 足のIKの反復回数の上限変更  
+- 足のIKの反復回数の上限変更  ß
 こちらで実装したIKの結果収束に問題があったので、今のところは数十回から数百回へ変更しています。
 
 ### その他
@@ -134,8 +137,7 @@ git clone git@github.com:redlily/test_resources.git
 
 ## 開発者
 
-Name: Syuuhei Kuno
-
+Syuuhei Kuno  
 E-Mail: circular.nine@gmail.com  
 Twitter: [@tabihato](https://twitter.com/tabihato)
 
@@ -145,7 +147,7 @@ Twitter: [@tabihato](https://twitter.com/tabihato)
 
 The BSD 3-Clause License
 
-Copyright (c) 2015, Syuuhei Kuno
+Copyright (c) 2016, Syuuhei Kuno
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

@@ -24,6 +24,8 @@
     "tests",
     "compile",
     "blender",
-    "example"
+    "example",
+    ".idea",
+    "*.iml"
   ]
 }
