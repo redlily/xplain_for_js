@@ -4,14 +4,15 @@
 
 ## 概要
 
-このライブラリはWebGLを使用して3Dを表示するためのライブラリです。
+このライブラリはWebGLを使用して3Dを表示するためのライブラリです。ライブラリの設計思想としてはプレーンなWebGL上で動作するライブラリを目指しています。機能としてベクトル、行列、四元数等の数学的チューティリティ、3Dモデルデータの読み込み、3Dモデルのアニメーション制御を含みます。
 
 このライブラリは下記の構成になります。
 
 - ベクトル、行列、四元数の数学的ユーティリティ
-- 独自形式の3Dモデルを書き出すためのBlenderのアドオンとJavaScriptで読み込むためのユーティリティ
+- 独自形式の3Dモデルデータを書き出すためのBlenderのアドオン
+- 独自形式の3DモデルデータをJavaScriptで読み込むためのユーティリティ
 - 読み込み済みの3Dモデルを制御するためのユーティリティ
-- WebGL、ブラウザの動作をサポートするユーティリティ
+- WebGL、ブラウザ用のユーティリティ
 
 ## サンプルプログラムの実行の流れ
 
@@ -31,7 +32,7 @@ python3 -m http.server 8000
 
 Copies the library or source codes to your html directory.
 
-Import the script in html when copied the library.
+Import the scAript in html when copied the library.
 
 ```html
 <script type="text/javascript" src="lib/xplain.min.js"></script>
@@ -89,23 +90,46 @@ attribute_map.a_tex_coord = a_tex_coord;
 model.draw(gl, uniform_map, attribute_map);
 ```
 
-## Blenderのプラグインを使うには
+## Blenderのプラグインの導入
 
-1. Copy from io_scene_xm directory in xplain_for_js/blender to blender addons directory.
+1. blender/io_scene_xmをBlenderのアドオンディレクトリにコピーしてください。  
+細かい手順はBlenderのマニュアルを参照してください。
+2. Blenderを起動し File > User Prefarences > Addons > Import-ExModel > Import-Export: xModel の順に移動しアドオンを有効にしてください。
+3. そして File > Import/Export の項目に xModel model(.xm) が表示されれば導入は完了です。
 
-2. Enable the xModel import/export module.  
-File > User Prefarences > Addons > Import-Export > Import-Export: xModel Format
+### Blender用のサンプルプロジェクト
 
-3. Then you can use the xModel importer and exporter.
+下記のURLからダウンロードすることができます。
 
-### Notes
-- Unsupported import from the xModel format yet.
+https://github.com/redlily/test_resources
 
-## History
+もしくはGitを使用してチェックアウトすることができます。
+
+``` bash
+git clone git@github.com:redlily/test_resources.git
+```
+
+このBlenderのプロジェクトを使用することによりサンプルプログラムで使用されているモデルデータを生成することができます。
+
+### サンプルデータについて
+
+ハッカドールのデータはxPlainの都合に合わせて下記のデータを調整してあります。
+
+- 画像形式の変換  
+すべてpngかbmpに変換してあります。
+- 画像パスを絶対パスから相対パスに書き換え
+- 足のIKの反復回数の上限変更  
+こちらで実装したIKの結果収束に問題があったので、今のところは数十回から数百回へ変更しています。
+
+### その他
+
+- まだモデルデータのエクスポートには対応していません。
+
+## 履歴
 
 |Version|Date|Discription|
 |:--|:--|:--|
-|0.9.0 Beta|Jan. 24, 2016|Init release.|
+|0.9.0 Beta|Jan. 24, 2016|Initial release.|
 |HEAD|-|-|
 
 ## 開発者
