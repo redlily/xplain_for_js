@@ -1,6 +1,6 @@
 # xPlain for JavaScript 0.9.0 beta
 
-<img src="./readme_res/ss.png" width="256" height="256" alt=""/>
+<img src="./readme_res/ss.png" alt=""/>
 
 ## 概要
 
