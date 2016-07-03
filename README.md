@@ -133,7 +133,7 @@ git clone git@github.com:redlily/test_resources.git
 ## 履歴
 
 |バージョン|日付|概要|
-|:-|:-|:-|
+|:---|:---|:---|
 |0.9.0 Beta|Jan. 24, 2016|初期リリース|
 |HEAD|-|-|
 
