@@ -25,6 +25,7 @@
     "compile",
     "blender",
     "example",
+    "tools",
     ".idea",
     "*.iml"
   ]
