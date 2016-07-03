@@ -31,8 +31,7 @@
  */
 
 /**
- * Extension dimensionally utilities for the Quaternion.
- * This module is mast be loaded after the Quaternion module.
+ * 幾何学に特化した機能を四元数のユーティリティクラスに追加する定義
  *
  * @author Syuuhei Kuno
  */
@@ -48,7 +47,9 @@
     let QR = 0, QI = 1, QJ = 2, QK = 3;
 
     /**
-     * Load the rotation values of i imaginary part axis at the elements of the quaternion.
+     * I軸(X軸)の回転を四元数に読み込ませます。
+     *
+     * x = (cos(rad / 2), sin(rad / 2), 0, 0)
      *
      * @memberof xpl.Quaternion
      * @function loadIAxisRotate
@@ -62,7 +63,9 @@
     };
 
     /**
-     * Load the rotation values of j imaginary part axis at the elements of the quaternion.
+     * J軸(Y軸)の回転を四元数に読み込ませます。
+     *
+     * x = (cos(rad / 2), 0, sin(rad / 2), 0)
      *
      * @memberof xpl.Quaternion
      * @function loadJAxisRotate
@@ -76,7 +79,9 @@
     };
 
     /**
-     * Load the rotation values of k imaginary part axis at the elements of the quaternion.
+     * K軸(Z軸)の回転を四元数に読み込ませます。
+     *
+     * x = (cos(rad / 2), 0, 0, sin(rad / 2))
      *
      * @memberof xpl.Quaternion
      * @function loadKAxisRotate
@@ -90,7 +95,9 @@
     };
 
     /**
-     * Load the rotation values of any axis at the elements of the quaternion.
+     * 任意軸の回転を四元数に読み込ませます。
+     *
+     * x = (cos(rad / 2); sin(rad / 2) * v / ||v||)
      *
      * @memberof xpl.Quaternion
      * @function loadRotate
@@ -127,7 +134,11 @@
     };
 
     /**
-     * Load the rotation value between two vectors.
+     * 2つのベクトルの回転を四元数に読み込ませます。
+     *
+     * rad = acos( (from / ||from||) ・ (to / ||to||) ) / 2 * t
+     * axis = (from / ||from||) × (to / ||to||)
+     * x = (cos(rad); sin(rad) * axis)
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3
@@ -212,7 +223,11 @@
     };
 
     /**
-     * Load the rotation value between two vectors.
+     * 2つのベクトルの回転を四元数に読み込ませます。
+     *
+     * rad = acos( (from / ||from||) ・ (to / ||to||) ) / 2 * t
+     * axis = (from / ||from||) × (to / ||to||)
+     * x = (cos(rad); sin(rad) * axis)
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3v
@@ -240,7 +255,9 @@
     };
 
     /**
-     * Multiplication the i imaginary part axis rotation to the quaternion.
+     * 四元数にI軸(X軸)回転を掛けあわせます。
+     *
+     * q *= (cos(rad / 2), sin(rad / 2), 0, 0)
      *
      * @memberof xpl.Quaternion
      * @function mulIAxisRotate
@@ -270,7 +287,9 @@
     };
 
     /**
-     * Multiplication the j imaginary part axis rotation to the quaternion.
+     * 四元数にJ軸(Y軸)回転を掛けあわせます。
+     *
+     * q *= (cos(rad / 2), 0, sin(rad / 2), 0)
      *
      * @memberof xpl.Quaternion
      * @function mulJAxisRotate
@@ -300,7 +319,9 @@
     };
 
     /**
-     * Multiplication the k imaginary part axis rotation to the quaternion.
+     * 四元数にK軸(Z軸)回転を掛けあわせます。
+     *
+     * q *= (cos(rad / 2), 0, 0, sin(rad / 2))
      *
      * @memberof xpl.Quaternion
      * @function mulKAxisRotate
@@ -330,7 +351,9 @@
     };
 
     /**
-     * Multiplication the any imaginary axis vector rotation to the quaternion.
+     * 四元数にK軸(Z軸)回転を掛けあわせます。
+     *
+     * q *= (cos(rad / 2); sin(rad / 2) * v / ||v||)
      *
      * @memberof xpl.Quaternion
      * @function mulRotate

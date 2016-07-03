@@ -1,33 +1,33 @@
 /**
  * @license
  *
- * Copyright (c) 2015, Syuuhei Kuno
+ * Copyright (c) 2016, Syuuhei Kuno
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  1. Redistributions of source code must retain the above copyright notice, this
- *     list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
  *
- *  2. Redistributions in binary form must reproduce the above copyright notice,
- *     this list of conditions and the following disclaimer in the documentation
- *     and/or other materials provided with the distribution.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
  *
- *  3. Neither the name of the copyright holder nor the names of its contributors
- *     may be used to endorse or promote products derived from this software
- *     without specific prior written permission.
+ * 3. Neither the name of xplain_for_js nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 (function (ns) {
@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * Array utilities.
+     * 配列用のユーティリティクラス
      *
      * @namespace xpl.ArrayUtils
      * @author Syuuhei Kuno
@@ -45,7 +45,7 @@
     };
 
     /**
-     * Element of the comparator for magnitude relation.
+     * 大小比較用のチェック関数定義
      *
      * @callback xpl.ArrayUtils~comparator
      * @param {Object} v1 - The left-hand side value.
@@ -58,7 +58,7 @@
      */
 
     /**
-     * Element of the Collection for magnitude relation.
+     * 一致比較用のチェック関数定義
      *
      * @callback xpl.ArrayUtils~collection
      * @param {Object} v1 - The left-hand side value.
@@ -70,7 +70,7 @@
      */
 
     /**
-     * Copy the elements from the source array to the destination array.
+     * 配列の要素をコピーします。
      *
      * @memberof xpl.ArrayUtils
      * @function copy
@@ -87,7 +87,7 @@
     };
 
     /**
-     * Assigns the specified value to the elements.
+     * 配列を指定の値で埋めます。
      *
      * @memberof xpl.ArrayUtils
      * @function fill
@@ -103,7 +103,7 @@
     };
 
     /**
-     * Binary Search an element from the array.
+     * 配列から指定の要素を二分探索します。
      *
      * @memberof xpl.ArrayUtils
      * @function binarySearch
@@ -138,7 +138,7 @@
     };
 
     /**
-     * Convert to the array of elements without duplicates.
+     * 配列の要素の重複を取り除いた配列を返します。
      *
      * @memberof xpl.ArrayUtils
      * @function convertSet
@@ -166,7 +166,7 @@
     };
 
     /**
-     * Check that the subset contained in the superset.
+     * 部分集合が指定の上位集合に含まれているかどうかを調べます。
      *
      * @memberof xpl.ArrayUtils
      * @function isContained
