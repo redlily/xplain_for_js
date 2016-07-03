@@ -1,10 +1,11 @@
 # xPlain for JavaScript 0.9.0 beta
 
-<img src="readme_res/ss.png" width="256" height="256" alt=""/>
+<img src="./readme_res/ss.png" width="256" height="256" alt=""/>
 
 ## 概要
 
-このライブラリはWebGLを使用して3Dを表示するためのライブラリです。ライブラリの設計思想としてはプレーンなWebGL上で動作するライブラリを目指しています。機能としてベクトル、行列、四元数等の数学的チューティリティ、3Dモデルデータの読み込み、3Dモデルのアニメーション制御を含みます。
+このライブラリはWebGLを使用して3Dを表示するためのライブラリです。ライブラリの設計思想としてはプレーンなWebGL上で動作するライブラリを
+目指しています。機能としてベクトル、行列、四元数等の数学的チューティリティ、3Dモデルデータの読み込み、3Dモデルのアニメーション制御を含みます。
 
 このライブラリは下記の構成になります。
 
@@ -18,7 +19,8 @@
 
 1. GitHubからリポジトリをクローンして下さい。  
 2. そしてクローンしたリポジトリのディレクトリをドキュメントルートとしてサーバを起動して下さい。
-3. 最後にブラウザを開き "http://localhost:8000/example/000_experiment/" とアドレスバーに入力してWebページに移動するとサンプルが表示されます。
+3. 最後にブラウザを開き "http://localhost:8000/example/000_experiment/" とアドレスバーに入力してWebページに移動するとサンプルが
+表示されます。
 
 ``` bash
 git clone https://github.com/redlily/xplain_for_js.git
@@ -30,7 +32,7 @@ python3 -m http.server 8000
 
 ## ライブラリの使い方
 
-ビルド済みのjsファイルかソースコードをHTMLが配置されているディレクトリにコピーしてください。
+ビルド済みのJSファイルかソースコードをHTMLが配置されているディレクトリにコピーしてください。
 
 そしてHTML上で、それらをインポートしてください。
 
@@ -130,9 +132,9 @@ git clone git@github.com:redlily/test_resources.git
 
 ## 履歴
 
-|Version|Date|Discription|
-|:--|:--|:--|
-|0.9.0 Beta|Jan. 24, 2016|Initial release.|
+|バージョン|日付|概要|
+|:-|:-|:-|
+|0.9.0 Beta|Jan. 24, 2016|初期リリース|
 |HEAD|-|-|
 
 ## 開発者
@@ -174,6 +176,25 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+### ソースコードの圧縮に使用されている Closure Compiler のライセンス
+
+The Closure Compiler License
+
+Copyright 2009 The Closure Compiler Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+配布ページ: https://developers.google.com/closure/compiler/docs/gettingstarted_app
+規約: https://developers.google.com/site-policies#attribution
 
 ### サンプルプログラム上で使用されている "ハッカドール" の3Dモデルのライセンス
 

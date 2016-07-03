@@ -1,6 +1,6 @@
 #!/bin/sh
 
-COMPILER='java -jar ./tool/compiler-latest/compiler.jar' # Google Closure Compiler.
+COMPILER='java -jar ./tools/compiler-latest/compiler.jar' # Google Closure Compiler.
 
 ${COMPILER} \
 --language_in=ECMASCRIPT6 \

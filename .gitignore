@@ -1,9 +1,7 @@
 out/
 doc/
-tool/
 .DS_store
-.swp
-.swo
-.iml
+*.swp
+*.swo
 .idea
 *.iml
