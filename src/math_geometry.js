@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * 幾何学ユーティリティの基底クラス
+     * 幾何学ユーティリティの基底クラスです。
      *
      * @namespace xpl.Geometry
      * @author Syuuhei Kuno

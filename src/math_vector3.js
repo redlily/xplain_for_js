@@ -43,7 +43,7 @@
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
-     * 3次元ベクトルのユーティリティクラス
+     * 3次元ベクトルのユーティリティクラスです。
      *
      * @namespace xpl.Vector3
      * @author Syuuhei Kuno
@@ -54,6 +54,8 @@
 
     /**
      * 任意の数値をベクトルに読み込ませます。
+     *
+     * d = (x, y, z)
      *
      * @memberof xpl.Vector3
      * @function load
@@ -72,6 +74,8 @@
     /**
      * 任意の数値をベクトルに読み込ませます。
      *
+     * d = (x, y, z)
+     *
      * @memberof xpl.Vector3
      * @function loadv
      * @param {Array.<Number>} d - 出力先のベクトル
@@ -86,6 +90,8 @@
     /**
      * 全ての要素が0の値をベクトルに読み込ませます。
      *
+     * d = (0, 0, 0)
+     *
      * @memberof xpl.Vector3
      * @function loadZero
      * @param {Array.<Number>} d - 出力先のベクトル
@@ -98,7 +104,7 @@
     /**
      * ベクトルの長さの2乗の値を算出します。
      *
-     * x = ||v||^2
+     * d = |v|^2
      *
      * @memberof xpl.Vector3
      * @function lenSq
@@ -116,7 +122,7 @@
     /**
      * ベクトルの長さを算出します。
      *
-     * x = ||v||
+     * d = |v|
      *
      * @memberof xpl.Vector3
      * @function len
@@ -131,7 +137,7 @@
     /**
      * ベクトルを正規化します。
      * 
-     * x = v / ||v||
+     * d = v / |v|
      *
      * @memberof xpl.Vector3
      * @function normalizevS
@@ -156,7 +162,7 @@
     /**
      * 2つのベクトルを線形補間します。
      *
-     * x = lerp(v1, v2; t)
+     * d = lerp(v1, v2; t)
      *
      * @memberof xpl.Vector3
      * @function lerp
@@ -178,7 +184,7 @@
     /**
      * 2つのベクトルを線形補間します。
      *
-     * x = lerp(v1, v2; t)
+     * d = lerp(v1, v2; t)
      *
      * @memberof xpl.Vector3
      * @function lerpv
@@ -201,7 +207,7 @@
     /**
      * 2つのベクトルを球面線形補間します。
      *
-     * x = slerp(v1, v2; t)
+     * d = slerp(v1, v2; t)
      *
      * @memberof xpl.Vector3
      * @function slerp
@@ -234,19 +240,19 @@
             z2 /= len2;
         }
 
-        // ２つのベクトルのcos値を算出
+        // 2つのベクトルのcos値を算出
         let cs = x1 * x2 + y1 * y2 + z1 * z2;
 
         if (1.0 <= cs) {
-            // ２つのベクトルの向きが同じ場合
+            // 2つのベクトルの向きが同じ場合
             let len = len1 * (1.0 - t) + len2 * t;
             ns.Vector3.load(d, d_off, x1 * len, y1 * len, z1 * len);
         } else if (cs <= -1.0) {
-            // ２つのベクトルの向きが真逆の場合
+            // 2つのベクトルの向きが真逆の場合
             let len = len1 * (1.0 - t) - len2 * t;
             ns.Vector3.load(d, d_off, x1 * len, y1 * len, z1 * len);
         } else {
-            // その他
+            // その他の場合
 
             // ベクトルの長さを線形補間
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -273,7 +279,7 @@
     /**
      * 2つのベクトルを球面線形補間します。
      *
-     * x = slerp(v1, v2; t)
+     * d = slerp(v1, v2; t)
      *
      * @memberof xpl.Vector3
      * @function slerpv
@@ -296,7 +302,7 @@
     /**
      * 内積を算出します。
      * 
-     * x = v1 ・ v2
+     * d = v1 ・ v2
      *
      * @memberof xpl.Vector3
      * @function dot
@@ -315,7 +321,7 @@
     /**
      * 内積を算出します。
      * 
-     * x = v1 ・ v2
+     * d = v1 ・ v2
      *
      * @memberof xpl.Vector3
      * @function dotv
@@ -334,7 +340,7 @@
     /**
      * 外積を算出します。
      * 
-     * x = v1 × v2
+     * d = v1 × v2
      *
      * @memberof xpl.Vector3
      * @function cross
@@ -354,7 +360,7 @@
     /**
      * 外積を算出します。
      * 
-     * x = v1 × v2
+     * d = v1 × v2
      *
      * @memberof xpl.Vector3
      * @function crossv
@@ -375,7 +381,7 @@
     /**
      * 2つのベクトルのcos値を算出します。
      * 
-     * x = (v1 / ||v1||) ・ (v2 / ||v2||)
+     * d = (v1 / |v1|) ・ (v2 / |v2|)
      *
      * @memberof xpl.Vector3
      * @function cos
@@ -385,7 +391,7 @@
      * @param {Number} x2 - 演算子の右側のベクトルのX要素
      * @param {Number} y2 - 演算子の右側のベクトルのY要素
      * @param {Number} z2 - 演算子の右側のベクトルのZ要素
-     * @returns {Number} The cosine between specified two vectors.
+     * @returns {Number} 2つのベクトル間のcos値
      */
     ns.Vector3.cos = function (x1, y1, z1, x2, y2, z2) {
         // 開始ベクトルを正規化
@@ -406,14 +412,14 @@
             z2 /= len2;
         }
 
-        // ２つのベクトルのcos値を算出
+        // 2つのベクトルのcos値を算出
         return x1 * x2 + y1 * y2 + z1 * z2;
     };
 
     /**
      * 2つのベクトルのcos値を算出します。
      * 
-     * x = (v1 / ||v1||) ・ (v2 / ||v2||)
+     * d = (v1 / |v1|) ・ (v2 / |v2|)
      *
      * @memberof xpl.Vector3
      * @function cosv
@@ -421,7 +427,7 @@
      * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
      * @param {Array.<Number>} v2 - 演算子の右側のベクトル
      * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
-     * @returns {Number} The cosine between specified two vectors.
+     * @returns {Number} 2つのベクトル間のcos値
      */
     ns.Vector3.cosv = function (v1, v1_off, v2, v2_off) {
         return ns.Vector3.cos(
@@ -431,6 +437,8 @@
 
     /**
      * ベクトルを反転させます。
+     *
+     * d = -v
      *
      * @memberof xpl.Vector3
      * @function reversev
@@ -446,7 +454,7 @@
     /**
      * ベクトルを加算します。
      * 
-     * x = v1 + v2
+     * d = v1 + v2
      *
      * @memberof xpl.Vector3
      * @function add
@@ -466,7 +474,7 @@
     /**
      * ベクトルを加算します。
      * 
-     * x = v1 + v2
+     * d = v1 + v2
      *
      * @memberof xpl.Vector3
      * @function addv
@@ -487,7 +495,7 @@
     /**
      * ベクトルの減算をします。
      *
-     * x = v1 - v2
+     * d = v1 - v2
      * 
      * @memberof xpl.Vector3
      * @function sub
@@ -507,7 +515,7 @@
     /**
      * ベクトルの減算をします。
      *
-     * x = v1 - v2
+     * d = v1 - v2
      *
      * @memberof xpl.Vector3
      * @function subv
@@ -528,7 +536,7 @@
     /**
      * ベクトルとスカラの掛け算をします。
      *
-     * x = v * s
+     * d = v * s
      *
      * @memberof xpl.Vector3
      * @function mul
@@ -546,7 +554,7 @@
     /**
      * ベクトルとスカラの掛け算をします。
      *
-     * x = v * s
+     * d = v * s
      *
      * @memberof xpl.Vector3
      * @function mulv
@@ -562,8 +570,8 @@
 
     /**
      * ベクトルと四元数の掛け算をします。
-     *                  _
-     * x = q * (0; v) * q
+     *                      _
+     * d = q * (0; i * v) * q
      *
      * @memberof xpl.Vector3
      * @function mulQuaternionv
@@ -606,10 +614,10 @@
      * 列ベクトルか行ベクトルかで引数a1, a2の意味合いが変わります。
      * 
      * 列ベクトルを指定した場合:
-     * x = m * v
+     * d = m * v
      * 
      * 行ベクトルを指定した場合:
-     * x = v * m
+     * d = v * m
      * 
      * @memberof xpl.Vector3
      * @function mulMatrix4x4v
@@ -617,7 +625,7 @@
      * @param {Number} d_off - 出力先のベクトルの配列インデックス
      * @param {Array.<Number>} a1 - 演算子の左側の数値
      * @param {Number} a1_off - 演算子の左側の数値の配列インデックス
-     * @param {Array.<Number>} a2 -　演算子の右側の数値
+     * @param {Array.<Number>} a2 - 演算子の右側の数値
      * @param {Number} a2_off - 演算子の右側の数値の配列インデックス
      * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
      */
@@ -657,10 +665,10 @@
      * 列ベクトルか行ベクトルかで引数a1, a2の意味合いが変わります。
      *
      * 列ベクトルを指定した場合:
-     * x = m * v
+     * d = m * v
      *
      * 行ベクトルを指定した場合:
-     * x = v * m
+     * d = v * m
      *
      * @memberof xpl.Vector3
      * @function mulMatrix4x4Axisv
@@ -668,7 +676,7 @@
      * @param {Number} d_off - 出力先のベクトルの配列インデックス
      * @param {Array.<Number>} a1 - 演算子の左側の数値
      * @param {Number} a1_off - 演算子の左側の数値の配列インデックス
-     * @param {Array.<Number>} a2 -　演算子の右側の数値
+     * @param {Array.<Number>} a2 - 演算子の右側の数値
      * @param {Number} a2_off - 演算子の右側の数値の配列インデックス
      * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
      */
@@ -702,7 +710,7 @@
     /**
      * ベクトルとスカラの割り算をします。
      *
-     * x = v / s
+     * d = v / s
      *
      * @memberof xpl.Vector3
      * @function div
@@ -720,7 +728,7 @@
     /**
      * ベクトルとスカラの割り算をします。
      *
-     * x = v / s
+     * d = v / s
      *
      * @memberof xpl.Vector3
      * @function divv

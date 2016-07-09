@@ -50,6 +50,8 @@
     /**
      * 任意の数値を四元数に読み込ませます。
      *
+     * d = (r, i, j, k)
+     *
      * @memberof xpl.Quaternion
      * @function load
      * @param {Array.<Number>} d - 出力先の四元数
@@ -69,6 +71,8 @@
     /**
      * 任意の数値を四元数に読み込ませます。
      *
+     * d = (r, i, j, k)
+     *
      * @memberof xpl.Quaternion
      * @function loadv
      * @param {Array.<Number>} d - 出力先の四元数
@@ -83,6 +87,8 @@
     /**
      * 全ての要素が0の値を四元数に読み込ませます。
      *
+     * d = (0, 0, 0, 0)
+     *
      * @memberof xpl.Quaternion
      * @function loadZero
      * @param {Array.<Number>} d - 出力先の四元数
@@ -94,6 +100,8 @@
 
     /**
      * 単位値を四元数に読み込ませます。
+     *
+     * d = (1, 0, 0, 0)
      *
      * @memberof xpl.Quaternion
      * @function loadIdentity
@@ -107,7 +115,7 @@
     /**
      * 四元数の絶対値の2乗の値を算出します。
      *
-     * x = ||q||^2
+     * d = |q|^2
      *
      * @memberof xpl.Quaternion
      * @function absSq
@@ -126,7 +134,7 @@
     /**
      * 四元数の絶対値を算出します。
      *
-     * x = ||q||
+     * d = |q|
      *
      * @memberof xpl.Quaternion
      * @function abs
@@ -141,7 +149,7 @@
     /**
      * 四元数を正規化します。
      *
-     * x = q / ||q||
+     * d = q / |q|
      *
      * @memberof xpl.Quaternion
      * @function normalizev
@@ -167,7 +175,7 @@
     /**
      * ネイピア数を底として指数を算出します。
      *
-     * x = e^q
+     * d = e^q
      *
      * @memberof xpl.Quaternion
      * @function exp
@@ -179,20 +187,20 @@
      * @param {Number} kp - 指数部の四元数の虚数K部
      */
     ns.Quaternion.exp = function (d, d_off, rp, ip, jp, kp) {
-        // e^(a + bi + cj + dk) = e^(a + v) = e^a * (cos||v|| + (v / ||v||) * sin||v||)
+        // e^(a + bi + cj + dk) = e^(a + v) = e^a * (cos|v| + (v / |v|) * sin|v|)
         let aexp = Math.exp(rp);                            // e^a
-        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
-        let vscale = aexp * Math.sin(vnorm) / vnorm;        // e^a * sin||v|| / ||v||
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // |v| = √(bi^2 + cj^2 + dk^2)
+        let vscale = aexp * Math.sin(vnorm) / vnorm;        // e^a * sin|v| / |v|
         ns.Quaternion.load(
             d, d_off,
-            aexp * Math.cos(vnorm),                         // e^2 * cos||v||
+            aexp * Math.cos(vnorm),                         // e^2 * cos|v|
             ip * vscale, jp * vscale, kp * vscale);
     };
 
     /**
      * ネイピア数を底として指数を算出します。
      *
-     * x = e^q
+     * d = e^q
      *
      * @memberof xpl.Quaternion
      * @function expv
@@ -208,7 +216,7 @@
     /**
      * ネイピア数を底として純虚数の指数を算出します。
      *
-     * x = e^iv
+     * d = e^iv
      *
      * @memberof xpl.Quaternion
      * @function cis
@@ -219,19 +227,19 @@
      * @param {Number} kp - 指数部の虚数K部
      */
     ns.Quaternion.cis = function (d, d_off, ip, jp, kp) {
-        // e^(bi + cj + dk) = e^v = cos||v|| + (v / ||v||) * sin||v||
-        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // ||v|| = √(bi^2 + cj^2 + dk^2)
-        let vscale = Math.sin(vnorm) / vnorm;               // e^a * sin||v|| / ||v||
+        // e^(bi + cj + dk) = e^v = cos|v| + (v / |v|) * sin|v|
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // |v| = √(bi^2 + cj^2 + dk^2)
+        let vscale = Math.sin(vnorm) / vnorm;               // e^a * sin|v| / |v|
         ns.Quaternion.load(
             d, d_off,
-            Math.cos(vnorm),                                // cos||v||
+            Math.cos(vnorm),                                // cos|v|
             ip * vscale, jp * vscale, kp * vscale);
     };
 
     /**
      * ネイピア数を底として純虚数の指数を算出します。
      *
-     * x = e^iv
+     * d = e^iv
      *
      * @memberof xpl.Quaternion
      * @function cisv
@@ -247,7 +255,7 @@
     /**
      * 対数を算出します。
      *
-     * x = log q
+     * d = log q
      *
      * @memberof xpl.Quaternion
      * @function log
@@ -259,18 +267,18 @@
      * @param {Number} kp - 対象の四元数の虚数K部
      */
     ns.Quaternion.log = function (d, d_off, rp, ip, jp, kp) {
-        // ln(a + bi + cj + dk) = ln(a + v) = ln(q) = ln||q|| + v / ||v|| * cos^-1 (a / ||q||)
-        let qnorm = Math.sqrt(rp * rp + ip * ip + jp * jp + kp * kp); // ||q|| = √(a^2 + bi^2 + cj^2 + dk^2)
-        let qln = Math.log(qnorm);                                    // ln||q||
-        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp);           // ||v|| = √(bi^2 + cj^2 + dk^2)
-        let vscale = Math.acos(rp / qnorm) / vnorm;                   // cos^-1 (a / ||q||) / ||v||
+        // ln(a + bi + cj + dk) = ln(a + v) = ln(q) = ln|q| + v / |v| * cos^-1 (a / |q|)
+        let qnorm = Math.sqrt(rp * rp + ip * ip + jp * jp + kp * kp); // |q| = √(a^2 + bi^2 + cj^2 + dk^2)
+        let qln = Math.log(qnorm);                                    // ln|q|
+        let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp);           // |v| = √(bi^2 + cj^2 + dk^2)
+        let vscale = Math.acos(rp / qnorm) / vnorm;                   // cos^-1 (a / |q|) / |v|
         ns.Quaternion.load(d, d_off, qln, ip * vscale, jp * vscale, kp * vscale);
     };
 
     /**
      * 対数を算出します。
      *
-     * x = log q
+     * d = log q
      *
      * @memberof xpl.Quaternion
      * @function logv
@@ -286,7 +294,7 @@
     /**
      * 2つの四元数を線形補間します。
      *
-     * x = lerp(q1, q2; t)
+     * d = lerp(q1, q2; t)
      *
      * @memberof xpl.Quaternion
      * @function lerp
@@ -316,7 +324,7 @@
     /**
      * 2つの四元数を線形補間します。
      *
-     * x = lerp(q1, q2; t)
+     * d = lerp(q1, q2; t)
      *
      * @memberof xpl.Quaternion
      * @function lerpv
@@ -339,7 +347,7 @@
     /**
      * 2つの四元数を球面線形補間します。
      *
-     * x = slerp(q1, q2; t)
+     * d = slerp(q1, q2; t)
      *
      * @memberof xpl.Quaternion
      * @function slerp
@@ -418,7 +426,7 @@
     /**
      * 2つの四元数を球面線形補間します。
      *
-     * x = slerp(q1, q2; t)
+     * d = slerp(q1, q2; t)
      *
      * @memberof xpl.Quaternion
      * @function slerpv
@@ -441,7 +449,7 @@
     /**
      * 内積を算出します。
      *
-     * x = a1 ・　a2
+     * d = a1 ・ a2
      *
      * @memberof xpl.Quaternion
      * @function dot
@@ -453,7 +461,7 @@
      * @param {Number} ip2 - 演算子の右側の四元数の虚数I部
      * @param {Number} jp2 - 演算子の右側の四元数の虚数J部
      * @param {Number} kp2 - 演算子の右側の四元数の虚数K部
-     * @returns {Number} The dot value.
+     * @returns {Number} 内積値
      */
     ns.Quaternion.dot = function (rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         return rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
@@ -462,7 +470,7 @@
     /**
      * 内積を算出します。
      *
-     * x = a1 ・　a2
+     * d = a1 ・ a2
      *
      * @memberof xpl.Quaternion
      * @function dotv
@@ -470,7 +478,7 @@
      * @param {Number} q1_off - 演算子の左側の四元数の配列インデックス
      * @param {Array.<Number>} q2 - 演算子の右側の四元数
      * @param {Number} q2_off - 演算子の右側の四元数の配列インデックス
-     * @returns {Number} The dot value.
+     * @returns {Number} 内積値
      */
     ns.Quaternion.dotv = function (q1, q1_off, q2, q2_off) {
         return q1[q1_off + QR] * q2[q2_off + QR] +
@@ -482,7 +490,7 @@
     /**
      * 共役を算出します。
      *     _
-     * x = q
+     * d = q
      *
      * @memberof xpl.Quaternion
      * @function conjugatev
@@ -498,7 +506,7 @@
     /**
      * 符号を反転させます。
      *
-     * x = -q
+     * d = -q
      *
      * @memberof xpl.Quaternion
      * @function reversev
@@ -514,7 +522,7 @@
     /**
      * 逆数を算出します。
      *
-     * x = q^-1
+     * d = q^-1
      *
      * @memberof xpl.Quaternion
      * @function inversev
@@ -542,7 +550,7 @@
     /**
      * 四元数の加算をします。
      *
-     * x = q1 + q2
+     * d = q1 + q2
      *
      * @memberof xpl.Quaternion
      * @function add
@@ -564,7 +572,7 @@
     /**
      * 四元数の加算をします。
      *
-     * x = q1 + q2
+     * d = q1 + q2
      *
      * @memberof xpl.Quaternion
      * @function addv
@@ -585,7 +593,7 @@
     /**
      * 四元数の減算をします。
      *
-     * x = q1 - q2
+     * d = q1 - q2
      *
      * @memberof xpl.Quaternion
      * @function sub
@@ -607,7 +615,7 @@
     /**
      * 四元数の減算をします。
      *
-     * x = q1 - q2
+     * d = q1 - q2
      *
      * @memberof xpl.Quaternion
      * @function subv
@@ -628,7 +636,7 @@
     /**
      * 四元数の掛け算をします。
      *
-     * x = q1 * q2
+     * d = q1 * q2
      *
      * @memberof xpl.Quaternion
      * @function mul
@@ -657,7 +665,7 @@
     /**
      * 四元数の掛け算をします。
      *
-     * x = q1 * q2
+     * d = q1 * q2
      *
      * @memberof xpl.Quaternion
      * @function mulv
@@ -678,7 +686,7 @@
     /**
      * 四元数とスカラの掛け算をします。
      *
-     * x = q * s
+     * d = q * s
      *
      * @memberof xpl.Quaternion
      * @function mulScalar
@@ -697,7 +705,7 @@
     /**
      * 四元数とスカラの掛け算をします。
      *
-     * x = q * s
+     * d = q * s
      *
      * @memberof xpl.Quaternion
      * @function mulScalarv
@@ -714,7 +722,7 @@
     /**
      * 四元数を割り算します。
      *
-     * x = q1 / q2
+     * d = q1 / q2
      *
      * @memberof xpl.Quaternion
      * @function div
@@ -744,7 +752,7 @@
     /**
      * 四元数の割り算をします。
      *
-     * x = q1 / q2
+     * d = q1 / q2
      *
      * @memberof xpl.Quaternion
      * @function divv
@@ -765,7 +773,7 @@
     /**
      * 四元数とスカラの割り算をします。
      *
-     * x = q / s
+     * d = q / s
      *
      * @memberof xpl.Quaternion
      * @function divScalar
@@ -784,7 +792,7 @@
     /**
      * 四元数とスカラの割り算をします。
      *
-     * x = q / s
+     * d = q / s
      *
      * @memberof xpl.Quaternion
      * @function divScalarv

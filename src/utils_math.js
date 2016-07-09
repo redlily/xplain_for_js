@@ -36,7 +36,7 @@
     "use strict";
 
     /**
-     * Mathematics utilities.
+     * 数値と数学のユーティリティクラスです。
      *
      * @author Syuuhei Kuno
      * @namespace xpl.MathUtils
@@ -46,79 +46,79 @@
     };
 
     /**
-     * Returns minimum value in three arguments.
+     * 引数のうち最も小さい値を返します。
      *
      * @memberof xpl.MathUtils
      * @function min
-     * @param {Number} v1 - The value of first.
-     * @param {Number} v2 - The value of second.
-     * @param {Number} v3 - The value of third.
-     * @returns {Number} The value.
+     * @param {Number} v1 - 第1引数
+     * @param {Number} v2 - 第2引数
+     * @param {Number} v3 - 第3引数
+     * @returns {Number} 結果
      */
     ns.MathUtils.min = function (v1, v2, v3) {
         return v1 < v2 ? (v1 < v3 ? v1 : v3) : (v2 < v3 ? v2 : v3);
     };
 
     /**
-     * Returns middle number in three arguments.
+     * 引数のうち中間の値を返します。
      *
      * @memberof xpl.MathUtils
      * @function mid
-     * @param {Number} v1 - The value of first.
-     * @param {Number} v2 - The value of second.
-     * @param {Number} v3 - The value of third.
-     * @returns {Number} The value.
+     * @param {Number} v1 - 第1引数
+     * @param {Number} v2 - 第2引数
+     * @param {Number} v3 - 第3引数
+     * @returns {Number} 結果
      */
     ns.MathUtils.mid = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v2 : (v3 < v1 ? v1 : v3)) : (v1 < v3 ? v1 : (v3 < v2 ? v2 : v3));
     };
 
     /**
-     * Returns maximum value in three arguments.
+     * 引数のうち最も大きいの値を返します。
      *
      * @memberof xpl.MathUtils
      * @function max
-     * @param {Number} v1 - The value of first.
-     * @param {Number} v2 - The value of second.
-     * @param {Number} v3 - The value of third.
-     * @returns {Number} The value.
+     * @param {Number} v1 - 第1引数
+     * @param {Number} v2 - 第2引数
+     * @param {Number} v3 - 第3引数
+     * @returns {Number} 結果
      */
     ns.MathUtils.max = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v3 : v2) : (v1 < v3 ? v3 : v1);
     };
 
     /**
-     * Returns logarithm value.
+     * 対数値を返します。
      *
      * @memberof xpl.MathUtils
      * @function log
-     * @param {Number} base - The base.
-     * @param {Number} index - The index.
-     * @returns {Number} The value.
+     * @param {Number} base - 基数
+     * @param {Number} index - 指数
+     * @returns {Number} 結果
      */
     ns.MathUtils.log = function (base, index) {
         return Math.log(index) / Math.log(base);
     };
 
     /**
-     * Returns cube root value.
+     * 立方根の値を返します。
      *
      * @memberof xpl.MathUtils
      * @function cqrt
-     * @param {Number} v - The target value.
-     * @returns {Number} The value.
+     * @param {Number} v - 対象値
+     * @returns {Number} 結果
      */
     ns.MathUtils.cqrt = function (v) {
         return 0 <= v ? Math.pow(v, 1.0 / 3.0) : -Math.pow(-v, 1.0 / 3.0);
     };
 
     /**
-     * Returns round down value in numbers of power of two.
+     * 指定の値以上の正の整数の2乗値の中で小さい値を返します。
      *
      * @memberof xpl.MathUtils
      * @function floorPow2
-     * @param {Number} value - The target value.
-     * @returns {Number} The value.
+     * @param {Number} value - 対象値
+     * @returns {Number} 結果
      */
     ns.MathUtils.floorPow2 = function (value) {
         value = Math.floor(value);
@@ -132,12 +132,12 @@
     };
 
     /**
-     * Returns round up value in numbers of power of two.
+     * 指定の値以下の正の整数の2乗値の中で大きい値を返します。
      *
      * @memberof xpl.MathUtils
      * @function ceilPow2
-     * @param {Number} value - The target value.
-     * @returns {Number} The value.
+     * @param {Number} value - 対象値
+     * @returns {Number} 結果
      */
     ns.MathUtils.ceilPow2 = function (value) {
         value = Math.floor(value);

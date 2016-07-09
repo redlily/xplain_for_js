@@ -30,7 +30,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 /**
  * Extension dimensionally utilities for the Matrix4x4.
  * This module is mast be loaded after the Matrix4x4 module.

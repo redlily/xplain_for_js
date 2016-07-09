@@ -30,9 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 /**
- * 幾何学に特化した機能を四元数のユーティリティクラスに追加する定義
+ * 3次元の幾何学に特化した機能を四元数のユーティリティクラスに追加する拡張です。
  *
  * @author Syuuhei Kuno
  */
@@ -54,9 +53,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadIAxisRotate
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadIAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -70,9 +69,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadJAxisRotate
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadJAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -86,9 +85,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadKAxisRotate
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadKAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -98,27 +97,25 @@
     /**
      * 任意軸の回転を四元数に読み込ませます。
      *
-     * x = (cos(rad / 2); sin(rad / 2) * v / ||v||)
+     * x = (cos(rad / 2); v * sin(rad / 2))
      *
      * @memberof xpl.Quaternion
      * @function loadRotate
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} ip - I imaginary part element of the imaginary axis vector.
-     * @param {Number} jp - J imaginary part element of the imaginary axis vector.
-     * @param {Number} kp - K imaginary part element of the imaginary axis vector.
-     * @param {Number} rad - The rotation value.
-     * @param {boolean} [normalize=true] -
-     *              Set true if normalized axis vector,
-     *              set false if not normalized axis vector.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Number} ip - 入力元の四元数の虚数I部
+     * @param {Number} jp - 入力元の四元数の虚数J部
+     * @param {Number} kp - 入力元の四元数の虚数K部
+     * @param {Number} rad - 回転のラジアン値
+     * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
-    ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, normalize) {
-        if (normalize === undefined) {
-            normalize = true;
+    ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, norm) {
+        if (norm === undefined) {
+            norm = true;
         }
 
-        // normalize the quaternion.
-        if (normalize) {
+        // 四元数を正規化
+        if (norm) {
             let len = ip * ip + jp * jp + kp * kp;
             if (0 < len) {
                 len = Math.sqrt(len);
@@ -128,7 +125,7 @@
             }
         }
 
-        // load on the quaternion.
+        // 結果の書き出し
         rad *= 0.5;
         let sn = Math.sin(rad);
         ns.Quaternion.load(d, d_off, Math.cos(rad), ip * sn, jp * sn, kp * sn);
@@ -137,36 +134,31 @@
     /**
      * 2つのベクトルの回転を四元数に読み込ませます。
      *
-     * rad = acos( (from / ||from||) ・ (to / ||to||) ) / 2 * t
-     * axis = (from / ||from||) × (to / ||to||)
-     * x = (cos(rad); sin(rad) * axis)
+     * rad = acos(from ・ to) / 2 * t
+     * axis = from × to
+     * x = (cos(rad); i * axis * sin(rad))
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Number} fx - X element of the from vector.
-     * @param {Number} fy - Y element of the from vector.
-     * @param {Number} fz - Z element of the from vector.
-     * @param {Boolean} fv_normalize -
-     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
-     * @param {Number} tx - X element of the to vector.
-     * @param {Number} ty - Y element of the to vector.
-     * @param {Number} tz - Z element of the to vector.
-     * @param {Boolean} tv_normalize -
-     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
-     * @param {Number} [t=1] - The interpolation coefficient.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Number} fx - 開始のベクトルのX要素
+     * @param {Number} fy - 開始のベクトルのY要素
+     * @param {Number} fz - 開始のベクトルのZ要素
+     * @param {Boolean} fv_norm - 開始のベクトルを正規化するかどうか
+     * @param {Number} tx - 終了のベクトルのX要素
+     * @param {Number} ty - 終了のベクトルのY要素
+     * @param {Number} tz - 終了のベクトルのZ要素
+     * @param {Boolean} tv_norm - 終了のベクトルを正規化するかどうか
+     * @param {Number} [t=1] - 補完係数
      */
-    ns.Quaternion.loadRotateVector3 = function (d, d_off,
-                                                fx, fy, fz, fv_normalize,
-                                                tx, ty, tz, tv_normalize,
-                                                t) {
+    ns.Quaternion.loadRotateVector3 = function (d, d_off, fx, fy, fz, fv_norm, tx, ty, tz, tv_norm, t) {
         if (t === undefined) {
             t = 1.0;
         }
 
-        // normalize the start point vector.
-        if (fv_normalize) {
+        // 開始のベクトルを正規化
+        if (fv_norm) {
             let f_len = fx * fx + fy * fy + fz * fz;
             if (0 < f_len) {
                 f_len = Math.sqrt(f_len);
@@ -179,8 +171,8 @@
             }
         }
 
-        // normalize the end point vector.
-        if (tv_normalize) {
+        // 終了のベクトルを正規化
+        if (tv_norm) {
             let t_len = tx * tx + ty * ty + tz * tz;
             if (0 < t_len) {
                 t_len = Math.sqrt(t_len);
@@ -193,19 +185,19 @@
             }
         }
 
-        // calculate the cosine and sine value from two vectors.
+        // 2つのベクトルのcos値を算出
         let cs = fx * tx + fy * ty + fz * tz;
         if (1.0 <= cs) {
             ns.Quaternion.loadIdentity(d, d_off);
             return;
         }
 
-        // calculate the axis vector for be rotation.
+        // 回転軸を算出
         let ip = fy * tz - fz * ty;
         let jp = fz * tx - fx * tz;
         let kp = fx * ty - fy * tx;
 
-        // normalize the axis vector.
+        // 回転軸を正規化
         let axis_len = ip * ip + jp * jp + kp * kp;
         if (0 < axis_len) {
             axis_len = Math.sqrt(axis_len);
@@ -217,7 +209,7 @@
             return;
         }
 
-        // load on the quaternion.
+        // 結果の書き出し
         let rad = Math.acos(cs) * 0.5 * t;
         let sn = Math.sin(rad);
         ns.Quaternion.load(d, d_off, Math.cos(rad), ip * sn, jp * sn, kp * sn);
@@ -226,32 +218,27 @@
     /**
      * 2つのベクトルの回転を四元数に読み込ませます。
      *
-     * rad = acos( (from / ||from||) ・ (to / ||to||) ) / 2 * t
-     * axis = (from / ||from||) × (to / ||to||)
-     * x = (cos(rad); sin(rad) * axis)
+     * rad = acos(from ・ to) / 2 * t
+     * axis = from × to
+     * x = (cos(rad); i * axis * sin(rad))
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3v
-     * @param {Array.<Number>} d - The destination quaternion.
-     * @param {Number} d_off - Starting position in the destination quaternion.
-     * @param {Array.<Number>} fv - The from vector.
-     * @param {Number} fv_off - Starting position in the from vector.
-     * @param {Boolean} fv_normalize -
-     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
-     * @param {Array.<Number>} tv - The to vector.
-     * @param {Number} tv_off - Starting position in the to vector.
-     * @param {Boolean} tv_normalize -
-     *              Set the true if normalized axis vector, set the false if not normalized axis vector.
-     * @param {Number} [t=1] - The interpolation coefficient.
+     * @param {Array.<Number>} d - 出力先の四元数
+     * @param {Number} d_off - 出力先の四元数の配列インデックス
+     * @param {Array.<Number>} fv - 開始のベクトル
+     * @param {Number} fv_off - 開始のベクトルの配列インデックス
+     * @param {Boolean} fv_norm - 開始のベクトルを正規化するかどうか
+     * @param {Array.<Number>} tv - 終了のベクトル
+     * @param {Number} tv_off - 終了のベクトルの配列インデックス
+     * @param {Boolean} tv_norm - 終了のベクトルの配列インデックス
+     * @param {Number} [t=1] - 補完係数
      */
-    ns.Quaternion.loadRotateVector3v = function (d, d_off,
-                                                 fv, fv_off, fv_normalize,
-                                                 tv, tv_off, tv_normalize,
-                                                 t) {
+    ns.Quaternion.loadRotateVector3v = function (d, d_off, fv, fv_off, fv_norm, tv, tv_off, tv_norm, t) {
         ns.Quaternion.loadRotateVector3(
             d, d_off,
-            fv[fv_off + VX], fv[fv_off + VY], fv[fv_off + VZ], fv_normalize,
-            tv[tv_off + VX], tv[tv_off + VY], tv[tv_off + VZ], tv_normalize,
+            fv[fv_off + VX], fv[fv_off + VY], fv[fv_off + VZ], fv_norm,
+            tv[tv_off + VX], tv[tv_off + VY], tv[tv_off + VZ], tv_norm,
             t);
     };
 
@@ -262,9 +249,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulIAxisRotate
-     * @param {Array.<Number>} q - The quaternion of push target.
-     * @param {Number} q_off - Starting position in the quaternion of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} q - 対象の四元数
+     * @param {Number} q_off - 対象の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulIAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = sn(rad * 0.5), j = 0, k = 0
@@ -272,7 +259,7 @@
         let sn = Math.sin(rad);
         let cs = Math.cos(rad);
 
-        // load on the quaternion.
+        // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
         let rp = q[q_off + QR];
@@ -294,9 +281,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulJAxisRotate
-     * @param {Array.<Number>} q - The quaternion of push target.
-     * @param {Number} q_off - Starting position in the quaternion of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} q - 対象の四元数
+     * @param {Number} q_off - 対象の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulJAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = 0, j = sn(rad * 0.5), k = 0
@@ -304,7 +291,7 @@
         let sn = Math.sin(rad);
         let cs = Math.cos(rad);
 
-        // load on the quaternion.
+        // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
         let rp = q[q_off + QR];
@@ -326,9 +313,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulKAxisRotate
-     * @param {Array.<Number>} q - The quaternion of push target.
-     * @param {Number} q_off - Starting position in the quaternion of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} q - 対象の四元数
+     * @param {Number} q_off - 対象の四元数の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulKAxisRotate = function (q, q_off, rad) {
         // r = cs(rad), i = 0, j = 0, k = sn(rad)
@@ -336,7 +323,7 @@
         let sn = Math.sin(rad);
         let cs = Math.cos(rad);
 
-        // multiplication then load on the quaternion.
+        // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
         let rp = q[q_off + QR];
@@ -358,23 +345,21 @@
      *
      * @memberof xpl.Quaternion
      * @function mulRotate
-     * @param {Array.<Number>} q - The quaternion of push target.
-     * @param {Number} q_off - Starting position in the quaternion of push target.
-     * @param {Number} ip - I imaginary part element of the imaginary axis vector.
-     * @param {Number} jp - J imaginary part element of the imaginary axis vector.
-     * @param {Number} kp - K imaginary part element of the imaginary axis vector.
-     * @param {Number} rad - The rotation value.
-     * @param {boolean} [normalize=true] -
-     *              Set true if normalized axis vector,
-     *              set false if not normalized axis vector.
+     * @param {Array.<Number>} q - 対象の四元数
+     * @param {Number} q_off - 対象の四元数の配列インデックス
+     * @param {Number} ip - 入力元の四元数の虚数I部
+     * @param {Number} jp - 入力元の四元数の虚数J部
+     * @param {Number} kp - 入力元の四元数の虚数K部
+     * @param {Number} rad - 回転のラジアン値
+     * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
-    ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, normalize) {
-        if (normalize === undefined) {
-            normalize = true;
+    ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, norm) {
+        if (norm === undefined) {
+            norm = true;
         }
 
-        // normalize the quaternion.
-        if (normalize) {
+        // 四元数の正規化
+        if (norm) {
             let len = ip * ip + jp * jp + kp * kp;
             if (0 < len) {
                 len = Math.sqrt(len);
@@ -390,7 +375,7 @@
         jp *= sn;
         kp *= sn;
 
-        // multiplication then load on the quaternion.
+        // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
         let trp = q[q_off + QR];

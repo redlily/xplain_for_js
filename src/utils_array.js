@@ -30,13 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
 
     /**
-     * 配列用のユーティリティクラス
+     * 配列用のユーティリティクラスです。
      *
      * @namespace xpl.ArrayUtils
      * @author Syuuhei Kuno
@@ -49,25 +48,10 @@
      * 大小比較用のチェック関数定義
      *
      * @callback xpl.ArrayUtils~comparator
-     * @param {Object} v1 - The left-hand side value.
-     * @param {Object} v2 - The right-hand side value.
-     * @returns {Number}
-     *              Returns value is comparator result,
-     *              the zero if equal then left side and right side,
-     *              the positive value if the left side is less then right side,
-     *              the negative value if the left side is greater then right side.
-     */
-
-    /**
-     * 一致比較用のチェック関数定義
-     *
-     * @callback xpl.ArrayUtils~collection
-     * @param {Object} v1 - The left-hand side value.
-     * @param {Object} v2 - The right-hand side value.
-     * @returns {Number}
-     *              Returns value is comparison result,
-     *              the true if equal then left side and right side,
-     *              the false if not equal then left side and right side.
+     * @param {Object} v1 - 演算子の左側の値
+     * @param {Object} v2 - 演算子の右側の値
+     * @returns {Number} 比較の結果、
+     *              値が0の場合は等しく、0以上の正の値の場合は左側の値の方が大きく、0以下の負の数の場合は右側の値の方が大きくなります。
      */
 
     /**
@@ -75,11 +59,11 @@
      *
      * @memberof xpl.ArrayUtils
      * @function copy
-     * @param {Array} src - The source array.
-     * @param {Number} src_off - Starting position in the source.
-     * @param {Array} dest - The destination array.
-     * @param {Number} dest_off - Starting position in the destination.
-     * @param {Number} len - Number of the elements to be copied.
+     * @param {Array} src - 入力元の配列
+     * @param {Number} src_off - 入力元の配列オフセット
+     * @param {Array} dest - The 出力先の配列
+     * @param {Number} dest_off - 出力先の配列オフセット
+     * @param {Number} len - コピーする要素の数
      */
     ns.ArrayUtils.copy = function (src, src_off, dest, dest_off, len) {
         for (let i = 0; i < len; ++i) {
@@ -92,10 +76,10 @@
      *
      * @memberof xpl.ArrayUtils
      * @function fill
-     * @param {Array} ary - The array.
-     * @param {Number} from - The index of the first element.
-     * @param {Number} to - The index of the last element.
-     * @param {Number} value - The value.
+     * @param {Array} ary - 配列
+     * @param {Number} from - 配列の開始インデックス
+     * @param {Number} to - 配列の開始インデックス
+     * @param {Number} value - 指定の値
      */
     ns.ArrayUtils.fill = function (ary, from, to, value) {
         for (let i = from; i < to; ++i) {
@@ -104,17 +88,17 @@
     };
 
     /**
-     * 配列から指定の要素を二分探索します。
+     * ソート済みの配列から指定の要素を2分探索します。
      *
      * @memberof xpl.ArrayUtils
      * @function binarySearch
-     * @param {Array} ary - The array.
-     * @param {Number} from - The index of the first element.
-     * @param {Number} to - The index of the last element.
-     * @param {Number} key - The key value.
-     * @param {xpl.ArrayUtils~comparator} [comparator=null] -
-     *              The comparison function. Can specified the null if not needed it.
-     * @returns {Number} The index to element.
+     * @param {Array} ary - 配列
+     * @param {Number} from - 配列の開始インデックス
+     * @param {Number} to - 配列の開始インデックス
+     * @param {Number} key - 指定の値
+     * @param {xpl.ArrayUtils~comparator} [comparator=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
+     * @returns {Number} 指定の値が発見された配列インデックス値、
+     *              ゼロ以下の場合は指定の要素が見つからず
      */
     ns.ArrayUtils.binarySearch = function (ary, from, to, key, comparator) {
         to--;
@@ -143,21 +127,18 @@
      *
      * @memberof xpl.ArrayUtils
      * @function convertSet
-     * @param {Array} ary - The array.
-     * @param {Number} from - The index of the first element.
-     * @param {Number} to - The index of the last element.
-     * @param {xpl.ArrayUtils~collection} [comparator=null] -
-     *              The comparison function. Can specified the null if not needed it.
-     * @returns {Array} The new array.
+     * @param {Array} ary - 配列
+     * @param {Number} from - 配列の開始のインデックス
+     * @param {Number} to - 配列の終了のインデックス
+     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
+     * @returns {Array} 重複が取り除かれた新たな配列
      */
-    ns.ArrayUtils.convertToSet = function (ary, from, to, comparator) {
+    ns.ArrayUtils.convertToSet = function (ary, from, to, comp) {
         let dest = [];
         loop: for (let i = from; i < to; ++i) {
             let value = ary[i];
             for (let j = 0; j < dest.length; ++j) {
-                if (comparator != null ?
-                        comparator(dest[j], value) :
-                    dest[j] == value) {
+                if (comp != null ? comp(dest[j], value) : dest[j] == value) {
                     continue loop;
                 }
             }
@@ -167,40 +148,35 @@
     };
 
     /**
-     * 部分集合が指定の上位集合に含まれているかどうかを調べます。
+     * 部分集合が指定の上位集合に内包されているかを調べます。
+     *
+     * A ⊆ B
      *
      * @memberof xpl.ArrayUtils
      * @function isContained
-     * @param {Array} superset - The superset.
-     * @param {Number} superset_from - The index of the first element at superset.
-     * @param {Number} superset_to - The index of the last element at superset.
-     * @param {Array} subset - The subset.
-     * @param {Number} subset_from - The index of the first element at subset.
-     * @param {Number} subset_to - The index of the last element at subset.
-     * @param {xpl.ArrayUtils~collection} [collection=null] -
-     *              The comparison function. Can specified the null if not needed it.
-     * @return {Boolean}
-     *              Returns value is check result,
-     *              the if subset contained all elements in superset,
-     *              false if subset not contained all elements in superset.
+     * @param {Array} superset - 上位集合
+     * @param {Number} super_from - 上位集合の配列の開始インデックス
+     * @param {Number} super_to - 上位集合の配列の終了インデックス
+     * @param {Array} subset - 下位集合
+     * @param {Number} sub_from - 下位集合の配列の開始インデックス
+     * @param {Number} sub_to - 下位集合の配列の終了インデックス
+     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
+     * @return {Boolean} 内包されているかどうか
      */
-    ns.ArrayUtils.isContained = function (superset, superset_from, superset_to,
-                                          subset, subset_from, subset_to,
-                                          collection) {
-        if (superset_to - superset_from < subset_to - subset_from) {
-            return false;
-        }
-        loop: for (let i = subset_from; i < subset_to; ++i) {
-            let value = subset[i];
-            for (let j = superset_from; j < superset_to; ++j) {
-                if (collection != null ? collection(superset[j], value) :
-                    superset[j] == value) {
-                    continue loop;
+    ns.ArrayUtils.isContained = function (superset, super_from, super_to, subset, sub_from, sub_to, comp) {
+        if (sub_to - sub_from <= super_to - super_from) {
+            loop: for (let i = sub_from; i < sub_to; ++i) {
+                let value = subset[i];
+                for (let j = super_from; j < super_to; ++j) {
+                    if (comp != null ? comp(superset[j], value) : superset[j] == value) {
+                        continue loop;
+                    }
                 }
+                return false;
             }
-            return false;
+            return true;
         }
-        return true;
+        return false;
     };
 
 })(xpl);
