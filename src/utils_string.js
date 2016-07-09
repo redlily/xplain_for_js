@@ -36,7 +36,7 @@
     "use strict";
 
     /**
-     * String utilities.
+     * 文字列のユーティリティクラスです。
      *
      * @author Syuuhei Kuno
      * @namespace xpl.StringUtils
@@ -46,22 +46,24 @@
     };
 
     /**
-     * Encoding string to byte array of the UTF-8 codes.
+     * JavaScript内部の文字列表現からUTF-8の文字列にエンコードします。
      *
      * @memberof xpl.StringUtils
      * @function encodeUTF8
-     * @param {String} str - The target string.
-     * @returns {Array} The encoded byte array to the UTF-8 codes.
+     * @param {String} str - JavaScriptの文字列
+     * @returns {Array} UTF-8の文字列
      */
     ns.StringUtils.encodeUTF8 = function (str) {
         var ary = [];
         for (var i = 0; i < str.length; ++i) {
-            // convert from the UTF-16 codes to the UTF-8 codes.
+            // UTF-16からUnicodeへ変換
             var code = str.charCodeAt(i);
             if ((0xd800 <= code && code <= 0xdfff) && i < str.length - 1) {
                 code = ((code & 0x3ff) << 10) | (str.charCodeAt(++i) & 0x3ff)
                     + 0x10000;
             }
+
+            // UnicodeからUTF-8へ変換
             if (code < 0x80) {
                 // 7bit.
                 ary.push(code);
@@ -106,16 +108,17 @@
     };
 
     /**
-     * Decoding string from byte array of the UTF-8 codes.
+     * UTF-8の文字列からJavaScript内部の文字列表現にデコードします。
      *
      * @memberof xpl.StringUtils
      * @function decodeUTF8
-     * @param {Array} ary - The byte array of the UTF-8 codes.
-     * @returns {String} The decoded string.
+     * @param {Array} ary - UTF-8の文字列
+     * @returns {String} JavaScriptの文字列
      */
     ns.StringUtils.decodeUTF8 = function (ary) {
         let str = "";
         for (let i = 0; i < ary.length;) {
+            // UTF-8からUnicodeへ変換
             let code = 0xff & ary[i];
             let remain = 0;
 
@@ -152,11 +155,13 @@
                 code |= (0x3f & c) << (6 * --remain);
                 i++;
             }
+
+            // UnicodeからUTF-8へ変換
             if (code < 0xd7ff || (0xe000 <= code && code <= 0xffff)) {
-                // one unit a code of UTF-16.
+                // 1つのUTF-16のコードで1文字の場合
                 str += String.fromCharCode(code);
             } else {
-                // two unit the codes of UTF-16.
+                // 2つのUTF-16のコードで1文字の場合
                 str += String.fromCharCode(
                     0xd800 | (((code - 0x10000) >> 10) & 0x3ff),
                     0xdc00 | (code & 0x3ff));

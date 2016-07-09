@@ -30,13 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
 
     /**
-     * System utilities.
+     * システムのユーティリティクラスです。
      *
      * @author Syuuhei Kuno
      * @namespace xpl.StringUtils
@@ -45,10 +44,10 @@
         throw new Error("Unsupported operation!");
     };
 
-    // initialize the utilities with window.
     if (typeof window == "object") {
         let requestAnimationFrame = null;
         let cancelAnimationFrame = null;
+
         if (typeof window.requestAnimationFrame == "function") {
             // HTML5 API.
             requestAnimationFrame = window.requestAnimationFrame;
@@ -92,38 +91,35 @@
         }
 
         /**
-         * Request the call timer of animation frame.
+         * アニメーションの開始を要求します。
          *
          * @memberof ns.SystemUtils
          * @function requestAnimationFrame
-         * @param {Function} callback -
-         * @returns {Object}
+         * @param {Function} callback - 定期的に呼び出すコールバック関数
+         * @returns {Object} タイマーID
          */
         ns.SystemUtils.requestAnimationFrame = function (callback) {
             return requestAnimationFrame(callback);
         };
 
         /**
-         * Cancel the call timer of animation frame.
+         * アニメーションをキャンセルします。
          *
          * @memberof ns.SystemUtils
          * @function cancelAnimationFrame
-         * @param {Object} timerId -
+         * @param {Object} timerId - タイマーID
          */
         ns.SystemUtils.cancelAnimationFrame = function (timerId) {
             cancelAnimationFrame(timerId);
         };
     }
 
-    // initialize the utilities with document.
     if (typeof document == "object") {
 
         /**
-         * Check the full screen mode at target element.
+         * フルスクリーンをサポートしているかどうかを調べます。
          *
-         * @returns {Boolean}
-         *              True if supported the full screen mode, false if
-         *              supported the full screen mode.
+         * @returns {Boolean} フルスクリーンをサポートしているかどうか
          */
         ns.SystemUtils.isSupportedFullScreen = function (target_element) {
             return (target_element.requestFullscreen ||
@@ -133,13 +129,12 @@
         };
 
         /**
-         * Change to the full screen mode.
+         * 指定の要素をフルスクリーン化を要求します。
          *
          * @memberof xpl.SystemUtils
          * @function requestFullScreen
-         * @param {Element} target_element - The target element of full screen.
-         * @returns {Boolean}
-         *              True if requested successful, false if requested failed.
+         * @param {Element} target_element - フルスクリーンの対象になる対象の要素
+         * @returns {Boolean} フルスクリーンに成功したかどうか
          */
         ns.SystemUtils.requestFullScreen = function (target_element) {
             if (typeof target_element.requestFullscreen == "function") {
@@ -161,16 +156,16 @@
         };
 
         /**
-         * Check the full screen mode.
+         * フルスクリーンかどうかを調べます。
          *
-         * @returns {Boolean} True if full screen mode, false if window mode.
+         * @returns {Boolean} フルスクリーンかどうか
          */
         ns.SystemUtils.isFullScreen = function () {
             return window.innerWidth == screen.width && window.innerHeight == screen.height;
         };
 
         /**
-         * Cancel the full screen mode.
+         * フルスクリーンをキャンセルします。
          *
          * @memberof xpl.SystemUtils
          * @function cancelFullScreen

@@ -35,10 +35,10 @@
     "use strict";
 
     let VX = 0, VY = 1, VZ = 2;
-    let QR = 0, QI = 1, QJ = 2, QK = 3;
+    let CR = 0, CI = 1, CJ = 2, CK = 3;
 
     /**
-     * 四元数のユーティリティクラス
+     * 四元数のユーティリティクラスです。
      *
      * @namespace xpl.Quaternion
      * @author Syuuhei Kuno
@@ -50,7 +50,7 @@
     /**
      * 任意の数値を四元数に読み込ませます。
      *
-     * d = (r, i, j, k)
+     * d = (a, ib, jc, kd)
      *
      * @memberof xpl.Quaternion
      * @function load
@@ -62,16 +62,16 @@
      * @param {Number} kp - 入力元の四元数の虚数K部
      */
     ns.Quaternion.load = function (d, d_off, rp, ip, jp, kp) {
-        d[d_off + QR] = rp;
-        d[d_off + QI] = ip;
-        d[d_off + QJ] = jp;
-        d[d_off + QK] = kp;
+        d[d_off + CR] = rp;
+        d[d_off + CI] = ip;
+        d[d_off + CJ] = jp;
+        d[d_off + CK] = kp;
     };
 
     /**
      * 任意の数値を四元数に読み込ませます。
      *
-     * d = (r, i, j, k)
+     * d = (a, ib, jc, kd)
      *
      * @memberof xpl.Quaternion
      * @function loadv
@@ -81,7 +81,7 @@
      * @param {Number} q_off - 入力元の四元数の配列インデックス
      */
     ns.Quaternion.loadv = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
+        ns.Quaternion.load(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -124,10 +124,10 @@
      * @returns {Number} 四元数の絶対値の2乗の値
      */
     ns.Quaternion.absSq = function (q, q_off) {
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         return rp * rp + ip * ip + jp * jp + kp * kp;
     };
 
@@ -159,10 +159,10 @@
      * @param {Number} q_off - 対象の四元数の配列インデックス
      */
     ns.Quaternion.normalizev = function (d, d_off, q, q_off) {
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         let len = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < len) {
             len = Math.sqrt(len);
@@ -210,7 +210,7 @@
      * @param {Number} q_off - 指数部の四元数の配列インデックス
      */
     ns.Quaternion.expv = function (d, d_off, q, q_off) {
-        ns.Quaternion.exp(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
+        ns.Quaternion.exp(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -255,7 +255,7 @@
     /**
      * 対数を算出します。
      *
-     * d = log q
+     * d = log(q)
      *
      * @memberof xpl.Quaternion
      * @function log
@@ -278,7 +278,7 @@
     /**
      * 対数を算出します。
      *
-     * d = log q
+     * d = log(q)
      *
      * @memberof xpl.Quaternion
      * @function logv
@@ -288,7 +288,7 @@
      * @param {Number} q_off - 対象の四元数の配列インデックス
      */
     ns.Quaternion.logv = function (d, d_off, q, q_off) {
-        ns.Quaternion.log(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK]);
+        ns.Quaternion.log(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -339,8 +339,8 @@
     ns.Quaternion.lerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.lerp(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK],
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK],
             t);
     };
 
@@ -386,7 +386,7 @@
 
         // 四元数同士のcos値を算出
         let cs = rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
-        
+
         if (1.0 <= cs) {
             // 2つの四元数の向きが同一の場合
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -399,7 +399,7 @@
             ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else {
             // その他の場合
-            
+
             // 四元数の絶対値を線形補間
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             let abs = abs1 * (1.0 - t) + abs2 * t;
@@ -441,8 +441,8 @@
     ns.Quaternion.slerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
         ns.Quaternion.slerp(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK],
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK],
             t);
     };
 
@@ -481,10 +481,10 @@
      * @returns {Number} 内積値
      */
     ns.Quaternion.dotv = function (q1, q1_off, q2, q2_off) {
-        return q1[q1_off + QR] * q2[q2_off + QR] +
-            q1[q1_off + QI] * q2[q2_off + QI] +
-            q1[q1_off + QJ] * q2[q2_off + QJ] +
-            q1[q1_off + QK] * q2[q2_off + QK];
+        return q1[q1_off + CR] * q2[q2_off + CR] +
+            q1[q1_off + CI] * q2[q2_off + CI] +
+            q1[q1_off + CJ] * q2[q2_off + CJ] +
+            q1[q1_off + CK] * q2[q2_off + CK];
     };
 
     /**
@@ -500,7 +500,7 @@
      * @param {Number} q_off - 対象の四元数の配列インデックス
      */
     ns.Quaternion.conjugatev = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + QR], -q[q_off + QI], -q[q_off + QJ], -q[q_off + QK]);
+        ns.Quaternion.load(d, d_off, q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
     };
 
     /**
@@ -516,7 +516,7 @@
      * @param {Number} q_off - 対象の四元数の配列インデックス
      */
     ns.Quaternion.reversev = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, -q[q_off + QR], -q[q_off + QI], -q[q_off + QJ], -q[q_off + QK]);
+        ns.Quaternion.load(d, d_off, -q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
     };
 
     /**
@@ -532,10 +532,10 @@
      * @param {Number} q_off - 対象の四元数の配列インデックス
      */
     ns.Quaternion.inversev = function (d, d_off, q, q_off) {
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         let det = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < det) {
             det = Math.sqrt(det);
@@ -586,8 +586,8 @@
     ns.Quaternion.addv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.add(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
     };
 
     /**
@@ -629,8 +629,8 @@
     ns.Quaternion.subv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.sub(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
     };
 
     /**
@@ -679,8 +679,8 @@
     ns.Quaternion.mulv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.mul(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
     };
 
     /**
@@ -716,7 +716,7 @@
      * @param {Number} s - 対象のスカラ
      */
     ns.Quaternion.mulScalarv = function (d, d_off, q, q_off, s) {
-        ns.Quaternion.mulScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
+        ns.Quaternion.mulScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
     };
 
     /**
@@ -766,8 +766,8 @@
     ns.Quaternion.divv = function (d, d_off, q1, q1_off, q2, q2_off) {
         ns.Quaternion.div(
             d, d_off,
-            q1[q1_off + QR], q1[q1_off + QI], q1[q1_off + QJ], q1[q1_off + QK],
-            q2[q2_off + QR], q2[q2_off + QI], q2[q2_off + QJ], q2[q2_off + QK]);
+            q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
+            q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
     };
 
     /**
@@ -803,7 +803,7 @@
      * @param {Number} s - 対象のスカラ
      */
     ns.Quaternion.divScalarv = function (d, d_off, q, q_off, s) {
-        ns.Quaternion.divScalar(d, d_off, q[q_off + QR], q[q_off + QI], q[q_off + QJ], q[q_off + QK], s);
+        ns.Quaternion.divScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
     };
 
     /**
@@ -816,7 +816,7 @@
      * @returns {String} 変換された文字列
      */
     ns.Quaternion.convertToString = function (q, off) {
-        return "Quaternion(" + q[off + QR] + ", " + q[off + QI] + ", " + q[off + QJ] + ", " + q[off + QK] + ")";
+        return "Quaternion(" + q[off + CR] + ", " + q[off + CI] + ", " + q[off + CJ] + ", " + q[off + CK] + ")";
     };
 
 })(xpl);

@@ -39,12 +39,12 @@
 
     "use strict";
 
-    if (ns.Quaternion === undefined) {
+    if (ns.Quaternion == null) {
         return;
     }
 
     let VX = 0, VY = 1, VZ = 2;
-    let QR = 0, QI = 1, QJ = 2, QK = 3;
+    let CR = 0, CI = 1, CJ = 2, CK = 3;
 
     /**
      * I軸(X軸)の回転を四元数に読み込ませます。
@@ -110,7 +110,7 @@
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, norm) {
-        if (norm === undefined) {
+        if (norm == null) {
             norm = true;
         }
 
@@ -153,7 +153,7 @@
      * @param {Number} [t=1] - 補完係数
      */
     ns.Quaternion.loadRotateVector3 = function (d, d_off, fx, fy, fz, fv_norm, tx, ty, tz, tv_norm, t) {
-        if (t === undefined) {
+        if (t == null) {
             t = 1.0;
         }
 
@@ -256,16 +256,16 @@
     ns.Quaternion.mulIAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = sn(rad * 0.5), j = 0, k = 0
         rad *= 0.5;
-        let sn = Math.sin(rad);
         let cs = Math.cos(rad);
+        let sn = Math.sin(rad);
 
         // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - ip * sn,
@@ -288,16 +288,16 @@
     ns.Quaternion.mulJAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = 0, j = sn(rad * 0.5), k = 0
         rad *= 0.5;
-        let sn = Math.sin(rad);
         let cs = Math.cos(rad);
+        let sn = Math.sin(rad);
 
         // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - jp * sn,
@@ -320,16 +320,16 @@
     ns.Quaternion.mulKAxisRotate = function (q, q_off, rad) {
         // r = cs(rad), i = 0, j = 0, k = sn(rad)
         rad *= 0.5;
-        let sn = Math.sin(rad);
         let cs = Math.cos(rad);
+        let sn = Math.sin(rad);
 
         // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        let rp = q[q_off + QR];
-        let ip = q[q_off + QI];
-        let jp = q[q_off + QJ];
-        let kp = q[q_off + QK];
+        let rp = q[q_off + CR];
+        let ip = q[q_off + CI];
+        let jp = q[q_off + CJ];
+        let kp = q[q_off + CK];
         ns.Quaternion.load(
             q, q_off,
             rp * cs - kp * sn,
@@ -341,7 +341,7 @@
     /**
      * 四元数にK軸(Z軸)回転を掛けあわせます。
      *
-     * q *= (cos(rad / 2); sin(rad / 2) * v / ||v||)
+     * q *= (cos(rad / 2); sin(rad / 2) * v)
      *
      * @memberof xpl.Quaternion
      * @function mulRotate
@@ -354,7 +354,7 @@
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, norm) {
-        if (norm === undefined) {
+        if (norm == null) {
             norm = true;
         }
 
@@ -368,9 +368,10 @@
                 kp /= len;
             }
         }
+
         rad *= 0.5;
-        let sn = Math.sin(rad);
         let cs = Math.cos(rad);
+        let sn = Math.sin(rad);
         ip *= sn;
         jp *= sn;
         kp *= sn;
@@ -378,10 +379,10 @@
         // 掛け合わせて、結果の書き出し
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        let trp = q[q_off + QR];
-        let tip = q[q_off + QI];
-        let tjp = q[q_off + QJ];
-        let tkp = q[q_off + QK];
+        let trp = q[q_off + CR];
+        let tip = q[q_off + CI];
+        let tjp = q[q_off + CJ];
+        let tkp = q[q_off + CK];
         ns.Quaternion.load(
             q, q_off,
             trp * cs - (tip * ip + tjp * jp + tkp * kp),

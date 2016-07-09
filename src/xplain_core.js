@@ -30,26 +30,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 /**
- * Namespace for the xPlain.
+ * xPlainのネームスペースの定義です。
  *
  * @namespace xpl
  * @author Syuuhei Kuno
  */
 var xpl;
-
 if (typeof module == "object") {
-    // for the Node.js.
+    // Node.jsの場合
     xpl = module.exports;
     xpl.running_type = "Node.js";
 
 } else if (typeof exports == "object") {
-    // for the CommonJS.
+    // CommonJSの場合
     xpl = exports;
     xpl.running_type = "CommonJS";
 } else {
-    // for direct link.
+    // 直接的にリンクした場合
     xpl = {};
     xpl.running_type = "Direct Link"
 }
@@ -61,167 +59,157 @@ if (typeof module == "object") {
     Object.defineProperties(ns, {
 
         /**
-         * Running type of the Node.js.
+         * Node.jsで動作している場合の識別子
          *
          * @constant
          * @memberof xpl
          * @member {String} RUNTYPE_NODE_JS
          */
         "RUNTYPE_NODE_JS": {
-
             value: "Node.js"
         },
 
         /**
-         * Running type of the CommonJS.
+         * CommonJSで動作している場合の識別子
          *
          * @constant
          * @memberof xpl
          * @member {String} RUNTYPE_COMMON_JS
          */
         "RUNTYPE_COMMON_JS": {
-
             value: "CommonJS"
         },
 
         /**
-         * Running type of the direct link.
+         * 直接的なリンクで動作している場合の識別子
          *
          * @constant
          * @memberof xpl
          * @member {String} RUNTYPE_DIRECT_LINK
          */
         "RUNTYPE_DIRECT_LINK": {
-
             value: "Direct Link"
         }
     });
 
     /**
-     * About xPlain information.
+     * xPlainについての情報
      *
      * @namespace xpl.about
      */
     ns.about = {};
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.about, {
 
         /**
-         * Name of the this framework.
+         * このライブラリ名
          *
          * @constant
          * @memberof xpl.about
          * @member {String} NAME
          */
         "NAME": {
-
             value: "xPlain for JavaScript"
         },
 
         /**
-         * Code name of the this framework.
+         * このライブラリのコードネーム
          *
          * @constant
          * @memberof xpl.about
          * @member {String} CODE_NAME
          */
         "CODE_NAME": {
-
-            value: "DEUS"
+            value: "ORBIS"
         },
 
         /**
-         * Integer version of the this framework.
+         * このライブラリの管理用の整数バージョン
          *
          * @constant
          * @memberof xpl.about
          * @member {Number} VERSION_CODE
          */
         "VERSION_CODE": {
-
             value: 1
         },
 
         /**
-         * String version of the this framework.
+         * このライブラリの表示用の文字列バージョン
          *
          * @constant
          * @memberof xpl.about
          * @member {String} VERSION_NAME
          */
         "VERSION_NAME": {
-
             value: "0.9.0"
         },
 
         /**
-         * Developer name of the this framework.
+         * このライブラリの開発者
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} AUTHOR
+         * @member {Array.<String>} AUTHOR
          */
         "AUTHOR": {
-
-            value: "Syuuhei Kuno"
+            value: ["Syuuhei Kuno"]
         },
 
         /**
-         * Copyright of the this framework.
+         * このライブラリのコピーライト
          *
          * @constant
          * @memberof xpl.about
          * @member {String} COPYRIGHT
          */
         "COPYRIGHT": {
-
-            value: "Copyright (c) 2016, Syuuhei Kuno All rights reserved."
+            value: "Copyright (c) 2016, xPlain All rights reserved."
         },
 
         /**
-         * License URL of the this framework.
+         * このライブラリのライセンス
          *
          * @constant
          * @memberof xpl.about
          * @member {String} LICENSE
          */
         "LICENSE": {
-
             value: "http://opensource.org/licenses/BSD-3-Clause"
         },
 
         /**
-         * Repository URI of the this framework.
+         * このライブラリのGitリポジトリURL
          *
          * @constant
          * @memberof xpl.about
          * @member {String} REPOSITORY
          */
         "REPOSITORY": {
-
             value: "git@github.com:redlily/xplain_for_js.git"
         }
     });
 
     /**
-     * Get about information of the xPlain for JavaScript.
+     * ライブラリの情報を取得します。
      *
      * @memberof xpl
      * @function getAbout
-     * @returns {String} - The about information.
+     * @returns {String} - 情報
      */
     ns.getAbout = function () {
         return ns.about.NAME + "\n" +
             "Version code: " + ns.about.VERSION_CODE + "\n" +
             "Version name: " + ns.about.VERSION_NAME + "\n" +
-            "Author:       " + ns.about.AUTHOR + "\n" +
-            "Copyright:    " + ns.about.COPYRIGHT + "\n" +
-            "License:      " + ns.about.LICENSE + "\n" +
-            "Repository:   " + ns.about.REPOSITORY
+            "Author: " + ns.about.AUTHOR + "\n" +
+            "Copyright: " + ns.about.COPYRIGHT + "\n" +
+            "License: " + ns.about.LICENSE + "\n" +
+            "Repository: " + ns.about.REPOSITORY
     };
 
     /**
-     * Put about information of the xPlain for JavaScript to the standard output.
+     * ライブラリの情報をコンソール上に表示します。
      *
      * @memberof xpl
      * @function printAbout
@@ -230,8 +218,10 @@ if (typeof module == "object") {
         console.log(ns.getAbout);
     };
 
-    // working buffer.
+    // 作業用バッファ
     let workBuf = new DataView(new ArrayBuffer(8));
+
+    // JsDoc用の型定義
 
     /**
      * @typedef {Number} xpl.size_t
@@ -248,39 +238,39 @@ if (typeof module == "object") {
      */
 
     /**
-     * Convert to unsigned integer of the pointer size type.
+     * size_t型のクラス
      *
      * @class
      * @alias xpl.size_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.size_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.size_t} 変換後の数値
      */
     ns.size_t = function (value) {
         return Number.parseInt.apply(null, arguments);
     };
 
     /**
-     * Convert to signed integer of the pointer size type.
+     * ptrdiff_t型のクラス
      *
      * @class
      * @alias xpl.ptrdiff_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.ptrdiff_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.ptrdiff_t} 変換後の数値
      */
     ns.ptrdiff_t = function (value) {
         return Number.parseInt.apply(null, arguments);
     };
 
     /**
-     * Convert to signed integer of the 8bits size type.
+     * int8_t型のクラス
      *
      * @class
      * @alias xpl.int8_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.int8_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.int8_t} 変換後の数値
      */
     ns.int8_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 24) >> 24;
@@ -289,38 +279,36 @@ if (typeof module == "object") {
     Object.defineProperties(ns.int8_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.int8_t
          * @member {xpl.int8_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: -Math.pow(2, 7)
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.int8_t
          * @member {xpl.int8_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 7) - 1
         }
     });
 
     /**
-     * Convert to unsigned integer of the 8bits size type.
+     * uint8_t型のクラス
      *
      * @class
      * @alias xpl.uint8_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.uint8_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.uint8_t} 変換後の数値
      */
     ns.uint8_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 24) >>> 24;
@@ -329,38 +317,36 @@ if (typeof module == "object") {
     Object.defineProperties(ns.uint8_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.uint8_t
          * @member {xpl.uint8_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: 0
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.uint8_t
          * @member {xpl.uint8_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 8) - 1
         }
     });
 
     /**
-     * Convert to signed integer of the 16bits size type.
+     * int16_t型のクラス
      *
      * @class
      * @alias xpl.int16_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.int32_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.int32_t} 変換後の数値
      */
     ns.int16_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 16) >> 16;
@@ -369,38 +355,36 @@ if (typeof module == "object") {
     Object.defineProperties(ns.int16_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: 0
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 8) - 1
         }
     });
 
     /**
-     * Convert to unsigned integer of the 16bits size type.
+     * uint16_t型のクラス
      *
      * @class
      * @alias xpl.uint16_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.uint16_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.uint16_t} 変換後の数値
      */
     ns.uint16_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 16) >>> 16;
@@ -409,38 +393,36 @@ if (typeof module == "object") {
     Object.defineProperties(ns.uint16_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.uint16_t
          * @member {xpl.int16_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: 0
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 16) - 1
         }
     });
 
     /**
-     * Convert to signed integer of the 32bits size type.
+     * int32_t型のクラス
      *
      * @class
      * @alias xpl.int32_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.int32_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.int32_t} 変換後の数値
      */
     ns.int32_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 0) >> 0;
@@ -449,38 +431,36 @@ if (typeof module == "object") {
     Object.defineProperties(ns.int32_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.int32_t
          * @member {xpl.int32_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: -Math.pow(2, 31)
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.int32_t
          * @member {xpl.int32_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 31) - 1
         }
     });
 
     /**
-     * Convert to signed integer of the 32bits size type.
+     * uint32_t型のクラス
      *
      * @class
      * @alias xpl.uint32_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.uint32_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.uint32_t} 変換後の数値
      */
     ns.uint32_t = function (value) {
         return (Number.parseInt.apply(null, arguments) << 0) >>> 0;
@@ -489,50 +469,48 @@ if (typeof module == "object") {
     Object.defineProperties(ns.uint32_t, {
 
         /**
-         * The most minimum value in this type.
+         * 最小数値
          *
          * @constant
          * @memberof xpl.uint32_t
          * @member {xpl.uint32_t} MIN_VALUE
          */
         "MIN_VALUE": {
-
             value: 0
         },
 
         /**
-         * The most maximum value in this type.
+         * 最大数値
          *
          * @constant
          * @memberof xpl.uint32_t
          * @member {xpl.uint32_t} MIN_VALUE
          */
         "MAX_VALUE": {
-
             value: Math.pow(2, 32) - 1
         }
     });
 
     /**
-     * Convert to float number of the 32bits size type.
+     * float32_t型のクラス
      *
      * @class
      * @alias xpl.float32_t
      * @augments Number
-     * @param {Object} value - The any type value.
-     * @returns {xpl.float32_t} The converted value.
+     * @param {Object} value - 任意の数値
+     * @returns {xpl.float32_t} 変換後の数値
      */
     ns.float32_t = function (value) {
         return Number.parseFloat.apply(null, arguments);
     };
 
     /**
-     * Get a hash code of specify value.
+     * ハッシュ値を算出します。
      *
      * @memberof xpl.float64_t
      * @function hashCode
      * @param {xpl.float32_t} value - The value.
-     * @return {String} The hash code.
+     * @return {String} ハッシュコード
      */
     ns.float32_t.hashCode = function (value) {
         workBuf.setFloat64(value);
@@ -540,25 +518,25 @@ if (typeof module == "object") {
     };
 
     /**
-     * Convert to float number of the 64bits size type.
+     * float64_t型のクラス
      *
      * @class
      * @alias xpl.float64_t
      * @augments Number
-     * @param {Object} value - The any type value.
-     * @returns {xpl.float64_t} The converted value.
+     * @param {Object} value - 任意の数値
+     * @returns {xpl.float64_t} 変換後の数値
      */
     ns.float64_t = function (value) {
         return Number.parseFloat.apply(null, arguments);
     };
 
     /**
-     * Get a hash code of specify value.
+     * ハッシュ値を算出します。
      *
      * @memberof xpl.float64_t
      * @function hashCode
      * @param {xpl.float64_t} value - The value.
-     * @return {String} The hash code.
+     * @return {String} ハッシュコード
      */
     ns.float64_t.hashCode = function (value) {
         workBuf.setFloat64(value);
@@ -566,13 +544,13 @@ if (typeof module == "object") {
     };
 
     /**
-     * Convert to the enumeration type.
+     * 列挙型のクラス
      *
      * @class
      * @alias xpl.enum_t
      * @augments Number
-     * @param {Object} value - The any value.
-     * @returns {xpl.enum_t} The converted value.
+     * @param {Object} value - 任意の数
+     * @returns {xpl.enum_t} 変換後の数値
      */
     ns.enum_t = function (value) {
         return Number.parseInt.apply(null, arguments);

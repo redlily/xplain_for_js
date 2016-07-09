@@ -40,7 +40,7 @@
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
-     * Matrix utilities for the three dimensional.
+     * 4*4の行列のユーティリティクラスです。
      *
      * @namespace xpl.Matrix4x4
      * @author Syuuhei Kuno
@@ -50,42 +50,45 @@
     };
 
     /**
-     * Load the any values that to elements of the matrix.
+     * 任意の数値を行列に読み込ませます。
+     *
+     *     | a, b, c, d |
+     * d = | e, f, g, h |
+     *     | i, j, k, l |
+     *     | m, n, o, p |
      *
      * @memberof xpl.Matrix4x4
      * @function load
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} m00 - Element of 0-0 in the source matrix.
-     * @param {Number} m01 - Element of 0-1 in the source matrix.
-     * @param {Number} m02 - Element of 0-2 in the source matrix.
-     * @param {Number} m03 - Element of 0-3 in the source matrix.
-     * @param {Number} m10 - Element of 1-0 in the source matrix.
-     * @param {Number} m11 - Element of 1-1 in the source matrix.
-     * @param {Number} m12 - Element of 1-2 in the source matrix.
-     * @param {Number} m13 - Element of 1-3 in the source matrix.
-     * @param {Number} m20 - Element of 2-0 in the source matrix.
-     * @param {Number} m21 - Element of 2-1 in the source matrix.
-     * @param {Number} m22 - Element of 2-2 in the source matrix.
-     * @param {Number} m23 - Element of 2-3 in the source matrix.
-     * @param {Number} m30 - Element of 3-0 in the source matrix.
-     * @param {Number} m31 - Element of 3-1 in the source matrix.
-     * @param {Number} m32 - Element of 3-2 in the source matrix.
-     * @param {Number} m33 - Element of 3-3 in the source matrix.
-     * @param {Boolean} [transpose=false] -
-     *              Set true if transpose the matrix,
-     *              set false if don't transpose the matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} m00 - 入力元の行列の0, 0の要素
+     * @param {Number} m01 - 入力元の行列の0, 0の要素
+     * @param {Number} m02 - 入力元の行列の0, 0の要素
+     * @param {Number} m03 - 入力元の行列の0, 0の要素
+     * @param {Number} m10 - 入力元の行列の1, 1の要素
+     * @param {Number} m11 - 入力元の行列の1, 1の要素
+     * @param {Number} m12 - 入力元の行列の1, 1の要素
+     * @param {Number} m13 - 入力元の行列の1, 1の要素
+     * @param {Number} m20 - 入力元の行列の2, 2の要素
+     * @param {Number} m21 - 入力元の行列の2, 2の要素
+     * @param {Number} m22 - 入力元の行列の2, 2の要素
+     * @param {Number} m23 - 入力元の行列の2, 2の要素
+     * @param {Number} m30 - 入力元の行列の3, 3の要素
+     * @param {Number} m31 - 入力元の行列の3, 3の要素
+     * @param {Number} m32 - 入力元の行列の3, 3の要素
+     * @param {Number} m33 - 入力元の行列の3, 3の要素
+     * @param {Boolean} [trans=false] - 行列の要素を転置するかどうか
      */
     ns.Matrix4x4.load = function (d, d_off,
                                   m00, m01, m02, m03,
                                   m10, m11, m12, m13,
                                   m20, m21, m22, m23,
                                   m30, m31, m32, m33,
-                                  transpose) {
-        if (transpose === undefined) {
-            transpose = false;
+                                  trans) {
+        if (trans == null) {
+            trans = false;
         }
-        if (transpose) {
+        if (trans) {
             d[d_off + M00] = m00;
             d[d_off + M01] = m10;
             d[d_off + M02] = m20;
@@ -123,35 +126,43 @@
     };
 
     /**
-     * Load the any values that to elements of the matrix.
+     * 任意の数値を行列に読み込ませます。
+     *
+     *     | a, b, c, d |
+     * d = | e, f, g, h |
+     *     | i, j, k, l |
+     *     | m, n, o, p |
      *
      * @memberof xpl.Matrix4x4
      * @function loadv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The source matrix.
-     * @param {Number} m_off - Starting position in the source matrix.
-     * @param {Boolean} [transpose=false] -
-     *              Set true if transpose the matrix,
-     *              set false if don't transpose the matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 入力元の行列
+     * @param {Number} m_off - 入力元の行列の配列インデックス
+     * @param {Boolean} [trans=false] - 行列の要素を転置するかどうか
      */
-    ns.Matrix4x4.loadv = function (d, d_off, m, m_off, transpose) {
+    ns.Matrix4x4.loadv = function (d, d_off, m, m_off, trans) {
         ns.Matrix4x4.load(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
             m[m_off + M10], m[m_off + M11], m[m_off + M12], m[m_off + M13],
             m[m_off + M20], m[m_off + M21], m[m_off + M22], m[m_off + M23],
             m[m_off + M30], m[m_off + M31], m[m_off + M32], m[m_off + M33],
-            transpose);
+            trans);
     };
 
     /**
-     * Load the zero values at the all elements of the matrix.
+     * 全ての要素が0の値を行列に読み込ませます。
+     *
+     *     | 0, 0, 0, 0 |
+     * d = | 0, 0, 0, 0 |
+     *     | 0, 0, 0, 0 |
+     *     | 0, 0, 0, 0 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadZero
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
      */
     ns.Matrix4x4.loadZero = function (d, d_off) {
         ns.Matrix4x4.load(
@@ -164,12 +175,17 @@
     };
 
     /**
-     * Load the identity values at the all elements of the matrix.
+     * 単位値を行列に読み込ませます。
+     *
+     *     | 1, 0, 0, 0 |
+     * d = | 0, 1, 0, 0 |
+     *     | 0, 0, 1, 0 |
+     *     | 0, 0, 0, 1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadIdentity
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
      */
     ns.Matrix4x4.loadIdentity = function (d, d_off) {
         ns.Matrix4x4.load(
@@ -182,17 +198,19 @@
     };
 
     /**
-     * Linear interpolate any two matrix then set the destination matrix.
+     * 2つの行列を線形補間します。
+     *
+     * d = lrep(a, b; t)
      *
      * @memberof xpl.Matrix4x4
      * @function lrepv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} a - The start point matrix.
-     * @param {Number} a_off - Starting position in the start point matrix.
-     * @param {Array.<Number>} b - The end point matrix.
-     * @param {Number} b_off - Starting position in the end point matrix.
-     * @param {Number} t - The interpolation coefficient.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} a - 開始の行列
+     * @param {Number} a_off - 開始の行列の配列インデックス
+     * @param {Array.<Number>} b - 終了の行列
+     * @param {Number} b_off - 終了の行列の配列インデックス
+     * @param {Number} t - 補完係数
      */
     ns.Matrix4x4.lrepv = function (d, d_off, a, a_off, b, b_off, t) {
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -219,14 +237,16 @@
     };
 
     /**
-     * Transpose the matrix then set the destination matrix.
+     * 行列を転置させます。
+     *
+     * d = m^t
      *
      * @memberof xpl.Matrix4x4
      * @function transposev
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The target matrix.
-     * @param {Number} m_off - Starting position in the target matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
      */
     ns.Matrix4x4.transposev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
@@ -252,13 +272,15 @@
     };
 
     /**
-     * Calculate the determinant value.
+     * 行列式を算出します。
+     *
+     * d = |m|
      *
      * @memberof xpl.Matrix4x4
      * @function determinant
-     * @param {Array.<Number>} m - The target matrix.
-     * @param {Number} m_off - Starting position in the target matrix.
-     * @returns {Number} The determinant value.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @returns {Number} 行列式
      */
     ns.Matrix4x4.determinant = function (m, m_off) {
         let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
@@ -271,14 +293,16 @@
     };
 
     /**
-     * Calculate the inversion then set the destination matrix.
+     * 逆行列を算出します。
+     *
+     * d = m^-1
      *
      * @memberof xpl.Matrix4x4
      * @function inversev
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The target matrix.
-     * @param {Number} m_off - Starting position in the target matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
      */
     ns.Matrix4x4.inversev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
@@ -286,7 +310,7 @@
         let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
         let m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
 
-        // calculate the common denominator.
+        // 共通項を算出
         let m10_m21 = m10 * m21, m10_m22 = m10 * m22, m10_m23 = m10 * m23, m10_m31 = m10 * m31, m10_m32 = m10 * m32, m10_m33 = m10 * m33;
         let m11_m20 = m11 * m20, m11_m22 = m11 * m22, m11_m23 = m11 * m23, m11_m30 = m11 * m30, m11_m32 = m11 * m32, m11_m33 = m11 * m33;
         let m12_m20 = m12 * m20, m12_m21 = m12 * m21, m12_m23 = m12 * m23, m12_m30 = m12 * m30, m12_m31 = m12 * m31, m12_m33 = m12 * m33;
@@ -296,14 +320,14 @@
         let m22_m30 = m22 * m30, m22_m31 = m22 * m31, m22_m33 = m22 * m33;
         let m23_m30 = m23 * m30, m23_m31 = m23 * m31, m23_m32 = m23 * m32;
 
-        // calculate the determinant.
+        // 行列式を算出
         let det00 = m11 * (m22_m33 - m23_m32) + m12 * (m23_m31 - m21_m33) + m13 * (m21_m32 - m22_m31);
         let det01 = m10 * (m23_m32 - m22_m33) + m12 * (m20_m33 - m23_m30) + m13 * (m22_m30 - m20_m32);
         let det02 = m10 * (m21_m33 - m23_m31) + m11 * (m23_m30 - m20_m33) + m13 * (m20_m31 - m21_m30);
         let det03 = m10 * (m22_m31 - m21_m32) + m11 * (m20_m32 - m22_m30) + m12 * (m21_m30 - m20_m31);
         let det = m00 * det00 + m01 * det01 + m02 * det02 + m03 * det03;
 
-        // inverse then load on the matrix.
+        // 逆行列を算出して、結果の書き出し
         ns.Matrix4x4.load(
             d, d_off,
             det00 / det,
@@ -326,44 +350,46 @@
     };
 
     /**
-     * Calculate the addition any two matrix then set the destination matrix.
+     * 行列を加算します。
+     *
+     * d = a + b
      *
      * @memberof xpl.Matrix4x4
      * @function add
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} a00 - Element of 0-0 in the left-hand side matrix of operator.
-     * @param {Number} a01 - Element of 0-1 in the left-hand side matrix of operator.
-     * @param {Number} a02 - Element of 0-2 in the left-hand side matrix of operator.
-     * @param {Number} a03 - Element of 0-3 in the left-hand side matrix of operator.
-     * @param {Number} a10 - Element of 1-0 in the left-hand side matrix of operator.
-     * @param {Number} a11 - Element of 1-1 in the left-hand side matrix of operator.
-     * @param {Number} a12 - Element of 1-2 in the left-hand side matrix of operator.
-     * @param {Number} a13 - Element of 1-3 in the left-hand side matrix of operator.
-     * @param {Number} a20 - Element of 2-0 in the left-hand side matrix of operator.
-     * @param {Number} a21 - Element of 2-1 in the left-hand side matrix of operator.
-     * @param {Number} a22 - Element of 2-2 in the left-hand side matrix of operator.
-     * @param {Number} a23 - Element of 2-3 in the left-hand side matrix of operator.
-     * @param {Number} a30 - Element of 3-0 in the left-hand side matrix of operator.
-     * @param {Number} a31 - Element of 3-1 in the left-hand side matrix of operator.
-     * @param {Number} a32 - Element of 3-2 in the left-hand side matrix of operator.
-     * @param {Number} a33 - Element of 3-3 in the left-hand side matrix of operator.
-     * @param {Number} b00 - Element of 0-0 in the right-hand side matrix of operator.
-     * @param {Number} b01 - Element of 0-1 in the right-hand side matrix of operator.
-     * @param {Number} b02 - Element of 0-2 in the right-hand side matrix of operator.
-     * @param {Number} b03 - Element of 0-3 in the right-hand side matrix of operator.
-     * @param {Number} b10 - Element of 1-0 in the right-hand side matrix of operator.
-     * @param {Number} b11 - Element of 1-1 in the right-hand side matrix of operator.
-     * @param {Number} b12 - Element of 1-2 in the right-hand side matrix of operator.
-     * @param {Number} b13 - Element of 1-3 in the right-hand side matrix of operator.
-     * @param {Number} b20 - Element of 2-0 in the right-hand side matrix of operator.
-     * @param {Number} b21 - Element of 2-1 in the right-hand side matrix of operator.
-     * @param {Number} b22 - Element of 2-2 in the right-hand side matrix of operator.
-     * @param {Number} b23 - Element of 2-3 in the right-hand side matrix of operator.
-     * @param {Number} b30 - Element of 3-0 in the right-hand side matrix of operator.
-     * @param {Number} b31 - Element of 3-1 in the right-hand side matrix of operator.
-     * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
-     * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.add = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -381,20 +407,21 @@
             a20 + b20, a21 + b21, a22 + b22, a23 + b23,
             a30 + b30, a31 + b31, a32 + b32, a33 + b33,
             false);
-
     };
 
     /**
-     * Calculate the addition any two matrix then set the destination matrix.
+     * 行列を加算します。
+     *
+     * d = a + b
      *
      * @memberof xpl.Matrix4x4
      * @function addv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} a - The left-hand side matrix of operator.
-     * @param {Number} a_off - Starting position in the left-hand side matrix of operator.
-     * @param {Array.<Number>} b - The right-hand side matrix of operator.
-     * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} a - 演算子の左側の行列
+     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<Number>} b - 演算子の右側の行列
+     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.addv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.add(
@@ -410,44 +437,46 @@
     };
 
     /**
-     * Calculate the subtraction any two matrix then set the destination matrix.
+     * 行列を減算します。
+     *
+     * d = a - b
      *
      * @memberof xpl.Matrix4x4
      * @function sub
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} a00 - Element of 0-0 in the left-hand side matrix of operator.
-     * @param {Number} a01 - Element of 0-1 in the left-hand side matrix of operator.
-     * @param {Number} a02 - Element of 0-2 in the left-hand side matrix of operator.
-     * @param {Number} a03 - Element of 0-3 in the left-hand side matrix of operator.
-     * @param {Number} a10 - Element of 1-0 in the left-hand side matrix of operator.
-     * @param {Number} a11 - Element of 1-1 in the left-hand side matrix of operator.
-     * @param {Number} a12 - Element of 1-2 in the left-hand side matrix of operator.
-     * @param {Number} a13 - Element of 1-3 in the left-hand side matrix of operator.
-     * @param {Number} a20 - Element of 2-0 in the left-hand side matrix of operator.
-     * @param {Number} a21 - Element of 2-1 in the left-hand side matrix of operator.
-     * @param {Number} a22 - Element of 2-2 in the left-hand side matrix of operator.
-     * @param {Number} a23 - Element of 2-3 in the left-hand side matrix of operator.
-     * @param {Number} a30 - Element of 3-0 in the left-hand side matrix of operator.
-     * @param {Number} a31 - Element of 3-1 in the left-hand side matrix of operator.
-     * @param {Number} a32 - Element of 3-2 in the left-hand side matrix of operator.
-     * @param {Number} a33 - Element of 3-3 in the left-hand side matrix of operator.
-     * @param {Number} b00 - Element of 0-0 in the right-hand side matrix of operator.
-     * @param {Number} b01 - Element of 0-1 in the right-hand side matrix of operator.
-     * @param {Number} b02 - Element of 0-2 in the right-hand side matrix of operator.
-     * @param {Number} b03 - Element of 0-3 in the right-hand side matrix of operator.
-     * @param {Number} b10 - Element of 1-0 in the right-hand side matrix of operator.
-     * @param {Number} b11 - Element of 1-1 in the right-hand side matrix of operator.
-     * @param {Number} b12 - Element of 1-2 in the right-hand side matrix of operator.
-     * @param {Number} b13 - Element of 1-3 in the right-hand side matrix of operator.
-     * @param {Number} b20 - Element of 2-0 in the right-hand side matrix of operator.
-     * @param {Number} b21 - Element of 2-1 in the right-hand side matrix of operator.
-     * @param {Number} b22 - Element of 2-2 in the right-hand side matrix of operator.
-     * @param {Number} b23 - Element of 2-3 in the right-hand side matrix of operator.
-     * @param {Number} b30 - Element of 3-0 in the right-hand side matrix of operator.
-     * @param {Number} b31 - Element of 3-1 in the right-hand side matrix of operator.
-     * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
-     * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.sub = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -468,16 +497,18 @@
     };
 
     /**
-     * Calculate the subtraction any two matrix then set the destination matrix.
+     * 行列を減算します。
+     *
+     * d = a - b
      *
      * @memberof xpl.Matrix4x4
      * @function subv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} a - The left-hand side matrix of operator.
-     * @param {Number} a_off - Starting position in the left-hand side matrix of operator.
-     * @param {Array.<Number>} b - The right-hand side matrix of operator.
-     * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} a - 演算子の左側の行列
+     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<Number>} b - 演算子の右側の行列
+     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.subv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.sub(
@@ -493,44 +524,46 @@
     };
 
     /**
-     * Calculate the multiplication any two matrix then set the destination matrix.
+     * 行列の掛け算をします。
+     *
+     * d = a * b
      *
      * @memberof xpl.Matrix4x4
      * @function mul
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} a00 - Element of 0-0 in the left-hand side matrix of operator.
-     * @param {Number} a01 - Element of 0-1 in the left-hand side matrix of operator.
-     * @param {Number} a02 - Element of 0-2 in the left-hand side matrix of operator.
-     * @param {Number} a03 - Element of 0-3 in the left-hand side matrix of operator.
-     * @param {Number} a10 - Element of 1-0 in the left-hand side matrix of operator.
-     * @param {Number} a11 - Element of 1-1 in the left-hand side matrix of operator.
-     * @param {Number} a12 - Element of 1-2 in the left-hand side matrix of operator.
-     * @param {Number} a13 - Element of 1-3 in the left-hand side matrix of operator.
-     * @param {Number} a20 - Element of 2-0 in the left-hand side matrix of operator.
-     * @param {Number} a21 - Element of 2-1 in the left-hand side matrix of operator.
-     * @param {Number} a22 - Element of 2-2 in the left-hand side matrix of operator.
-     * @param {Number} a23 - Element of 2-3 in the left-hand side matrix of operator.
-     * @param {Number} a30 - Element of 3-0 in the left-hand side matrix of operator.
-     * @param {Number} a31 - Element of 3-1 in the left-hand side matrix of operator.
-     * @param {Number} a32 - Element of 3-2 in the left-hand side matrix of operator.
-     * @param {Number} a33 - Element of 3-3 in the left-hand side matrix of operator.
-     * @param {Number} b00 - Element of 0-0 in the right-hand side matrix of operator.
-     * @param {Number} b01 - Element of 0-1 in the right-hand side matrix of operator.
-     * @param {Number} b02 - Element of 0-2 in the right-hand side matrix of operator.
-     * @param {Number} b03 - Element of 0-3 in the right-hand side matrix of operator.
-     * @param {Number} b10 - Element of 1-0 in the right-hand side matrix of operator.
-     * @param {Number} b11 - Element of 1-1 in the right-hand side matrix of operator.
-     * @param {Number} b12 - Element of 1-2 in the right-hand side matrix of operator.
-     * @param {Number} b13 - Element of 1-3 in the right-hand side matrix of operator.
-     * @param {Number} b20 - Element of 2-0 in the right-hand side matrix of operator.
-     * @param {Number} b21 - Element of 2-1 in the right-hand side matrix of operator.
-     * @param {Number} b22 - Element of 2-2 in the right-hand side matrix of operator.
-     * @param {Number} b23 - Element of 2-3 in the right-hand side matrix of operator.
-     * @param {Number} b30 - Element of 3-0 in the right-hand side matrix of operator.
-     * @param {Number} b31 - Element of 3-1 in the right-hand side matrix of operator.
-     * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
-     * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.mul = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -563,16 +596,18 @@
     };
 
     /**
-     * Calculate the multiplication any two matrix then set the destination matrix.
+     * 行列の掛け算をします。
+     *
+     * d = a * b
      *
      * @memberof xpl.Matrix4x4
      * @function mulv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} a - The left-hand side matrix of operator.
-     * @param {Number} a_off - Starting position in the left-hand side matrix of operator.
-     * @param {Array.<Number>} b - The right-hand side matrix of operator.
-     * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} a - 演算子の左側の行列
+     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<Number>} b - 演算子の右側の行列
+     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.mulv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.mul(
@@ -588,29 +623,31 @@
     };
 
     /**
-     * Calculate the multiplication any one matrix and one scalar value then set the destination matrix.
+     * 行列とスカラの掛け算をします。
+     *
+     * d = m * s
      *
      * @memberof xpl.Matrix4x4
      * @function mulScalar
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} m00 - Element of 0-0 in the target matrix.
-     * @param {Number} m01 - Element of 0-1 in the target matrix.
-     * @param {Number} m02 - Element of 0-2 in the target matrix.
-     * @param {Number} m03 - Element of 0-3 in the target matrix.
-     * @param {Number} m10 - Element of 1-0 in the target matrix.
-     * @param {Number} m11 - Element of 1-1 in the target matrix.
-     * @param {Number} m12 - Element of 1-2 in the target matrix.
-     * @param {Number} m13 - Element of 1-3 in the target matrix.
-     * @param {Number} m20 - Element of 2-0 in the target matrix.
-     * @param {Number} m21 - Element of 2-1 in the target matrix.
-     * @param {Number} m22 - Element of 2-2 in the target matrix.
-     * @param {Number} m23 - Element of 2-3 in the target matrix.
-     * @param {Number} m30 - Element of 3-0 in the target matrix.
-     * @param {Number} m31 - Element of 3-1 in the target matrix.
-     * @param {Number} m32 - Element of 3-2 in the target matrix.
-     * @param {Number} m33 - Element of 3-3 in the target matrix.
-     * @param {Number} s - The target scalar.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} m00 - 対象の行列の0, 0の要素
+     * @param {Number} m01 - 対象の行列の0, 1の要素
+     * @param {Number} m02 - 対象の行列の0, 2の要素
+     * @param {Number} m03 - 対象の行列の0, 3の要素
+     * @param {Number} m10 - 対象の行列の1, 0の要素
+     * @param {Number} m11 - 対象の行列の1, 1の要素
+     * @param {Number} m12 - 対象の行列の1, 2の要素
+     * @param {Number} m13 - 対象の行列の1, 3の要素
+     * @param {Number} m20 - 対象の行列の2, 0の要素
+     * @param {Number} m21 - 対象の行列の2, 1の要素
+     * @param {Number} m22 - 対象の行列の2, 2の要素
+     * @param {Number} m23 - 対象の行列の2, 3の要素
+     * @param {Number} m30 - 対象の行列の3, 0の要素
+     * @param {Number} m31 - 対象の行列の3, 1の要素
+     * @param {Number} m32 - 対象の行列の3, 2の要素
+     * @param {Number} m33 - 対象の行列の3, 3の要素
+     * @param {Number} s - 対象のスカラ
      */
     ns.Matrix4x4.mulScalar = function (d, d_off,
                                        m00, m01, m02, m03,
@@ -628,15 +665,17 @@
     };
 
     /**
-     * Calculate the multiplication any one matrix and one scalar value then set the destination matrix.
+     * 行列とスカラの掛け算をします。
+     *
+     * d = m / s
      *
      * @memberof xpl.Matrix4x4
      * @function mulScalarv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The target matrix.
-     * @param {Number} m_off - Starting position in the target matrix.
-     * @param {Number} s - The target scalar.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} s - 対象のスカラ
      */
     ns.Matrix4x4.mulScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.mulScalar(
@@ -649,44 +688,46 @@
     };
 
     /**
-     * Calculate the division any two matrix then set the destination matrix.
+     * 行列の割り算をします。
+     *
+     * d = a / b
      *
      * @memberof xpl.Matrix4x4
      * @function div
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} a00 - Element of 0-0 in the left-hand side matrix of operator.
-     * @param {Number} a01 - Element of 0-1 in the left-hand side matrix of operator.
-     * @param {Number} a02 - Element of 0-2 in the left-hand side matrix of operator.
-     * @param {Number} a03 - Element of 0-3 in the left-hand side matrix of operator.
-     * @param {Number} a10 - Element of 1-0 in the left-hand side matrix of operator.
-     * @param {Number} a11 - Element of 1-1 in the left-hand side matrix of operator.
-     * @param {Number} a12 - Element of 1-2 in the left-hand side matrix of operator.
-     * @param {Number} a13 - Element of 1-3 in the left-hand side matrix of operator.
-     * @param {Number} a20 - Element of 2-0 in the left-hand side matrix of operator.
-     * @param {Number} a21 - Element of 2-1 in the left-hand side matrix of operator.
-     * @param {Number} a22 - Element of 2-2 in the left-hand side matrix of operator.
-     * @param {Number} a23 - Element of 2-3 in the left-hand side matrix of operator.
-     * @param {Number} a30 - Element of 3-0 in the left-hand side matrix of operator.
-     * @param {Number} a31 - Element of 3-1 in the left-hand side matrix of operator.
-     * @param {Number} a32 - Element of 3-2 in the left-hand side matrix of operator.
-     * @param {Number} a33 - Element of 3-3 in the left-hand side matrix of operator.
-     * @param {Number} b00 - Element of 0-0 in the right-hand side matrix of operator.
-     * @param {Number} b01 - Element of 0-1 in the right-hand side matrix of operator.
-     * @param {Number} b02 - Element of 0-2 in the right-hand side matrix of operator.
-     * @param {Number} b03 - Element of 0-3 in the right-hand side matrix of operator.
-     * @param {Number} b10 - Element of 1-0 in the right-hand side matrix of operator.
-     * @param {Number} b11 - Element of 1-1 in the right-hand side matrix of operator.
-     * @param {Number} b12 - Element of 1-2 in the right-hand side matrix of operator.
-     * @param {Number} b13 - Element of 1-3 in the right-hand side matrix of operator.
-     * @param {Number} b20 - Element of 2-0 in the right-hand side matrix of operator.
-     * @param {Number} b21 - Element of 2-1 in the right-hand side matrix of operator.
-     * @param {Number} b22 - Element of 2-2 in the right-hand side matrix of operator.
-     * @param {Number} b23 - Element of 2-3 in the right-hand side matrix of operator.
-     * @param {Number} b30 - Element of 3-0 in the right-hand side matrix of operator.
-     * @param {Number} b31 - Element of 3-1 in the right-hand side matrix of operator.
-     * @param {Number} b32 - Element of 3-2 in the right-hand side matrix of operator.
-     * @param {Number} b33 - Element of 3-3 in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.div = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -697,7 +738,7 @@
                                  b10, b11, b12, b13,
                                  b20, b21, b22, b23,
                                  b30, b31, b32, b33) {
-        // calculate the common denominator.
+        // 共通項の算出
         let m10_m21 = b10 * b21, m10_m22 = b10 * b22, m10_m23 = b10 * b23, m10_m31 = b10 * b31, m10_m32 = b10 * b32, m10_m33 = b10 * b33;
         let m11_m20 = b11 * b20, m11_m22 = b11 * b22, m11_m23 = b11 * b23, m11_m30 = b11 * b30, m11_m32 = b11 * b32, m11_m33 = b11 * b33;
         let m12_m20 = b12 * b20, m12_m21 = b12 * b21, m12_m23 = b12 * b23, m12_m30 = b12 * b30, m12_m31 = b12 * b31, m12_m33 = b12 * b33;
@@ -707,22 +748,22 @@
         let m22_m30 = b22 * b30, m22_m31 = b22 * b31, m22_m33 = b22 * b33;
         let m23_m30 = b23 * b30, m23_m31 = b23 * b31, m23_m32 = b23 * b32;
 
-        // calculate the determinant.
+        // 行列式の算出
         let det00 = b11 * (m22_m33 - m23_m32) + b12 * (m23_m31 - m21_m33) + b13 * (m21_m32 - m22_m31);
         let det01 = b10 * (m23_m32 - m22_m33) + b12 * (m20_m33 - m23_m30) + b13 * (m22_m30 - m20_m32);
         let det02 = b10 * (m21_m33 - m23_m31) + b11 * (m23_m30 - m20_m33) + b13 * (m20_m31 - m21_m30);
         let det03 = b10 * (m22_m31 - m21_m32) + b11 * (m20_m32 - m22_m30) + b12 * (m21_m30 - m20_m31);
         let det = b00 * det00 + b01 * det01 + b02 * det02 + b03 * det03;
 
-        // inverse then multiplication and load on the matrix.
+        // 逆行列を掛け合わせて、結果の書き出し
         ns.Matrix4x4.mul(
             d, d_off,
-            // the matrix A.
+            // 行列A
             a00, a01, a02, a03,
             a10, a11, a12, a13,
             a20, a21, a22, a23,
             a30, a31, a32, a33,
-            // the inverse matrix B.
+            // 行列Bの逆行列
             det00 / det,
             (b01 * (m23_m32 - m22_m33) + b02 * (m21_m33 - m23_m31) + b03 * (m22_m31 - m21_m32)) / det,
             (b01 * (m12_m33 - m13_m32) + b02 * (m13_m31 - m11_m33) + b03 * (m11_m32 - m12_m31)) / det,
@@ -742,16 +783,16 @@
     };
 
     /**
-     * Calculate the division any two matrix then set the destination matrix.
+     * 行列の割り算をします。
      *
      * @memberof xpl.Matrix4x4
      * @function divv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} a - The left-hand side matrix of operator.
-     * @param {Number} a_off - Starting position in the left-hand side matrix of operator.
-     * @param {Array.<Number>} b - The right-hand side matrix of operator.
-     * @param {Number} b_off - Starting position in the right-hand side matrix of operator.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} a - 演算子の左側の行列
+     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<Number>} b - 演算子の右側の行列
+     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.divv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.div(
@@ -767,29 +808,31 @@
     };
 
     /**
-     * Calculate the division any one matrix and one scalar value then set the destination matrix.
+     * 行列とスカラの割り算をします。
+     *
+     * d = m / s
      *
      * @memberof xpl.Matrix4x4
      * @function divScalar
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} m00 - Element of 0-0 in the target matrix.
-     * @param {Number} m01 - Element of 0-1 in the target matrix.
-     * @param {Number} m02 - Element of 0-2 in the target matrix.
-     * @param {Number} m03 - Element of 0-3 in the target matrix.
-     * @param {Number} m10 - Element of 1-0 in the target matrix.
-     * @param {Number} m11 - Element of 1-1 in the target matrix.
-     * @param {Number} m12 - Element of 1-2 in the target matrix.
-     * @param {Number} m13 - Element of 1-3 in the target matrix.
-     * @param {Number} m20 - Element of 2-0 in the target matrix.
-     * @param {Number} m21 - Element of 2-1 in the target matrix.
-     * @param {Number} m22 - Element of 2-2 in the target matrix.
-     * @param {Number} m23 - Element of 2-3 in the target matrix.
-     * @param {Number} m30 - Element of 3-0 in the target matrix.
-     * @param {Number} m31 - Element of 3-1 in the target matrix.
-     * @param {Number} m32 - Element of 3-2 in the target matrix.
-     * @param {Number} m33 - Element of 3-3 in the target matrix.
-     * @param {Number} s - The target scalar.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} m00 - 対象の行列の0, 0の要素
+     * @param {Number} m01 - 対象の行列の0, 1の要素
+     * @param {Number} m02 - 対象の行列の0, 2の要素
+     * @param {Number} m03 - 対象の行列の0, 3の要素
+     * @param {Number} m10 - 対象の行列の1, 0の要素
+     * @param {Number} m11 - 対象の行列の1, 1の要素
+     * @param {Number} m12 - 対象の行列の1, 2の要素
+     * @param {Number} m13 - 対象の行列の1, 3の要素
+     * @param {Number} m20 - 対象の行列の2, 0の要素
+     * @param {Number} m21 - 対象の行列の2, 1の要素
+     * @param {Number} m22 - 対象の行列の2, 2の要素
+     * @param {Number} m23 - 対象の行列の2, 3の要素
+     * @param {Number} m30 - 対象の行列の3, 0の要素
+     * @param {Number} m31 - 対象の行列の3, 1の要素
+     * @param {Number} m32 - 対象の行列の3, 2の要素
+     * @param {Number} m33 - 対象の行列の3, 3の要素
+     * @param {Number} s - 対象のスカラ
      */
     ns.Matrix4x4.divScalar = function (d, d_off,
                                        m00, m01, m02, m03,
@@ -807,15 +850,15 @@
     };
 
     /**
-     * Calculate the division any one matrix and one scalar value then set the destination matrix.
+     * 行列とスカラの割り算をします。
      *
      * @memberof xpl.Matrix4x4
      * @function divScalarv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The target matrix.
-     * @param {Number} m_off - Starting position in the target matrix.
-     * @param {Number} s - The target scalar.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} s - 対象のスカラ
      */
     ns.Matrix4x4.divScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.divScalar(
@@ -828,12 +871,12 @@
     };
 
     /**
-     * Convert to the string.
+     * 行列の文字列表現を返します。
      *
      * @memberof xpl.Matrix4x4
      * @function convertToString
-     * @param {Array.<Number>} m - The source matrix.
-     * @param {Number} m_off - Starting position in the source matrix.
+     * @param {Array.<Number>} m - 入力元の行列
+     * @param {Number} m_off - 入力元の行列の配列インデックス
      * @returns {String} The converted matrix to string.
      */
     ns.Matrix4x4.convertToString = function (m, m_off) {
