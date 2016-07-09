@@ -128,7 +128,7 @@ git clone git@github.com:redlily/test_resources.git
 
 ### その他
 
-- まだモデルデータのエクスポートには対応していません。
+- まだモデルデータのインポートには対応していません。
 
 ## 履歴
 
