@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * Definition for xModel codec.
+     * xModelのデコーダの定義クラスです。
      *
      * @class
      * @alias xpl.XModelCodec
@@ -46,26 +46,25 @@
 
     Object.defineProperties(ns.XModelCodec, {
 
-        /** Code name.
+        /**
+         * コードネーム.
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {String} CODE_NAME
          */
         "CODE_NAME": {
-
             value: "EX-MACHINA"
         },
 
         /**
-         * Magic number (XModel DAta).
+         * マジックナンバー (XModel DAta).
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {xpl.uint32_t} MAGIC_NUMBER
          */
         "MAGIC_NUMBER": {
-
             value: ((0xff & "x".charCodeAt(0)) << 0) |
             ((0xff & "m".charCodeAt(0)) << 8) |
             ((0xff & "d".charCodeAt(0)) << 16) |
@@ -73,14 +72,13 @@
         },
 
         /**
-         * Data terminator (End Of xModel Data).
+         * 終端識別子 (End Of xModel Data).
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {xpl.uint32_t} END_OF_DATA
          */
         "END_OF_DATA": {
-
             value: ((0xff & "e".charCodeAt(0)) << 0) |
             ((0xff & "o".charCodeAt(0)) << 8) |
             ((0xff & "x".charCodeAt(0)) << 16) |
@@ -88,50 +86,46 @@
         },
 
         /**
-         * Version number.
+         * バージョン数
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {xpl.uint32_t} VERSION
          */
         "VERSION": {
-
             value: 35
         },
 
         /**
-         * Compatibility version number.
+         * 互換のあるバージョン数
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {xpl.uint32_t} COMPATIBILITY_VERSION
          */
         "COMPATIBILITY_VERSION": {
-
             value: 35
         },
 
         /**
-         * Version name.
+         * バージョン文字列
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {String} VERSION_NAME
          */
         "VERSION_NAME": {
-
             value: "0.9.90"
         },
 
         /**
-         * Compatibility version name.
+         * 互換のあるバージョン文字列
          *
          * @constant
          * @memberof xpl.XModelCodec
          * @member {String} COMPATIBILITY_VERSION_NAME
          */
         "COMPATIBILITY_VERSION_NAME": {
-
             value: "0.9.90"
         }
     });

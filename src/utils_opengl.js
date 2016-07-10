@@ -30,13 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
 
     /**
-     * OpenGL utilities for WebGL.
+     * WebGL用のユーティリティクラスです。
      *
      * @namespace xpl.GLUtils
      * @author Syuuhei Kuno
@@ -48,38 +47,35 @@
     Object.defineProperties(ns.GLUtils, {
 
         /**
-         * Type of the OpenGL vertex shader.
+         * 頂点シェーダの識別子
          *
          * @constant
          * @memberof xpl.GLUtils
          * @member {String} TYPE_VERTEX_SHADER
          */
         "TYPE_VERTEX_SHADER": {
-
             value: "OpenGL Vertex Shader"
         },
 
         /**
-         * Type of the OpenGL fragment shader.
+         * フラグメントシェーダの識別子
          *
          * @constant
          * @memberof xpl.GLUtils
          * @member {String} TYPE_FRAGMENT_SHADER
          */
         "TYPE_FRAGMENT_SHADER": {
-
             value: "OpenGL Fragment Shader"
         },
 
         /**
-         * Type of the OpenGL program.
+         * シェーダプログラムの識別子
          *
          * @constant
          * @memberof xpl.GLUtils
          * @member {String} TYPE_PROGRAM
          */
         "TYPE_PROGRAM": {
-
             value: "OpenGL Program"
         }
     });
