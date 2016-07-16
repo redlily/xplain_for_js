@@ -31,8 +31,7 @@
  */
 
 /**
- * Extension dimensionally utilities for the Matrix4x4.
- * This module is mast be loaded after the Matrix4x4 module.
+ * 3次元の幾何学に特化した機能を4*4の行列のユーティリティクラスに追加する拡張です。
  *
  * @author Syuuhei Kuno
  */
@@ -52,15 +51,15 @@
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
-     * Load the scaling values at the elements of the matrix.
+     * 拡大の変換行列に読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadScale
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} x - The scale value in X element of the axis.
-     * @param {Number} y - The scale value in Y element of the axis.
-     * @param {Number} z - The scale value in Z element of the axis.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} x - X軸の拡大値
+     * @param {Number} y - Y軸の拡大値
+     * @param {Number} z - Z軸の拡大値
      */
     ns.Matrix4x4.loadScale = function (d, d_off, x, y, z) {
         ns.Matrix4x4.load(
@@ -73,15 +72,15 @@
     };
 
     /**
-     * Load the translation values at the elements of the matrix.
+     * 平行移動の変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadTranslate
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - The destination in array. destination matrix.
-     * @param {Number} x - X element of the axis.
-     * @param {Number} y - Y element of the axis.
-     * @param {Number} z - Z element of the axis.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} x - X軸の移動量
+     * @param {Number} y - Y軸の移動量
+     * @param {Number} z - Z軸の移動量
      * @param {Boolean} [column=true] -
      *              Set the true if use specified matrix to the column vector,
      *              set the false if use specified matrix to the row vector.
@@ -100,16 +99,14 @@
     };
 
     /**
-     * Load the rotation values of X-axis at the elements of the matrix.
+     * X軸回転の変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateXAxis
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateXAxis = function (d, d_off, rad, column) {
         if (column === undefined) {
@@ -127,16 +124,14 @@
     };
 
     /**
-     * Load the rotation values of Y-axis at the elements of the matrix.
+     * Y軸回転の変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateYAxis
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateYAxis = function (d, d_off, rad, column) {
         if (column === undefined) {
@@ -154,16 +149,14 @@
     };
 
     /**
-     * Load the rotation values of Z-axis at the elements of the matrix.
+     * Z軸回転の変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateZAxis
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadRotateZAxis = function (d, d_off, rad, column) {
         if (column === undefined) {
@@ -181,35 +174,32 @@
     };
 
     /**
-     * Load the rotation values of any axis at the elements of the matrix.
+     * 任意軸の回転の変換用列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotate
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} x - X element of the axis vector.
-     * @param {Number} y - Y element of the axis vector.
-     * @param {Number} z - Z element of the axis vector.
-     * @param {Number} rad - The rotation value.
-     * @param {boolean} [normalize=true] -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} x - 回転軸のX要素
+     * @param {Number} y - 回転軸のY要素
+     * @param {Number} z - 回転軸のZ要素
+     * @param {Number} rad - 回転のラジアン値
+     * @param {boolean} [norm=true] -
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
-    ns.Matrix4x4.loadRotate = function (d, d_off, x, y, z, rad, normalize, column) {
+    ns.Matrix4x4.loadRotate = function (d, d_off, x, y, z, rad, norm, column) {
         if (column === undefined) {
             column = true;
         }
-        if (normalize === undefined) {
-            normalize = true;
+        if (norm === undefined) {
+            norm = true;
         }
+
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
 
-        // normalize the rotation axis vector.
-        if (normalize) {
+        // 回転軸を正規化
+        if (norm) {
             let len = x * x + y * y + z * z;
             if (0 < len) {
                 len = Math.sqrt(len);
@@ -219,13 +209,13 @@
             }
         }
 
-        // calculate the common denominator.
+        // 共通項を算出
         let cs1 = 1.0 - cs;
         let xcs1 = x * cs1, ycs1 = y * cs1;
         let xycs1 = y * xcs1, xzcs1 = z * xcs1, yzcs1 = z * ycs1;
         let xsn = x * sn, ysn = y * sn, zsn = z * sn;
 
-        // load on the matrix.
+        // 結果の書き出し
         ns.Matrix4x4.load(
             d, d_off,
             cs + x * xcs1, xycs1 - zsn, xzcs1 + ysn, 0,
@@ -236,36 +226,32 @@
     };
 
     /**
-     * Load the viewing transformation values at the elements of the matrix.
+     * ビューの変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadLookAt
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} eye_x - X element of the eye point.
-     * @param {Number} eye_y - Y element of the eye point.
-     * @param {Number} eye_z - Z element of the eye point.
-     * @param {Number} center_x - X element of the reference point.
-     * @param {Number} center_y - Y element of the reference point.
-     * @param {Number} center_z - Z element of the reference point.
-     * @param {Number} upper_x - X element of the upper vector.
-     * @param {Number} upper_y - Y element of the upper vector.
-     * @param {Number} upper_z - Z element of the upper vector.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} eye_x - 視点の位置のX要素
+     * @param {Number} eye_y - 視点の位置のY要素
+     * @param {Number} eye_z - 視点の位置のZ要素
+     * @param {Number} center_x - 参照点の位置のX要素
+     * @param {Number} center_y - 参照点の位置のY要素
+     * @param {Number} center_z - 参照点の位置のZ要素
+     * @param {Number} upper_x - 吊上げのベクトルのX要素
+     * @param {Number} upper_y - 吊上げのベクトルのY要素
+     * @param {Number} upper_z - 吊上げのベクトルのZ要素
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadLookAt = function (d, d_off,
                                         eye_x, eye_y, eye_z,
                                         center_x, center_y, center_z,
                                         upper_x, upper_y, upper_z,
                                         column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
-        // calculate the Z-axis vector.
-        // (centVec - eyeVec) / ||centVec - eyeVec||
+        // Z軸のベクトルを算出
+        // (centVec - eyeVec) / |centVec - eyeVec|
         let zx = center_x - eye_x;
         let zy = center_y - eye_y;
         let zz = center_z - eye_z;
@@ -277,8 +263,8 @@
             zz /= z_len;
         }
 
-        // calculate the X-axis vector.
-        // (zAxis × upper) / ||zAxis × upper||
+        // X軸のベクトルを算出
+        // (zAxis × upper) / |zAxis × upper|
         let xx = zy * upper_z - zz * upper_y;
         let xy = zz * upper_x - zx * upper_z;
         let xz = zx * upper_y - zy * upper_x;
@@ -290,14 +276,13 @@
             xz /= x_len;
         }
 
-        // calculate the Y-axis vector.
-        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because
-        // it's normalized and vertical.
+        // Y軸のベクトルを算出
+        // zAxis × xAxis
         let yx = zy * xz - zz * xy;
         let yy = zz * xx - zx * xz;
         let yz = zx * xy - zy * xx;
 
-        // calculate the translate vector.
+        // 平行移動に回転を掛ける
         // | xx, xy, xz |   | eye_x |
         // | yx, yy, yz | * | eye_y | * -1
         // | zx, zy, zz |   | eye_z |
@@ -305,7 +290,7 @@
         let ty = -(yx * eye_x + yy * eye_y + yz * eye_z);
         let tz = -(zx * eye_x + zy * eye_y + zz * eye_z);
 
-        // load on the matrix.
+        // 結果の書き出し
         ns.Matrix4x4.load(
             d, d_off,
             xx, xy, xz, tx,
@@ -316,23 +301,21 @@
     };
 
     /**
-     * Load the perspective transformation values at the elements of the matrix.
+     * 射影の変換行列を読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadPerspective
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Number} view_width - The width of the virtual dimension.
-     * @param {Number} view_height - The height of the virtual dimension.
-     * @param {Number} view_near - The near coordinate of the device dimension.
-     * @param {Number} view_far - The far coordinate of the device dimension.
-     * @param {Number} device_width - The width of the device dimension. Default value is 2.0.
-     * @param {Number} device_height - The height of the device dimension. Default value is 2.0.
-     * @param {Number} device_near - The near coordinate of the device dimension. Default value is 0.0.
-     * @param {Number} device_far - The far coordinate of the device dimension. Default value is 1.0.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Number} view_width - ビューの仮想的な幅
+     * @param {Number} view_height - ビューの仮想的な高さ
+     * @param {Number} view_near - ビューの仮想的な近平面の座標
+     * @param {Number} view_far - ビューの仮想的な遠平面の座標
+     * @param {Number} [device_width=2.0] - デバイスで定められている実際の幅
+     * @param {Number} [device_height=2.0] - デバイスで定められている実際の高さ
+     * @param {Number} [device_near=-1.0] - デバイスで定められている実際の近平面の座標
+     * @param {Number} [device_far=1.0] - デバイスで定められている実際の遠平面の座標
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.loadPerspective = function (d, d_off,
                                              view_width, view_height,
@@ -340,9 +323,12 @@
                                              device_width, device_height,
                                              device_near, device_far,
                                              column) {
-        if (column === undefined) {
-            column = true;
-        }
+        device_width = ns.defaultValue(device_width, 2.0);
+        device_height = ns.defaultValue(device_height, 2.0);
+        device_near = ns.defaultValue(device_near, -1.0);
+        device_far = ns.defaultValue(device_far, 1.0);
+        column = ns.defaultValue(column, true);
+
         let view_depth = view_far - view_near;
         let scaled_far = view_far * (device_far - device_near);
         let xx = (view_near * device_width) / view_width;
@@ -359,25 +345,24 @@
     };
 
     /**
-     * Load the matrix at axis part elements.
+     * 軸の要素のみを行列に読み込ませます。
      *
      * @memberof xpl.Matrix4x4
      * @function loadAxis
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The source matrix.
-     * @param {Number} m_off - Starting position in the source matrix.
-     * @param {Boolean} [transpose=false] -
-     *              Set the true if transpose the matrix, set the false if don't transpose the matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 入力元の行列
+     * @param {Number} m_off - 入力元の行列の配列インデックス
+     * @param {Boolean} [trans=false] -
      */
-    ns.Matrix4x4.loadAxisv = function (d, d_off, m, m_off, transpose) {
+    ns.Matrix4x4.loadAxisv = function (d, d_off, m, m_off, trans) {
         ns.Matrix4x4.load(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], 0,
             m[m_off + M10], m[m_off + M11], m[m_off + M12], 0,
             m[m_off + M20], m[m_off + M21], m[m_off + M22], 0,
             0, 0, 0, 1,
-            transpose);
+            trans);
     };
 
     /**
@@ -385,11 +370,11 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulScale
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} x - The scale value in X element of the axis.
-     * @param {Number} y - The scale value in Y element of the axis.
-     * @param {Number} z - The scale value in Z element of the axis.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} x - X軸の拡大値
+     * @param {Number} y - Y軸の拡大値
+     * @param {Number} z - Z軸の拡大値
      */
     ns.Matrix4x4.mulScale = function (m, m_off, x, y, z) {
         m[m_off + M00] *= x;
@@ -411,14 +396,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulTranslate
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} x - X element of the axis.
-     * @param {Number} y - Y element of the axis.
-     * @param {Number} z - Z element of the axis.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} x - X軸の移動量
+     * @param {Number} y - Y軸の移動量
+     * @param {Number} z - Z軸の移動量
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulTranslate = function (m, m_off, x, y, z, column) {
         if (column === undefined) {
@@ -454,17 +437,14 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulRotateXAxis
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateXAxis = function (m, m_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         let cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -492,17 +472,14 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulRotateYAxis
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateYAxis = function (m, m_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         let cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -530,17 +507,14 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulRotateZAxis
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} rad - The rotation value.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} rad - 回転のラジアン値
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulRotateZAxis = function (m, m_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+        
         let cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -568,26 +542,19 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulRotate
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} x - X element of the axis vector.
-     * @param {Number} y - Y element of the axis vector.
-     * @param {Number} z - Z element of the axis vector.
-     * @param {Number} rad - The rotation value.
-     * @param {boolean} [normalize=true] -
-     *              Set the true if normalized axis vector,
-     *              set the false if not normalized axis vector.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} x - 回転軸のX要素
+     * @param {Number} y - 回転軸のY要素
+     * @param {Number} z - 回転軸のZ要素
+     * @param {Number} rad - 回転のラジアン値
+     * @param {boolean} [norm=true] -
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
-    ns.Matrix4x4.mulRotate = function (m, m_off, x, y, z, rad, normalize, column) {
-        if (normalize === undefined) {
-            normalize = true;
-        }
-        if (column === undefined) {
-            column = true;
-        }
+    ns.Matrix4x4.mulRotate = function (m, m_off, x, y, z, rad, norm, column) {
+        norm = ns.defaultValue(norm, true);
+        column = ns.defaultValue(column, true);
+        
         let cs, sn;
         if (column) {
             cs = Math.cos(rad);
@@ -597,8 +564,8 @@
             sn = -Math.sin(rad);
         }
 
-        // normalize the rotation axis vector.
-        if (normalize) {
+        // 回転軸を正規化
+        if (norm) {
             let len = x * x + y * y + z * z;
             if (0 < len) {
                 len = Math.sqrt(len);
@@ -608,13 +575,13 @@
             }
         }
 
-        // calculate the common denominator.
+        // 共通項を算出
         let cs1 = 1.0 - cs;
         let xcs1 = x * cs1, ycs1 = y * cs1;
         let xycs1 = y * xcs1, xzcs1 = z * xcs1, yzcs1 = z * ycs1;
         let xsn = x * sn, ysn = y * sn, zsn = z * sn;
 
-        // multiplication and then load on the matrix.
+        // 掛けあわせて、結果の書き出し
         let a00 = m[m_off + M00], a01 = m[m_off + M01], a02 = m[m_off + M02];
         let a10 = m[m_off + M10], a11 = m[m_off + M11], a12 = m[m_off + M12];
         let a20 = m[m_off + M20], a21 = m[m_off + M21], a22 = m[m_off + M22];
@@ -641,31 +608,27 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulLookAt
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} eye_x - X element of the eye point.
-     * @param {Number} eye_y - Y element of the eye point.
-     * @param {Number} eye_z - Z element of the eye point.
-     * @param {Number} center_x - X element of the reference point.
-     * @param {Number} center_y - Y element of the reference point.
-     * @param {Number} center_z - Z element of the reference point.
-     * @param {Number} upper_x - X element of the upper vector.
-     * @param {Number} upper_y - Y element of the upper vector.
-     * @param {Number} upper_z - Z element of the upper vector.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} eye_x - 視点の位置のX要素
+     * @param {Number} eye_y - 視点の位置のY要素
+     * @param {Number} eye_z - 視点の位置のZ要素
+     * @param {Number} center_x - 参照点の位置のX要素
+     * @param {Number} center_y - 参照点の位置のY要素
+     * @param {Number} center_z - 参照点の位置のZ要素
+     * @param {Number} upper_x - 吊上げのベクトルのX要素
+     * @param {Number} upper_y - 吊上げのベクトルのY要素
+     * @param {Number} upper_z - 吊上げのベクトルのZ要素
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulLookAt = function (m, m_off,
                                        eye_x, eye_y, eye_z,
                                        center_x, center_y, center_z,
                                        upper_x, upper_y, upper_z,
                                        column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
-        // calculate the Z-axis vector.
+        // Z軸のベクトルを算出
         // (centVec - eyeVec) / |centVec - eyeVec|
         let zx = center_x - eye_x;
         let zy = center_y - eye_y;
@@ -678,7 +641,7 @@
             zz /= z_len;
         }
 
-        // calculate the X-axis vector.
+        // X軸のベクトルを算出
         // (zAxis × upper) / |zAxis × upper|
         let xx = zy * upper_z - zz * upper_y;
         let xy = zz * upper_x - zx * upper_z;
@@ -691,14 +654,13 @@
             xz /= x_len;
         }
 
-        // calculate the Y-axis vector.
-        // zAxis × xAxis - Z-axis and X-axis doesn't need be normalize because
-        // it's normalized and vertical.
+        // Y軸のベクトルを算出
+        // zAxis × xAxis
         let yx = zy * xz - zz * xy;
         let yy = zz * xx - zx * xz;
         let yz = zx * xy - zy * xx;
 
-        // calculate the translate vector.
+        // 平行移動に回転を掛ける
         // | xx, xy, xz |   | eye_x |
         // | yx, yy, yz | * | eye_y | * - 1
         // | zx, zy, zz |   | eye_z |
@@ -706,7 +668,7 @@
         let ty = -(yx * eye_x + yy * eye_y + yz * eye_z);
         let tz = -(zx * eye_x + zy * eye_y + zz * eye_z);
 
-        // multiplication then load on the matrix.
+        // 掛けあわせて、結果の書き出し
         let a00 = m[m_off + M00], a01 = m[m_off + M01], a02 = m[m_off + M02];
         let a10 = m[m_off + M10], a11 = m[m_off + M11], a12 = m[m_off + M12];
         let a20 = m[m_off + M20], a21 = m[m_off + M21], a22 = m[m_off + M22];
@@ -753,19 +715,17 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulPerspective
-     * @param {Array.<Number>} m - The matrix of push target.
-     * @param {Number} m_off - Starting position in the matrix of push target.
-     * @param {Number} view_width - The width of the virtual dimension.
-     * @param {Number} view_height - The height of the virtual dimension.
-     * @param {Number} view_near - The near coordinate of the device dimension.
-     * @param {Number} view_far - The far coordinate of the device dimension.
-     * @param {Number} device_width - The width of the device dimension. Default value is 2.0.
-     * @param {Number} device_height - The height of the device dimension. Default value is 2.0.
-     * @param {Number} device_near - The near coordinate of the device dimension. Default value is 0.0.
-     * @param {Number} device_far - The far coordinate of the device dimension. Default value is 1.0.
+     * @param {Array.<Number>} m - 対象の行列
+     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Number} view_width - ビューの仮想的な幅
+     * @param {Number} view_height - ビューの仮想的な高さ
+     * @param {Number} view_near - ビューの仮想的な近平面の座標
+     * @param {Number} view_far - ビューの仮想的な遠平面の座標
+     * @param {Number} [device_width=2.0] - デバイスで定めている実際の幅
+     * @param {Number} [device_height=2.0] - デバイスで定めている実際の高さ
+     * @param {Number} [device_near=-1.0] - デバイスで定めている実際の近平面の座標
+     * @param {Number} [device_far=-1.0] - デバイスで定めている実際の遠平面の座標
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.mulPerspective = function (m, m_off,
                                             view_width, view_height,
@@ -773,11 +733,13 @@
                                             device_width, device_height,
                                             device_near, device_far,
                                             column) {
-        if (column === undefined) {
-            column = true;
-        }
+        device_width = ns.defaultValue(device_width, 2.0);
+        device_height = ns.defaultValue(device_height, 2.0);
+        device_near = ns.defaultValue(device_near, -1.0);
+        device_far = ns.defaultValue(device_far, 1.0);
+        column = ns.defaultValue(column, true);
 
-        // calculate the common denominator.
+        // 共通項を算出
         let range_view = view_far - view_near;
         let scaled_far = view_far * (device_far - device_near);
 
@@ -834,12 +796,10 @@
      * @memberof xpl.Matrix4x4
      * @function normalizeAxisv
      * @param {Array.<Number>} d - The destination vector.
-     * @param {Number} d_off - Starting position in the destination matrix.
-     * @param {Array.<Number>} m - The source matrix.
-     * @param {Number} m_off - Starting position in the source matrix.
+     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<Number>} m - 入力元の行列
+     * @param {Number} m_off - 入力元の行列の配列インデックス
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.normalizeAxisv = function (d, d_off, m, m_off, column) {
         if (column === undefined) {
@@ -866,7 +826,7 @@
             zy = m[m_off + M21];
         }
 
-        // nomalize the X-axis.
+        // X軸を正規化
         let xLen = xx * xx + xy * xy + xz * xz;
         if (0 < xLen) {
             xLen = Math.sqrt(xLen);
@@ -875,7 +835,7 @@
             xz /= xLen;
         }
 
-        // normalize the Y-axis.
+        // Y軸を正規化
         let yLen = yx * yx + yy * yy + yz * yz;
         if (0 < yLen) {
             yLen = Math.sqrt(yLen);
@@ -884,7 +844,7 @@
             yz /= yLen;
         }
 
-        // normalize the Z-axis.
+        // Z軸を正規化
         let zLen = zx * zx + zy * zy + zz * zz;
         if (0 < zLen) {
             zLen = Math.sqrt(zLen);
@@ -893,7 +853,7 @@
             zz /= zLen;
         }
 
-        // load on the matrix.
+        // 結果の書き出し
         d[d_off + M00] = xx;
         d[d_off + M11] = yy;
         d[d_off + M22] = zz;
@@ -920,25 +880,22 @@
      *
      * @memberof xpl.Matrix4x4
      * @function slrepAxisAndLrepOtherv
-     * @param {Array.<Number>} d - The destination matrix.
-     * @param {Number} d_off - Starting position in the destination matrix.
+     * @param {Array.<Number>} d - 出力先の行列
+     * @param {Number} d_off - 出力先の行列の配列インデックス
      * @param {Array.<Number>} a - Starting matrix.
      * @param {Number} a_off - Starting position in the starting matrix.
      * @param {Array.<Number>} b - The end matrix.
      * @param {Number} b_off - Starting position in the end matrix.
      * @param {Number} t - The interpolation coefficient.
      * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
      */
     ns.Matrix4x4.slrepAxisAndLrepOtherv = function (d, d_off, a, a_off, b, b_off, t, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+        
         let t1 = 1.0 - t;
         let rxx, rxy, rxz, ryx, ryy, ryz, rzx, rzy, rzz;
 
-        // extract axis vectors in the A matrix and the other elements.
+        // 行列Aの要素を自動変数に展開
         let axx, axy, axz, axw,
             ayx, ayy, ayz, ayw,
             azx, azy, azz, azw,
@@ -975,7 +932,7 @@
             atz = a[a_off + M32];
         }
 
-        // extract axis vectors in the B matrix and the other elements.
+        // 行列Bの要素を自動変数に展開
         let bxx, bxy, bxz, bxw,
             byx, byy, byz, byw,
             bzx, bzy, bzz, bzw,
@@ -1012,7 +969,7 @@
             btz = b[b_off + M32];
         }
 
-        // normalize the X-axis vector of the A matrix.
+        // 行列AのX軸のベクトルを正規化
         let axlen = axx * axx + axy * axy + axz * axz;
         if (0 < axlen) {
             axlen = Math.sqrt(axlen);
@@ -1021,7 +978,7 @@
             axz /= axlen;
         }
 
-        // normalize the Y-axis vector of the A matrix.
+        // 行列AのY軸のベクトルを正規化
         let aylen = ayx * ayx + ayy * ayy + ayz * ayz;
         if (0 < aylen) {
             aylen = Math.sqrt(aylen);
@@ -1030,7 +987,7 @@
             ayz /= aylen;
         }
 
-        // normalize the Z-axis vector of the A matrix.
+        // 行列AのZ軸のベクトルを正規化
         let azlen = azx * azx + azy * azy + azz * azz;
         if (0 < azlen) {
             azlen = Math.sqrt(azlen);
@@ -1039,7 +996,7 @@
             azz /= azlen;
         }
 
-        // normalize the X-axis vector of the B matrix.
+        // 行列BのX軸のベクトルを正規化
         let bxlen = bxx * bxx + bxy * bxy + bxz * bxz;
         if (0 < bxlen) {
             bxlen = Math.sqrt(bxlen);
@@ -1048,7 +1005,7 @@
             bxz /= bxlen;
         }
 
-        // normalize the Y-axis vector of the B matrix.
+        // 行列BのY軸のベクトルを正規化
         let bylen = byx * byx + byy * byy + byz * byz;
         if (0 < bylen) {
             bylen = Math.sqrt(bylen);
@@ -1057,7 +1014,7 @@
             byz /= bylen;
         }
 
-        // normalize the Z-axis vector of the B matrix.
+        // 行列BのZ軸のベクトルを正規化
         let bzlen = bzx * bzx + bzy * bzy + bzz * bzz;
         if (0 < bzlen) {
             bzlen = Math.sqrt(bzlen);
@@ -1066,7 +1023,7 @@
             bzz /= bzlen;
         }
 
-        // calculate the cosine value from two vectors.
+        // 2つのX軸のベクトルのcos値を算出
         let xcs = axx * bxx + axy * bxy + axz * bxz;
 
         if (1.0 <= xcs) {
@@ -1082,7 +1039,7 @@
             rxy = axy * len;
             rxz = axz * len;
         } else {
-            // other conditions.
+            // その他の場合
 
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -1098,13 +1055,13 @@
             let sn1 = Math.sin(rad2) / sn;
             let sn2 = Math.sin(rad3) / sn;
 
-            // load on the vector.
+            // 結果の書き出し
             rxx = (axx * sn1 + bxx * sn2) * len;
             rxy = (axy * sn1 + bxy * sn2) * len;
             rxz = (axz * sn1 + bxz * sn2) * len;
         }
 
-        // calculate the cosine value from two vectors.
+        // 2つのY軸のベクトルのcos値を算出
         let ycs = ayx * byx + ayy * byy + ayz * byz;
 
         if (1.0 <= ycs) {
@@ -1120,7 +1077,7 @@
             ryy = ayy * len;
             ryz = ayz * len;
         } else {
-            // other conditions.
+            // その他の場合
 
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -1136,13 +1093,13 @@
             let sn1 = Math.sin(rad2) / sn;
             let sn2 = Math.sin(rad3) / sn;
 
-            // load on the vector.
+            // 結果の書き出し
             ryx = (ayx * sn1 + byx * sn2) * len;
             ryy = (ayy * sn1 + byy * sn2) * len;
             ryz = (ayz * sn1 + byz * sn2) * len;
         }
 
-        // calculate the cosine value from two vectors.
+        // 2つのZ軸のベクトルのcos値を算出
         let zcs = azx * bzx + azy * bzy + azz * bzz;
 
         if (1.0 <= zcs) {
@@ -1158,7 +1115,7 @@
             rzy = azy * len;
             rzz = azz * len;
         } else {
-            // other conditions.
+            // その他の場合
 
             // linear interpolate the absolute value.
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -1174,13 +1131,13 @@
             let sn1 = Math.sin(rad2) / sn;
             let sn2 = Math.sin(rad3) / sn;
 
-            // load on the vector.
+            // 結果の書き出し
             rzx = (azx * sn1 + bzx * sn2) * len;
             rzy = (azy * sn1 + bzy * sn2) * len;
             rzz = (azz * sn1 + bzz * sn2) * len;
         }
 
-        // linear interpolation the translation vector and then load on the matrix.
+        // その他の要素を線形補間して、結果の書き出し
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
         ns.Matrix4x4.load(
             d, d_off,
@@ -1199,12 +1156,12 @@
      * @function toRotateAxisv
      * @param {Array.<Number>} v - The destination axis vector.
      * @param {Number} v_off - Starting position of the destination axis vector.
-     * @param {Array.<Number>} m - The source matrix.
+     * @param {Array.<Number>} m - 入力元の行列
      * @param {Number} m_off - Starting position of the source matrix.
      * @param {Boolean} [column=true] -
      *              Set the true if use specified matrix to the column vector,
      *              set the false if use specified matrix to the row vector.
-     * @returns {Number} The rotation value.
+     * @returns {Number} 回転のラジアン値
      */
     ns.Matrix4x4.toRotateAxisv = function (v, v_off, m, m_off, column) {
         if (column === undefined) {
@@ -1280,7 +1237,7 @@
      *
      * @memberof xpl.Matrix4x4
      * @function fromQuaternionv
-     * @param {Array.<Number>} m - The destination matrix.
+     * @param {Array.<Number>} m - 出力先の行列
      * @param {Number} m_off - Starting position of the destination matrix.
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
@@ -1301,12 +1258,12 @@
         let jp = q[q_off + CJ];
         let kp = q[q_off + CK];
 
-        // calculate the common denominator.
+        // 共通項を算出
         let rr = rp * rp, ii = ip * ip, jj = jp * jp, kk = kp * kp;
         let ij2 = ip * jp * 2, ik2 = ip * kp * 2, jk2 = jp * kp * 2;
         let ri2 = rp * ip * 2, rj2 = rp * jp * 2, rk2 = rp * kp * 2;
 
-        // load on the quaternion.
+        // 結果の書き出し
         ns.Matrix4x4.load(
             m, m_off,
             ii + rr - kk - jj, ij2 - rk2, ik2 + rj2, 0,
@@ -1321,7 +1278,7 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulQuaternionv
-     * @param {Array.<Number>} m - The destination matrix.
+     * @param {Array.<Number>} m - 出力先の行列
      * @param {Number} m_off - Starting position of the destination matrix.
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
@@ -1342,7 +1299,7 @@
         let jp = q[q_off + CJ];
         let kp = q[q_off + CK];
 
-        // calculate the common denominator.
+        // 共通項を算出
         let rr = rp * rp, ii = ip * ip, jj = jp * jp, kk = kp * kp;
         let ij2 = ip * jp * 2, ik2 = ip * kp * 2, jk2 = jp * kp * 2;
         let ri2 = rp * ip * 2, rj2 = rp * jp * 2, rk2 = rp * kp * 2;
@@ -1388,7 +1345,7 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulQuaternionAxisv
-     * @param {Array.<Number>} m - The destination matrix.
+     * @param {Array.<Number>} m - 出力先の行列
      * @param {Number} m_off - Starting position of the destination matrix.
      * @param {Array.<Number>} q - The source quaternion.
      * @param {Number} q_off - Starting position of the source quaternion.
@@ -1409,7 +1366,7 @@
         let jp = q[q_off + CJ];
         let kp = q[q_off + CK];
 
-        // calculate the common denominator.
+        // 共通項を算出
         let rr = rp * rp, ii = ip * ip, jj = jp * jp, kk = kp * kp;
         let ij2 = ip * jp * 2, ik2 = ip * kp * 2, jk2 = jp * kp * 2;
         let ri2 = rp * ip * 2, rj2 = rp * jp * 2, rk2 = rp * kp * 2;
@@ -1447,13 +1404,13 @@
     };
 
     /**
-     * Convert from the matrix to the quaternion.
+     * 行列から四元数に変換します。
      *
      * @memberof xpl.Matrix4x4
      * @function toQuaternionv
      * @param {Array.<Number>} q - The destination quaternion.
      * @param {Number} q_off - Starting position of the destination quaternion.
-     * @param {Array.<Number>} m - The source matrix.
+     * @param {Array.<Number>} m - 入力元の行列
      * @param {Number} m_off - Starting position of the source matrix.
      * @param {Number} reverse - Set the true if reverse the sign to the imaginary part.
      * @param {Boolean} [column=true] -
@@ -1561,7 +1518,7 @@
         cs = Math.cos(rad);
         sn = Math.sin(rad);
 
-        // load on the quaternion.
+        // 結果の書き出し
         if (!reverse) {
             q[q_off + CR] = scale * -cs;
             q[q_off + CI] = scale * -sn * ip;

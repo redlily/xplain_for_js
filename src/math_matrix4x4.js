@@ -881,10 +881,10 @@
      */
     ns.Matrix4x4.convertToString = function (m, m_off) {
         return "Matrix4x4(" + "\n" +
-            "   " + m[m_off + M00] + ", " + m[m_off + M01] + ", " + m[m_off + M02] + ", " + m[m_off + M03] + ",\n" +
-            "   " + m[m_off + M10] + ", " + m[m_off + M11] + ", " + m[m_off + M12] + ", " + m[m_off + M13] + ",\n" +
-            "   " + m[m_off + M20] + ", " + m[m_off + M21] + ", " + m[m_off + M22] + ", " + m[m_off + M23] + ",\n" +
-            "   " + m[m_off + M30] + ", " + m[m_off + M31] + ", " + m[m_off + M32] + ", " + m[m_off + M33] + ")";
+            "    " + m[m_off + M00] + ", " + m[m_off + M01] + ", " + m[m_off + M02] + ", " + m[m_off + M03] + ",\n" +
+            "    " + m[m_off + M10] + ", " + m[m_off + M11] + ", " + m[m_off + M12] + ", " + m[m_off + M13] + ",\n" +
+            "    " + m[m_off + M20] + ", " + m[m_off + M21] + ", " + m[m_off + M22] + ", " + m[m_off + M23] + ",\n" +
+            "    " + m[m_off + M30] + ", " + m[m_off + M31] + ", " + m[m_off + M32] + ", " + m[m_off + M33] + ")";
     };
 
 })(xpl);

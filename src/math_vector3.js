@@ -46,6 +46,8 @@
      * 3次元ベクトルのユーティリティクラスです。
      *
      * @namespace xpl.Vector3
+     * @see xpl.Matrix4x4
+     * @see xpl.Quaternion
      * @author Syuuhei Kuno
      */
     ns.Vector3 = function () {
@@ -630,9 +632,8 @@
      * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        if (column == null) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+        
         if (column) {
             // 列ベクトル場合
             let x = a2[a2_off + VX];
@@ -681,9 +682,8 @@
      * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        if (column == null) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+        
         if (column) {
             // 列ベクトルの場合
             let x = a2[a2_off + VX];

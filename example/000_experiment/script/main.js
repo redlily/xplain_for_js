@@ -44,7 +44,7 @@
         "a_color": 2,
         "a_tex_coord": 3,
         "a_bone_indices": 4,
-        "a_bone_weights": 5,
+        "a_bone_weights": 5
     };
     // uniform names.
     var UNIFORM_NAMES = [
@@ -57,7 +57,7 @@
         "u_diffuse_color",
         "u_diffuse_map",
         "u_bone_matrices",
-        "u_max_bones",
+        "u_max_bones"
     ];
 
     // screen element.

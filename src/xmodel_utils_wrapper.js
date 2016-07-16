@@ -31,18 +31,18 @@
  */
 
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
     /**
      *
      */
-    ns.XModelWrapper = function() {
+    ns.XModelWrapper = function () {
         this._container = null;
         this.__prev_anim_index = -1;
-        this.__min_bounds = new Float32Array([ Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE ]);
-        this.__max_bounds = new Float32Array([ -Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]);
+        this.__min_bounds = new Float32Array([Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE]);
+        this.__max_bounds = new Float32Array([-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]);
         this.__is_completed = false;
         this.__is_canseled = false;
     };
@@ -53,7 +53,7 @@
          *
          */
         "container": {
-            get: function() {
+            get: function () {
                 return this._container;
             }
         },
@@ -62,7 +62,7 @@
          *
          */
         "isCompleted": {
-            get: function() {
+            get: function () {
                 return this.__is_completed;
             }
         },
@@ -71,7 +71,7 @@
          *
          */
         "isCanceled": {
-            get: function() {
+            get: function () {
                 return this.__is_canseled;
             }
         },
@@ -80,7 +80,7 @@
          *
          */
         "numAnimationSets": {
-            get: function() {
+            get: function () {
                 return this._container != null ? this._container.num_animation_sets : 0;
             }
         }
@@ -89,7 +89,7 @@
     /**
      *
      */
-    ns.XModelWrapper.prototype._complete = function() {
+    ns.XModelWrapper.prototype._complete = function () {
         this.__is_completed = true;
         ns.XModelContainerUtils.forEachMesh(this._container, (function (mesh, arg) {
             // get the size.
@@ -106,42 +106,42 @@
     /**
      *
      */
-    ns.XModelWrapper.prototype.cancel = function() {
+    ns.XModelWrapper.prototype.cancel = function () {
         this.__is_canseled = true;
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.getMinBound = function(index) {
+    ns.XModelWrapper.prototype.getMinBound = function (index) {
         return this.__min_bounds[index];
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.getMaxBound = function(index) {
+    ns.XModelWrapper.prototype.getMaxBound = function (index) {
         return this.__max_bounds[index];
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.getSize = function(index) {
+    ns.XModelWrapper.prototype.getSize = function (index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.getCenter = function(index) {
+    ns.XModelWrapper.prototype.getCenter = function (index) {
         return (this.__min_bounds[index] + this.__max_bounds[index]) * 0.5;
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.resetPose = function() {
+    ns.XModelWrapper.prototype.resetPose = function () {
         ns.XModelContainerUtils.resetTransforms(this._container);
         ns.XModelContainerUtils.updateCombination(this._container);
     };
@@ -149,7 +149,7 @@
     /**
      *
      */
-    ns.XModelWrapper.prototype.setAnimation = function(index, time, loop, kinematics) {
+    ns.XModelWrapper.prototype.setAnimation = function (index, time, loop, kinematics) {
         if (loop == undefined) {
             loop = false;
         }
@@ -173,21 +173,21 @@
     /**
      *
      */
-    ns.XModelWrapper.prototype.dispose = function() {
+    ns.XModelWrapper.prototype.dispose = function () {
         this.cancel();
         this.__is_completed = false;
     };
 
 })(xpl);
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
     /**
      *
      */
-    ns.XModelWrapperGL = function() {
+    ns.XModelWrapperGL = function () {
         ns.XModelWrapper.call(this);
         this.__config = null;
         this.__white_texture = null;
@@ -356,19 +356,18 @@
         }
     });
 
-    // alias of this class name.
     var cls = ns.XModelWrapperGL;
 
     /**
-     *
+     * モデルデータ制御のデフォルト設定を取得します。
      */
-    ns.XModelWrapperGL.defaultConfig = function() {
+    ns.XModelWrapperGL.defaultConfig = function () {
         var config = {};
         config[cls.CONFIG_MEMORY_ALIGNMENT_SIZE] = 4;
         config[cls.CONFIG_USE_VERTEX_ARRAY_OBJECT] = false;
         config[cls.CONFIG_USE_MIPMAP_TEXTURE] = false;
-        config[cls.CONFIG_USE_SKINNING] = false;
-        config[cls.CONFIG_GPU_SKINNING] = false;
+        config[cls.CONFIG_USE_SKINNING] = true;
+        config[cls.CONFIG_GPU_SKINNING] = true;
         config[cls.CONFIG_MAX_BONE_MATRICES] = 16;
         config[cls.CONFIG_MAX_BONE_WEIGHTED_INDICES] = 4;
         config[cls.CONFIG_USE_MORFING] = false;
@@ -378,9 +377,9 @@
     };
 
     /**
-     *
+     * モデルデータ制御の設定を複製します。
      */
-    ns.XModelWrapperGL.copyConfig = function(src) {
+    ns.XModelWrapperGL.copyConfig = function (src) {
         var members = [
             cls.CONFIG_MEMORY_ALIGNMENT_SIZE,
             cls.CONFIG_USE_VERTEX_ARRAY_OBJECT,
@@ -403,7 +402,7 @@
     /**
      *
      */
-    ns.XModelWrapperGL.defaultUniforms = function() {
+    ns.XModelWrapperGL.defaultUniforms = function () {
         var uniforms = {};
         uniforms[cls.UNIFORM_DIFFUSE] = null;
         uniforms[cls.UNIFORM_DIFFUSE_MAP] = null;
@@ -415,7 +414,7 @@
     /**
      *
      */
-    ns.XModelWrapperGL.defaultAttributes = function() {
+    ns.XModelWrapperGL.defaultAttributes = function () {
         var attributes = {};
         attributes[cls.ATTRIBUTE_POSITION] = -1;
         attributes[cls.ATTRIBUTE_NORMAL] = -1;
@@ -429,7 +428,7 @@
     /**
      *
      */
-    var attachVertexAttributes = function(self, gl, mesh, attributes, subset) {
+    var attachVertexAttributes = function (self, gl, mesh, attributes, subset) {
         var base = subset == -1 ? mesh : mesh.subsets[subset];
 
         // bind the vertex buffer.
@@ -530,7 +529,7 @@
     /**
      *
      */
-    var detachVertexAttributes = function(self, gl, mesh, attributes, subset) {
+    var detachVertexAttributes = function (self, gl, mesh, attributes, subset) {
         var base = subset == -1 ? mesh : mesh.subsets[subset];
 
         // bind the vertex buffer.
@@ -560,7 +559,7 @@
     /**
      *
      */
-    var loadModelWithUrl = function(self, gl, name, prefix, config) {
+    var loadModelWithUrl = function (self, gl, name, prefix, config) {
         // check the supported extensions.
         if (gl.getExtension("OES_element_index_uint") == null) {
             throw new Error("Required the OES_element_index_uint");
@@ -579,7 +578,7 @@
                 if (event.target.status == 200) {
                     this._container = new ns.XModelDecoder().decode(event.target.response);
                     if (this._container != null) {
-                        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, gl) {
+                        ns.XModelContainerUtils.forEachMesh(this._container, function (mesh, gl) {
                             var use_skinning =
                                 config[cls.CONFIG_USE_SKINNING] &&
                                 mesh.skin != null && 0 < mesh.skin.num_nodes;
@@ -604,15 +603,14 @@
                                 weight_type = ns.XModelMeshUtils.TYPE_VOID;
                             }
 
-                            // optimize the mesh.
                             if (use_gpu_skinning) {
-                                ns.XModelOptimizeUtils.
-                                    optimizeMeshSkinForMatrixPallet(
-                                        mesh, config[cls.CONFIG_MAX_BONE_MATRICES]);
+                                // 最大のパレット数をGPUのベクトルのスロット数に合わせて最適化
+                                ns.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet(
+                                    mesh, config[cls.CONFIG_MAX_BONE_MATRICES]);
                             }
 
                             // define that the GPU buffer building closure.
-                            var makeGPUBuffer = function(subset) {
+                            var makeGPUBuffer = function (subset) {
                                 var base = subset == -1 ? mesh : mesh.subsets[subset];
 
                                 // get the vertices information.
@@ -780,9 +778,9 @@
                         ns.XModelContainerUtils.getTextures(
                             this._container, textures, 0, num_textures);
                         textures = ns.ArrayUtils.convertToSet(
-                            textures, 0, textures.length, function(a, b) {
-                            return a.name == b.name;
-                        });
+                            textures, 0, textures.length, function (a, b) {
+                                return a.name == b.name;
+                            });
 
                         // load the textures.
                         this.__remain_textures = textures.length;
@@ -806,7 +804,7 @@
     /**
      *
      */
-    var loadTextureWithUrl = function(self, gl, texture, prefix, config) {
+    var loadTextureWithUrl = function (self, gl, texture, prefix, config) {
         var request = new XMLHttpRequest();
         if (config[cls.CONFIG_PATH_ALIAS] != null && config[cls.CONFIG_PATH_ALIAS][texture.ref] != null) {
             request.open("GET", config[cls.CONFIG_PATH_ALIAS][texture.ref], true);
@@ -845,7 +843,7 @@
     /**
      *
      */
-    ns.XModelWrapperGL.prototype.initializeWithUrl = function(gl, name, prefix, config) {
+    ns.XModelWrapperGL.prototype.initializeWithUrl = function (gl, name, prefix, config) {
         this.__white_texture = ns.GLUtils.createTexture2D(
             gl,
             gl.RGBA,
@@ -861,7 +859,7 @@
     /**
      *
      */
-    ns.XModelWrapperGL.prototype.setAnimation = function(index, time, loop, kinematics) {
+    ns.XModelWrapperGL.prototype.setAnimation = function (index, time, loop, kinematics) {
         ns.XModelWrapper.prototype.setAnimation.call(this, index, time, loop, kinematics);
         this.__is_update_anim = true;
     };
@@ -869,7 +867,7 @@
     /**
      *
      */
-    ns.XModelWrapperGL.prototype._complete = function() {
+    ns.XModelWrapperGL.prototype._complete = function () {
         ns.XModelWrapper.prototype._complete.call(this);
         ns.XModelContainerUtils.releaseShapes(this._container);
     };
@@ -877,9 +875,9 @@
     /**
      *
      */
-    ns.XModelWrapperGL.prototype.draw = function(gl, uniforms, attributes) {
+    ns.XModelWrapperGL.prototype.draw = function (gl, uniforms, attributes) {
         // draw meshs.
-        ns.XModelContainerUtils.forEachMesh(this._container, (function(mesh, gl) {
+        ns.XModelContainerUtils.forEachMesh(this._container, (function (mesh, gl) {
             var use_skinning = this.__config[cls.CONFIG_USE_SKINNING];
             var gpu_skinning = this.__config[cls.CONFIG_GPU_SKINNING];
 
@@ -889,7 +887,7 @@
                     mesh.skin, mesh.skin.num_nodes, this.__matrix_pallet, 0);
             }
 
-            var drawMesh = (function(subset) {
+            var drawMesh = (function (subset) {
                 var mesh_subset;
                 var base;
                 if (subset == -1) {
@@ -993,7 +991,7 @@
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, base.element_buffer);
 
                 // draw the elements.
-                for(var i = 0; i < mesh.num_materials; ++i) {
+                for (var i = 0; i < mesh.num_materials; ++i) {
                     var material = mesh.materials[i];
                     var elements_size = base.user_object.elements_sizes[i];
                     if (0 < elements_size) {
@@ -1090,11 +1088,11 @@
     /**
      *
      */
-    ns.XModelWrapperGL.prototype.dispose = function(gl) {
+    ns.XModelWrapperGL.prototype.dispose = function (gl) {
         ns.XModelWrapper.prototype.dispose.call(this);
 
         // release the shape memory.
-        ns.XModelContainerUtils.forEachMesh(this._container, function(mesh, gl) {
+        ns.XModelContainerUtils.forEachMesh(this._container, function (mesh, gl) {
             if (mesh.vertex_buffer != null) {
                 gl.deleteBuffer(mesh.vertex_buffer);
                 mesh.vertex_buffer = null;

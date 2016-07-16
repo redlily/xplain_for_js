@@ -36,7 +36,7 @@
     "use strict";
 
     /**
-     * Identifier counter of the instance.
+     * xModelのインスタンスを判別するための識別子
      *
      * @private
      * @static
@@ -46,17 +46,17 @@
     var identifier_counter = 1;
 
     /**
-     * Base structure of the xModel.
+     * xModelの構造の基礎となるクラスです。
      *
      * @class
      * @alias xpl.XModelStructure
-     * @param {xpl.enum_t} structure_type - The structure type.
+     * @param {xpl.enum_t} structure_type - 構造種別
      * @author Syuuhei Kuno
      */
     ns.XModelStructure = function (structure_type) {
 
         /**
-         * uint32_t : Type of the structure.
+         * enum_t : 構造種別
          *
          * @constant
          * @instance
@@ -66,7 +66,7 @@
         this.structure_type = structure_type;
 
         /**
-         * uint32_t : Identifier of the instance.
+         * uint32_t : 識別子
          *
          * @private
          * @constant
@@ -77,25 +77,24 @@
         var identifier = identifier_counter++;
 
         /**
-         * Get the identifier of instance.
+         * 識別子を取得します。
          *
          * @instance
          * @memberof xpl.XModelStructure
          * @function valueOf
-         * @returns {xpl.uint32_t} The identifier.
+         * @returns {xpl.uint32_t} 識別子
          */
         this.valueOf = function () {
             return identifier;
         };
 
         /**
-         * Get the hash code of instance.
-         * Default implementation is equivalent to the valueOf().
+         * ハッシュ値を取得します。
          *
          * @instance
          * @memberof xpl.XModelStructure
          * @function hashCode
-         * @returns {xpl.uint32_t} The hash code.
+         * @returns {xpl.uint32_t} ハッシュ値
          */
         this.hashCode = function () {
             return identifier;
@@ -103,7 +102,7 @@
     };
 
     /**
-     * Compares this instance with specified object.
+     * このメソッドのインスタンスと引数で指定されたインスタンスが同じものかを調べます。
      *
      * @instance
      * @memberof xpl.XModelStructure

@@ -556,4 +556,16 @@ if (typeof module == "object") {
         return Number.parseInt.apply(null, arguments);
     };
 
+    /**
+     * 指定の変数が undefined かチェックする。
+     * 指定の変数が undefined の場合は既定値を返し、そうでない場合は指定の値を返します。
+     *
+     * @param value {*} - 検査する値
+     * @param defaultValue {*} - 既定値
+     * @returns {*} 検査済みの値
+     */
+    ns.defaultValue = function (value, defaultValue) {
+        return value === undefined ? defaultValue : value;
+    }
+
 })(xpl);

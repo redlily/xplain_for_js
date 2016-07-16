@@ -45,50 +45,17 @@
     };
 
     if (typeof window == "object") {
-        let requestAnimationFrame = null;
-        let cancelAnimationFrame = null;
-
-        if (typeof window.requestAnimationFrame == "function") {
-            // HTML5 API.
-            requestAnimationFrame = window.requestAnimationFrame;
-            cancelAnimationFrame = window.cancelAnimationFrame;
-        } else if (typeof window.mozRequestAnimationFrame == "function") {
-            // Mozilla API.
-            requestAnimationFrame = window.mozRequestAnimationFrame;
-            cancelAnimationFrame = window.mozCancelAnimationFrame;
-        } else if (typeof window.webkitRequestAnimationFrame == "function") {
-            // Webkit API.
-            requestAnimationFrame = function (callback) {
-                let timer = window.webkitRequestAnimationFrame(function () {
-                    if (!timer.__is_cancel) {
-                        callback();
-                    }
-                });
-                return timer;
-            };
-            cancelAnimationFrame = function (timer) {
-                timer.__is_cancel = true;
-            };
-        } else if (typeof window.msRequestAnimationFrame == "function") {
-            // Classic Microsoft API.
-            requestAnimationFrame = function (callback) {
-                let timer = window.msRequestAnimationFrame(function () {
-                    if (!timer.__is_cancel) {
-                        callback();
-                    }
-                });
-                return timer;
-            };
-            cancelAnimationFrame = function (timer) {
-                timer.__is_cancel = true;
-            };
-        } else {
-            // unknown.
-            requestAnimationFrame = function (callback) {
-                return setTimeout(callback, 2);
-            };
-            cancelAnimationFrame = clearTimeout;
-        }
+        
+        var requestAnimationFrame =
+            window.requestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.msRequestAnimationFrame;
+        var cancelAnimationFrame =
+            window.cancelAnimationFrame ||
+            window.mozCancelAnimationFrame ||
+            window.webkitCancelAnimationFrame ||
+            window.msCancelAnimationFrame;
 
         /**
          * アニメーションの開始を要求します。
@@ -115,6 +82,12 @@
     }
 
     if (typeof document == "object") {
+
+        var exitFullscreen =
+            document.exitFullscreen ||
+            document.mozCancelFullScreen ||
+            document.webkitExitFullscreen ||
+            document.msExitFullscreen;
 
         /**
          * フルスクリーンをサポートしているかどうかを調べます。
@@ -171,19 +144,7 @@
          * @function cancelFullScreen
          */
         ns.SystemUtils.cancelFullScreen = function () {
-            if (typeof document.exitFullscreen == "function") {
-                // HTML5 API.
-                document.exitFullscreen();
-            } else if (typeof document.mozCancelFullScreen == "function") {
-                // Mozilla API.
-                document.mozCancelFullScreen();
-            } else if (typeof document.webkitExitFullscreen == "function") {
-                // Webkit API.
-                document.webkitExitFullscreen();
-            } else if (typeof document.msExitFullscreen == "function") {
-                // Classic Microsoft API.
-                document.msExitFullscreen();
-            }
+            exitFullscreen()
         };
     }
 

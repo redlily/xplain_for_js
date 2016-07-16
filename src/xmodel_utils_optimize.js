@@ -31,12 +31,12 @@
  */
 
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
     /**
-     * Optimize utilities for the xModel skin structure.
+     * xModelの最適化を行うためのユーティリティクラスです。
      *
      * @namespace xpl.XModelOptimizeUtils
      * @see xpl.XModelMesh
@@ -44,7 +44,7 @@
      * @see xpl.XModelSkin
      * @author Syuuhei Kuno
      */
-    ns.XModelOptimizeUtils = function() {
+    ns.XModelOptimizeUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -54,7 +54,7 @@
      * @function optimizeMeshVertices
      * @param {xpl.XModelMesh} mesh - The terget mesh.
      */
-    ns.XModelOptimizeUtils.optimizeMeshVertices = function(mesh) {
+    ns.XModelOptimizeUtils.optimizeMeshVertices = function (mesh) {
         if (mesh != null) {
             // TODO
         }
@@ -66,7 +66,7 @@
      * @function optimizeMeshElements
      * @param {xpl.XModelMesh} mesh - The target mesh.
      */
-    ns.XModelOptimizeUtils.optimizeMeshElements = function(mesh) {
+    ns.XModelOptimizeUtils.optimizeMeshElements = function (mesh) {
         if (mesh != null) {
             // TODO
         }
@@ -79,7 +79,7 @@
      * @class
      * @alias xpl.XModelOptimizeUtils.MeshSubset
      */
-    var MeshSubset = function() {
+    var MeshSubset = function () {
 
         /**
          *
@@ -109,7 +109,7 @@
      * @function addBone
      * @param {xpl.uint16_t} bone - The bone index.
      */
-    MeshSubset.prototype.addBone = function(bone) {
+    MeshSubset.prototype.addBone = function (bone) {
         var index = ns.ArrayUtils.binarySearch(
             this.bones, 0, this.bones.length, bone);
         if (index < 0) {
@@ -125,7 +125,7 @@
      * @function addVertex
      * @param {xpl.uint32_t} vertex - The vertex index.
      */
-    MeshSubset.prototype.addVertex = function(vertex) {
+    MeshSubset.prototype.addVertex = function (vertex) {
         var index = ns.ArrayUtils.binarySearch(
             this.vertices, 0, this.vertices.length, vertex);
         if (index < 0) {
@@ -141,7 +141,7 @@
      * @function addElement
      * @param {xpl.uint32_t} element - The element index.
      */
-    MeshSubset.prototype.addElement = function(element) {
+    MeshSubset.prototype.addElement = function (element) {
         var index = ns.ArrayUtils.binarySearch(
             this.elements, 0, this.elements.length, element);
         if (index < 0) {
@@ -160,10 +160,10 @@
      * @param {Boolean} enable_vertices - Enable the merge for the vertex index set.
      * @param {Boolean} enable_elements - Enable the merge for the element index set.
      */
-    MeshSubset.prototype.merge = function(subset,
-                                              enable_bones,
-                                              enable_vertices,
-                                              enable_elements) {
+    MeshSubset.prototype.merge = function (subset,
+                                           enable_bones,
+                                           enable_vertices,
+                                           enable_elements) {
         if (enable_bones) {
             for (let i = 0; i < subset.bones.length; ++i) {
                 this.addBone(subset.bones[i]);
@@ -182,19 +182,20 @@
     };
 
     /**
-     *
+     * 必要となる行列パレットの数を指定の上限を超えないようにするためメッシュのスキン情報を最適化します。
+     * 
      * @memberof xpl.XModelOptimizeUtils
-     * @function
-     * @param {xpl.XModelMesh} mesh - The target mesh.
-     * @param {xpl.size_t} [max_matrix_pallet=16] -
+     * @function optimizeMeshSkinForMatrixPallet
+     * @param {xpl.XModelMesh} mesh - 処理対象のメッシュ構造
+     * @param {xpl.size_t} [max_matrix_pallet=16] - 行列パレットの最大数
      */
-    ns.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet = function(mesh, max_matrix_pallet) {
+    ns.XModelOptimizeUtils.optimizeMeshSkinForMatrixPallet = function (mesh, max_matrix_pallet) {
         if (mesh != null && mesh.skin != null && max_matrix_pallet < mesh.skin.num_nodes) {
             if (max_matrix_pallet === undefined || max_matrix_pallet < 16) {
                 max_matrix_pallet = 16;
             }
 
-            // build the skinning maps.
+            // スキニングマップを構築
             let skinning_map = {};
             for (let i = 0; i < mesh.num_elements; ++i) {
                 let subset = new MeshSubset();
@@ -223,7 +224,9 @@
             for (let key in skinning_map) {
                 sorted_skinning_list.push(skinning_map[key]);
             }
-            sorted_skinning_list.sort(function(a, b) { return b.bones.length - a.bones.length; });
+            sorted_skinning_list.sort(function (a, b) {
+                return b.bones.length - a.bones.length;
+            });
 
             // build the optimized skinning set.
             for (let i = sorted_skinning_list.length - 1; 0 <= i; --i) {
@@ -239,7 +242,9 @@
                     }
                 }
             }
-            sorted_skinning_list = sorted_skinning_list.filter(function (a) { return a !== undefined; });
+            sorted_skinning_list = sorted_skinning_list.filter(function (a) {
+                return a !== undefined;
+            });
             console.log(sorted_skinning_list.length);
 
             // concat the skinning set.
@@ -248,8 +253,8 @@
                 if (subset_i !== undefined &&
                     subset_i.bones.length <= max_matrix_pallet) {
                     for (let j = i + 1;
-                        j < sorted_skinning_list.length && subset_i.bones.length < max_matrix_pallet;
-                        ++j) {
+                         j < sorted_skinning_list.length && subset_i.bones.length < max_matrix_pallet;
+                         ++j) {
                         let subset_j = sorted_skinning_list[j];
                         if (subset_j !== undefined &&
                             subset_i.bones.length + subset_j.bones.length <= max_matrix_pallet) {
@@ -259,7 +264,9 @@
                     }
                 }
             }
-            sorted_skinning_list = sorted_skinning_list.filter(function (a) { return a !== undefined; });
+            sorted_skinning_list = sorted_skinning_list.filter(function (a) {
+                return a !== undefined;
+            });
             console.log(sorted_skinning_list.length);
 
             // copy the optimized skinning set to the mesh subsets.
@@ -309,7 +316,7 @@
      * @param {xpl.XModelMesh} mesh -
      * @param {xpl.size_t} [max_weighted_indices=4] -
      */
-    ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function(mesh, max_weighted_indices) {
+    ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function (mesh, max_weighted_indices) {
         if (mesh != null && mesh.skin != null) {
             if (max_weighted_indices === undefined || max_weighted_indices <= 0) {
                 max_weighted_indices = 4;

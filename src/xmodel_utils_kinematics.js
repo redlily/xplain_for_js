@@ -31,7 +31,7 @@
  */
 
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -49,7 +49,7 @@
      * @see xpl.XModelNode
      * @author Syuuhei Kuno
      */
-    ns.XModelKinematicsUtils = function() {
+    ns.XModelKinematicsUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -70,7 +70,7 @@
      * @alias xpl.XModelKinematicsUtils.BoneInformation
      * @param {xpl.XModelNode} node - The node.
      */
-    var BoneInformation = function(node) {
+    var BoneInformation = function (node) {
 
         /**
          * XModelNode : The node.
@@ -159,7 +159,7 @@
         var m00 = this.local_transform[M00], m01 = this.local_transform[M01], m02 = this.local_transform[M02],
             m10 = this.local_transform[M10], m11 = this.local_transform[M11], m12 = this.local_transform[M12],
             m20 = this.local_transform[M20], m21 = this.local_transform[M21], m22 = this.local_transform[M22];
-        if(((m10 * m21 - m20 * m11) * m02 +
+        if (((m10 * m21 - m20 * m11) * m02 +
             (m20 * m01 - m00 * m21) * m12 +
             (m00 * m11 - m10 * m01) * m22) < 0) {
             // (xAxis × yAxis) ・ zAxis < 0
@@ -205,17 +205,17 @@
      * @memberof xpl.XModelKinematicsUtils.BoneInformation
      * @function updateOffsetTransform
      */
-    BoneInformation.prototype.updateOffsetTransform = function() {
-        var m00 =  this.transform[M00], m01 =  this.transform[M10], m02 =  this.transform[M20],
-            m10 =  this.transform[M01], m11 =  this.transform[M11], m12 =  this.transform[M21],
-            m20 =  this.transform[M02], m21 =  this.transform[M12], m22 =  this.transform[M22],
-            tx  = -this.transform[M03], ty  = -this.transform[M13], tz  = -this.transform[M23];
+    BoneInformation.prototype.updateOffsetTransform = function () {
+        var m00 = this.transform[M00], m01 = this.transform[M10], m02 = this.transform[M20],
+            m10 = this.transform[M01], m11 = this.transform[M11], m12 = this.transform[M21],
+            m20 = this.transform[M02], m21 = this.transform[M12], m22 = this.transform[M22],
+            tx = -this.transform[M03], ty = -this.transform[M13], tz = -this.transform[M23];
         ns.Matrix4x4.load(
             this.offset_transform, 0,
             m00, m01, m02, tx * m00 + ty * m01 + tz * m02,
             m10, m11, m12, tx * m10 + ty * m11 + tz * m12,
             m20, m21, m22, tx * m20 + ty * m21 + tz * m22,
-            0,   0,   0,   1,
+            0, 0, 0, 1,
             false);
     };
 
@@ -228,7 +228,7 @@
      * @param {xpl.size_t} num_bones - The number of bones.
      * @param {Array.<BoneInformation>} bone_infos - The bones.
      */
-    var updateTransforms = function(num_bones, bone_infos) {
+    var updateTransforms = function (num_bones, bone_infos) {
         // calculate transform in the root.
         var bone_info = bone_infos[num_bones - 1];
         if (bone_info.node.parent != null) {
@@ -266,7 +266,7 @@
      * @function updateCombination
      * @param {xpl.XModelNode} node - The root node that apply transform.
      */
-    var updateCombination = function(node) {
+    var updateCombination = function (node) {
         if (node.parent != null) {
             ns.XModelNodeUtils.updateCombinationv(
                 node,
@@ -286,13 +286,11 @@
      * @param {Float32Array} target - The target coordination.
      * @param {xpl.uint32_t} num_max_iteration - The number of processing iteration.
      * @param {xpl.uint32_t} num_max_chain - The number of chained nodes.
-     * @param {xpl.float32} err_len - The allowable error distance.
+     * @param {xpl.float32_t} err_len - The allowable error distance.
      */
-    ns.XModelKinematicsUtils.applyInverseKinematicesLocation = function(node,
-                                                                        target,
-                                                                        num_max_iteration,
-                                                                        num_max_chain,
-                                                                        err_len) {
+    ns.XModelKinematicsUtils.applyInverseKinematicesLocation = function (node, target,
+                                                                         num_max_iteration, num_max_chain,
+                                                                         err_len) {
         if (node != null && 1 <= num_max_chain) {
             // count and reset transform at target nodes.
             var last_node = node;
@@ -409,7 +407,7 @@
                         between_rotate, CI,
                         true);
                     ns.Vector3.mulQuaternionv(
-                       effector, 0, between_rotate, 0, effector, 0);
+                        effector, 0, between_rotate, 0, effector, 0);
                     ns.Vector3.add(
                         effector, 0,
                         effector[VX], effector[VY], effector[VZ],
@@ -462,12 +460,12 @@
      * @param {xpl.uint32_t} num_max_chain - The number of chained nodes.
      * @param {xpl.float32} err_len - The allowable error distance.
      */
-    ns.XModelKinematicsUtils.applyInverseKinematices = function(node,
-                                                                target,
-                                                                num_max_iteration,
-                                                                num_max_chain,
-                                                                err_len) {
-        if(node != null && target != null) {
+    ns.XModelKinematicsUtils.applyInverseKinematices = function (node,
+                                                                 target,
+                                                                 num_max_iteration,
+                                                                 num_max_chain,
+                                                                 err_len) {
+        if (node != null && target != null) {
             var position = new Float32Array(ns.XModelStructure.SIZE_VECTOR_3);
             ns.Vector3.loadZero(position, 0);
             ns.Vector3.mulMatrix4x4v(
@@ -492,7 +490,7 @@
      * @param {xpl.XModelNode} node - The node.
      * @param {xpl.XModelNode} target - The target node.
      */
-    ns.XModelKinematicsUtils.applyCopyTransform = function(node, target) {
+    ns.XModelKinematicsUtils.applyCopyTransform = function (node, target) {
         // TODO: implementation.
     };
 
