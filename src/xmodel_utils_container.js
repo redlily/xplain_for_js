@@ -30,8 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -59,7 +58,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of the textures.
      */
-    ns.XModelContainerUtils.getTextures = function(container, dest, off, len) {
+    ns.XModelContainerUtils.getTextures = function (container, dest, off, len) {
         var count = 0;
         if (container != null) {
             // count the textures in the this container.
@@ -108,7 +107,7 @@
      * @function releaseTextures
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.releaseTextures = function(container) {
+    ns.XModelContainerUtils.releaseTextures = function (container) {
         if (container != null) {
             // release the textures in the this container.
             for (var i = 0; i < container.num_textures; ++i) {
@@ -149,7 +148,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of the meshes.
      */
-    ns.XModelContainerUtils.getMeshes = function(container, dest, off, len) {
+    ns.XModelContainerUtils.getMeshes = function (container, dest, off, len) {
         var count = 0;
         if (container != null) {
             // count the meshes in the this container.
@@ -182,7 +181,7 @@
      * @function releaseShapes
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.releaseShapes = function(container) {
+    ns.XModelContainerUtils.releaseShapes = function (container) {
         if (container != null) {
             // release the shape information in the meshes that has been chained to the this container.
             for (var i = 0; i < container.num_meshes; ++i) {
@@ -209,7 +208,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of the nodes.
      */
-    ns.XModelContainerUtils.getNodes = function(container, dest, off, len) {
+    ns.XModelContainerUtils.getNodes = function (container, dest, off, len) {
         var count = 0;
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
@@ -229,7 +228,7 @@
      * @function updateParent
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.updateParent = function(container) {
+    ns.XModelContainerUtils.updateParent = function (container) {
         if (container != null) {
             // update the parent in the this container.
             for (var i = 0; i < container.num_meshes; ++i) {
@@ -269,11 +268,11 @@
      * @param {xpl.float32_t} m32 - Element of 3-2 in the source matrix.
      * @param {xpl.float32_t} m33 - Element of 3-3 in the source matrix.
      */
-    ns.XModelContainerUtils.updateCombinationp = function(container,
-                                                          m00, m01, m02, m03,
-                                                          m10, m11, m12, m13,
-                                                          m20, m21, m22, m23,
-                                                          m30, m31, m32, m33) {
+    ns.XModelContainerUtils.updateCombinationp = function (container,
+                                                           m00, m01, m02, m03,
+                                                           m10, m11, m12, m13,
+                                                           m20, m21, m22, m23,
+                                                           m30, m31, m32, m33) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.updateCombinationAllp(
@@ -295,7 +294,7 @@
      * @param {Float32Array} m - The source matrix.
      * @param {xpl.size_t} m_off - Starting position in the source matrix.
      */
-    ns.XModelContainerUtils.updateCombinationv = function(container, m, m_off) {
+    ns.XModelContainerUtils.updateCombinationv = function (container, m, m_off) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.updateCombinationAllv(container.nodes[i], m, m_off);
@@ -310,7 +309,7 @@
      * @function updateCombination
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.updateCombination = function(container) {
+    ns.XModelContainerUtils.updateCombination = function (container) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.updateCombinationAll(container.nodes[i]);
@@ -325,7 +324,7 @@
      * @function updateOffset
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.updateOffset = function(container) {
+    ns.XModelContainerUtils.updateOffset = function (container) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.updateOffset(container.nodes[i]);
@@ -343,8 +342,8 @@
      * @param {xpl.float64_t} time - The time
      * @param {Boolean} loop - It's the true if enable the loop, It's false if disnable the loop.
      */
-    ns.XModelContainerUtils.setAnimation = function(container, index, time, loop) {
-        if (container != null && 0 <= index &&  index < container.num_animation_sets) {
+    ns.XModelContainerUtils.setAnimation = function (container, index, time, loop) {
+        if (container != null && 0 <= index && index < container.num_animation_sets) {
             var anim_set = container.animation_sets[index];
             var total = ns.XModelAnimationUtils.getAnimationSetTotalTime(anim_set);
             time *= container.time_rate;
@@ -366,7 +365,7 @@
      * @param {xpl.size_t} index - The index of the animation track.
      * @returns {xpl.float64_t} The total time.
      */
-    ns.XModelContainerUtils.getAnimationTotalTime = function(container, index) {
+    ns.XModelContainerUtils.getAnimationTotalTime = function (container, index) {
         if (container != null && 0 <= index && index < container.num_animation_sets) {
             return ns.XModelAnimationUtils.getAnimationSetTotalTime(container.animation_sets[index]) / container.time_rate;
         }
@@ -380,9 +379,9 @@
      * @function applyKinematics
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.applyKinematics = function(container) {
+    ns.XModelContainerUtils.applyKinematics = function (container) {
         if (container != null) {
-            for(var i = 0; i < container.num_nodes; ++i) {
+            for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.applyKinematics(container.nodes[i]);
             }
         }
@@ -395,7 +394,7 @@
      * @function resetTransforms
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.resetTransforms = function(container) {
+    ns.XModelContainerUtils.resetTransforms = function (container) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.resetTransforms(container.nodes[i]);
@@ -410,7 +409,7 @@
      * @function resetOffset
      * @param {xpl.XModelContainer?} container - The container instance.
      */
-    ns.XModelContainerUtils.resetOffset = function(container) {
+    ns.XModelContainerUtils.resetOffset = function (container) {
         ns.XModelContainerUtils.resetTransforms(container);
         ns.XModelContainerUtils.updateCombination(container);
         ns.XModelContainerUtils.updateOffset(container);
@@ -428,7 +427,7 @@
      *              Second argument is the any parameter.
      * @param {Object?} param - The any parameter for the callback to be passed.
      */
-    ns.XModelContainerUtils.forEachMesh = function(container, callback, arg) {
+    ns.XModelContainerUtils.forEachMesh = function (container, callback, arg) {
         if (container != null) {
             // process the mesh in the this container.
             for (var i = 0; i < container.num_meshes; ++i) {
@@ -458,7 +457,7 @@
      *              Third argument is the any parameter.
      * @param {Object?} param - The any parameter for the callback to be passed.
      */
-    ns.XModelContainerUtils.forEachNode = function(container, callback, arg) {
+    ns.XModelContainerUtils.forEachNode = function (container, callback, arg) {
         if (container != null) {
             for (var i = 0; i < container.num_nodes; ++i) {
                 ns.XModelNodeUtils.forEachNode(container.nodes[i], callback, 0, arg);

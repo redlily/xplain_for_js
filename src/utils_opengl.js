@@ -258,7 +258,7 @@
             // create the program instance.
             let program = gl.createProgram();
             if (program != null) {
-                // attach shader object to the program.
+                // シェーダオブジェクトをプログラムに接続
                 gl.attachShader(program, vs);
                 gl.attachShader(program, fs);
                 if (attr_map != null) {
@@ -267,7 +267,7 @@
                     }
                 }
 
-                // linkage the program.
+                // プログラムのリンク
                 gl.linkProgram(program);
 
                 // エラーをチェック

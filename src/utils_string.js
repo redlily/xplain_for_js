@@ -30,7 +30,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
@@ -54,10 +53,10 @@
      * @returns {Array} UTF-8の文字列
      */
     ns.StringUtils.encodeUTF8 = function (str) {
-        var ary = [];
-        for (var i = 0; i < str.length; ++i) {
+        let ary = [];
+        for (let i = 0; i < str.length; ++i) {
             // UTF-16からUnicodeへ変換
-            var code = str.charCodeAt(i);
+            let code = str.charCodeAt(i);
             if ((0xd800 <= code && code <= 0xdfff) && i < str.length - 1) {
                 code = ((code & 0x3ff) << 10) | (str.charCodeAt(++i) & 0x3ff)
                     + 0x10000;

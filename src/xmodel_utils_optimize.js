@@ -30,7 +30,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
@@ -183,7 +182,7 @@
 
     /**
      * 必要となる行列パレットの数を指定の上限を超えないようにするためメッシュのスキン情報を最適化します。
-     * 
+     *
      * @memberof xpl.XModelOptimizeUtils
      * @function optimizeMeshSkinForMatrixPallet
      * @param {xpl.XModelMesh} mesh - 処理対象のメッシュ構造

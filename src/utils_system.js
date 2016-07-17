@@ -45,7 +45,7 @@
     };
 
     if (typeof window == "object") {
-        
+
         var requestAnimationFrame =
             window.requestAnimationFrame ||
             window.mozRequestAnimationFrame ||

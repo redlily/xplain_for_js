@@ -30,8 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -42,7 +41,7 @@
      * @see xpl.XModelMaterial
      * @author Syuuhei Kuno
      */
-    ns.XModelMaterialUtils = function() {
+    ns.XModelMaterialUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -59,7 +58,7 @@
      * @param {xpl.size_t} len - The maximum number of elements to be copied.
      * @returns {xpl.size_t} The number of texture.
      */
-    ns.XModelMaterialUtils.getTextures = function(material, dest, off, len) {
+    ns.XModelMaterialUtils.getTextures = function (material, dest, off, len) {
         var count = 0;
         if (material != null) {
             // emissive map.
@@ -124,7 +123,7 @@
      *
      * @param {xpl.XModelMaterial?} material - The material instance.
      */
-    ns.XModelMaterialUtils.releaseTexture = function(material) {
+    ns.XModelMaterialUtils.releaseTexture = function (material) {
         if (material != null) {
             // emissive map.
             if (material.emissive_map) {

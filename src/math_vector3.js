@@ -30,7 +30,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
@@ -633,7 +632,7 @@
      */
     ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         column = ns.defaultValue(column, true);
-        
+
         if (column) {
             // 列ベクトル場合
             let x = a2[a2_off + VX];
@@ -683,7 +682,7 @@
      */
     ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         column = ns.defaultValue(column, true);
-        
+
         if (column) {
             // 列ベクトルの場合
             let x = a2[a2_off + VX];

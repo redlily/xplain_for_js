@@ -30,8 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -42,7 +41,7 @@
      * @see xpl.XModelMesh
      * @author Syuuhei Kuno
      */
-    ns.XModelMeshUtils = function() {
+    ns.XModelMeshUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -232,7 +231,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getPositions = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getPositions = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.positions != null && 0 < mesh.position_size) {
             if (subset === undefined) {
@@ -296,7 +295,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getNormals = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getNormals = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.normals != null && 0 < mesh.normal_size) {
             if (subset === undefined) {
@@ -360,7 +359,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getColors = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getColors = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.colors != null && 0 < mesh.color_size) {
             if (subset === undefined) {
@@ -428,7 +427,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getTexCoords = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getTexCoords = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.tex_coords != null && 0 < mesh.tex_coord_size) {
             if (subset === undefined) {
@@ -491,7 +490,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getSkinBoneLengths = function(mesh, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getSkinBoneLengths = function (mesh, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.skin != null && 1 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
@@ -540,7 +539,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getSkinBoneIndices = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getSkinBoneIndices = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
@@ -614,7 +613,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} Number of written the elements.
      */
-    ns.XModelMeshUtils.getSkinBoneWeights = function(mesh, size, stride, buf, off, subset) {
+    ns.XModelMeshUtils.getSkinBoneWeights = function (mesh, size, stride, buf, off, subset) {
         var count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
@@ -692,18 +691,18 @@
      *              But if specified -1, it get superset information (first arguments).
      * @returns {xpl.size_t} byte size of the all attributes.
      */
-    ns.XModelMeshUtils.getVerticesSize = function(mesh,
-                                                  is_structured,
-                                                  alignment_size,
-                                                  position_size,
-                                                  normal_size,
-                                                  color_size,
-                                                  tex_coord_size,
-                                                  bone_length_size,
-                                                  bone_indices_size,
-                                                  bone_weights_size,
-                                                  attrs, off,
-                                                  subset) {
+    ns.XModelMeshUtils.getVerticesSize = function (mesh,
+                                                   is_structured,
+                                                   alignment_size,
+                                                   position_size,
+                                                   normal_size,
+                                                   color_size,
+                                                   tex_coord_size,
+                                                   bone_length_size,
+                                                   bone_indices_size,
+                                                   bone_weights_size,
+                                                   attrs, off,
+                                                   subset) {
         if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
             if (subset === undefined) {
                 subset = -1;
@@ -729,7 +728,7 @@
                 if (attrs != null) {
                     attrs[off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL] = size;
                 }
-                size += num_vertices* mesh.normal_size * normal_size;
+                size += num_vertices * mesh.normal_size * normal_size;
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
             }
 
@@ -786,7 +785,7 @@
             if (is_structured) {
                 attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
                 return (subset == -1 ?
-                    mesh.num_vertices : mesh.subsets[subset].num_vertices) * size;
+                        mesh.num_vertices : mesh.subsets[subset].num_vertices) * size;
             } else {
                 attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
                 return size;
@@ -816,17 +815,17 @@
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
      */
-    ns.XModelMeshUtils.getVertices = function(mesh,
-                                              position_type,
-                                              normal_type,
-                                              color_type,
-                                              tex_coord_type,
-                                              bone_length_type,
-                                              bone_indices_type,
-                                              bone_weights_type,
-                                              attrs, attrs_off,
-                                              buf, buf_off,
-                                              subset) {
+    ns.XModelMeshUtils.getVertices = function (mesh,
+                                               position_type,
+                                               normal_type,
+                                               color_type,
+                                               tex_coord_type,
+                                               bone_length_type,
+                                               bone_indices_type,
+                                               bone_weights_type,
+                                               attrs, attrs_off,
+                                               buf, buf_off,
+                                               subset) {
         if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
             var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
             var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
@@ -836,7 +835,7 @@
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]) {
                 offset = buf_off +
                     attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION];
-                switch(position_type) {
+                switch (position_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getPositions(
                             mesh,
@@ -856,7 +855,7 @@
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
                 offset = buf_off +
                     attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
-                switch(normal_type) {
+                switch (normal_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getNormals(
                             mesh,
@@ -876,7 +875,7 @@
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]) {
                 offset = buf_off +
                     attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR];
-                switch(color_type) {
+                switch (color_type) {
                     case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                         ns.XModelMeshUtils.getColors(
                             mesh,
@@ -908,7 +907,7 @@
             if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
                 offset = buf_off +
                     attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
-                switch(tex_coord_type) {
+                switch (tex_coord_type) {
                     case ns.XModelMeshUtils.TYPE_FLOAT:
                         ns.XModelMeshUtils.getTexCoords(
                             mesh,
@@ -930,7 +929,7 @@
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
                     offset = buf_off +
                         attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH];
-                    switch(bone_length_type) {
+                    switch (bone_length_type) {
                         case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                             ns.XModelMeshUtils.getSkinBoneLengths(
                                 mesh,
@@ -948,7 +947,7 @@
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
                     offset = buf_off +
                         attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
-                    switch(bone_indices_type) {
+                    switch (bone_indices_type) {
                         case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
                             ns.XModelMeshUtils.getSkinBoneIndices(
                                 mesh,
@@ -980,7 +979,7 @@
                 if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
                     offset = buf_off +
                         attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
-                    switch(bone_weights_type) {
+                    switch (bone_weights_type) {
                         case ns.XModelMeshUtils.TYPE_FLOAT:
                             ns.XModelMeshUtils.getSkinBoneWeights(
                                 mesh,
@@ -1011,7 +1010,7 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getNumTriangledFaceIndices = function(mesh, material, subset) {
+    ns.XModelMeshUtils.getNumTriangledFaceIndices = function (mesh, material, subset) {
         var count = 0;
         if (mesh != null) {
             if (subset === undefined) {
@@ -1066,10 +1065,10 @@
      * @returns {xpl.size_t}
      *              The number of elements.
      */
-    ns.XModelMeshUtils.getNumAllTriangledFaceIndices = function(mesh,
-                                                                offs, offs_off,
-                                                                sizes, sizes_off,
-                                                                subset) {
+    ns.XModelMeshUtils.getNumAllTriangledFaceIndices = function (mesh,
+                                                                 offs, offs_off,
+                                                                 sizes, sizes_off,
+                                                                 subset) {
         var count = 0;
         if (mesh != null) {
             // listed the materials.
@@ -1114,10 +1113,10 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getTriangledFaceIndices = function(mesh,
-                                                          material, reverse,
-                                                          buf, off,
-                                                          subset) {
+    ns.XModelMeshUtils.getTriangledFaceIndices = function (mesh,
+                                                           material, reverse,
+                                                           buf, off,
+                                                           subset) {
         var count = 0;
         if (mesh != null) {
             if (subset === undefined) {
@@ -1137,9 +1136,13 @@
             // triangle order.
             var sq0, sq1, sq2;
             if (reverse) {
-                sq0 = 0; sq1 = 2; sq2 = 1;
+                sq0 = 0;
+                sq1 = 2;
+                sq2 = 1;
             } else {
-                sq0 = 0; sq1 = 1; sq2 = 2;
+                sq0 = 0;
+                sq1 = 1;
+                sq2 = 2;
             }
 
             // write the vertex indices of face to the buffer.
@@ -1177,11 +1180,11 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getAllTriangledFaceIndices = function(mesh,
-                                                             reverse,
-                                                             offs, offs_off,
-                                                             buf, buf_off,
-                                                             subset) {
+    ns.XModelMeshUtils.getAllTriangledFaceIndices = function (mesh,
+                                                              reverse,
+                                                              offs, offs_off,
+                                                              buf, buf_off,
+                                                              subset) {
         var count = 0;
         if (mesh != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
@@ -1199,7 +1202,7 @@
      * @function releaseShape
      * @param {xpl.XModelMesh} mesh - The mesh instance.
      */
-    ns.XModelMeshUtils.releaseShape = function(mesh) {
+    ns.XModelMeshUtils.releaseShape = function (mesh) {
         if (mesh != null) {
             mesh.positions = null;
             mesh.normals = null;
@@ -1235,7 +1238,7 @@
      * @param {xpl.size_t} len - maximum number of the elements to be copied.
      * @returns {xpl.size_t} Number of the texture.
      */
-    ns.XModelMeshUtils.getTextures = function(mesh, dest, off, len) {
+    ns.XModelMeshUtils.getTextures = function (mesh, dest, off, len) {
         var count = 0;
         if (mesh != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
@@ -1256,7 +1259,7 @@
      * @function releaseTextures
      * @param {xpl.XModelMesh} mesh - The mesh instance.
      */
-    ns.XModelMeshUtils.releaseTextures = function(mesh) {
+    ns.XModelMeshUtils.releaseTextures = function (mesh) {
         if (mesh != null) {
             for (var i = 0; i < mesh.num_materials; ++i) {
                 ns.XModelMaterialUtils.releaseTexture(mesh.materials[i]);

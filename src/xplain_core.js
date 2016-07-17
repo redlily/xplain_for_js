@@ -55,7 +55,7 @@ if (typeof module == "object") {
 (function (ns) {
 
     "use strict";
-    
+
     /**
      * 指定の変数が undefined かチェックする。
      * 指定の変数が undefined の場合は既定値を返し、そうでない場合は指定の値を返します。
@@ -68,17 +68,6 @@ if (typeof module == "object") {
      */
     ns.defaultValue = function (value, defaultValue) {
         return value === undefined ? defaultValue : value;
-    };
-
-    /**
-     * 定数プロパティを生成します。
-     *
-     * @param {object} obj - プロパティを追加するオブジェクト
-     * @param {String} name - 定数名
-     * @param {*} value - 任意値
-     */
-    ns.defineConstValue = function (obj, name, value) {
-        
     };
 
     Object.defineProperties(ns, {

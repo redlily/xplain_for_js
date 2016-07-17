@@ -30,8 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     /**
      * Utilities for xModel animation structure.
@@ -42,7 +41,7 @@
      * @see xpl.XModelAnimationKey
      * @author Syuuhei Kuno
      */
-    ns.XModelAnimationUtils = function() {
+    ns.XModelAnimationUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -61,7 +60,7 @@
      *              target time following nearest negative index to the element nearest
      *              if return value is negative.
      */
-    var search = function(keys, from, to, time) {
+    var search = function (keys, from, to, time) {
         to--;
         while (from <= to) {
             var mid = (from + to) >> 1;
@@ -88,7 +87,7 @@
      * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
      * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
      */
-    var interpolateRotate = function(anim, key0, key1, weight) {
+    var interpolateRotate = function (anim, key0, key1, weight) {
         var target = anim.target;
         if (weight <= 0) {
             if (anim.index == -1) {
@@ -105,7 +104,7 @@
                 ns.Vector3.slerpv(target.value, 0, key0.value, 0, key1.value, 0, weight);
                 target.value[ns.XModelAxisRotate.ANGLE] =
                     key0.value[ns.XModelAxisRotate.ANGLE] * (1.0 - weight) +
-                    key1.value[ns.XModelAxisRotate.ANGLE] *        weight;
+                    key1.value[ns.XModelAxisRotate.ANGLE] * weight;
             } else {
                 // interpolate to a element.
                 target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
@@ -124,7 +123,7 @@
      * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
      * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
      */
-    var interpolateQuaternion = function(anim, key0, key1, weight) {
+    var interpolateQuaternion = function (anim, key0, key1, weight) {
         var target = anim.target;
         if (weight <= 0) {
             if (anim.index == -1) {
@@ -156,7 +155,7 @@
      * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
      * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
      */
-    var interpolateScale = function(anim, key0, key1, weight) {
+    var interpolateScale = function (anim, key0, key1, weight) {
         var target = anim.target;
         if (weight <= 0) {
             if (anim.index == -1) {
@@ -188,7 +187,7 @@
      * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
      * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
      */
-    var interpolateTranslate = function(anim, key0, key1, weight) {
+    var interpolateTranslate = function (anim, key0, key1, weight) {
         var target = anim.target;
         if (weight <= 0) {
             if (anim.index == -1) {
@@ -220,7 +219,7 @@
      * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
      * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
      */
-    var interpolateMatrix = function(anim, key0, key1, weight) {
+    var interpolateMatrix = function (anim, key0, key1, weight) {
         var target = anim.target;
         if (weight <= 0) {
             if (anim.index == -1) {
@@ -254,7 +253,7 @@
      * @param {xpl.XModelAnimation?} anim - The target animation structure.
      * @param {xpl.float64_t} time - The any time.
      */
-    ns.XModelAnimationUtils.setAnimation = function(anim, time) {
+    ns.XModelAnimationUtils.setAnimation = function (anim, time) {
         if (anim != null) {
             if (0 < anim.num_keys) {
                 // search a keys.
@@ -294,7 +293,7 @@
                 }
 
                 // interpolate transformation.
-                switch(anim.target.structure_type) {
+                switch (anim.target.structure_type) {
                     case ns.XModelStructure.TYPE_AXIS_ROTATE:
                         // axis rotate.
                         interpolateRotate(anim, key0, key1, weight);
@@ -337,7 +336,7 @@
      * @param {xpl.XModelAnimationSet?} anim_set - The target animation structure.
      * @param {xpl.float64_t} time - The any value.
      */
-    ns.XModelAnimationUtils.setAnimationSet = function(anim_set, time) {
+    ns.XModelAnimationUtils.setAnimationSet = function (anim_set, time) {
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {
                 ns.XModelAnimationUtils.setAnimation(anim_set.animations[i], time);
@@ -353,7 +352,7 @@
      * @param {xpl.XModelAnimation?} anim - The target animation structure.
      * @returns {xpl.float64_t} The total animation time.
      */
-    ns.XModelAnimationUtils.getAnimationTotalTime = function(anim) {
+    ns.XModelAnimationUtils.getAnimationTotalTime = function (anim) {
         var max = 0;
         if (anim != null) {
             // scane the maximum time to this animation.
@@ -383,7 +382,7 @@
      * @param {xpl.XModelAnimationSet?} anim_set - The target animation set structure.
      * @returns {xpl.float64_t} The total animation time.
      */
-    ns.XModelAnimationUtils.getAnimationSetTotalTime = function(anim_set) {
+    ns.XModelAnimationUtils.getAnimationSetTotalTime = function (anim_set) {
         var max = 0;
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {

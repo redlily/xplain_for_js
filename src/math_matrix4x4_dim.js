@@ -39,7 +39,7 @@
 
     "use strict";
 
-    if (ns.Matrix4x4 === undefined) {
+    if (ns.Matrix4x4 == null) {
         return;
     }
 
@@ -52,6 +52,11 @@
 
     /**
      * 拡大の変換行列に読み込ませます。
+     *
+     *     | x, 0, 0, 0 |
+     * d = | 0, y, 0, 0 |
+     *     | 0, 0, z, 0 |
+     *     | 0, 0, 0, 1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadScale
@@ -74,6 +79,11 @@
     /**
      * 平行移動の変換行列を読み込ませます。
      *
+     *     | 1, 0, 0, x |
+     * d = | 0, 1, 0, y |
+     *     | 0, 0, 1, z |
+     *     | 0, 0, 0, 1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadTranslate
      * @param {Array.<Number>} d - 出力先の行列
@@ -81,14 +91,11 @@
      * @param {Number} x - X軸の移動量
      * @param {Number} y - Y軸の移動量
      * @param {Number} z - Z軸の移動量
-     * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadTranslate = function (d, d_off, x, y, z, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         ns.Matrix4x4.load(
             d, d_off,
             1, 0, 0, x,
@@ -101,17 +108,21 @@
     /**
      * X軸回転の変換行列を読み込ませます。
      *
+     *     | 1, 0,         0,        0 |
+     * d = | 0, cos(rad), -sin(rad), 0 |
+     *     | 0, sin(rad),  cos(rad), 0 |
+     *     | 0, 0,         0,        1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadRotateXAxis
      * @param {Array.<Number>} d - 出力先の行列
      * @param {Number} d_off - 出力先の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateXAxis = function (d, d_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -126,17 +137,21 @@
     /**
      * Y軸回転の変換行列を読み込ませます。
      *
+     *     |  cos(rad), 0, sin(rad), 0 |
+     * d = |  0,        0, 0,        0 |
+     *     | -sin(rad), 0, cos(rad), 0 |
+     *     |  0,        0, 0,        1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadRotateYAxis
      * @param {Array.<Number>} d - 出力先の行列
      * @param {Number} d_off - 出力先の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateYAxis = function (d, d_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -151,17 +166,21 @@
     /**
      * Z軸回転の変換行列を読み込ませます。
      *
+     *     | cos(rad), -sin(rad), 0, 0 |
+     * d = | sin(rad),  cos(rad), 0, 0 |
+     *     | 0,         0,        0, 0 |
+     *     | 0,         0,        0, 1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadRotateZAxis
      * @param {Array.<Number>} d - 出力先の行列
      * @param {Number} d_off - 出力先の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateZAxis = function (d, d_off, rad, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
         ns.Matrix4x4.load(
@@ -176,6 +195,11 @@
     /**
      * 任意軸の回転の変換用列を読み込ませます。
      *
+     *     | cos(rad) + x^2 * (1.0 - cos(rad)),       x * y * (1.0 - cos(rad)) - z * sin(rad), x * z * (1.0 - cos(rad)) + y * sin(rad), 0 |
+     * d = | x * y * (1.0 - cos(rad)) + z * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       y * z * (1.0 - cos(rad)) - x * sin(rad), 0 |
+     *     | x * z * (1.0 - cos(rad)) - y * sin(rad), y * z * (1.0 - cos(rad)) + x * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       0 |
+     *     | 0,                                       0,                                       0,                                       1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadRotate
      * @param {Array.<Number>} d - 出力先の行列
@@ -184,16 +208,12 @@
      * @param {Number} y - 回転軸のY要素
      * @param {Number} z - 回転軸のZ要素
      * @param {Number} rad - 回転のラジアン値
-     * @param {boolean} [norm=true] -
-     * @param {Boolean} [column=true] -
+     * @param {boolean} [norm=true] - 回転軸を正規化するかどうか
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotate = function (d, d_off, x, y, z, rad, norm, column) {
-        if (column === undefined) {
-            column = true;
-        }
-        if (norm === undefined) {
-            norm = true;
-        }
+        norm = ns.defaultValue(norm, true);
+        column = ns.defaultValue(column, true);
 
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
@@ -228,6 +248,19 @@
     /**
      * ビューの変換行列を読み込ませます。
      *
+     * z = (center - eye) / |center - eye|
+     * x = (z × upper) / |z × upper|
+     * y = z × x
+     *
+     *     | x.x, x.y, x.z |
+     * t = | y.x, y.y, y.z | * eye * - 1
+     *     | z.x, z.y, z.z |
+     *
+     *     | x.x, x.y, x.z, t.x |
+     * d = | y.x, y.y, y.z, t.y |
+     *     | z.x, z.y, z.z, t.z |
+     *     | 0,   0,   0,   1   |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadLookAt
      * @param {Array.<Number>} d - 出力先の行列
@@ -241,7 +274,7 @@
      * @param {Number} upper_x - 吊上げのベクトルのX要素
      * @param {Number} upper_y - 吊上げのベクトルのY要素
      * @param {Number} upper_z - 吊上げのベクトルのZ要素
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadLookAt = function (d, d_off,
                                         eye_x, eye_y, eye_z,
@@ -251,7 +284,7 @@
         column = ns.defaultValue(column, true);
 
         // Z軸のベクトルを算出
-        // (centVec - eyeVec) / |centVec - eyeVec|
+        // (center - eye) / |center - eye|
         let zx = center_x - eye_x;
         let zy = center_y - eye_y;
         let zz = center_z - eye_z;
@@ -303,6 +336,11 @@
     /**
      * 射影の変換行列を読み込ませます。
      *
+     *     | (view_near * device_width) / view_width, 0,                                         0,                                     0                                      |
+     * d = | 0,                                       (view_near * device_height) / view_height, 0,                                     0                                      |
+     *     | 0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth |
+     *     | 0,                                       0,                                         1,                                     0                                      |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadPerspective
      * @param {Array.<Number>} d - 出力先の行列
@@ -315,7 +353,7 @@
      * @param {Number} [device_height=2.0] - デバイスで定められている実際の高さ
      * @param {Number} [device_near=-1.0] - デバイスで定められている実際の近平面の座標
      * @param {Number} [device_far=1.0] - デバイスで定められている実際の遠平面の座標
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadPerspective = function (d, d_off,
                                              view_width, view_height,
@@ -347,6 +385,11 @@
     /**
      * 軸の要素のみを行列に読み込ませます。
      *
+     *     | m(0,0), m(0,1), m(0,2), 0 |
+     * d = | m(1,0), m(1,1), m(1,2), 0 |
+     *     | m(2,0), m(2,1), m(2,2), 0 |
+     *     | 0,      0,      0,      1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function loadAxis
      * @param {Array.<Number>} d - 出力先の行列
@@ -367,6 +410,11 @@
 
     /**
      * 拡大の変換行列を行列に掛けあわせます。
+     *
+     *      | x, 0, 0, 0 |
+     * d *= | 0, y, 0, 0 |
+     *      | 0, 0, z, 0 |
+     *      | 0, 0, 0, 1 |
      *
      * @memberof xpl.Matrix4x4
      * @function mulScale
@@ -394,6 +442,11 @@
     /**
      * 平行移動の変換行列を行列に掛けあわせます。
      *
+     *      | 1, 0, 0, x |
+     * d *= | 0, 1, 0, y |
+     *      | 0, 0, 1, z |
+     *      | 0, 0, 0, 1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulTranslate
      * @param {Array.<Number>} m - 対象の行列
@@ -401,12 +454,11 @@
      * @param {Number} x - X軸の移動量
      * @param {Number} y - Y軸の移動量
      * @param {Number} z - Z軸の移動量
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulTranslate = function (m, m_off, x, y, z, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
+
         if (column) {
             m[m_off + M03] += m[m_off + M00] * x + m[m_off + M01] * y + m[m_off + M02] * z;
             m[m_off + M13] += m[m_off + M10] * x + m[m_off + M11] * y + m[m_off + M12] * z;
@@ -435,12 +487,17 @@
     /**
      * X軸回転の変換行列を行列に掛けあわせます。
      *
+     *      | 1, 0,         0,        0 |
+     * d *= | 0, cos(rad), -sin(rad), 0 |
+     *      | 0, sin(rad),  cos(rad), 0 |
+     *      | 0, 0,         0,        1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulRotateXAxis
      * @param {Array.<Number>} m - 対象の行列
      * @param {Number} m_off - 対象の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateXAxis = function (m, m_off, rad, column) {
         column = ns.defaultValue(column, true);
@@ -470,12 +527,17 @@
     /**
      * Y軸回転の変換行列を行列に掛けあわせます。
      *
+     *      |  cos(rad), 0, sin(rad), 0 |
+     * d *= |  0,        0, 0,        0 |
+     *      | -sin(rad), 0, cos(rad), 0 |
+     *      |  0,        0, 0,        1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulRotateYAxis
      * @param {Array.<Number>} m - 対象の行列
      * @param {Number} m_off - 対象の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateYAxis = function (m, m_off, rad, column) {
         column = ns.defaultValue(column, true);
@@ -505,12 +567,17 @@
     /**
      * Z軸回転の変換行列を行列に掛けあわせます。
      *
+     *      | cos(rad), -sin(rad), 0, 0 |
+     * d *= | sin(rad),  cos(rad), 0, 0 |
+     *      | 0,         0,        0, 0 |
+     *      | 0,         0,        0, 1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulRotateZAxis
      * @param {Array.<Number>} m - 対象の行列
      * @param {Number} m_off - 対象の行列の配列インデックス
      * @param {Number} rad - 回転のラジアン値
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateZAxis = function (m, m_off, rad, column) {
         column = ns.defaultValue(column, true);
@@ -540,6 +607,11 @@
     /**
      * 任意軸回転の変換行列を行列に掛けあわせます。
      *
+     *      | cos(rad) + x^2 * (1.0 - cos(rad)),       x * y * (1.0 - cos(rad)) - z * sin(rad), x * z * (1.0 - cos(rad)) + y * sin(rad), 0 |
+     * d *= | x * y * (1.0 - cos(rad)) + z * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       y * z * (1.0 - cos(rad)) - x * sin(rad), 0 |
+     *      | x * z * (1.0 - cos(rad)) - y * sin(rad), y * z * (1.0 - cos(rad)) + x * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       0 |
+     *      | 0,                                       0,                                       0,                                       1 |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulRotate
      * @param {Array.<Number>} m - 対象の行列
@@ -549,7 +621,7 @@
      * @param {Number} z - 回転軸のZ要素
      * @param {Number} rad - 回転のラジアン値
      * @param {boolean} [norm=true] -
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotate = function (m, m_off, x, y, z, rad, norm, column) {
         norm = ns.defaultValue(norm, true);
@@ -606,6 +678,19 @@
     /**
      * ビューの変換行列を行列に掛けあわせます。
      *
+     * z = (center - eye) / |center - eye|
+     * x = (z × upper) / |z × upper|
+     * y = z × z
+     *
+     *     | x.x, x.y, x.z |
+     * t = | y.x, y.y, y.z | * eye * - 1
+     *     | z.x, z.y, z.z |
+     *
+     *      | x.x, x.y, x.z, t.x |
+     * d *= | y.x, y.y, y.z, t.y |
+     *      | z.x, z.y, z.z, t.z |
+     *      | 0,   0,   0,   1   |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulLookAt
      * @param {Array.<Number>} m - 対象の行列
@@ -619,7 +704,7 @@
      * @param {Number} upper_x - 吊上げのベクトルのX要素
      * @param {Number} upper_y - 吊上げのベクトルのY要素
      * @param {Number} upper_z - 吊上げのベクトルのZ要素
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulLookAt = function (m, m_off,
                                        eye_x, eye_y, eye_z,
@@ -629,7 +714,7 @@
         column = ns.defaultValue(column, true);
 
         // Z軸のベクトルを算出
-        // (centVec - eyeVec) / |centVec - eyeVec|
+        // (center - eye) / |center - eye|
         let zx = center_x - eye_x;
         let zy = center_y - eye_y;
         let zz = center_z - eye_z;
@@ -642,7 +727,7 @@
         }
 
         // X軸のベクトルを算出
-        // (zAxis × upper) / |zAxis × upper|
+        // (z_axis × upper) / |z_axis × upper|
         let xx = zy * upper_z - zz * upper_y;
         let xy = zz * upper_x - zx * upper_z;
         let xz = zx * upper_y - zy * upper_x;
@@ -655,15 +740,15 @@
         }
 
         // Y軸のベクトルを算出
-        // zAxis × xAxis
+        // z_axis × x_axis
         let yx = zy * xz - zz * xy;
         let yy = zz * xx - zx * xz;
         let yz = zx * xy - zy * xx;
 
         // 平行移動に回転を掛ける
-        // | xx, xy, xz |   | eye_x |
-        // | yx, yy, yz | * | eye_y | * - 1
-        // | zx, zy, zz |   | eye_z |
+        // | x.x, x.y, x.z |   | eye_x |
+        // | y.x, y.y, y.z | * | eye_y | * - 1
+        // | z.x, z.y, z.z |   | eye_z |
         let tx = -(xx * eye_x + xy * eye_y + xz * eye_z);
         let ty = -(yx * eye_x + yy * eye_y + yz * eye_z);
         let tz = -(zx * eye_x + zy * eye_y + zz * eye_z);
@@ -713,6 +798,11 @@
     /**
      * 射影の変換行列を行列に掛けあわせます。
      *
+     *      | (view_near * device_width) / view_width, 0,                                         0,                                     0                                      |
+     * d *= | 0,                                       (view_near * device_height) / view_height, 0,                                     0                                      |
+     *      | 0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth |
+     *      | 0,                                       0,                                         1,                                     0                                      |
+     *
      * @memberof xpl.Matrix4x4
      * @function mulPerspective
      * @param {Array.<Number>} m - 対象の行列
@@ -725,7 +815,7 @@
      * @param {Number} [device_height=2.0] - デバイスで定めている実際の高さ
      * @param {Number} [device_near=-1.0] - デバイスで定めている実際の近平面の座標
      * @param {Number} [device_far=-1.0] - デバイスで定めている実際の遠平面の座標
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulPerspective = function (m, m_off,
                                             view_width, view_height,
@@ -743,7 +833,7 @@
         let range_view = view_far - view_near;
         let scaled_far = view_far * (device_far - device_near);
 
-        // multiplication then load on the matrices.
+        // 行列に掛けあわせて、結果の書き出し
         let a02 = m[m_off + M02];
         let a12 = m[m_off + M12];
         let a22 = m[m_off + M22];
@@ -793,18 +883,25 @@
     /**
      * 行列の軸ベクトルのみを正規化します。
      *
+     * x = (m(0,0), m(1,0), m(2, 0)) / |(m(0,0), m(1,0), m(2, 0))|
+     * y = (m(0,1), m(1,1), m(2, 1)) / |(m(0,1), m(1,1), m(2, 1))|
+     * z = (m(0,2), m(1,2), m(2, 2)) / |(m(0,2), m(1,2), m(2, 2))|
+     *
+     *     | x.x,    y.x,    z.x,    m(0,3) |
+     * d = | x.y,    y.y,    z.y,    m(1,3) |
+     *     | x.z,    y.z,    z.z,    m(2,3) |
+     *     | m(3,0), m(3,1), m(3,2), m(3,3) |
+     *
      * @memberof xpl.Matrix4x4
      * @function normalizeAxisv
      * @param {Array.<Number>} d - The destination vector.
      * @param {Number} d_off - 出力先の行列の配列インデックス
      * @param {Array.<Number>} m - 入力元の行列
      * @param {Number} m_off - 入力元の行列の配列インデックス
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.normalizeAxisv = function (d, d_off, m, m_off, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
         let xx, xy, xz, yx, yy, yz, zx, zy, zz;
         xx = m[m_off + M00];
@@ -827,30 +924,30 @@
         }
 
         // X軸を正規化
-        let xLen = xx * xx + xy * xy + xz * xz;
-        if (0 < xLen) {
-            xLen = Math.sqrt(xLen);
-            xx /= xLen;
-            xy /= xLen;
-            xz /= xLen;
+        let x_len = xx * xx + xy * xy + xz * xz;
+        if (0 < x_len) {
+            x_len = Math.sqrt(x_len);
+            xx /= x_len;
+            xy /= x_len;
+            xz /= x_len;
         }
 
         // Y軸を正規化
-        let yLen = yx * yx + yy * yy + yz * yz;
-        if (0 < yLen) {
-            yLen = Math.sqrt(yLen);
-            yx /= yLen;
-            yy /= yLen;
-            yz /= yLen;
+        let y_len = yx * yx + yy * yy + yz * yz;
+        if (0 < y_len) {
+            y_len = Math.sqrt(y_len);
+            yx /= y_len;
+            yy /= y_len;
+            yz /= y_len;
         }
 
         // Z軸を正規化
-        let zLen = zx * zx + zy * zy + zz * zz;
-        if (0 < zLen) {
-            zLen = Math.sqrt(zLen);
-            zx /= zLen;
-            zy /= zLen;
-            zz /= zLen;
+        let z_len = zx * zx + zy * zy + zz * zz;
+        if (0 < z_len) {
+            z_len = Math.sqrt(z_len);
+            zx /= z_len;
+            zy /= z_len;
+            zz /= z_len;
         }
 
         // 結果の書き出し
@@ -877,6 +974,15 @@
     /**
      * 軸ベクトルを球面線形補間、それ以外の要素を線形補間します。
      *
+     * x = slrep((a(0,0), a(1,0), a(2,0)), (b(0,0), b(1,0), b(2,0)); t)
+     * y = slrep((a(0,1), a(1,1), a(2,1)), (b(0,1), b(1,1), b(2,1)); t)
+     * z = slrep((a(0,2), a(1,2), a(2,2)), (b(0,2), b(1,2), b(2,2)); t)
+     *
+     *     | x.x,                     y.x,                     z.x,                    lrep(a(0,3), b(0,3); t) |
+     * d = | x.y,                     y.y,                     z.y,                    lrep(a(1,3), b(1,3); t) |
+     *     | x.z,                     y.z                      z.z,                    lrep(a(2,3), b(2,3); t) |
+     *     | lrep(a(3,0), b(3,0); t), lrep(a(3,1), b(3,1); t), lrep(a(3,2, b(3,2); t), lrep(a(3,3), b(3,3); t) |
+     *
      * @memberof xpl.Matrix4x4
      * @function slrepAxisAndLrepOtherv
      * @param {Array.<Number>} d - 出力先の行列
@@ -886,7 +992,7 @@
      * @param {Array.<Number>} b - 終了の行列
      * @param {Number} b_off - 終了の行列の配列インデックス
      * @param {Number} t - 補間係数
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.slrepAxisAndLrepOtherv = function (d, d_off, a, a_off, b, b_off, t, column) {
         column = ns.defaultValue(column, true);
@@ -1148,89 +1254,18 @@
     };
 
     /**
-     * 行列を回転軸と回転角度に変換します。
-     * 回転軸は引数のベクトルに出力し、回転角度は戻り値として出力します。
-     *
-     * @memberof xpl.Matrix4x4
-     * @function toRotateAxisv
-     * @param {Array.<Number>} v - 出力先のベクトル
-     * @param {Number} v_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} m - 入力元の行列
-     * @param {Number} m_off - 入力元の行列の配列インデックス
-     * @param {Boolean} [column=true] -
-     * @returns {Number} 回転のラジアン値
-     */
-    ns.Matrix4x4.toRotateAxisv = function (v, v_off, m, m_off, column) {
-        if (column === undefined) {
-            column = true;
-        }
-
-        //   X-axis,                     Y-axis,                 Z-axis,
-        // | x^2 (1 - cosθ) +  cosθ, xy  (1 - cosθ) - zsinθ, xz  (1 - cosθ) + ysinθ, n |
-        // | xy  (1 - cosθ) + zsinθ, y^2 (1 - cosθ) +  cosθ, yz  (1 - cosθ) - xsinθ, n |
-        // | xz  (1 - cosθ) - ysinθ, yz  (1 - cosθ) + xsinθ, z^2 (1 - cosθ) +  cosθ, n |
-        // | n,                      n,                      n,                      n |
-        let m00 = m[m_off + M00];
-        let m11 = m[m_off + M11];
-        let m22 = m[m_off + M22];
-        let m01, m02, m10, m12, m20, m21;
-        if (column) {
-            m01 = m[m_off + M01];
-            m02 = m[m_off + M02];
-            m10 = m[m_off + M10];
-            m12 = m[m_off + M12];
-            m20 = m[m_off + M20];
-            m21 = m[m_off + M21];
-        } else {
-            m01 = m[m_off + M10];
-            m02 = m[m_off + M20];
-            m10 = m[m_off + M01];
-            m12 = m[m_off + M21];
-            m20 = m[m_off + M02];
-            m21 = m[m_off + M12];
-        }
-        let xycs = (m01 + m10) * 0.5; // xy (1 - cosθ)
-        let xzcs = (m20 + m02) * 0.5; // xz (1 - cosθ)
-        let yzcs = (m12 + m21) * 0.5; // yz (1 - cosθ)
-        let xxcs = yzcs != 0 ? Math.abs((xycs * xzcs) / yzcs) : 0; // x^2 (1 - cosθ)
-        let yycs = xzcs != 0 ? Math.abs((xycs * yzcs) / xzcs) : 0; // y^2 (1 - cosθ)
-        let zzcs = xycs != 0 ? Math.abs((xzcs * yzcs) / xycs) : 0; // z^2 (1 - cosθ)
-
-        // 回転の要素となる複素数を算出
-        let cs = Math.min(m00 - xxcs, m11 - yycs, m22 - zzcs); // ||axis|| cosθ
-        let xsn = (m12 - m21) * 0.5; // x sinθ
-        let ysn = (m20 - m02) * 0.5; // y sinθ
-        let zsn = (m01 - m10) * 0.5; // z sinθ
-        let sn = xsn * xsn + ysn * ysn + zsn * zsn; // (||axis|| sinθ)^2
-
-        // 複素数を正規化
-        let norm = cs * cs + sn;
-        if (0 < norm) {
-            cs /= Math.sqrt(norm);
-        }
-        if (1.0 <= cs) {
-            v[v_off + VX] = 0;
-            v[v_off + VY] = 0;
-            v[v_off + VZ] = 0;
-            return 0;
-        }
-
-        // 回転軸を算出して、結果を書き出す
-        if (0 < sn) {
-            sn = Math.sqrt(sn);
-            v[v_off + VX] = -xsn / sn;
-            v[v_off + VY] = -ysn / sn;
-            v[v_off + VZ] = -zsn / sn;
-        } else {
-            v[v_off + VX] = 0;
-            v[v_off + VY] = 0;
-            v[v_off + VZ] = 0;
-        }
-        return Math.acos(cs);
-    };
-
-    /**
      * 四元数を行列に変換します。
+     *                          _
+     * x = q * (0; (1, 0, 0)) * q
+     *                          _
+     * y = q * (0; (0, 1, 0)) * q
+     *                          _
+     * z = q * (0; (0, 0, 1)) * q
+     *
+     *     | x.x, y.x, z.x, 0 |
+     * d = | x.y, y.y, z.y, 0 |
+     *     | x.z, y.z, z.z, 0 |
+     *     | 0,   0,   0,   1 |
      *
      * @memberof xpl.Matrix4x4
      * @function fromQuaternionv
@@ -1238,14 +1273,10 @@
      * @param {Number} m_off - 出力先の行列の配列インデックス
      * @param {Array.<Number>} q - 入力元の四元数
      * @param {Number} q_off - 入力元の四元数の配列インデックス
-     * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.fromQuaternionv = function (m, m_off, q, q_off, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
         //                               _
         // X-axis = q * (0; (1, 0, 0)) * q
@@ -1275,6 +1306,17 @@
 
     /**
      * 四元数を行列に掛けあわせます。
+     *                          _
+     * x = q * (0; (1, 0, 0)) * q
+     *                          _
+     * y = q * (0; (0, 1, 0)) * q
+     *                          _
+     * z = q * (0; (0, 0, 1)) * q
+     *
+     *      | x.x, y.x, z.x, 0 |
+     * d *= | x.y, y.y, z.y, 0 |
+     *      | x.z, y.z, z.z, 0 |
+     *      | 0,   0,   0,   1 |
      *
      * @memberof xpl.Matrix4x4
      * @function mulQuaternionv
@@ -1282,12 +1324,10 @@
      * @param {Number} m_off - 出力先の行列の配列インデックス
      * @param {Array.<Number>} q - 入力元の四元数
      * @param {Number} q_off - 入力元の四元数の配列インデックス
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulQuaternionv = function (m, m_off, q, q_off, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
         //                               _
         // X-axis = q * (0; (1, 0, 0)) * q
@@ -1305,7 +1345,7 @@
         let ij2 = ip * jp * 2, ik2 = ip * kp * 2, jk2 = jp * kp * 2;
         let ri2 = rp * ip * 2, rj2 = rp * jp * 2, rk2 = rp * kp * 2;
 
-        // multiplication then load on the matrices.
+        // 行列に掛けあわせて、結果の書き出し
         let a00 = m[m_off + M00], a01 = m[m_off + M01], a02 = m[m_off + M02];
         let a10 = m[m_off + M10], a11 = m[m_off + M11], a12 = m[m_off + M12];
         let a20 = m[m_off + M20], a21 = m[m_off + M21], a22 = m[m_off + M22];
@@ -1343,6 +1383,16 @@
 
     /**
      * 四元数を行列の軸要素に掛けあわせます。
+     *                          _
+     * x = q * (0; (1, 0, 0)) * q
+     *                          _
+     * y = q * (0; (0, 1, 0)) * q
+     *                          _
+     * z = q * (0; (0, 0, 1)) * q
+     *
+     *      | x.x, y.x, z.x |
+     * d *= | x.y, y.y, z.y |
+     *      | x.z, y.z, z.z |
      *
      * @memberof xpl.Matrix4x4
      * @function mulQuaternionAxisv
@@ -1350,19 +1400,17 @@
      * @param {Number} m_off - 出力先の行列の配列インデックス
      * @param {Array.<Number>} q - 入力元の四元数
      * @param {Number} q_off - 入力元の四元数の配列インデックス
-     * @param {Boolean} [column=true] -
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulQuaternionAxisv = function (m, m_off, q, q_off, column) {
-        if (column === undefined) {
-            column = true;
-        }
+        column = ns.defaultValue(column, true);
 
         //                               _
-        // X-axis = q * (0, (1, 0, 0)) * q
+        // X-axis = q * (0; (1, 0, 0)) * q
         //                               _
-        // Y-axis = q * (0, (0, 1, 0)) * q
+        // Y-axis = q * (0; (0, 1, 0)) * q
         //                               _
-        // Z-axis = q * (0, (0, 0, 1)) * q
+        // Z-axis = q * (0; (0, 0, 1)) * q
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -1373,7 +1421,7 @@
         let ij2 = ip * jp * 2, ik2 = ip * kp * 2, jk2 = jp * kp * 2;
         let ri2 = rp * ip * 2, rj2 = rp * jp * 2, rk2 = rp * kp * 2;
 
-        // multiplication then load on the matrices.
+        // 行列に掛けあわせて、結果の書き出し
         let a00 = m[m_off + M00], a01 = m[m_off + M01], a02 = m[m_off + M02];
         let a10 = m[m_off + M10], a11 = m[m_off + M11], a12 = m[m_off + M12];
         let a20 = m[m_off + M20], a21 = m[m_off + M21], a22 = m[m_off + M22];
@@ -1410,14 +1458,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function toQuaternionv
-     * @param {Array.<Number>} q - The destination quaternion.
-     * @param {Number} q_off - Starting position of the destination quaternion.
+     * @param {Array.<Number>} q - 出力先の四元数
+     * @param {Number} q_off - 出力先の四元数の配列インデックス
      * @param {Array.<Number>} m - 入力元の行列
      * @param {Number} m_off - 入力元の行列の配列インデックス
-     * @param {Number} reverse - Set the true if reverse the sign to the imaginary part.
-     * @param {Boolean} [column=true] -
-     *              Set the true if use specified matrix to the column vector,
-     *              set the false if use specified matrix to the row vector.
+     * @param {Number} reverse - 虚数部の符号を反転させるかどうか
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.toQuaternionv = function (q, q_off, m, m_off, reverse, column) {
         column = ns.defaultValue(column, true);
@@ -1447,7 +1493,7 @@
             m21 = m[m_off + M12];
         }
 
-        // calculate scale of the matrix.
+        // 行列の拡大率を算出
         // scale = √(|(xAxis × yAxis) ・ zAxis|^(1.0 / 3.0))
         //       = |(xAxis × yAxis) ・ zAxis|^(1.0 / 6.0)
         let scale = (m10 * m21 - m20 * m11) * m02 +
@@ -1468,7 +1514,7 @@
             scale = Math.sqrt(scale);
         }
 
-        // calculate the sine value and axis vector.
+        // sin値と軸ベクトルを算出
         //   (v * 4 * sinθ * cosθ) / 2.0
         // = (v * 2 * sin2θ) / 2.0
         // = v * sin2θ
@@ -1498,7 +1544,7 @@
         if (!is_imaginary) {
             // 四元数の絶対値が実数の場合
             //   (rr + rr + rr - ii - jj - kk - 1.0) / 2.0
-            // = (3 * cos^2(θ) - ||v|| * sin^2(θ) - 1.0) / 2.0
+            // = (3 * cos^2(θ) - |v| * sin^2(θ) - 1.0) / 2.0
             // = ((2 * cos^2(θ) - 1.0) - (cos^2(θ) - 1.0 * sin^2(θ))) / 2.0
             // = (cos2θ + cos2θ) / 2.0
             // = cos2θ
@@ -1506,14 +1552,14 @@
         } else {
             // 四元数の絶対値が虚数の場合
             //   -(rr + rr + rr + ii + jj + kk + 1.0) / 2.0
-            // = -(3 * -cos^2(θ) - ||v * i|| * sin^2(θ) + 1.0) / 2.0
+            // = -(3 * -cos^2(θ) - |v * i| * sin^2(θ) + 1.0) / 2.0
             // = -((2 * -cos^2(θ) + 1.0) - (-cos^2(θ) + 1.0 * sin^2(θ))) / 2.0
             // = -(-cos2θ - cos2θ) / 2.0
             // = cos2θ
             cs = -ns.MathUtils.mid((m00 + m11 + m22 + 1.0) * 0.5, 1, -1);
         }
 
-        // calculate the sine and cosine be half angle.
+        // 半角のsin値とcos値を算出
         let rad = Math.acos(cs) * 0.5;
         cs = Math.cos(rad);
         sn = Math.sin(rad);
@@ -1530,6 +1576,86 @@
             q[q_off + CJ] = scale * sn * jp;
             q[q_off + CK] = scale * sn * kp;
         }
+    };
+
+    /**
+     * 行列を回転軸と回転角度に変換します。
+     * 回転軸は引数のベクトルに出力し、回転角度は戻り値として出力します。
+     *
+     * @memberof xpl.Matrix4x4
+     * @function toRotateAxisv
+     * @param {Array.<Number>} v - 出力先のベクトル
+     * @param {Number} v_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<Number>} m - 入力元の行列
+     * @param {Number} m_off - 入力元の行列の配列インデックス
+     * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
+     * @returns {Number} 回転のラジアン値
+     */
+    ns.Matrix4x4.toRotateAxisv = function (v, v_off, m, m_off, column) {
+        column = ns.defaultValue(column, true);
+
+        //   X-axis,                     Y-axis,                 Z-axis,
+        // | x^2 (1 - cosθ) +  cosθ, xy  (1 - cosθ) - zsinθ, xz  (1 - cosθ) + ysinθ, n |
+        // | xy  (1 - cosθ) + zsinθ, y^2 (1 - cosθ) +  cosθ, yz  (1 - cosθ) - xsinθ, n |
+        // | xz  (1 - cosθ) - ysinθ, yz  (1 - cosθ) + xsinθ, z^2 (1 - cosθ) +  cosθ, n |
+        // | n,                      n,                      n,                      n |
+        let m00 = m[m_off + M00];
+        let m11 = m[m_off + M11];
+        let m22 = m[m_off + M22];
+        let m01, m02, m10, m12, m20, m21;
+        if (column) {
+            m01 = m[m_off + M01];
+            m02 = m[m_off + M02];
+            m10 = m[m_off + M10];
+            m12 = m[m_off + M12];
+            m20 = m[m_off + M20];
+            m21 = m[m_off + M21];
+        } else {
+            m01 = m[m_off + M10];
+            m02 = m[m_off + M20];
+            m10 = m[m_off + M01];
+            m12 = m[m_off + M21];
+            m20 = m[m_off + M02];
+            m21 = m[m_off + M12];
+        }
+        let xycs = (m01 + m10) * 0.5; // xy (1 - cosθ)
+        let xzcs = (m20 + m02) * 0.5; // xz (1 - cosθ)
+        let yzcs = (m12 + m21) * 0.5; // yz (1 - cosθ)
+        let xxcs = yzcs != 0 ? Math.abs((xycs * xzcs) / yzcs) : 0; // x^2 (1 - cosθ)
+        let yycs = xzcs != 0 ? Math.abs((xycs * yzcs) / xzcs) : 0; // y^2 (1 - cosθ)
+        let zzcs = xycs != 0 ? Math.abs((xzcs * yzcs) / xycs) : 0; // z^2 (1 - cosθ)
+
+        // 回転の要素となる複素数を算出
+        let cs = Math.min(m00 - xxcs, m11 - yycs, m22 - zzcs); // |axis| cosθ
+        let xsn = (m12 - m21) * 0.5; // x sinθ
+        let ysn = (m20 - m02) * 0.5; // y sinθ
+        let zsn = (m01 - m10) * 0.5; // z sinθ
+        let sn = xsn * xsn + ysn * ysn + zsn * zsn; // (|axis| sinθ)^2
+
+        // 複素数を正規化
+        let norm = cs * cs + sn;
+        if (0 < norm) {
+            cs /= Math.sqrt(norm);
+        }
+        if (1.0 <= cs) {
+            v[v_off + VX] = 0;
+            v[v_off + VY] = 0;
+            v[v_off + VZ] = 0;
+            return 0;
+        }
+
+        // 回転軸を算出して、結果を書き出す
+        if (0 < sn) {
+            sn = Math.sqrt(sn);
+            v[v_off + VX] = -xsn / sn;
+            v[v_off + VY] = -ysn / sn;
+            v[v_off + VZ] = -zsn / sn;
+        } else {
+            v[v_off + VX] = 0;
+            v[v_off + VY] = 0;
+            v[v_off + VZ] = 0;
+        }
+        return Math.acos(cs);
     };
 
 })(xpl);

@@ -51,7 +51,9 @@
      * @param {Object} v1 - 演算子の左側の値
      * @param {Object} v2 - 演算子の右側の値
      * @returns {Number} 比較の結果、
-     *              値が0の場合は等しく、0以上の正の値の場合は左側の値の方が大きく、0以下の負の数の場合は右側の値の方が大きくなります。
+     *              値が0の場合は等しく、
+     *              0以上の正の値の場合は左側の値の方が大きく
+     *              0以下の負の数の場合は右側の値の方が大きくなります。
      */
 
     /**
@@ -97,8 +99,7 @@
      * @param {Number} to - 配列の開始インデックス
      * @param {Number} key - 指定の値
      * @param {xpl.ArrayUtils~comparator} [comparator=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
-     * @returns {Number} 指定の値が発見された配列インデックス値、
-     *              ゼロ以下の場合は指定の要素が見つからず
+     * @returns {Number} 指定の値が発見された配列インデックス値、ゼロ以下の場合は指定の要素が見つからず
      */
     ns.ArrayUtils.binarySearch = function (ary, from, to, key, comparator) {
         to--;

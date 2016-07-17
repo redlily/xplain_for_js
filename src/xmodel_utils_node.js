@@ -30,8 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
@@ -42,7 +41,7 @@
      * @see xpl.XModelNode
      * @author Syuuhei Kuno
      */
-    ns.XModelNodeUtils = function() {
+    ns.XModelNodeUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -59,7 +58,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of written the textures.
      */
-    ns.XModelNodeUtils.getTextures = function(root, dest, off, len) {
+    ns.XModelNodeUtils.getTextures = function (root, dest, off, len) {
         var count = 0;
         if (root != null) {
             // count the textures in the meshes that be chained to the this node.
@@ -88,7 +87,7 @@
      * @function releaseTextures
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.releaseTextures = function(root) {
+    ns.XModelNodeUtils.releaseTextures = function (root) {
         if (root != null) {
             // release the textures in the meshes that be chained to the this node.
             for (var i = 0; i < root.num_meshes; ++i) {
@@ -115,7 +114,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of written the meshes.
      */
-    ns.XModelNodeUtils.getMeshes = function(root, dest, off, len) {
+    ns.XModelNodeUtils.getMeshes = function (root, dest, off, len) {
         var count = 0;
         if (root != null) {
             // count the mesh in the this node.
@@ -148,7 +147,7 @@
      * @function releaseShapes
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.releaseShapes = function(root) {
+    ns.XModelNodeUtils.releaseShapes = function (root) {
         if (root != null) {
             // release the shape information in the meshes that has been chained to the this node.
             for (var i = 0; i < root.num_meshes; ++i) {
@@ -175,7 +174,7 @@
      * @param {xpl.size_t} len - Number of the destination to be copied.
      * @returns {xpl.size_t} Number of written the meshes.
      */
-    ns.XModelNodeUtils.getNodes = function(root, dest, off, len) {
+    ns.XModelNodeUtils.getNodes = function (root, dest, off, len) {
         var count = 0;
         if (root != null) {
             // destinate the this node.
@@ -204,7 +203,7 @@
      * @param {xpl.XModelNode?} root - The root node instance.
      * @param {xpl.XModelNode?} parent - The parent node.
      */
-    ns.XModelNodeUtils.updateParent = function(root, parent) {
+    ns.XModelNodeUtils.updateParent = function (root, parent) {
         if (root != null) {
             // update the this node.
             root.parent = parent;
@@ -247,12 +246,12 @@
      * @param {xpl.float32_t} m32 - Element of 3-2 in the source matrix.
      * @param {xpl.float32_t} m33 - Element of 3-3 in the source matrix.
      */
-    ns.XModelNodeUtils.updateCombinationp = function(root,
-                                                     num_children, children, children_off,
-                                                     m00, m01, m02, m03,
-                                                     m10, m11, m12, m13,
-                                                     m20, m21, m22, m23,
-                                                     m30, m31, m32, m33) {
+    ns.XModelNodeUtils.updateCombinationp = function (root,
+                                                      num_children, children, children_off,
+                                                      m00, m01, m02, m03,
+                                                      m10, m11, m12, m13,
+                                                      m20, m21, m22, m23,
+                                                      m30, m31, m32, m33) {
         if (root != null) {
             // blend the matrix.
             ns.Matrix4x4.load(
@@ -310,9 +309,9 @@
      * @param {Float32Array} m - The source matrix.
      * @param {xpl.size_t} m_off - Starting position in the source matrix.
      */
-    ns.XModelNodeUtils.updateCombinationv = function(root,
-                                                     num_children, children, children_off,
-                                                     m, m_off) {
+    ns.XModelNodeUtils.updateCombinationv = function (root,
+                                                      num_children, children, children_off,
+                                                      m, m_off) {
         ns.XModelNodeUtils.updateCombinationp(
             root,
             num_children, children, children_off,
@@ -332,7 +331,7 @@
      * @param {Array.<xpl.XModelNode>} children - Array of the node.
      * @param {xpl.size_t} children_off - Starting position in the node.
      */
-    ns.XModelNodeUtils.updateCombination = function(root, num_children, children, children_off) {
+    ns.XModelNodeUtils.updateCombination = function (root, num_children, children, children_off) {
         ns.XModelNodeUtils.updateCombinationp(
             root,
             num_children, children, children_off,
@@ -365,11 +364,11 @@
      * @param {xpl.float32_t} m32 - Element of 3-2 in the source matrix.
      * @param {xpl.float32_t} m33 - Element of 3-3 in the source matrix.
      */
-    ns.XModelNodeUtils.updateCombinationAllp = function(root,
-                                                        m00, m01, m02, m03,
-                                                        m10, m11, m12, m13,
-                                                        m20, m21, m22, m23,
-                                                        m30, m31, m32, m33) {
+    ns.XModelNodeUtils.updateCombinationAllp = function (root,
+                                                         m00, m01, m02, m03,
+                                                         m10, m11, m12, m13,
+                                                         m20, m21, m22, m23,
+                                                         m30, m31, m32, m33) {
         if (root != null) {
             ns.XModelNodeUtils.updateCombinationp(
                 root,
@@ -389,7 +388,7 @@
      * @param {Float32Array} m - The source matrix.
      * @param {xpl.size_t} m_off - Starting position in the source matrix.
      */
-    ns.XModelNodeUtils.updateCombinationAllv = function(root, m, m_off) {
+    ns.XModelNodeUtils.updateCombinationAllv = function (root, m, m_off) {
         if (root != null) {
             ns.XModelNodeUtils.updateCombinationp(
                 root, root.num_children, root.children, 0,
@@ -407,7 +406,7 @@
      * @function updateCombinationAll
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.updateCombinationAll = function(root) {
+    ns.XModelNodeUtils.updateCombinationAll = function (root) {
         if (root != null) {
             ns.XModelNodeUtils.updateCombinationp(
                 root, root.num_children, root.children, 0,
@@ -425,14 +424,14 @@
      * @function updateOffset
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.updateOffset = function(root) {
+    ns.XModelNodeUtils.updateOffset = function (root) {
         if (root != null) {
             // calculate the offset transform.
             ns.Matrix4x4.inversev(root.offset_matrix, 0, root.combined_matrix, 0);
 
             // update the offsets in the nodes that be chained to the this node.
             for (var i = 0; i < root.num_children; ++i) {
-               ns.XModelNodeUtils.updateOffset(root.children[i]);
+                ns.XModelNodeUtils.updateOffset(root.children[i]);
             }
         }
     };
@@ -442,12 +441,12 @@
      *
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.applyKinematics = function(root) {
+    ns.XModelNodeUtils.applyKinematics = function (root) {
         if (root != null) {
             // apply the inverse kinematics in the node.
-            for(var i = 0; i < root.num_iks; ++i) {
+            for (var i = 0; i < root.num_iks; ++i) {
                 var ik = root.iks[i];
-                if(ik != null) {
+                if (ik != null) {
                     ns.XModelKinematicsUtils.applyInverseKinematices(
                         root,
                         ik.target,
@@ -458,7 +457,7 @@
             }
 
             // apply the kinematics in the node that be chained to the this node.
-            for(var i = 0; i < root.num_children; ++i) {
+            for (var i = 0; i < root.num_children; ++i) {
                 ns.XModelNodeUtils.applyKinematics(root.children[i]);
             }
         }
@@ -469,10 +468,10 @@
      *
      * @param {xpl.XModelNode?} root - The root node instance.
      */
-    ns.XModelNodeUtils.resetTransforms = function(root) {
+    ns.XModelNodeUtils.resetTransforms = function (root) {
         if (root != null) {
             // assignment the initial value to transforms.
-            for (var i = 0; i <ns.XModelNode.NUM_TRANSFORMS; ++i) {
+            for (var i = 0; i < ns.XModelNode.NUM_TRANSFORMS; ++i) {
                 ns.XModelTransformUtils.resetTransform(root.transforms[i]);
             }
 
@@ -495,7 +494,7 @@
      *              second argument is the any parameter.
      * @param {Object?} param - The any parameter for the callback to be passed.
      */
-   ns.XModelNodeUtils.forEachMesh = function(root, callback, param) {
+    ns.XModelNodeUtils.forEachMesh = function (root, callback, param) {
         if (root != null) {
             // process the mesh in the this node.
             for (var i = 0; i < root.num_meshes; ++i) {
@@ -507,7 +506,7 @@
 
             // process the mesh in the nodes that be chained to the this node.
             for (var i = 0; i < root.num_children; ++i) {
-               ns.XModelNodeUtils.forEachMesh(root.children[i], callback, param);
+                ns.XModelNodeUtils.forEachMesh(root.children[i], callback, param);
             }
         }
     };
@@ -526,7 +525,7 @@
      * @param {xpl.size_t} level - The hierarchy deep.
      * @param {Object?} param - The any parameter for the callback to be passed.
      */
-   ns.XModelNodeUtils.forEachNode = function(root, callback, level, param) {
+    ns.XModelNodeUtils.forEachNode = function (root, callback, level, param) {
         if (root != null) {
             // process the this node.
             callback(root, level, param);
@@ -534,7 +533,7 @@
             // process the node in the nodes that be chained to the this node.
             level += 1;
             for (var i = 0; i < root.num_children; ++i) {
-               ns.XModelNodeUtils.forEachNode(root.children[i], callback, level, param);
+                ns.XModelNodeUtils.forEachNode(root.children[i], callback, level, param);
             }
         }
     };

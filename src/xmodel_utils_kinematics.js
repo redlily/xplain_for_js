@@ -30,14 +30,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
 
-    var VX = ns.Geometry.VX, VY = ns.Geometry.VY, VZ = ns.Geometry.VZ;
-    var CR = ns.Geometry.CR, CI = ns.Geometry.CI, CJ = ns.Geometry.CJ, CK = ns.Geometry.CK;
-    var M00 = ns.Geometry.M4X4_00, M01 = ns.Geometry.M4X4_01, M02 = ns.Geometry.M4X4_02, M03 = ns.Geometry.M4X4_03,
+    const VX = ns.Geometry.VX, VY = ns.Geometry.VY, VZ = ns.Geometry.VZ;
+    const CR = ns.Geometry.CR, CI = ns.Geometry.CI, CJ = ns.Geometry.CJ, CK = ns.Geometry.CK;
+    const M00 = ns.Geometry.M4X4_00, M01 = ns.Geometry.M4X4_01, M02 = ns.Geometry.M4X4_02, M03 = ns.Geometry.M4X4_03,
         M10 = ns.Geometry.M4X4_10, M11 = ns.Geometry.M4X4_11, M12 = ns.Geometry.M4X4_12, M13 = ns.Geometry.M4X4_13,
         M20 = ns.Geometry.M4X4_20, M21 = ns.Geometry.M4X4_21, M22 = ns.Geometry.M4X4_22, M23 = ns.Geometry.M4X4_23,
         M30 = ns.Geometry.M4X4_30, M31 = ns.Geometry.M4X4_31, M32 = ns.Geometry.M4X4_32, M33 = ns.Geometry.M4X4_33;

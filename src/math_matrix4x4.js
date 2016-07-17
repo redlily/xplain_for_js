@@ -666,7 +666,7 @@
     /**
      * 行列とスカラの掛け算をします。
      *
-     * d = m / s
+     * d = m * s
      *
      * @memberof xpl.Matrix4x4
      * @function mulScalarv
@@ -789,6 +789,8 @@
     /**
      * 行列の割り算をします。
      *
+     * d = a / b
+     *
      * @memberof xpl.Matrix4x4
      * @function divv
      * @param {Array.<Number>} d - 出力先の行列
@@ -855,6 +857,8 @@
 
     /**
      * 行列とスカラの割り算をします。
+     *
+     * d = m / s
      *
      * @memberof xpl.Matrix4x4
      * @function divScalarv
