@@ -1,0 +1,8 @@
+#!/bin/sh
+
+jsdoc -d doc \
+src/xplain_core.js \
+src/math_geometry.js \
+src/math_vector3.js \
+src/math_quaternion.js \
+src/math_quaternion_dim.js

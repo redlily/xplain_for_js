@@ -30,20 +30,49 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
 
     /**
+     * XModelの読み込み、描画の処理をラップしたユーティリティクラス
      *
+     * @author Syuuhei Kuno
      */
     ns.XModelWrapper = function () {
+
+        /**
+         * コンテナ
+         *
+         * @protected
+         * @instanceof
+         * @memberof
+         * @member {xpl.XModelContainer} _container
+         */
         this._container = null;
+
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         this.__prev_anim_index = -1;
+
+        /**
+         */
         this.__min_bounds = new Float32Array([Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE]);
+
+        /**
+         */
         this.__max_bounds = new Float32Array([-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]);
+
+        /**
+         */
         this.__is_completed = false;
+
+        /**
+         *
+         */
         this.__is_canseled = false;
     };
 
@@ -59,7 +88,7 @@
         },
 
         /**
-         *
+         * 読み込みが終了したかどうか
          */
         "isCompleted": {
             get: function () {
@@ -68,7 +97,7 @@
         },
 
         /**
-         *
+         * 読み込みをキャンセルしたかどうか
          */
         "isCanceled": {
             get: function () {
@@ -77,7 +106,7 @@
         },
 
         /**
-         *
+         * アニメーションセットの数
          */
         "numAnimationSets": {
             get: function () {
@@ -87,12 +116,14 @@
     });
 
     /**
+     * 読み込み完了後の処理です。
      *
+     * @memberof xpl.XModelWrapper
+     * @function _complete
      */
     ns.XModelWrapper.prototype._complete = function () {
         this.__is_completed = true;
         ns.XModelContainerUtils.forEachMesh(this._container, (function (mesh, arg) {
-            // get the size.
             for (var i = 0; i < mesh.num_positions; ++i) {
                 for (var j = 0; j < mesh.position_size; ++j) {
                     var value = mesh.positions[mesh.position_size * i + j];
@@ -104,35 +135,52 @@
     };
 
     /**
+     * 読み込みをキャンセルいます。
      *
+     * @memberof xpl.XModelWrapper
+     * @function cancel
      */
     ns.XModelWrapper.prototype.cancel = function () {
         this.__is_canseled = true;
     };
 
     /**
+     * 境界の最小値を取得します。
      *
+     * @memberof xpl.XModelWrapper
+     * @function getMinBound
+     * @param {xpl.uint32_t} index - 要素のインデックス
+     * @return {xpl.float32_t} 境界の採用値
      */
     ns.XModelWrapper.prototype.getMinBound = function (index) {
         return this.__min_bounds[index];
     };
 
     /**
+     * 境界の最大値を取得します。
      *
+     * @param {xpl.uint32_t} index - 要素のインデックス
+     * @return {xpl.float32_t} 境界の最大値
      */
     ns.XModelWrapper.prototype.getMaxBound = function (index) {
         return this.__max_bounds[index];
     };
 
     /**
+     * モデルの大きさを取得います。
      *
+     * @param {xpl.uint32_t} index - 要素のインデックス
+     * @return {xpl.float32_t} モデルの大きさ
      */
     ns.XModelWrapper.prototype.getSize = function (index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
     };
 
     /**
+     * モデルの中心座標を取得します。
      *
+     * @param {xpl.uint32_t} index - 要素のインデックス
+     * @return {xpl.float32_t} モデルの大きさ
      */
     ns.XModelWrapper.prototype.getCenter = function (index) {
         return (this.__min_bounds[index] + this.__max_bounds[index]) * 0.5;
@@ -941,14 +989,15 @@
                         // update the positions.
                         var position_off = mesh.user_object.vertices_offsets[ns.XModelMeshUtils.ATTRIBUTE_POSITION];
                         if (position_off != -1) {
-                            ns.XModelSkinUtils.updatePositions(
+                            ns.XModelSkinUtils.updateVertices(
                                 this.__matrix_pallet, 0,
                                 base.num_vertices,
                                 base.user_object.src_positions, 0, 0,
                                 base.user_object.dest_positions, 0, 0,
                                 base.skin.weighted_index_stride,
                                 base.user_object.src_bone_indices, 0, 0,
-                                base.user_object.src_bone_weights, 0, 0);
+                                base.user_object.src_bone_weights, 0, 0,
+                                ns.XModelMesh.TYPE_POSITION);
                         }
 
                         // update the normals.
@@ -965,17 +1014,18 @@
                                     this.__matrix_pallet, matrix_index,
                                     true);
                             }
-                            ns.XModelSkinUtils.updateNormals(
+                            ns.XModelSkinUtils.updateVertices(
                                 this.__matrix_pallet, 0,
                                 base.num_vertices,
                                 base.user_object.src_normals, 0, 0,
                                 base.user_object.dest_normals, 0, 0,
                                 base.skin.weighted_index_stride,
                                 base.user_object.src_bone_indices, 0, 0,
-                                base.user_object.src_bone_weights, 0, 0);
+                                base.user_object.src_bone_weights, 0, 0,
+                                xpl.XModelMesh.TYPE_NORMAL);
                         }
 
-                        // send the updated workbuffer to the video memory.
+                        // send the updated work-buffer to the video memory.
                         gl.bufferSubData(
                             gl.ARRAY_BUFFER, 0, base.user_object.dest_vertices);
                         this.__is_update_anim = false;

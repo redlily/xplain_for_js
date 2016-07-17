@@ -31,12 +31,12 @@
  */
 
 
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
     /**
-     * Utilities for xModel transform structure.
+     * 変換構造用のユーティリティクラスです。
      *
      * @namespace xpl.XModelTransformUtils
      * @see xpl.XModelTransform
@@ -47,33 +47,35 @@
      * @see xpl.XModelMatrix
      * @author Syuuhei Kuno
      */
-    ns.XModelTransformUtils = function() {
+    ns.XModelTransformUtils = function () {
         throw new Error("Unsupported operation");
     };
 
     /**
-     * Apply the transform to a matrix and a quaternion.
+     * 変換を行列に適用します。
      *
      * @memberof xpl.XModelTransformUtils
      * @function applyTransform
-     * @param {xpl.XModelTransform?} transform - The target trensform instance.
-     * @param {Float32Array} m - The source matrix.
-     * @param {xpl.size_t} m_off - Starting position in the source matrix.
+     * @param {xpl.XModelTransform} transform - 処理対象の変換構造
+     * @param {Float32Array} m - 出力先の行列
+     * @param {xpl.size_t} m_off - 出力先の行列の配列インデックス
+     * @param {xpl.size_t} [blend_rate=0.0] - 2つのスロットのブレンド率
      */
-    ns.XModelTransformUtils.applyTransform = function(transform, m, m_off) {
+    ns.XModelTransformUtils.applyTransform = function (transform, m, m_off, blend_rate) {
+        blend_rate = ns.defaultValue(blend_rate, 0.0);
+
         if (transform != null) {
-            var blend_weight = 0.0;
             var value;
             var value_off;
-            switch(transform.structure_type) {
+            switch (transform.structure_type) {
                 case ns.XModelStructure.TYPE_AXIS_ROTATE:
-                    // axis rotate.
+                    // 軸回転
 
-                    // blending.
-                    if (blend_weight <= 0.0) {
+                    // 合成
+                    if (blend_rate <= 0.0) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_AXIS_ROTATE * 0;
-                    } else if (1.0 <= blend_weight) {
+                    } else if (1.0 <= blend_rate) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_AXIS_ROTATE * 1;
                     } else {
@@ -83,14 +85,14 @@
                             value, 0,
                             transform.value, ns.XModelStructure.SIZE_AXIS_ROTATE * 0,
                             transform.value, ns.XModelStructure.SIZE_AXIS_ROTATE * 1,
-                            blend_weight);
+                            blend_rate);
                         ns.Vector3.normalizev(value, 0, value, 0);
                         value[ns.XModelAxisRotate.ANGLE] =
-                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 0 + ns.XModelAxisRotate.ANGLE] * (1.0 - blend_weight) +
-                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 1 + ns.XModelAxisRotate.ANGLE] *        blend_weight;
+                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 0 + ns.XModelAxisRotate.ANGLE] * (1.0 - blend_rate) +
+                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 1 + ns.XModelAxisRotate.ANGLE] * blend_rate;
                     }
 
-                    // transform.
+                    // 変換
                     ns.Matrix4x4.mulRotate(
                         m, m_off,
                         value[value_off + ns.XModelAxisRotate.X],
@@ -101,13 +103,13 @@
                     break;
 
                 case ns.XModelStructure.TYPE_QUATERNION:
-                    // quaternion.
+                    // 四元数
 
-                    // blend.
-                    if (blend_weight <= 0.0) {
+                    // 合成
+                    if (blend_rate <= 0.0) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_QUATERNION * 0;
-                    } else if (1.0 <= blend_weight) {
+                    } else if (1.0 <= blend_rate) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_QUATERNION * 1;
                     } else {
@@ -117,22 +119,22 @@
                             value, 0,
                             transform.value, ns.XModelStructure.SIZE_QUATERNION * 0,
                             transform.value, ns.XModelStructure.SIZE_QUATERNION * 1,
-                            blend_weight);
+                            blend_rate);
                         ns.Quaternion.normalizev(value, 0, value, 0);
                     }
 
-                    // transform.
+                    // 変換
                     ns.Matrix4x4.mulQuaternionv(m, m_off, value, value_off, true);
                     break;
 
                 case ns.XModelStructure.TYPE_SCALE:
-                    // scale.
+                    // 拡大
 
-                    // blend.
-                    if (blend_weight <= 0.0) {
+                    // 合成
+                    if (blend_rate <= 0.0) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_SCALE * 0;
-                    } else if (1.0 <= blend_weight) {
+                    } else if (1.0 <= blend_rate) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_SCALE * 1;
                     } else {
@@ -142,10 +144,10 @@
                             value, 0,
                             transform.value, ns.XModelStructure.SIZE_SCALE * 0,
                             transform.value, ns.XModelStructure.SIZE_SCALE * 1,
-                            blend_weight);
+                            blend_rate);
                     }
 
-                    // transform.
+                    // 変換
                     ns.Matrix4x4.mulScale(
                         m, m_off,
                         value[value_off + ns.Geometry.VX],
@@ -154,13 +156,13 @@
                     break;
 
                 case ns.XModelStructure.TYPE_TRANSLATE:
-                    // translate.
+                    // 平行移動
 
-                    // blend.
-                    if (blend_weight <= 0.0) {
+                    // 合成
+                    if (blend_rate <= 0.0) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_TRANSLATE * 0;
-                    } else if (1.0 <= blend_weight) {
+                    } else if (1.0 <= blend_rate) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_TRANSLATE * 1;
                     } else {
@@ -170,10 +172,10 @@
                             value, 0,
                             transform.value, ns.XModelStructure.SIZE_TRANSLATE * 0,
                             transform.value, ns.XModelStructure.SIZE_TRANSLATE * 1,
-                            blend_weight);
+                            blend_rate);
                     }
 
-                    // transform.
+                    // 変換
                     ns.Matrix4x4.mulTranslate(
                         m, m_off,
                         value[value_off + ns.Geometry.VX],
@@ -183,13 +185,13 @@
                     break;
 
                 case ns.XModelStructure.TYPE_MATRIX:
-                    // matrix.
+                    // 行列
 
-                    // blend.
-                    if (blend_weight <= 0.0) {
+                    // 合成
+                    if (blend_rate <= 0.0) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_MATRIX * 0;
-                    } else if (1.0 <= blend_weight) {
+                    } else if (1.0 <= blend_rate) {
                         value = transform.value;
                         value_off = ns.XModelStructure.SIZE_MATRIX * 1;
                     } else {
@@ -199,11 +201,11 @@
                             value, 0,
                             transform.value, ns.XModelStructure.SIZE_MATRIX * 0,
                             transform.value, ns.XModelStructure.SIZE_MATRIX * 1,
-                            blend_weight,
+                            blend_rate,
                             true);
                     }
 
-                    // transform.
+                    // 変換
                     ns.Matrix4x4.mulv(m, m_off, m, m_off, value, value_off);
                     break;
             }
@@ -211,53 +213,55 @@
     };
 
     /**
-     * Reset the transform structure.
+     * 変換構造をリセットします。
      *
      * @memberof xpl.XModelTransformUtils
      * @function resetTransform
-     * @param {xpl.XModelTransform?} transform - The target transform instance.
+     * @param {xpl.XModelTransform} transform - 対象の変換構造
+     * @param {xpl.enum_t} [slot=xpl.] - リセットするスロット番号
      */
-    ns.XModelTransformUtils.resetTransform = function(transform) {
+    ns.XModelTransformUtils.resetTransform = function (transform, slot) {
+        slot = ns.defaultValue(slot, 0);
+
         if (transform != null) {
-            switch(transform.structure_type) {
-                case ns.XModelStructure.TYPE_AXIS_ROTATE: {
-                    // axis rotate.
+            switch (transform.structure_type) {
+                case ns.XModelStructure.TYPE_AXIS_ROTATE:
+                    // 軸回転
                     ns.ArrayUtils.copy(
                         transform.initial, 0,
-                        transform.value, 0,
+                        transform.value, ns.XModelStructure.SIZE_AXIS_ROTATE * slot,
                         ns.XModelStructure.SIZE_AXIS_ROTATE);
                     break;
-                }
 
                 case ns.XModelStructure.TYPE_QUATERNION:
-                    // quaternion.
+                    // 四元数
                     ns.ArrayUtils.copy(
                         transform.initial, 0,
-                        transform.value, 0,
+                        transform.value, ns.XModelStructure.SIZE_QUATERNION * slot,
                         ns.XModelStructure.SIZE_QUATERNION);
                     break;
 
                 case ns.XModelStructure.TYPE_SCALE:
-                    // scale.
+                    // 拡大
                     ns.ArrayUtils.copy(
                         transform.initial, 0,
-                        transform.value, 0,
+                        transform.value, ns.XModelStructure.SIZE_SCALE * slot,
                         ns.XModelStructure.SIZE_SCALE);
                     break;
 
                 case ns.XModelStructure.TYPE_TRANSLATE:
-                    // translate.
+                    // 平行移動
                     ns.ArrayUtils.copy(
                         transform.initial, 0,
-                        transform.value, 0,
+                        transform.value, ns.XModelStructure.SIZE_TRANSLATE * slot,
                         ns.XModelStructure.SIZE_TRANSLATE);
                     break;
 
                 case ns.XModelStructure.TYPE_MATRIX:
-                    // matrix.
+                    // 行列
                     ns.ArrayUtils.copy(
                         transform.initial, 0,
-                        transform.value, 0,
+                        transform.value, ns.XModelStructure.SIZE_MATRIX * slot,
                         ns.XModelStructure.SIZE_MATRIX);
                     break;
             }

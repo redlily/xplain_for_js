@@ -36,7 +36,7 @@
  * @namespace xpl
  * @author Syuuhei Kuno
  */
-var xpl;
+var xpl = null;
 if (typeof module == "object") {
     // Node.jsの場合
     xpl = module.exports;
@@ -55,6 +55,31 @@ if (typeof module == "object") {
 (function (ns) {
 
     "use strict";
+    
+    /**
+     * 指定の変数が undefined かチェックする。
+     * 指定の変数が undefined の場合は既定値を返し、そうでない場合は指定の値を返します。
+     *
+     * @memberof xpl
+     * @function defaultValue
+     * @param value {*} - 検査する値
+     * @param defaultValue {*} - 既定値
+     * @returns {*} 検査済みの値
+     */
+    ns.defaultValue = function (value, defaultValue) {
+        return value === undefined ? defaultValue : value;
+    };
+
+    /**
+     * 定数プロパティを生成します。
+     *
+     * @param {object} obj - プロパティを追加するオブジェクト
+     * @param {String} name - 定数名
+     * @param {*} value - 任意値
+     */
+    ns.defineConstValue = function (obj, name, value) {
+        
+    };
 
     Object.defineProperties(ns, {
 
@@ -103,7 +128,7 @@ if (typeof module == "object") {
     Object.defineProperties(ns.about, {
 
         /**
-         * このライブラリ名
+         * このライブラリの名前
          *
          * @constant
          * @memberof xpl.about
@@ -555,17 +580,5 @@ if (typeof module == "object") {
     ns.enum_t = function (value) {
         return Number.parseInt.apply(null, arguments);
     };
-
-    /**
-     * 指定の変数が undefined かチェックする。
-     * 指定の変数が undefined の場合は既定値を返し、そうでない場合は指定の値を返します。
-     *
-     * @param value {*} - 検査する値
-     * @param defaultValue {*} - 既定値
-     * @returns {*} 検査済みの値
-     */
-    ns.defaultValue = function (value, defaultValue) {
-        return value === undefined ? defaultValue : value;
-    }
 
 })(xpl);

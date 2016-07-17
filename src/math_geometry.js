@@ -50,8 +50,8 @@
          * ベクトルのX要素のインデックス
          *
          * @constant
-         * @memberof xpl.Geometry
-         * @member {xpl.enum_t} VX
+         * @memberof Geometry
+         * @member {xpl.enum_t} VY
          */
         "VX": {
             value: 0
@@ -95,7 +95,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {xpl.enum_t} SIZE_VECTOR_3
+         * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
             value: 3
@@ -150,7 +150,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {xpl.enum_t} SIZE_QUATERNION
+         * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
             value: 4
@@ -337,7 +337,7 @@
          *
          * @constant
          * @memberof xpl.Geometry
-         * @member {xpl.enum_t} SIZE_MATRIX_4X4
+         * @member {xpl.size_t} SIZE_MATRIX_4X4
          */
         "SIZE_MATRIX_4X4": {
             value: 16

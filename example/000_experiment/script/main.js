@@ -28,7 +28,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function() {
+(function () {
 
     "use strict";
 
@@ -107,8 +107,8 @@
     var model = null;
     // ligth.
     var light = {
-        diffuse_direction: new Float32Array([ 1, 1, -1 ]), // x, y, z
-        diffuse_color: new Float32Array([ 1.0, 1.0, 1.0, 0.85 ]), // red, green, blue, opening
+        diffuse_direction: new Float32Array([1, 1, -1]), // x, y, z
+        diffuse_color: new Float32Array([1.0, 1.0, 1.0, 0.85]), // red, green, blue, opening
     };
     xpl.Vector3.normalizev(light.diffuse_direction, 0, light.diffuse_direction, 0);
     // animation index.
@@ -119,7 +119,7 @@
     var is_play_anim = true;
 
     // create shader program.
-    var createShaderProgram = function(gl, vs, fs, failed_callback) {
+    var createShaderProgram = function (gl, vs, fs, failed_callback) {
         var inst = {};
         inst.program = xpl.GLUtils.createShaderProgram(
             gl, vs, fs, ATTRIBUTE_MAP, failed_callback);
@@ -133,12 +133,12 @@
     };
 
     // initialize the OpenGL.
-    var onInitializeGL = function() {
+    var onInitializeGL = function () {
         onRestoreGL();
     };
 
     // restore the OpenGL.
-    var onRestoreGL = function() {
+    var onRestoreGL = function () {
         enable_rotation = false;
 
         gl.clearColor(0.5, 0.5, 0.5, 1.0);
@@ -153,14 +153,14 @@
             gl,
             document.getElementById("model_vertex_shader").text,
             document.getElementById("model_fragment_shader").text,
-            function(type, message) {
+            function (type, message) {
                 alert("Compile failed for model be rendering.\n" + type + "\n" + message);
             });
         guide_shader = createShaderProgram(
             gl,
             document.getElementById("guide_vertex_shader").text,
             document.getElementById("guide_fragment_shader").text,
-            function(type, message) {
+            function (type, message) {
                 alert("Compile failed for guide be rendering.\n" + type + "\n" + message);
             });
 
@@ -184,7 +184,7 @@
     };
 
     // refresh the OpenGL.
-    var onRefreshGL = function(width, height, delta) {
+    var onRefreshGL = function (width, height, delta) {
         gl.viewport(0, 0, width, height);
 
         // draw the model.
@@ -281,7 +281,7 @@
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             // visible the load spinner.
-            load_spinner.style.visibility="visible";
+            load_spinner.style.visibility = "visible";
         }
 
         // draw the guide.
@@ -289,13 +289,13 @@
     };
 
     // terminate the OpenGL.
-    var onTerminateGL = function() {
+    var onTerminateGL = function () {
         if (model != null) {
         }
     };
 
     // resume event.
-    var onCreate = function(event) {
+    var onCreate = function (event) {
         console.log("create");
 
         // initalize the context.
@@ -306,7 +306,7 @@
             return false;
         }
         load_spinner = document.getElementById("load_spinner");
-        load_spinner.onselectstart = function() {
+        load_spinner.onselectstart = function () {
             return false;
         }
         main_canvas = document.getElementById("main_canvas");
@@ -348,7 +348,7 @@
     };
 
     // resize event.
-    var onResize = function() {
+    var onResize = function () {
         // FPS.
         if (fps_textfield != null) {
             fps_textfield.style.left = 5;
@@ -381,7 +381,7 @@
     };
 
     // mouse event.
-    var onMouseEvent = function(event) {
+    var onMouseEvent = function (event) {
         switch (event.type) {
             case "mousedown":
                 enable_rotation = true;
@@ -410,7 +410,7 @@
     };
 
     // touch event.
-    var onTouchEvent = function(event) {
+    var onTouchEvent = function (event) {
         event.preventDefault();
         switch (event.type) {
             case "touchstart":
@@ -441,7 +441,7 @@
     };
 
     // change play animation.
-    var onPlayAnim = function(event) {
+    var onPlayAnim = function (event) {
         console.log("change play animation");
         if (is_play_anim) {
             is_play_anim = false;
@@ -451,7 +451,7 @@
     };
 
     // change prev animation.
-    var onPrevAnim = function(event) {
+    var onPrevAnim = function (event) {
         console.log("change prev animation");
         if (model != null && model.isCompleted && 0 < model.numAnimationSets) {
             anim_index--;
@@ -464,7 +464,7 @@
     };
 
     // change next animation.
-    var onNextAnim = function(event) {
+    var onNextAnim = function (event) {
         console.log("change next animation");
         if (model != null && model.isCompleted && 0 < model.numAnimationSets) {
             anim_index++;
@@ -474,7 +474,7 @@
     };
 
     // change screen mode.
-    var onChangeScreenMode = function(event) {
+    var onChangeScreenMode = function (event) {
         console.log("change screen mode");
         if (xpl.SystemUtils.isSupportedFullScreen(screen_element)) {
             if (!xpl.SystemUtils.isFullScreen(screen_element)) {
@@ -488,19 +488,19 @@
     };
 
     // resume event.
-    var onResume = function(event) {
+    var onResume = function (event) {
         console.log("resume");
         startRefresh();
     };
 
     // restore WebGL context.
-    var onRestoreWebGLContext = function(event) {
+    var onRestoreWebGLContext = function (event) {
         console.log("restore");
         onRestoreGL();
     };
 
     // start refresh.
-    var startRefresh = function() {
+    var startRefresh = function () {
         if (!refresh_enable) {
             refresh_timer = xpl.SystemUtils.requestAnimationFrame(onRefresh);
             refresh_enable = true;
@@ -511,7 +511,7 @@
     };
 
     // stop refresh.
-    var stoprefresh = function() {
+    var stoprefresh = function () {
         if (refresh_enable) {
             cancelTimeout(refresh_timer);
             refresh_timer = null;
@@ -520,7 +520,7 @@
     };
 
     // refresh event.
-    var onRefresh = function() {
+    var onRefresh = function () {
         var now_time = Date.now();
 
         if (!gl.isContextLost()) {
@@ -543,13 +543,13 @@
     };
 
     // suspend event.
-    var onSuspend = function(event) {
+    var onSuspend = function (event) {
         console.log("suspend");
         stoprefresh();
     };
 
     // unload event.
-    var onDestroy = function(event) {
+    var onDestroy = function (event) {
         onSuspend(event);
         console.log("destroy");
 

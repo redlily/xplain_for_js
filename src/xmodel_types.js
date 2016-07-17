@@ -30,7 +30,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 (function (ns) {
 
     "use strict";
@@ -46,7 +45,7 @@
     var identifier_counter = 1;
 
     /**
-     * xModelの構造の基礎となるクラスです。
+     * xModelの構造の基礎となる構造です。
      *
      * @class
      * @alias xpl.XModelStructure
@@ -107,8 +106,8 @@
      * @instance
      * @memberof xpl.XModelStructure
      * @function equals
-     * @param {xpl.XModelStructure} other - The other instance.
-     * @returns {Boolean} Returns true if equivalent to the parameter.
+     * @param {xpl.XModelStructure} other - 対象のインスタンス
+     * @returns {Boolean} 比較の結果
      */
     ns.XModelStructure.prototype.equals = function (other) {
         return this == other;
@@ -117,303 +116,277 @@
     Object.defineProperties(ns.XModelStructure, {
 
         /**
-         * Structure of the undefined.
+         * 未定義の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_UNDEFINED
          */
         "TYPE_UNDEFINED": {
-
-            "value": -1
+            value: -1
         },
 
         /**
-         * Structure of the null.
+         * 空の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_NULL
          */
         "TYPE_NULL": {
-
             value: 0
         },
 
         /**
-         * Structure of the axis rotation.
+         * 軸回転の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_AXIS_ROTATE
          */
         "TYPE_AXIS_ROTATE": {
-
             value: 1
         },
 
         /**
-         * Structure of the quaternion.
+         * 四元数の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_QUATERNION
          */
         "TYPE_QUATERNION": {
-
             value: 2
         },
 
         /**
-         * Structure of the scale.
+         * 拡大の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_SCALE
          */
         "TYPE_SCALE": {
-
             value: 3
         },
 
         /**
-         * Structure of the translate.
+         * 平行移動の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_TRANSLATE
          */
         "TYPE_TRANSLATE": {
-
             value: 4
         },
 
         /**
-         * Structure of the matrix.
+         * 行列の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MATRIX
          */
         "TYPE_MATRIX": {
-
             value: 5
         },
 
         /**
-         * Structure of the container.
+         * コンテナの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_CONTAINER
          */
         "TYPE_CONTAINER": {
-
             value: 6
         },
 
         /**
-         * Structure of the texture.
+         * テクスチャの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_TEXTURE
          */
         "TYPE_TEXTURE": {
-
             value: 7
         },
 
         /**
-         * Structure of the material.
+         * 材質の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MATERIAL
          */
         "TYPE_MATERIAL": {
-
             value: 8
         },
 
         /**
-         * Structure of the mesh.
+         * メッシュの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MESH
          */
         "TYPE_MESH": {
-
             value: 9
         },
 
         /**
-         * Structure of the mesh subset.
+         * メッシュのサブセットの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MESH_SUBSET
          */
         "TYPE_MESH_SUBSET": {
-
             value: 15
         },
 
         /**
-         * Structure of the node.
+         * ノードの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_NODE
          */
         "TYPE_NODE": {
-
             value: 10
         },
 
         /**
-         * Structure of the inverse kinematics.
+         * 逆運動学の構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_IK
          */
         "TYPE_IK": {
-
             value: 11
         },
 
         /**
-         * Structure of the animation.
+         * アニメーションの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION
          */
         "TYPE_ANIMATION": {
-
             value: 12
         },
 
         /**
-         * Structure of the animation key.
+         * アニメーションキーの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION_KEY
          */
         "TYPE_ANIMATION_KEY": {
-
             value: 13
         },
 
         /**
-         * Structure of the animation set.
+         * アニメーションセットの構造種別
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION_SET
          */
         "TYPE_ANIMATION_SET": {
-
             value: 14
         },
 
         /**
-         * Size of the RGBA parameter.
+         * RGBAのパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_RGBA
          */
         "SIZE_RGBA": {
-
             value: 4
         },
 
         /**
-         * Size of the three dimensionally vector.
+         * 3次元ベクトルのパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
         "SIZE_VECTOR_3": {
-
             value: 3
         },
 
         /**
-         * Size of the axis rotate parameter.
-         * Elements are the three dimensionally vector and angle.
+         * 軸回転のパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_AXIS_ROTATE
          */
         "SIZE_AXIS_ROTATE": {
-
             value: 4
         },
 
         /**
-         * Size of the quaternion parameter.
+         * 四元数のパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_QUATERNION
          */
         "SIZE_QUATERNION": {
-
             value: 4
         },
 
         /**
-         * Size of the scale parameter.
+         * 拡大のパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_SCALE
          */
         "SIZE_SCALE": {
-
             value: 3
         },
 
         /**
-         * Size of the translate parameter.
+         * 平行移動のパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_TRANSLATE
          */
         "SIZE_TRANSLATE": {
-
             value: 3
         },
 
         /**
-         * Size of the matrix parameter.
+         * 行列のパラメータのサイズ
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_MATRIX
          */
         "SIZE_MATRIX": {
-
             value: 16
         },
 
         /**
-         * Number of slot for animation blend.
+         * ブレンドのためのスロットの数
          *
          * @constant
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} NUM_BLEND_SLOT
          */
         "NUM_BLEND_SLOT": {
-
             value: 2
         }
     });
@@ -425,7 +398,7 @@
     "use strict";
 
     /**
-     * User data structure of the xModel.
+     * ユーザ定義のデータ構造です。
      *
      * @class
      * @alias xpl.XModelUserData
@@ -434,7 +407,7 @@
     ns.XModelUserData = function () {
 
         /**
-         * uint32_t : The size of data.
+         * uint32_t : データサイズ
          *
          * @instance
          * @memberof xpl.XModelUserData
@@ -443,11 +416,11 @@
         this.data_size = 0;
 
         /**
-         * (uint8_t|int8_t)[data_size] : The data.
+         * (uint8_t|int8_t)[data_size] : データ
          *
          * @instance
          * @memberof xpl.XModelUserData
-         * @member {Uint8Array|Int8Array} data
+         * @member {Uint8Array} data
          */
         this.data = null;
     };
@@ -459,7 +432,7 @@
     "use strict";
 
     /**
-     * Base transform structure of the xModel.
+     * 変換構造の基礎構造です。
      *
      * @class
      * @alias xpl.XModelTransform
@@ -480,7 +453,7 @@
     "use strict";
 
     /**
-     * Axis rotate transform structure of the xModel.
+     * 軸回転の変換構造です。
      *
      * @class
      * @alias xpl.XModelAxisRotate
@@ -499,7 +472,7 @@
          */
         this.initial = new Float32Array([0.0, 0.0, 0.0, 1.0]);
 
-        // work variable.
+        // 作業変数
 
         /**
          * float32_t[SIZE_AXIS_ROTATE * NUM_BLEND_SLOT] : The work value.
@@ -525,7 +498,6 @@
          * @member {xpl.size_t} ANGLE
          */
         "ANGLE": {
-
             value: 0
         },
 
@@ -537,7 +509,6 @@
          * @member {xpl.size_t} X
          */
         "X": {
-
             value: 1
         },
 
@@ -549,7 +520,6 @@
          * @member {xpl.size_t} Y
          */
         "Y": {
-
             value: 2
         },
 
@@ -561,7 +531,6 @@
          * @member {xpl.size_t} Z
          */
         "Z": {
-
             value: 3
         }
     });
@@ -573,7 +542,7 @@
     "use strict";
 
     /**
-     * Quaternion transform structure fo the xModel.
+     * 四元数の変換構造です。
      *
      * @class
      * @alias xpl.XModelQuaternion
@@ -592,7 +561,7 @@
          */
         this.initial = new Float32Array([1.0, 0.0, 0.0, 0.0]);
 
-        // work variable.
+        // 作業変数
 
         /**
          * float32_t[SIZE_MATRIX * NUM_BLEND_SLOT] : The work value.
@@ -615,7 +584,7 @@
     "use strict";
 
     /**
-     * Scale transform structure of the xModel.
+     * 拡大の変換構造です。
      *
      * @class
      * @alias xpl.XModelScale
@@ -634,7 +603,7 @@
          */
         this.initial = new Float32Array([1.0, 1.0, 1.0]);
 
-        // work variable.
+        // 作業変数
 
         /**
          * float32_t[SIZE_SCALE * NUM_BLEND_SLOT] : The work value.
@@ -657,7 +626,7 @@
     "use strict";
 
     /**
-     * Translate transform structure of the xModel.
+     * 平行移動の変換構造です。
      *
      * @class
      * @alias xpl.XModelTranslate
@@ -676,7 +645,7 @@
          */
         this.initial = new Float32Array([0.0, 0.0, 0.0]);
 
-        // work variable.
+        // 作業変数
 
         /**
          * float32_t[SIZE_TRANSLATE * NUM_BLEND_SLOT] : The work value.
@@ -699,7 +668,7 @@
     "use strict";
 
     /**
-     * Matrix transform structure of the xModel.
+     * 行列の変換構造です。
      *
      * @class
      * @alias xpl.XModelMatrix
@@ -722,7 +691,7 @@
             0.0, 0.0, 1.0, 0.0,
             0.0, 0.0, 0.0, 1.0]);
 
-        // work variable.
+        // 作業変数
 
         /**
          * float32_t[SIZE_MATRIX * NUM_BLEND_SLOT] : The work value.
@@ -751,7 +720,7 @@
     "use strict";
 
     /**
-     * Extensible structure of the xModel.
+     * 拡張可能な基礎構造です。
      *
      * @class
      * @alias xpl.XModelExtensible
@@ -770,7 +739,7 @@
          */
         this.user_data = null;
 
-        // work variable.
+        // 作業変数
 
         /**
          * Object : The temporary user object.
@@ -791,7 +760,7 @@
     "use strict";
 
     /**
-     * Container structure of the xModel.
+     * コンテナ構造です。
      *
      * @class
      * @alias xpl.XModelContainer
@@ -913,7 +882,7 @@
     Object.setPrototypeOf(ns.XModelContainer.prototype, ns.XModelExtensible.prototype);
 
     /**
-     * Get the name of this container.
+     * コンテナの名前を取得します。
      *
      * @instance
      * @memberof xpl.XModelContainer
@@ -931,7 +900,7 @@
     "use strict";
 
     /**
-     * Texture structure of the xModel.
+     * テクスチャ構造です。
      *
      * @class
      * @alias xpl.XModelTexture
@@ -942,7 +911,7 @@
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_TEXTURE);
 
         /**
-         * string : The texture name.
+         * string : テクスチャ名
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -951,7 +920,7 @@
         this.name = null;
 
         /**
-         * string : The reference name to texture.
+         * string : テクスチャの参照名
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -960,7 +929,7 @@
         this.ref = null;
 
         /**
-         * uint32_t : The size of binary data of texture.
+         * uint32_t : テクスチャのバイナリデータのサイズ
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -969,7 +938,7 @@
         this.data_size = 0;
 
         /**
-         * (uint8_t|int8_t)[data_size] : The binary data of texture.
+         * uint8_t[data_size] : テクスチャのバイナリデータ
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -977,10 +946,10 @@
          */
         this.data = null;
 
-        // work variable.
+        // 作業変数
 
         /**
-         * Object : The texture instance.
+         * void* : テクスチャのインスタンス
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -989,7 +958,7 @@
         this.texture = null;
 
         /**
-         * uint32_t : X-axis size of the texture.
+         * uint32_t : テクスチャのX軸のサイズ
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -998,7 +967,7 @@
 
         this.x_size = 0;
         /**
-         * uint32_t : Y-axis size of the texture.
+         * uint32_t : テクスチャのY軸のサイズ
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -1008,7 +977,7 @@
         this.y_size = 0;
 
         /**
-         * uint32_t : Z-axis size of the texture.
+         * uint32_t : テクスチャのZ軸のサイズ
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -1020,12 +989,12 @@
     Object.setPrototypeOf(ns.XModelTexture.prototype, ns.XModelExtensible.prototype);
 
     /**
-     * Get the name of this texture.
+     * テクスチャ名を取得します。
      *
      * @instance
      * @memberof xpl.XModelTexture
      * @function toString
-     * @returns {String} The name of this texture.
+     * @returns {String} テクスチャ名
      */
     ns.XModelTexture.prototype.toString = function () {
         return this.name;
@@ -1038,7 +1007,7 @@
     "use strict";
 
     /**
-     * Material structure of the xModel.
+     * 材質構造です。
      *
      * @class
      * @alias xpl.XModelMaterial
@@ -1247,7 +1216,7 @@
     "use strict";
 
     /**
-     * Extensible mesh structure of the xModel.
+     * 拡張可能なメッシュの基礎構造です。
      *
      * @class
      * @alias xpl.XModelMeshBase
@@ -1257,7 +1226,7 @@
     ns.XModelMeshBase = function (structure_type) {
         ns.XModelExtensible.call(this, structure_type);
 
-        // work variable.
+        // 作業変数
 
         /**
          * Object : The vertex buffer object.
@@ -1296,7 +1265,7 @@
     "use strict";
 
     /**
-     * Mesh structure of the xModel.
+     * メッシュ構造です。
      *
      * @class
      * @alias xpl.XModelMesh
@@ -1504,7 +1473,7 @@
          */
         this.subsets = null;
 
-        // work variable.
+        // 作業変数
 
         /**
          * XModelNode : The parent of this mesh.
@@ -1517,6 +1486,32 @@
     };
 
     Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelMeshBase.prototype);
+
+    Object.defineProperties(ns.XModelMesh, {
+
+        /**
+         * 位置の型
+         *
+         * @constant
+         * @memberof xpl.XModelMesh
+         * @member {xpl.enum_t} TYPE_POSITION
+         */
+        "TYPE_POSITION": {
+            value: 0
+        },
+
+        /**
+         * 法線の型
+         *
+         * @constant
+         * @memberof xpl.XModelMesh
+         * @member {xpl.enum_t} TYPE_NORMAL
+         *
+         */
+        "TYPE_NORMAL": {
+            value: 1
+        }
+    });
 
     /**
      * Get the name of this mesh.
@@ -1537,7 +1532,7 @@
     "use strict";
 
     /**
-     * Subset mesh of the xModel.
+     * サブメッシュ構造です。
      *
      * @class
      * @alias xpl.XModelSubsetMesh
@@ -1610,7 +1605,7 @@
     "use strict";
 
     /**
-     * Skin data structure of the xModel.
+     * スキン構造です。
      *
      * @class
      * @alias xpl.XModelMesh
@@ -1708,7 +1703,7 @@
     "use strict";
 
     /**
-     * Vertex data structure of the xModel.
+     * 頂点構造です。
      *
      * @class
      * @alias xpl.XModelVertex
@@ -1780,8 +1775,8 @@
      * @instance
      * @memberof xpl.XModelVertex
      * @function equals
-     * @param {xpl.XModelVertex} other - The other instance.
-     * @returns {Boolean} Returns true if equivalent to the parameter.
+     * @param {xpl.XModelVertex} other - 対象のインスタンス
+     * @returns {Boolean} 比較の結果
      */
     ns.XModelVertex.prototype.equals = function (other) {
         if (this === other) {
@@ -1804,7 +1799,7 @@
     "use strict";
 
     /**
-     * Element data structure of the xModel.
+     * 要素構造です。
      *
      * @class
      * @alias xpl.XModelElement
@@ -1862,8 +1857,8 @@
      * @instance
      * @memberof xpl.XModelElement
      * @function equals
-     * @param {xpl.XModelElement} other - The other instance.
-     * @returns {Boolean} Returns true if equivalent to the parameter.
+     * @param {xpl.XModelElement} other - 対象のインスタンス
+     * @returns {Boolean} 比較の結果
      */
     ns.XModelElement.prototype.equals = function (other) {
         if (this === other) {
@@ -1887,7 +1882,7 @@
     "use strict";
 
     /**
-     * Node structure of the xModel.
+     * ノード構造です。
      *
      * @class
      * @alias xpl.XModelNode
@@ -2023,7 +2018,7 @@
          */
         this.children = null;
 
-        // work variable.
+        // 作業変数
 
         /**
          * XModelNode : this object is parent of this node.
@@ -2073,7 +2068,6 @@
          * @member {xpl.size_t} TRANSFORM_MATRIX
          */
         "TRANSFORM_MATRIX": {
-
             value: 0
         },
 
@@ -2085,7 +2079,6 @@
          * @member {xpl.size_t} TRANSFORM_TRANSLATE
          */
         "TRANSFORM_TRANSLATE": {
-
             value: 1
         },
 
@@ -2097,7 +2090,6 @@
          * @member {xpl.size_t} TRANSFORM_SCALE
          */
         "TRANSFORM_SCALE": {
-
             value: 2
         },
 
@@ -2109,7 +2101,6 @@
          * @member {xpl.size_t} TRANSFORM_ROTATE
          */
         "TRANSFORM_ROTATE": {
-
             value: 3
         },
 
@@ -2145,7 +2136,7 @@
     "use strict";
 
     /**
-     * Inverse kinematics structure of the xModel.
+     * 逆運動学構造です。
      *
      * @class
      * @alias xpl.XModelIK
@@ -2213,7 +2204,7 @@
     "use strict";
 
     /**
-     * Animation structure of xModel.
+     * アニメーション構造です。
      *
      * @class
      * @alias xpl.XModelAnimation
@@ -2308,7 +2299,7 @@
     "use strict";
 
     /**
-     * Animation key structure of the xModel.
+     * アニメーションキー構造です。
      *
      * @class
      * @alias xpl.XModelAnimationKey

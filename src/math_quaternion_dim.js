@@ -43,8 +43,8 @@
         return;
     }
 
-    let VX = 0, VY = 1, VZ = 2;
-    let CR = 0, CI = 1, CJ = 2, CK = 3;
+    const VX = 0, VY = 1, VZ = 2;
+    const CR = 0, CI = 1, CJ = 2, CK = 3;
 
     /**
      * I軸(X軸)の回転を四元数に読み込ませます。

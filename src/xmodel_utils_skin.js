@@ -30,18 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-(function(ns) {
+(function (ns) {
 
     "use strict";
 
-    var SIZE_VECTOR_3 = ns.Geometry.SIZE_VECTOR_3;
-    var SIZE_MATRIX_4X4 = ns.Geometry.SIZE_MATRIX_4X4;
+    const SIZE_VECTOR_3 = ns.Geometry.SIZE_VECTOR_3;
+    const SIZE_MATRIX_4X4 = ns.Geometry.SIZE_MATRIX_4X4;
 
     /**
-     * Utilities for the xModel skin structure.
+     * スキニング構造用のユーティリティクラスです。
      *
      * @namespace xpl.XModelSkinUtils
+     * @see xpl.XModelNode
      * @see xpl.XModelMesh
      * @see xpl.XModelSkin
      * @author Syuuhei Kuno
@@ -51,21 +51,21 @@
     };
 
     /**
-     * Update the matrix pallet.
+     * 行列パレットを更新します。
      *
      * @memberof xpl.XModelSkinUtils
      * @function updateMatrixPallet
-     * @param {xpl.XModelSkin?} skin - The skin instance.
-     * @param {xpl.uint16_t} num_matrices - Number of the matrices in the pallet.
-     * @param {Float32Array} matrices - The destination matrices.
-     * @param {xpl.size_t} matrices_off - Starting position in the destination matrices.
-     * @returns {xpl.uint16_t} The number of updated nodes.
+     * @param {xpl.XModelSkin?} skin - スキン構造のインスタンス
+     * @param {xpl.uint16_t} num_matrices - 行列の数
+     * @param {Float32Array} matrices - 行列パレット
+     * @param {xpl.size_t} matrices_off - 行列パレットの配列インデックス
+     * @returns {xpl.uint16_t} 実際に更新した行列の数
      */
-    ns.XModelSkinUtils.updateMatrixPallet = function(skin, num_matrices, matrices, matrices_off) {
+    ns.XModelSkinUtils.updateMatrixPallet = function (skin, num_matrices, matrices, matrices_off) {
         if (skin != null) {
-            for (var i = 0; i < skin.num_nodes && i < num_matrices; ++i) {
-                var index = SIZE_MATRIX_4X4 * i;
-                var node = skin.nodes[i];
+            for (let i = 0; i < skin.num_nodes && i < num_matrices; ++i) {
+                let index = SIZE_MATRIX_4X4 * i;
+                let node = skin.nodes[i];
                 if (node != null) {
                     ns.Matrix4x4.mulv(
                         matrices, matrices_off + index,
@@ -81,50 +81,67 @@
     };
 
     /**
-     * Update the positions by matrix pallet.
+     * 行列パレットの情報を元に頂点の位置を更新します。
      *
      * @memberof xpl.XModelSkinUtils
-     * @function updatePositions
-     * @param {Float32Array} mat_pallet - The matrix pallet.
-     * @param {xpl.size_t} mat_pallet_off - Starting position in the matrix pallet.
-     * @param {xpl.size_t} num_vertices - Number of the positions.
-     * @param {Float32Array} src - The source positions.
-     * @param {xpl.size_t} src_off - Starting position in the source positions.
-     * @param {xpl.size_t} src_stride - The offset between consecutive source positions.
-     * @param {Float32Array} dest - The destination positions.
-     * @param {xpl.size_t} dest_off - Starting position in the destination positions.
-     * @param {xpl.size_t} dest_stride - The offset between consecutive destination positions.
-     * @param {xpl.size_t} weighted_indices_stride - The offset between consecutive weighted indices.
-     * @param {Uint8Array|Uint16Array|Uint32Array} indices - The indices in matrix pallet.
-     * @param {xpl.size_t} indices_off - Starting position in the indices in matrix pallet.
-     * @param {xpl.size_t} indices_stride - The offset between consecutive indices in matrix pallet.
-     * @param {Float32Array} weights - The weights for matrix.
-     * @param {xpl.size_t} weights_off - Starting position in the weights for matrix.
-     * @param {xpl.size_t} weights_stride - The offset between consecutive weights for matrix.
+     * @member updateVertices
+     * @param {Float32Array} mat_pallet - 行列パレット
+     * @param {xpl.size_t} mat_pallet_off - 行列パレットの配列インデックス
+     * @param {xpl.size_t} num_vertices - 頂点数
+     * @param {Float32Array} src - 入力元の位置の配列
+     * @param {xpl.size_t} src_off - 入力元の位置の配列インデックス
+     * @param {xpl.size_t} src_stride - 入力元の位置の要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {Float32Array} dest - 出力先の位置の配列
+     * @param {xpl.size_t} dest_off - 出力先の位置の配列インデックス
+     * @param {xpl.size_t} dest_stride - 出力先の位置の要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {xpl.size_t} weighted_indices_size - 重み付きインデックスの配列長
+     * @param {Uint8Array|Uint16Array|Uint32Array} indices - インデックスの配列
+     * @param {xpl.size_t} indices_off - インデックスの配列インデックス
+     * @param {xpl.size_t} indices_stride - インデックスの要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {Float32Array} weights - 重みの配列
+     * @param {xpl.size_t} weights_off - 重みの配列インデックス
+     * @param {xpl.size_t} weights_stride - 重みの要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {xpl.enum_t} type - 入力値のデータ種別を指定、
+     *              <ul>
+     *                  <li>xpl.XModelMesh.TYPE_POSITION: 位置</li>
+     *                  <li>xpl.XModelMesh.TYPE_NORMAL: 法線</li>
+     *              </ul>
      */
-    ns.XModelSkinUtils.updatePositions = function(mat_pallet, mat_pallet_off,
+    ns.XModelSkinUtils.updateVertices = function (mat_pallet, mat_pallet_off,
                                                   num_vertices,
                                                   src, src_off, src_stride,
                                                   dest, dest_off, dest_stride,
-                                                  weighted_indices_stride,
+                                                  weighted_indices_size,
                                                   indices, indices_off, indices_stride,
-                                                  weights, weights_off, weights_stride) {
+                                                  weights, weights_off, weights_stride,
+                                                  type) {
         if (src_stride < SIZE_VECTOR_3) {
             src_stride = SIZE_VECTOR_3;
         }
         if (dest_stride < SIZE_VECTOR_3) {
             dest_stride = SIZE_VECTOR_3;
         }
-        if (weights_stride < weighted_indices_stride) {
-            weights_stride = weighted_indices_stride;
+        if (weights_stride < weighted_indices_size) {
+            weights_stride = weighted_indices_size;
         }
-        if (indices_stride < weighted_indices_stride) {
-            indices_stride = weighted_indices_stride;
+        if (indices_stride < weighted_indices_size) {
+            indices_stride = weighted_indices_size;
         }
-        if (weighted_indices_stride == 1) {
-            // number of bone affected is one.
-            for (var i = 0; i < num_vertices; ++i) {
-                ns.Vector3.mulMatrix4x4v(
+        let trans_func = null;
+        switch (type) {
+            case ns.XModelMesh.TYPE_POSITION:
+                trans_func = ns.Vector3.mulMatrix4x4v;
+                break;
+            case ns.XModelMesh.TYPE_NORMAL:
+                trans_func = ns.Vector3.mulMatrix4x4Axisv;
+                break;
+            default:
+                throw new Error("Unsupported the type of " + +".");
+        }
+        if (weighted_indices_size == 1) {
+            // 重み付きインデックスの幅が1の場合
+            for (let i = 0; i < num_vertices; ++i) {
+                trans_func(
                     dest, dest_off,
                     mat_pallet, mat_pallet_off + SIZE_MATRIX_4X4 * indices[indices_off],
                     src, src_off,
@@ -133,97 +150,20 @@
                 dest_off += dest_stride;
                 indices_off += indices_stride;
             }
-        } else if (1 < weighted_indices_stride) {
-            // number of bones affected is multiple.
-            var vector = new Float32Array(SIZE_VECTOR_3);
-            for (var i = 0; i < num_vertices; ++i) {
+        } else if (1 < weighted_indices_size) {
+            // 重み付きインデックスの幅が1を超える場合
+            let vector = new Float32Array(SIZE_VECTOR_3);
+            for (let i = 0; i < num_vertices; ++i) {
                 ns.Vector3.loadZero(dest, dest_off);
-                for (var j = 0; j < weighted_indices_stride; ++j) {
-                    var weight = weights[weights_off + j];
+                for (let j = 0; j < weighted_indices_size; ++j) {
+                    let weight = weights[weights_off + j];
                     if (0 < weight) {
-                        // transform the position.
-                        ns.Vector3.mulMatrix4x4v(
+                        // 座標変換
+                        trans_func(
                             vector, 0,
                             mat_pallet, mat_pallet_off + SIZE_MATRIX_4X4 * indices[indices_off + j],
                             src, src_off,
                             true);
-                        ns.Vector3.mulv(vector, 0, vector, 0, weight);
-                        ns.Vector3.addv(dest, dest_off, dest, dest_off, vector, 0);
-                    }
-                }
-                src_off += src_stride;
-                dest_off += dest_stride;
-                indices_off += indices_stride;
-                weights_off += weights_stride;
-            }
-        }
-    };
-
-    /**
-     * Update the normals by rotation pallet.
-     *
-     * @memberof xpl.XModelSkin
-     * @function updateNormals
-     * @param {Float32Array} rot_pallet - The rotation matrix pallet.
-     * @param {xpl.size_t} rot_pallet_off - Starting position in the rotation matrix pallet.
-     * @param {xpl.uint32_t} num_vertices - Number of the normals.
-     * @param {Float32Array} src - The source normals.
-     * @param {xpl.size_t} src_off - Starting position in the source normals.
-     * @param {xpl.size_t} src_stride - The offset between consecutive source normals.
-     * @param {Float32Array} dest - The destination normals.
-     * @param {xpl.size_t} dest_off - Starting position in the destination normals.
-     * @param {xpl.size_t} dest_stride - The offset between consecutive destination normals.
-     * @param {xpl.size_t} weighted_indices_stride - The offset between consecutive weighted indices.
-     * @param {Uint8Array|Uint16Array|Uint32Array} indices - The indices in matrix pallet.
-     * @param {xpl.size_t} indices_off - Starting position in the indices in matrix pallet.
-     * @param {xpl.size_t} indices_stride - The offset between consecutive indices in matrix pallet.
-     * @param {Float32Array} weights - The weights for matrix.
-     * @param {xpl.size_t} weights_off - Starting position in the weights for rotation matrix.
-     * @param {xpl.size_t} weights_stride - The offset between consecutive weights for rotation_matrix.
-     */
-    ns.XModelSkinUtils.updateNormals = function(rot_pallet, rot_pallet_off,
-                                                num_vertices,
-                                                src, src_off, src_stride,
-                                                dest, dest_off, dest_stride,
-                                                weighted_indices_stride,
-                                                indices, indices_off, indices_stride,
-                                                weights, weights_off, weights_stride) {
-        if (src_stride < SIZE_VECTOR_3) {
-            src_stride = SIZE_VECTOR_3;
-        }
-        if (dest_stride < SIZE_VECTOR_3) {
-            dest_stride = SIZE_VECTOR_3;
-        }
-        if (weights_stride < weighted_indices_stride) {
-            weights_stride = weighted_indices_stride;
-        }
-        if (indices_stride < weighted_indices_stride) {
-            indices_stride = weighted_indices_stride;
-        }
-        if (weighted_indices_stride == 1) {
-            // number of bone affected is one.
-            for (var i = 0; i < num_vertices; ++i) {
-                ns.Vector3.mulMatrix4x4Axisv(
-                    dest, dest_off,
-                    rot_pallet, rot_pallet_off + SIZE_MATRIX_4X4 * indices[indices_off],
-                    src, src_off);
-                src_off += src_stride;
-                dest_off += dest_stride;
-                indices_off += indices_stride;
-            }
-        } else if (1 < weighted_indices_stride) {
-            // number of bones affected is multiple.
-            var vector = new Float32Array(SIZE_VECTOR_3);
-            for (var i = 0; i < num_vertices; ++i) {
-                ns.Vector3.loadZero(dest, dest_off);
-                for (var j = 0; j < weighted_indices_stride; ++j) {
-                    var weight = weights[weights_off + j];
-                    if (0 < weight) {
-                        // transform the normal.
-                        ns.Vector3.mulMatrix4x4Axisv(
-                            vector, 0,
-                            rot_pallet, rot_pallet_off + SIZE_MATRIX_4X4 * indices[indices_off + j],
-                            src, src_off);
                         ns.Vector3.mulv(vector, 0, vector, 0, weight);
                         ns.Vector3.addv(dest, dest_off, dest, dest_off, vector, 0);
                     }

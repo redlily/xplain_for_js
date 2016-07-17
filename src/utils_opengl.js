@@ -81,23 +81,23 @@
     });
 
     /**
-     * This callback is processing for the error.
+     * エラーが発生した場合のコールバック関数
      *
      * @callback xpl.GLUtils~buildErrorCallback
-     * @param {String} type - The error type.
-     * @param {String} message - The error message.
+     * @param {String} type - エラー種別
+     * @param {String} message - エラーメッセージ
      */
 
     /**
-     * Create the OpenGL buffer instance.
+     * WebgLのバッファのインスタンスを生成します。
      *
      * @memberof xpl.GLUtils
      * @function createBuffer
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {Number} type - The type of buffer.
-     * @param {Number} data - The binary data.
-     * @param {Number} usage - The usage of buffer.
-     * @returns {WebGLBuffer} The buffer instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {Number} type - バッファ種別
+     * @param {Number} data - データ配列
+     * @param {Number} usage - バッファの使用方法
+     * @returns {WebGLBuffer} バッファのインスタンス
      */
     ns.GLUtils.createBuffer = function (gl, type, data, usage) {
         if (type == gl.ARRAY_BUFFER || type == gl.ELEMENT_ARRAY_BUFFER) {
@@ -112,47 +112,46 @@
     };
 
     /**
-     * Create the OpenGL texture instance.
+     * WebGLのテクスチャのインスタンスを生成します。
      *
      * @memberof xpl.GLUtils
      * @function createTexture2D
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {Number} format - The color format.
-     * @param {Number} type - The data type.
-     * @param {Number} width - The texture width.
-     * @param {Number} height - The texture height.
-     * @param {Object?} pixels -
-     *              The pixel data.
-     *              Can specified the null if not needed it.
-     * @param {Boolean} mipmap -
-     *              Generate the mipmap if set the true,
-     *              not generate the mipmap if set the false.
-     * @param {Array.<Number>?} size -
-     *              Output size if set the destination array.
-     *              Can specified the null if not needed it.
-     * @param {Number} size_off - Starting position in the destination array of size.
-     * @returns {WebGLTexture} The texture instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {Number} format - 色のフォーマット
+     * @param {Number} type - データ種別
+     * @param {Number} width - テクスチャの幅
+     * @param {Number} height - テクスチャの高さ
+     * @param {Object} [pixels=null] - ピクセル配列
+     * @param {Boolean} [mipmap=false] - ミップマップを生成するかどうか
+     * @param {Array.<Number>} [size=null] - テクスチャサイズ
+     * @param {Number} [size_off=0] - テクスチャサイズの配列インデックス
+     * @returns {WebGLTexture} テクスチャのインスタンス
      */
     ns.GLUtils.createTexture2D = function (gl,
                                            format, type,
                                            width, height,
                                            pixels, mipmap,
                                            size, size_off) {
-        // create the texture instance.
+        pixels = ns.defaultValue(pixels, null);
+        mipmap = ns.defaultValue(mipmap, false);
+        size = ns.defaultValue(size, null);
+        size_off = ns.defaultValue(size_off, 0);
+
+        // テクスチャのインスタンス生成
         let tex = gl.createTexture();
         if (tex != null) {
             gl.bindTexture(gl.TEXTURE_2D, tex);
             let tex_width = ns.MathUtils.ceilPow2(width);
             let tex_height = ns.MathUtils.ceilPow2(height);
             if (width == tex_width && height == tex_height) {
-                // size is number of power of two.
+                // サイズが2の乗数の場合
                 gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
                 gl.texImage2D(
                     gl.TEXTURE_2D, 0,
                     format, tex_width, tex_height, 0,
                     format, type, pixels);
             } else {
-                // size isn't number of power of two.
+                // サイズが2の乗数ではない場合
                 gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
                 gl.texImage2D(
                     gl.TEXTURE_2D, 0,
@@ -166,12 +165,12 @@
                 }
             }
 
-            // generate the mipmap.
+            // ミップマップを生成
             if (mipmap) {
                 gl.generateMipmap(gl.TEXTURE_2D);
             }
 
-            // output the size.
+            // テクスチャサイズを出力
             if (size != null) {
                 size[size_off + 0] = tex_width;
                 size[size_off + 1] = tex_height;
@@ -181,15 +180,15 @@
     };
 
     /**
-     * Create the OpenGL texture instance from 2D.
+     * 2次元の画像からWebGLのテクスチャのインスタンスを生成します。
      *
      * @memberof xpl.GLUtils
      * @function createTexture2DFromImage
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {Number} format - The color format.
-     * @param {Number} type - The data type.
-     * @param {Object} object - The image data.
-     * @returns {WebGLTexture} The texture instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {Number} format - 色のフォーマット
+     * @param {Number} type - データ種別
+     * @param {Object} object - 画像データ
+     * @returns {WebGLTexture} テクスチャのインスタンス
      */
     ns.GLUtils.createTexture2DFromImage = function (gl, format, type, object) {
         let tex = gl.createTexture();
@@ -201,28 +200,28 @@
     };
 
     /**
-     * Create the OpenGL shader instance.
+     * WebGLのシェーダのインスタンを生成します。
      *
      * @memberof xpl.GLUtils
      * @function createShader
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {Number} type - The type of shader.
-     * @param {String} code - The source code of shader.
-     * @param {xpl.GLUtils~buildErrorCallback?} err_handle -
-     *              Call the error handle when an exception occurs.
-     *              Can specified the null if not needed it.
-     * @returns {WebGLShader} The shader instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {Number} type - シェーダの種別
+     * @param {String} code - シェーダのソースコード
+     * @param {xpl.GLUtils~buildErrorCallback} [err_handle=null] - エラーをハンドルするためのコールバック関数
+     * @returns {WebGLShader} シェーダのインスタンス
      */
     ns.GLUtils.createShader = function (gl, type, code, err_handle) {
+        err_handle = ns.defaultValue(err_handle, null);
+
         if (type == gl.VERTEX_SHADER || type == gl.FRAGMENT_SHADER) {
-            // create the shader instance.
+            // シェーダのインスタンスを生成
             let shader = gl.createShader(type);
             if (shader != null) {
-                // compile the shader.
+                // シェーダのコンパイル
                 gl.shaderSource(shader, code);
                 gl.compileShader(shader);
 
-                // error check.
+                // エラーをチェック
                 if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
                     let err_info = gl.getShaderInfoLog(shader);
                     console.error("Shader compile error:\n" + err_info);
@@ -247,14 +246,12 @@
      *
      * @memberof xpl.GLUtils
      * @function createProgram
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {WebGLShader} vs - The vertex shader instance.
-     * @param {WebGLShader} fs - The fragment shader instance.
-     * @param {Map.<String, Number>} attr_map - The map of named attribute variables.
-     * @param {xpl.GLUtils~buildErrorCallback?} err_handle -
-     *              Call the error handle when an exception occurs.
-     *              Can specified the null if not needed it.
-     * @returns {WebGLProgram} The program instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {WebGLShader} vs - 頂点シェーダ
+     * @param {WebGLShader} fs - フラグメントシェーダ
+     * @param {Map.<String, Number>} attr_map - バインドする名前付きアトリビュート変数のマップ
+     * @param {xpl.GLUtils~buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
+     * @returns {WebGLProgram} プログラムのインスタンス
      */
     ns.GLUtils.createProgram = function (gl, vs, fs, attr_map, err_handle) {
         if (vs != null && fs != null) {
@@ -273,7 +270,7 @@
                 // linkage the program.
                 gl.linkProgram(program);
 
-                // error check.
+                // エラーをチェック
                 if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
                     let err_info = gl.getProgramInfoLog(program);
                     console.error("Program linkage error:\n" + err_info);
@@ -294,30 +291,28 @@
      *
      * @memberof xpl.GLUtils
      * @function createShaderProgram
-     * @param {WebGLRenderingContext} gl - The OpenGL interface.
-     * @param {String} vs_code - The source code of vertex shader.
-     * @param {String} fs_code - The source code of fragment shader.
-     * @param {Map.<String, Number>} attr_map - The map of named attribute variables.
-     * @param {xpl.GLUtils.buildErrorCallback?} err_handle -
-     *              Call the error handle when an exception occurs.
-     *              Can specified the null if not needed it.
-     * @returns {WebGLProgram} The program instance.
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {String} vs_code - 頂点シェーダのソースコード
+     * @param {String} fs_code - フラグメントシェーダのソースコード
+     * @param {Map.<String, Number>} attr_map - バインドする名前付きアトリビュート変数のマップ
+     * @param {xpl.GLUtils.buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
+     * @returns {WebGLProgram} プログラムのインスタンス
      */
     ns.GLUtils.createShaderProgram = function (gl, vs_code, fs_code, attr_map, err_handle) {
-        // create the vertex shader instance.
+        // 頂点シェーダのインスタンス生成
         let vs = ns.GLUtils.createShader(gl, gl.VERTEX_SHADER, vs_code, err_handle);
         if (vs == null) {
             return null;
         }
 
-        // create the fragment shader instance.
+        // フラグメントシェーダのインスタンス生成
         let fs = ns.GLUtils.createShader(gl, gl.FRAGMENT_SHADER, fs_code, err_handle);
         if (fs == null) {
             gl.deleteShader(vs);
             return null;
         }
 
-        // create the program instance.
+        // プログラムのインスタンス生成
         let pg = ns.GLUtils.createProgram(gl, vs, fs, attr_map, err_handle);
         gl.deleteShader(vs);
         gl.deleteShader(fs);

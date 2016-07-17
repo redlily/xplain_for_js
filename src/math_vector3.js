@@ -35,9 +35,9 @@
 
     "use strict";
 
-    let VX = 0, VY = 1, VZ = 2;
-    let CR = 0, CI = 1, CJ = 2, CK = 3;
-    let M00 = 0, M01 = 4, M02 = 8, M03 = 12,
+    const VX = 0, VY = 1, VZ = 2;
+    const CR = 0, CI = 1, CJ = 2, CK = 3;
+    const M00 = 0, M01 = 4, M02 = 8, M03 = 12,
         M10 = 1, M11 = 5, M12 = 9, M13 = 13,
         M20 = 2, M21 = 6, M22 = 10, M23 = 14,
         M30 = 3, M31 = 7, M32 = 11, M33 = 15;
