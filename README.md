@@ -108,7 +108,7 @@ model.draw(gl, uniform_map, attribute_map);
 
 https://github.com/redlily/test_resources
 
-もしくはGitを使用してチェックアウトすることができます。
+もしくはGitを使用してcloneすることができます。
 
 ``` bash
 git clone git@github.com:redlily/test_resources.git
@@ -136,6 +136,15 @@ git clone git@github.com:redlily/test_resources.git
 |:---|:---|:---|
 |0.9.0 Beta|Jan. 24, 2016|初期リリース|
 |HEAD|-|-|
+
+## 動作確認
+
+|ブラウザ|ソースコード|ビルド済みソース|備考|
+|:---|:---|:---|:---|
+|Chrome|○|○||
+|Firefox|○|○||
+|Safari|×|○|letキーワードでエラー|
+|Edge|-|-|未検証|
 
 ## 開発者
 
@@ -176,25 +185,6 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-### ソースコードの圧縮に使用されている Closure Compiler のライセンス
-
-The Closure Compiler License
-
-Copyright 2009 The Closure Compiler Authors.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-配布ページ: https://developers.google.com/closure/compiler/docs/gettingstarted_app
-規約: https://developers.google.com/site-policies#attribution
 
 ### サンプルプログラム上で使用されている "ハッカドール" の3Dモデルのライセンス
 
