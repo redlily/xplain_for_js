@@ -37,36 +37,43 @@ python3 -m http.server 8000
 そしてHTML上で、それらをインポートしてください。
 
 ```html
-<script type="text/javascript" src="lib/xplain.min.js"></script>
+<script type="text/javascript" src="build/xplain.min.js"></script>
 ```
 
 もしくは
 
 ```html
-<script type="text/javascript" src="lib/xplain_core.js"></script>
-<script type="text/javascript" src="lib/utils_system.js"></script>
-<script type="text/javascript" src="lib/utils_array.js"></script>
-<script type="text/javascript" src="lib/utils_string.js"></script>
-<script type="text/javascript" src="lib/utils_math.js"></script>
-<script type="text/javascript" src="lib/utils_opengl.js"></script>
-<script type="text/javascript" src="lib/math_geometry.js"></script>
-<script type="text/javascript" src="lib/math_quaternion.js"></script>
-<script type="text/javascript" src="lib/math_quaternion_dim.js"></script>
-<script type="text/javascript" src="lib/math_matrix4x4.js"></script>
-<script type="text/javascript" src="lib/math_matrix4x4_dim.js"></script>
-<script type="text/javascript" src="lib/math_vector3.js"></script>
-<script type="text/javascript" src="lib/xmodel_types.js"></script>
-<script type="text/javascript" src="lib/xmodel_codec.js"></script>
-<script type="text/javascript" src="lib/xmodel_decoder.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_transform.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_material.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_mesh.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_skin.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_node.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_kinematics.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_animation.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_container.js"></script>
-<script type="text/javascript" src="lib/xmodel_utils_wrapper.js"></script>
+<script type="text/javascript" src="src/xplain_core.js"></script>
+<script type="text/javascript" src="src/utils_system.js"></script>
+<script type="text/javascript" src="src/utils_array.js"></script>
+<script type="text/javascript" src="src/utils_string.js"></script>
+<script type="text/javascript" src="src/utils_math.js"></script>
+<script type="text/javascript" src="src/utils_opengl.js"></script>
+<script type="text/javascript" src="src/math_geometry.js"></script>
+<script type="text/javascript" src="src/math_quaternion.js"></script>
+<script type="text/javascript" src="src/math_quaternion_dim.js"></script>
+<script type="text/javascript" src="src/math_matrix4x4.js"></script>
+<script type="text/javascript" src="src/math_matrix4x4_dim.js"></script>
+<script type="text/javascript" src="src/math_vector3.js"></script>
+<script type="text/javascript" src="src/xmodel_type_base.js"></script>
+<script type="text/javascript" src="src/xmodel_type_parameter.js"></script>
+<script type="text/javascript" src="src/xmodel_type_container.js"></script>
+<script type="text/javascript" src="src/xmodel_type_kinematics.js"></script>
+<script type="text/javascript" src="src/xmodel_type_material.js"></script>
+<script type="text/javascript" src="src/xmodel_type_mesh.js"></script>
+<script type="text/javascript" src="src/xmodel_type_animation.js"></script>
+<script type="text/javascript" src="src/xmodel_codec.js"></script>
+<script type="text/javascript" src="src/xmodel_decoder.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_transform.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_material.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_skin.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_mesh.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_node.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_kinematics.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_animation.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_container.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_optimize.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_wrapper.js"></script>
 ```
 
 ライブラリをインポートしたのであればJavaScript上でモデルの読み込み処理を実装してください。

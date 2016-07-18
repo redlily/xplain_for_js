@@ -134,7 +134,7 @@
      *
      * rad = acos(from ・ to) / 2 * t
      * axis = from × to
-     * x = (cos(rad); i * axis * sin(rad))
+     * x = (cos(rad); axis * sin(rad))
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3
@@ -216,7 +216,7 @@
      *
      * rad = acos(from ・ to) / 2 * t
      * axis = from × to
-     * x = (cos(rad); i * axis * sin(rad))
+     * x = (cos(rad); axis * sin(rad))
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3v

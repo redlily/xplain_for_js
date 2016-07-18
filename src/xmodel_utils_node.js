@@ -261,7 +261,7 @@
                 m20, m21, m22, m23,
                 m30, m31, m32, m33);
             for (var i = 0; i < ns.XModelNode.NUM_TRANSFORMS; ++i) {
-                ns.XModelTransformUtils.applyTransform(
+                ns.XModeParameterUtils.applyTransform(
                     root.transforms[i],
                     root.combined_matrix, 0);
             }
@@ -472,7 +472,7 @@
         if (root != null) {
             // assignment the initial value to transforms.
             for (var i = 0; i < ns.XModelNode.NUM_TRANSFORMS; ++i) {
-                ns.XModelTransformUtils.resetTransform(root.transforms[i]);
+                ns.XModeParameterUtils.resetParameter(root.transforms[i]);
             }
 
             // update the transforms in the nodes that be chained to the this node.

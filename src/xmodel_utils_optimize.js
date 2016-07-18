@@ -56,6 +56,7 @@
     ns.XModelOptimizeUtils.optimizeMeshVertices = function (mesh) {
         if (mesh != null) {
             // TODO
+            console.log("it doesn't implement yet.");
         }
     };
 
@@ -68,6 +69,7 @@
     ns.XModelOptimizeUtils.optimizeMeshElements = function (mesh) {
         if (mesh != null) {
             // TODO
+            console.log("it doesn't implement yet.");
         }
     };
 

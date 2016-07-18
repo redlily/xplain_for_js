@@ -147,7 +147,7 @@
         // local transform.
         ns.Matrix4x4.loadIdentity(this.local_transform, 0);
         for (var i = 0; i < ns.XModelNode.TRANSFORM_ROTATE; ++i) {
-            ns.XModelTransformUtils.applyTransform(
+            ns.XModeParameterUtils.applyTransform(
                 this.node.transforms[i],
                 this.local_transform, 0);
         }

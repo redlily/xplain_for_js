@@ -108,10 +108,10 @@
     /**
      * X軸回転の変換行列を読み込ませます。
      *
-     *     | 1, 0,         0,        0 |
-     * d = | 0, cos(rad), -sin(rad), 0 |
-     *     | 0, sin(rad),  cos(rad), 0 |
-     *     | 0, 0,         0,        1 |
+     *     | 1, 0,     0,    0 |
+     * d = | 0, cosθ, -sinθ, 0 |
+     *     | 0, sinθ,  cosθ, 0 |
+     *     | 0, 0,     0,    1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateXAxis
@@ -137,10 +137,10 @@
     /**
      * Y軸回転の変換行列を読み込ませます。
      *
-     *     |  cos(rad), 0, sin(rad), 0 |
-     * d = |  0,        0, 0,        0 |
-     *     | -sin(rad), 0, cos(rad), 0 |
-     *     |  0,        0, 0,        1 |
+     *     |  cosθ, 0, sinθ, 0 |
+     * d = |  0,    0, 0,    0 |
+     *     | -sinθ, 0, cosθ, 0 |
+     *     |  0,    0, 0,    1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateYAxis
@@ -166,10 +166,10 @@
     /**
      * Z軸回転の変換行列を読み込ませます。
      *
-     *     | cos(rad), -sin(rad), 0, 0 |
-     * d = | sin(rad),  cos(rad), 0, 0 |
-     *     | 0,         0,        0, 0 |
-     *     | 0,         0,        0, 1 |
+     *     | cosθ, -sinθ, 0, 0 |
+     * d = | sinθ,  cosθ, 0, 0 |
+     *     | 0,     0,    0, 0 |
+     *     | 0,     0,    0, 1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotateZAxis
@@ -195,10 +195,10 @@
     /**
      * 任意軸の回転の変換用列を読み込ませます。
      *
-     *     | cos(rad) + x^2 * (1.0 - cos(rad)),       x * y * (1.0 - cos(rad)) - z * sin(rad), x * z * (1.0 - cos(rad)) + y * sin(rad), 0 |
-     * d = | x * y * (1.0 - cos(rad)) + z * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       y * z * (1.0 - cos(rad)) - x * sin(rad), 0 |
-     *     | x * z * (1.0 - cos(rad)) - y * sin(rad), y * z * (1.0 - cos(rad)) + x * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       0 |
-     *     | 0,                                       0,                                       0,                                       1 |
+     *     | cosθ + x^2 * (1.0 - cosθ),       x * y * (1.0 - cosθ) - z * sinθ, x * z * (1.0 - cosθ) + y * sinθ, 0 |
+     * d = | x * y * (1.0 - cosθ) + z * sinθ, cosθ + y^2 * (1.0 - cosθ),       y * z * (1.0 - cosθ) - x * sinθ, 0 |
+     *     | x * z * (1.0 - cosθ) - y * sinθ, y * z * (1.0 - cosθ) + x * sinθ, cosθ + y^2 * (1.0 - cosθ),       0 |
+     *     | 0,                               0,                               0,                               1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadRotate
@@ -271,9 +271,9 @@
      * @param {Number} center_x - 参照点の位置のX要素
      * @param {Number} center_y - 参照点の位置のY要素
      * @param {Number} center_z - 参照点の位置のZ要素
-     * @param {Number} upper_x - 吊上げのベクトルのX要素
-     * @param {Number} upper_y - 吊上げのベクトルのY要素
-     * @param {Number} upper_z - 吊上げのベクトルのZ要素
+     * @param {Number} [upper_x=0.0] - 吊上げのベクトルのX要素
+     * @param {Number} [upper_y=1.0] - 吊上げのベクトルのY要素
+     * @param {Number} [upper_z=0.0] - 吊上げのベクトルのZ要素
      * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadLookAt = function (d, d_off,
@@ -281,6 +281,9 @@
                                         center_x, center_y, center_z,
                                         upper_x, upper_y, upper_z,
                                         column) {
+        upper_x = ns.defaultValue(upper_x, 0.0);
+        upper_y = ns.defaultValue(upper_y, 1.0);
+        upper_z = ns.defaultValue(upper_z, 0.0);
         column = ns.defaultValue(column, true);
 
         // Z軸のベクトルを算出
@@ -297,7 +300,7 @@
         }
 
         // X軸のベクトルを算出
-        // (zAxis × upper) / |zAxis × upper|
+        // (z_axis × upper) / |z_axis × upper|
         let xx = zy * upper_z - zz * upper_y;
         let xy = zz * upper_x - zx * upper_z;
         let xz = zx * upper_y - zy * upper_x;
@@ -310,7 +313,7 @@
         }
 
         // Y軸のベクトルを算出
-        // zAxis × xAxis
+        // z_axis × x_axis
         let yx = zy * xz - zz * xy;
         let yy = zz * xx - zx * xz;
         let yz = zx * xy - zy * xx;
@@ -336,10 +339,13 @@
     /**
      * 射影の変換行列を読み込ませます。
      *
-     *     | (view_near * device_width) / view_width, 0,                                         0,                                     0                                      |
-     * d = | 0,                                       (view_near * device_height) / view_height, 0,                                     0                                      |
-     *     | 0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth |
-     *     | 0,                                       0,                                         1,                                     0                                      |
+     * range_view = view_far - view_near
+     * scaled_far = view_far * (device_far - device_near)
+     * 
+     *     | view_near * device_width / view_width, 0,                                       0,                                     0                                    |
+     * d = | 0,                                     view_near * device_height / view_height, 0,                                     0                                    |
+     *     | 0,                                     0,                                       scaled_far / view_depth + device_near, view_near * scaled_far / -view_depth |
+     *     | 0,                                     0,                                       1,                                     0                                    |
      *
      * @memberof xpl.Matrix4x4
      * @function loadPerspective
@@ -385,10 +391,10 @@
     /**
      * 軸の要素のみを行列に読み込ませます。
      *
-     *     | m(0,0), m(0,1), m(0,2), 0 |
-     * d = | m(1,0), m(1,1), m(1,2), 0 |
-     *     | m(2,0), m(2,1), m(2,2), 0 |
-     *     | 0,      0,      0,      1 |
+     *     | m(0, 0), m(0, 1), m(0, 2), 0 |
+     * d = | m(1, 0), m(1, 1), m(1, 2), 0 |
+     *     | m(2, 0), m(2, 1), m(2, 2), 0 |
+     *     | 0,       0,      0,        1 |
      *
      * @memberof xpl.Matrix4x4
      * @function loadAxis
@@ -607,10 +613,10 @@
     /**
      * 任意軸回転の変換行列を行列に掛けあわせます。
      *
-     *      | cos(rad) + x^2 * (1.0 - cos(rad)),       x * y * (1.0 - cos(rad)) - z * sin(rad), x * z * (1.0 - cos(rad)) + y * sin(rad), 0 |
-     * d *= | x * y * (1.0 - cos(rad)) + z * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       y * z * (1.0 - cos(rad)) - x * sin(rad), 0 |
-     *      | x * z * (1.0 - cos(rad)) - y * sin(rad), y * z * (1.0 - cos(rad)) + x * sin(rad), cos(rad) + y^2 * (1.0 - cos(rad)),       0 |
-     *      | 0,                                       0,                                       0,                                       1 |
+     *      | cosθ + x^2 * (1.0 - cosθ),       x * y * (1.0 - cosθ) - z * sinθ, x * z * (1.0 - cosθ) + y * sinθ, 0 |
+     * d *= | x * y * (1.0 - cosθ) + z * sinθ, cosθ + y^2 * (1.0 - cosθ),       y * z * (1.0 - cosθ) - x * sinθ, 0 |
+     *      | x * z * (1.0 - cosθ) - y * sinθ, y * z * (1.0 - cosθ) + x * sinθ, cosθ + y^2 * (1.0 - cosθ),       0 |
+     *      | 0,                               0,                               0,                               1 |
      *
      * @memberof xpl.Matrix4x4
      * @function mulRotate
@@ -620,7 +626,7 @@
      * @param {Number} y - 回転軸のY要素
      * @param {Number} z - 回転軸のZ要素
      * @param {Number} rad - 回転のラジアン値
-     * @param {boolean} [norm=true] -
+     * @param {boolean} [norm=true] - 回転軸ベクトルを正規化するかどうか
      * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotate = function (m, m_off, x, y, z, rad, norm, column) {
@@ -798,10 +804,13 @@
     /**
      * 射影の変換行列を行列に掛けあわせます。
      *
-     *      | (view_near * device_width) / view_width, 0,                                         0,                                     0                                      |
-     * d *= | 0,                                       (view_near * device_height) / view_height, 0,                                     0                                      |
-     *      | 0,                                       0,                                         scaled_far / view_depth + device_near, (view_near * scaled_far) / -view_depth |
-     *      | 0,                                       0,                                         1,                                     0                                      |
+     * range_view = view_far - view_near
+     * scaled_far = view_far * (device_far - device_near)
+     * 
+     *      | view_near * device_width / view_width, 0,                                       0,                                     0                                    |
+     * d *= | 0,                                     view_near * device_height / view_height, 0,                                     0                                    |
+     *      | 0,                                     0,                                       scaled_far / view_depth + device_near, view_near * scaled_far / -view_depth |
+     *      | 0,                                     0,                                       1,                                     0                                    |
      *
      * @memberof xpl.Matrix4x4
      * @function mulPerspective
@@ -814,7 +823,7 @@
      * @param {Number} [device_width=2.0] - デバイスで定めている実際の幅
      * @param {Number} [device_height=2.0] - デバイスで定めている実際の高さ
      * @param {Number} [device_near=-1.0] - デバイスで定めている実際の近平面の座標
-     * @param {Number} [device_far=-1.0] - デバイスで定めている実際の遠平面の座標
+     * @param {Number} [device_far=1.0] - デバイスで定めている実際の遠平面の座標
      * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulPerspective = function (m, m_off,
@@ -974,14 +983,14 @@
     /**
      * 軸ベクトルを球面線形補間、それ以外の要素を線形補間します。
      *
-     * x = slrep((a(0,0), a(1,0), a(2,0)), (b(0,0), b(1,0), b(2,0)); t)
-     * y = slrep((a(0,1), a(1,1), a(2,1)), (b(0,1), b(1,1), b(2,1)); t)
-     * z = slrep((a(0,2), a(1,2), a(2,2)), (b(0,2), b(1,2), b(2,2)); t)
+     * x = slrep((a(0, 0), a(1, 0), a(2, 0)), (b(0, 0), b(1, 0), b(2, 0)); t)
+     * y = slrep((a(0, 1), a(1, 1), a(2, 1)), (b(0, 1), b(1, 1), b(2, 1)); t)
+     * z = slrep((a(0, 2), a(1, 2), a(2, 2)), (b(0, 2), b(1, 2), b(2, 2)); t)
      *
-     *     | x.x,                     y.x,                     z.x,                    lrep(a(0,3), b(0,3); t) |
-     * d = | x.y,                     y.y,                     z.y,                    lrep(a(1,3), b(1,3); t) |
-     *     | x.z,                     y.z                      z.z,                    lrep(a(2,3), b(2,3); t) |
-     *     | lrep(a(3,0), b(3,0); t), lrep(a(3,1), b(3,1); t), lrep(a(3,2, b(3,2); t), lrep(a(3,3), b(3,3); t) |
+     *     | x.x,                       y.x,                       z.x,                      lrep(a(0, 3), b(0, 3); t) |
+     * d = | x.y,                       y.y,                       z.y,                      lrep(a(1, 3), b(1, 3); t) |
+     *     | x.z,                       y.z                        z.z,                      lrep(a(2, 3), b(2, 3); t) |
+     *     | lrep(a(3, 0), b(3, 0); t), lrep(a(3, 1), b(3, 1); t), lrep(a(3, 2, b(3, 2); t), lrep(a(3, 3), b(3, 3); t) |
      *
      * @memberof xpl.Matrix4x4
      * @function slrepAxisAndLrepOtherv
@@ -1462,10 +1471,11 @@
      * @param {Number} q_off - 出力先の四元数の配列インデックス
      * @param {Array.<Number>} m - 入力元の行列
      * @param {Number} m_off - 入力元の行列の配列インデックス
-     * @param {Number} reverse - 虚数部の符号を反転させるかどうか
+     * @param {Number} [reverse=false] - 虚数部の符号を反転させるかどうか
      * @param {Boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.toQuaternionv = function (q, q_off, m, m_off, reverse, column) {
+        reverse = ns.defaultValue(reverse, false);
         column = ns.defaultValue(column, true);
 
         //   X-axis,             Y-axis,             Z-axis,
@@ -1494,8 +1504,8 @@
         }
 
         // 行列の拡大率を算出
-        // scale = √(|(xAxis × yAxis) ・ zAxis|^(1.0 / 3.0))
-        //       = |(xAxis × yAxis) ・ zAxis|^(1.0 / 6.0)
+        // scale = √(|(x_axis × yAxis) ・ z_axis|^(1.0 / 3.0))
+        //       = |(x_axis × yAxis) ・ z_axis|^(1.0 / 6.0)
         let scale = (m10 * m21 - m20 * m11) * m02 +
             (m20 * m01 - m00 * m21) * m12 +
             (m00 * m11 - m10 * m01) * m22;

@@ -50,7 +50,7 @@
     /**
      * 任意の数値を四元数に読み込ませます。
      *
-     * d = (a, ib, jc, kd)
+     * d = (a, b, c, d)
      *
      * @memberof xpl.Quaternion
      * @function load
@@ -71,7 +71,7 @@
     /**
      * 任意の数値を四元数に読み込ませます。
      *
-     * d = (a, ib, jc, kd)
+     * d = (a, b, c, d)
      *
      * @memberof xpl.Quaternion
      * @function loadv

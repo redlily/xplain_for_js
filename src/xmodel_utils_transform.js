@@ -46,7 +46,7 @@
      * @see xpl.XModelMatrix
      * @author Syuuhei Kuno
      */
-    ns.XModelTransformUtils = function () {
+    ns.XModeParameterUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -58,9 +58,9 @@
      * @param {xpl.XModelTransform} transform - 処理対象の変換構造
      * @param {Float32Array} m - 出力先の行列
      * @param {xpl.size_t} m_off - 出力先の行列の配列インデックス
-     * @param {xpl.size_t} [blend_rate=0.0] - 2つのスロットのブレンド率
+     * @param {xpl.float32_t} [blend_rate=0.0] - 2つのスロットのブレンド率
      */
-    ns.XModelTransformUtils.applyTransform = function (transform, m, m_off, blend_rate) {
+    ns.XModeParameterUtils.applyTransform = function (transform, m, m_off, blend_rate) {
         blend_rate = ns.defaultValue(blend_rate, 0.0);
 
         if (transform != null) {
@@ -87,8 +87,10 @@
                             blend_rate);
                         ns.Vector3.normalizev(value, 0, value, 0);
                         value[ns.XModelAxisRotate.ANGLE] =
-                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 0 + ns.XModelAxisRotate.ANGLE] * (1.0 - blend_rate) +
-                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 1 + ns.XModelAxisRotate.ANGLE] * blend_rate;
+                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 0 +
+                            ns.XModelAxisRotate.ANGLE] * (1.0 - blend_rate) +
+                            transform.value[ns.XModelStructure.SIZE_AXIS_ROTATE * 1 +
+                            ns.XModelAxisRotate.ANGLE] * blend_rate;
                     }
 
                     // 変換
@@ -212,14 +214,14 @@
     };
 
     /**
-     * 変換構造をリセットします。
+     * パラメータ構造をリセットします。
      *
      * @memberof xpl.XModelTransformUtils
      * @function resetTransform
      * @param {xpl.XModelTransform} transform - 対象の変換構造
-     * @param {xpl.enum_t} [slot=xpl.] - リセットするスロット番号
+     * @param {xpl.uint32_t} [slot=0] - リセットするスロット番号
      */
-    ns.XModelTransformUtils.resetTransform = function (transform, slot) {
+    ns.XModeParameterUtils.resetParameter = function (transform, slot) {
         slot = ns.defaultValue(slot, 0);
 
         if (transform != null) {
