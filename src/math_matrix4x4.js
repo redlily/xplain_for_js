@@ -43,7 +43,6 @@
      * 4*4の行列のユーティリティクラスです。
      *
      * @namespace xpl.Matrix4x4
-     * @author Syuuhei Kuno
      */
     ns.Matrix4x4 = function () {
         throw new Error("Unsupported operation!");
@@ -59,25 +58,25 @@
      *
      * @memberof xpl.Matrix4x4
      * @function load
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} m00 - 入力元の行列の0, 0の要素
-     * @param {Number} m01 - 入力元の行列の0, 0の要素
-     * @param {Number} m02 - 入力元の行列の0, 0の要素
-     * @param {Number} m03 - 入力元の行列の0, 0の要素
-     * @param {Number} m10 - 入力元の行列の1, 1の要素
-     * @param {Number} m11 - 入力元の行列の1, 1の要素
-     * @param {Number} m12 - 入力元の行列の1, 1の要素
-     * @param {Number} m13 - 入力元の行列の1, 1の要素
-     * @param {Number} m20 - 入力元の行列の2, 2の要素
-     * @param {Number} m21 - 入力元の行列の2, 2の要素
-     * @param {Number} m22 - 入力元の行列の2, 2の要素
-     * @param {Number} m23 - 入力元の行列の2, 2の要素
-     * @param {Number} m30 - 入力元の行列の3, 3の要素
-     * @param {Number} m31 - 入力元の行列の3, 3の要素
-     * @param {Number} m32 - 入力元の行列の3, 3の要素
-     * @param {Number} m33 - 入力元の行列の3, 3の要素
-     * @param {Boolean} [trans=false] - 行列の要素を転置するかどうか
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} m00 - 入力元の行列の0, 0の要素
+     * @param {number} m01 - 入力元の行列の0, 0の要素
+     * @param {number} m02 - 入力元の行列の0, 0の要素
+     * @param {number} m03 - 入力元の行列の0, 0の要素
+     * @param {number} m10 - 入力元の行列の1, 1の要素
+     * @param {number} m11 - 入力元の行列の1, 1の要素
+     * @param {number} m12 - 入力元の行列の1, 1の要素
+     * @param {number} m13 - 入力元の行列の1, 1の要素
+     * @param {number} m20 - 入力元の行列の2, 2の要素
+     * @param {number} m21 - 入力元の行列の2, 2の要素
+     * @param {number} m22 - 入力元の行列の2, 2の要素
+     * @param {number} m23 - 入力元の行列の2, 2の要素
+     * @param {number} m30 - 入力元の行列の3, 3の要素
+     * @param {number} m31 - 入力元の行列の3, 3の要素
+     * @param {number} m32 - 入力元の行列の3, 3の要素
+     * @param {number} m33 - 入力元の行列の3, 3の要素
+     * @param {boolean} [trans=false] - 行列の要素を転置するかどうか
      */
     ns.Matrix4x4.load = function (d, d_off,
                                   m00, m01, m02, m03,
@@ -134,11 +133,11 @@
      *
      * @memberof xpl.Matrix4x4
      * @function loadv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} m - 入力元の行列
-     * @param {Number} m_off - 入力元の行列の配列インデックス
-     * @param {Boolean} [trans=false] - 行列の要素を転置するかどうか
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} m - 入力元の行列
+     * @param {number} m_off - 入力元の行列の配列インデックス
+     * @param {boolean} [trans=false] - 行列の要素を転置するかどうか
      */
     ns.Matrix4x4.loadv = function (d, d_off, m, m_off, trans) {
         ns.Matrix4x4.load(
@@ -160,8 +159,8 @@
      *
      * @memberof xpl.Matrix4x4
      * @function loadZero
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
      */
     ns.Matrix4x4.loadZero = function (d, d_off) {
         ns.Matrix4x4.load(
@@ -183,8 +182,8 @@
      *
      * @memberof xpl.Matrix4x4
      * @function loadIdentity
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
      */
     ns.Matrix4x4.loadIdentity = function (d, d_off) {
         ns.Matrix4x4.load(
@@ -203,13 +202,13 @@
      *
      * @memberof xpl.Matrix4x4
      * @function lrepv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} a - 開始の行列
-     * @param {Number} a_off - 開始の行列の配列インデックス
-     * @param {Array.<Number>} b - 終了の行列
-     * @param {Number} b_off - 終了の行列の配列インデックス
-     * @param {Number} t - 補完係数
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} a - 開始の行列
+     * @param {number} a_off - 開始の行列の配列インデックス
+     * @param {Array.<number>} b - 終了の行列
+     * @param {number} b_off - 終了の行列の配列インデックス
+     * @param {number} t - 補完係数
      */
     ns.Matrix4x4.lrepv = function (d, d_off, a, a_off, b, b_off, t) {
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
@@ -242,10 +241,10 @@
      *
      * @memberof xpl.Matrix4x4
      * @function transposev
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} m - 対象の行列
-     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} m - 対象の行列
+     * @param {number} m_off - 対象の行列の配列インデックス
      */
     ns.Matrix4x4.transposev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
@@ -277,9 +276,9 @@
      *
      * @memberof xpl.Matrix4x4
      * @function determinant
-     * @param {Array.<Number>} m - 対象の行列
-     * @param {Number} m_off - 対象の行列の配列インデックス
-     * @returns {Number} 行列式
+     * @param {Array.<number>} m - 対象の行列
+     * @param {number} m_off - 対象の行列の配列インデックス
+     * @returns {number} 行列式
      */
     ns.Matrix4x4.determinant = function (m, m_off) {
         let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
@@ -298,10 +297,10 @@
      *
      * @memberof xpl.Matrix4x4
      * @function inversev
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} m - 対象の行列
-     * @param {Number} m_off - 対象の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} m - 対象の行列
+     * @param {number} m_off - 対象の行列の配列インデックス
      */
     ns.Matrix4x4.inversev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
@@ -355,40 +354,40 @@
      *
      * @memberof xpl.Matrix4x4
      * @function add
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
-     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
-     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
-     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
-     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
-     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
-     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
-     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
-     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
-     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
-     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
-     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
-     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
-     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
-     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
-     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
-     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
-     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
-     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
-     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
-     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
-     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
-     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
-     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
-     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
-     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
-     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
-     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
-     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
-     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
-     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
-     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.add = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -415,12 +414,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function addv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} a - 演算子の左側の行列
-     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<Number>} b - 演算子の右側の行列
-     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.addv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.add(
@@ -442,40 +441,40 @@
      *
      * @memberof xpl.Matrix4x4
      * @function sub
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
-     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
-     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
-     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
-     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
-     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
-     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
-     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
-     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
-     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
-     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
-     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
-     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
-     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
-     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
-     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
-     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
-     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
-     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
-     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
-     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
-     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
-     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
-     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
-     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
-     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
-     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
-     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
-     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
-     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
-     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
-     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.sub = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -502,12 +501,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function subv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} a - 演算子の左側の行列
-     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<Number>} b - 演算子の右側の行列
-     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.subv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.sub(
@@ -529,40 +528,40 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mul
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
-     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
-     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
-     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
-     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
-     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
-     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
-     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
-     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
-     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
-     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
-     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
-     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
-     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
-     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
-     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
-     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
-     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
-     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
-     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
-     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
-     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
-     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
-     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
-     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
-     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
-     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
-     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
-     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
-     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
-     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
-     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.mul = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -601,12 +600,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} a - 演算子の左側の行列
-     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<Number>} b - 演算子の右側の行列
-     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.mulv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.mul(
@@ -628,25 +627,25 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulScalar
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} m00 - 対象の行列の0, 0の要素
-     * @param {Number} m01 - 対象の行列の0, 1の要素
-     * @param {Number} m02 - 対象の行列の0, 2の要素
-     * @param {Number} m03 - 対象の行列の0, 3の要素
-     * @param {Number} m10 - 対象の行列の1, 0の要素
-     * @param {Number} m11 - 対象の行列の1, 1の要素
-     * @param {Number} m12 - 対象の行列の1, 2の要素
-     * @param {Number} m13 - 対象の行列の1, 3の要素
-     * @param {Number} m20 - 対象の行列の2, 0の要素
-     * @param {Number} m21 - 対象の行列の2, 1の要素
-     * @param {Number} m22 - 対象の行列の2, 2の要素
-     * @param {Number} m23 - 対象の行列の2, 3の要素
-     * @param {Number} m30 - 対象の行列の3, 0の要素
-     * @param {Number} m31 - 対象の行列の3, 1の要素
-     * @param {Number} m32 - 対象の行列の3, 2の要素
-     * @param {Number} m33 - 対象の行列の3, 3の要素
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} m00 - 対象の行列の0, 0の要素
+     * @param {number} m01 - 対象の行列の0, 1の要素
+     * @param {number} m02 - 対象の行列の0, 2の要素
+     * @param {number} m03 - 対象の行列の0, 3の要素
+     * @param {number} m10 - 対象の行列の1, 0の要素
+     * @param {number} m11 - 対象の行列の1, 1の要素
+     * @param {number} m12 - 対象の行列の1, 2の要素
+     * @param {number} m13 - 対象の行列の1, 3の要素
+     * @param {number} m20 - 対象の行列の2, 0の要素
+     * @param {number} m21 - 対象の行列の2, 1の要素
+     * @param {number} m22 - 対象の行列の2, 2の要素
+     * @param {number} m23 - 対象の行列の2, 3の要素
+     * @param {number} m30 - 対象の行列の3, 0の要素
+     * @param {number} m31 - 対象の行列の3, 1の要素
+     * @param {number} m32 - 対象の行列の3, 2の要素
+     * @param {number} m33 - 対象の行列の3, 3の要素
+     * @param {number} s - 対象のスカラ
      */
     ns.Matrix4x4.mulScalar = function (d, d_off,
                                        m00, m01, m02, m03,
@@ -670,11 +669,11 @@
      *
      * @memberof xpl.Matrix4x4
      * @function mulScalarv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} m - 対象の行列
-     * @param {Number} m_off - 対象の行列の配列インデックス
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} m - 対象の行列
+     * @param {number} m_off - 対象の行列の配列インデックス
+     * @param {number} s - 対象のスカラ
      */
     ns.Matrix4x4.mulScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.mulScalar(
@@ -693,40 +692,40 @@
      *
      * @memberof xpl.Matrix4x4
      * @function div
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} a00 - 演算子の左側の行列の0, 0の要素
-     * @param {Number} a01 - 演算子の左側の行列の0, 1の要素
-     * @param {Number} a02 - 演算子の左側の行列の0, 2の要素
-     * @param {Number} a03 - 演算子の左側の行列の0, 3の要素
-     * @param {Number} a10 - 演算子の左側の行列の1, 0の要素
-     * @param {Number} a11 - 演算子の左側の行列の1, 1の要素
-     * @param {Number} a12 - 演算子の左側の行列の1, 2の要素
-     * @param {Number} a13 - 演算子の左側の行列の1, 3の要素
-     * @param {Number} a20 - 演算子の左側の行列の2, 0の要素
-     * @param {Number} a21 - 演算子の左側の行列の2, 1の要素
-     * @param {Number} a22 - 演算子の左側の行列の2, 2の要素
-     * @param {Number} a23 - 演算子の左側の行列の2, 3の要素
-     * @param {Number} a30 - 演算子の左側の行列の3, 0の要素
-     * @param {Number} a31 - 演算子の左側の行列の3, 1の要素
-     * @param {Number} a32 - 演算子の左側の行列の3, 2の要素
-     * @param {Number} a33 - 演算子の左側の行列の3, 3の要素
-     * @param {Number} b00 - 演算子の右側の行列の0, 0の要素
-     * @param {Number} b01 - 演算子の右側の行列の0, 1の要素
-     * @param {Number} b02 - 演算子の右側の行列の0, 2の要素
-     * @param {Number} b03 - 演算子の右側の行列の0, 3の要素
-     * @param {Number} b10 - 演算子の右側の行列の1, 0の要素
-     * @param {Number} b11 - 演算子の右側の行列の1, 1の要素
-     * @param {Number} b12 - 演算子の右側の行列の1, 2の要素
-     * @param {Number} b13 - 演算子の右側の行列の1, 3の要素
-     * @param {Number} b20 - 演算子の右側の行列の2, 0の要素
-     * @param {Number} b21 - 演算子の右側の行列の2, 1の要素
-     * @param {Number} b22 - 演算子の右側の行列の2, 2の要素
-     * @param {Number} b23 - 演算子の右側の行列の2, 3の要素
-     * @param {Number} b30 - 演算子の右側の行列の3, 0の要素
-     * @param {Number} b31 - 演算子の右側の行列の3, 1の要素
-     * @param {Number} b32 - 演算子の右側の行列の3, 2の要素
-     * @param {Number} b33 - 演算子の右側の行列の3, 3の要素
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} a00 - 演算子の左側の行列の0, 0の要素
+     * @param {number} a01 - 演算子の左側の行列の0, 1の要素
+     * @param {number} a02 - 演算子の左側の行列の0, 2の要素
+     * @param {number} a03 - 演算子の左側の行列の0, 3の要素
+     * @param {number} a10 - 演算子の左側の行列の1, 0の要素
+     * @param {number} a11 - 演算子の左側の行列の1, 1の要素
+     * @param {number} a12 - 演算子の左側の行列の1, 2の要素
+     * @param {number} a13 - 演算子の左側の行列の1, 3の要素
+     * @param {number} a20 - 演算子の左側の行列の2, 0の要素
+     * @param {number} a21 - 演算子の左側の行列の2, 1の要素
+     * @param {number} a22 - 演算子の左側の行列の2, 2の要素
+     * @param {number} a23 - 演算子の左側の行列の2, 3の要素
+     * @param {number} a30 - 演算子の左側の行列の3, 0の要素
+     * @param {number} a31 - 演算子の左側の行列の3, 1の要素
+     * @param {number} a32 - 演算子の左側の行列の3, 2の要素
+     * @param {number} a33 - 演算子の左側の行列の3, 3の要素
+     * @param {number} b00 - 演算子の右側の行列の0, 0の要素
+     * @param {number} b01 - 演算子の右側の行列の0, 1の要素
+     * @param {number} b02 - 演算子の右側の行列の0, 2の要素
+     * @param {number} b03 - 演算子の右側の行列の0, 3の要素
+     * @param {number} b10 - 演算子の右側の行列の1, 0の要素
+     * @param {number} b11 - 演算子の右側の行列の1, 1の要素
+     * @param {number} b12 - 演算子の右側の行列の1, 2の要素
+     * @param {number} b13 - 演算子の右側の行列の1, 3の要素
+     * @param {number} b20 - 演算子の右側の行列の2, 0の要素
+     * @param {number} b21 - 演算子の右側の行列の2, 1の要素
+     * @param {number} b22 - 演算子の右側の行列の2, 2の要素
+     * @param {number} b23 - 演算子の右側の行列の2, 3の要素
+     * @param {number} b30 - 演算子の右側の行列の3, 0の要素
+     * @param {number} b31 - 演算子の右側の行列の3, 1の要素
+     * @param {number} b32 - 演算子の右側の行列の3, 2の要素
+     * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
     ns.Matrix4x4.div = function (d, d_off,
                                  a00, a01, a02, a03,
@@ -793,12 +792,12 @@
      *
      * @memberof xpl.Matrix4x4
      * @function divv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} a - 演算子の左側の行列
-     * @param {Number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<Number>} b - 演算子の右側の行列
-     * @param {Number} b_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number} a_off - 演算子の左側の行列の配列インデックス
+     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
     ns.Matrix4x4.divv = function (d, d_off, a, a_off, b, b_off) {
         ns.Matrix4x4.div(
@@ -820,25 +819,25 @@
      *
      * @memberof xpl.Matrix4x4
      * @function divScalar
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Number} m00 - 対象の行列の0, 0の要素
-     * @param {Number} m01 - 対象の行列の0, 1の要素
-     * @param {Number} m02 - 対象の行列の0, 2の要素
-     * @param {Number} m03 - 対象の行列の0, 3の要素
-     * @param {Number} m10 - 対象の行列の1, 0の要素
-     * @param {Number} m11 - 対象の行列の1, 1の要素
-     * @param {Number} m12 - 対象の行列の1, 2の要素
-     * @param {Number} m13 - 対象の行列の1, 3の要素
-     * @param {Number} m20 - 対象の行列の2, 0の要素
-     * @param {Number} m21 - 対象の行列の2, 1の要素
-     * @param {Number} m22 - 対象の行列の2, 2の要素
-     * @param {Number} m23 - 対象の行列の2, 3の要素
-     * @param {Number} m30 - 対象の行列の3, 0の要素
-     * @param {Number} m31 - 対象の行列の3, 1の要素
-     * @param {Number} m32 - 対象の行列の3, 2の要素
-     * @param {Number} m33 - 対象の行列の3, 3の要素
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} m00 - 対象の行列の0, 0の要素
+     * @param {number} m01 - 対象の行列の0, 1の要素
+     * @param {number} m02 - 対象の行列の0, 2の要素
+     * @param {number} m03 - 対象の行列の0, 3の要素
+     * @param {number} m10 - 対象の行列の1, 0の要素
+     * @param {number} m11 - 対象の行列の1, 1の要素
+     * @param {number} m12 - 対象の行列の1, 2の要素
+     * @param {number} m13 - 対象の行列の1, 3の要素
+     * @param {number} m20 - 対象の行列の2, 0の要素
+     * @param {number} m21 - 対象の行列の2, 1の要素
+     * @param {number} m22 - 対象の行列の2, 2の要素
+     * @param {number} m23 - 対象の行列の2, 3の要素
+     * @param {number} m30 - 対象の行列の3, 0の要素
+     * @param {number} m31 - 対象の行列の3, 1の要素
+     * @param {number} m32 - 対象の行列の3, 2の要素
+     * @param {number} m33 - 対象の行列の3, 3の要素
+     * @param {number} s - 対象のスカラ
      */
     ns.Matrix4x4.divScalar = function (d, d_off,
                                        m00, m01, m02, m03,
@@ -862,11 +861,11 @@
      *
      * @memberof xpl.Matrix4x4
      * @function divScalarv
-     * @param {Array.<Number>} d - 出力先の行列
-     * @param {Number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<Number>} m - 対象の行列
-     * @param {Number} m_off - 対象の行列の配列インデックス
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {Array.<number>} m - 対象の行列
+     * @param {number} m_off - 対象の行列の配列インデックス
+     * @param {number} s - 対象のスカラ
      */
     ns.Matrix4x4.divScalarv = function (d, d_off, m, m_off, s) {
         ns.Matrix4x4.divScalar(
@@ -883,8 +882,8 @@
      *
      * @memberof xpl.Matrix4x4
      * @function convertToString
-     * @param {Array.<Number>} m - 入力元の行列
-     * @param {Number} m_off - 入力元の行列の配列インデックス
+     * @param {Array.<number>} m - 入力元の行列
+     * @param {number} m_off - 入力元の行列の配列インデックス
      * @returns {String} The converted matrix to string.
      */
     ns.Matrix4x4.convertToString = function (m, m_off) {

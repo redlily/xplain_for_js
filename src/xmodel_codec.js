@@ -39,7 +39,6 @@
      *
      * @class
      * @alias xpl.XModelCodec
-     * @author Syuuhei Kuno
      */
     ns.XModelCodec = function () {
     };
@@ -51,7 +50,7 @@
          *
          * @constant
          * @memberof xpl.XModelCodec
-         * @member {String} CODE_NAME
+         * @member {string} CODE_NAME
          */
         "CODE_NAME": {
             value: "EX-MACHINA"
@@ -112,7 +111,7 @@
          *
          * @constant
          * @memberof xpl.XModelCodec
-         * @member {String} VERSION_NAME
+         * @member {string} VERSION_NAME
          */
         "VERSION_NAME": {
             value: "0.9.90"
@@ -123,7 +122,7 @@
          *
          * @constant
          * @memberof xpl.XModelCodec
-         * @member {String} COMPATIBILITY_VERSION_NAME
+         * @member {string} COMPATIBILITY_VERSION_NAME
          */
         "COMPATIBILITY_VERSION_NAME": {
             value: "0.9.90"

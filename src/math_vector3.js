@@ -45,9 +45,6 @@
      * 3次元ベクトルのユーティリティクラスです。
      *
      * @namespace xpl.Vector3
-     * @see xpl.Matrix4x4
-     * @see xpl.Quaternion
-     * @author Syuuhei Kuno
      */
     ns.Vector3 = function () {
         throw new Error("Unsupported operation!");
@@ -60,11 +57,11 @@
      *
      * @memberof xpl.Vector3
      * @function load
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x - 入力元のベクトルのX要素
-     * @param {Number} y - 入力元のベクトルのY要素
-     * @param {Number} z - 入力元のベクトルのZ要素
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x - 入力元のベクトルのX要素
+     * @param {number} y - 入力元のベクトルのY要素
+     * @param {number} z - 入力元のベクトルのZ要素
      */
     ns.Vector3.load = function (d, d_off, x, y, z) {
         d[d_off + VX] = x;
@@ -79,10 +76,10 @@
      *
      * @memberof xpl.Vector3
      * @function loadv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v - 入力元のベクトル
-     * @param {Number} v_off - 入力元のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v - 入力元のベクトル
+     * @param {number} v_off - 入力元のベクトルの配列インデックス
      */
     ns.Vector3.loadv = function (d, d_off, v, v_off) {
         ns.Vector3.load(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
@@ -95,8 +92,8 @@
      *
      * @memberof xpl.Vector3
      * @function loadZero
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
      */
     ns.Vector3.loadZero = function (d, d_off) {
         ns.Vector3.load(d, d_off, 0, 0, 0);
@@ -109,9 +106,9 @@
      *
      * @memberof xpl.Vector3
      * @function lenSq
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
-     * @returns {Number} ベクトルの長さの2乗の値
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
+     * @returns {number} ベクトルの長さの2乗の値
      */
     ns.Vector3.lenSq = function (v, v_off) {
         let x = v[v_off + VX];
@@ -127,9 +124,9 @@
      *
      * @memberof xpl.Vector3
      * @function len
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
-     * @returns {Number} ベクトルの長さ
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
+     * @returns {number} ベクトルの長さ
      */
     ns.Vector3.len = function (v, v_off) {
         return Math.sqrt(ns.Vector3.lenSq(v, v_off));
@@ -142,10 +139,10 @@
      *
      * @memberof xpl.Vector3
      * @function normalizevS
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
      */
     ns.Vector3.normalizev = function (d, d_off, v, v_off) {
         let x = v[v_off + VX];
@@ -167,15 +164,15 @@
      *
      * @memberof xpl.Vector3
      * @function lerp
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x1 - 開始のベクトルのX要素
-     * @param {Number} y1 - 開始のベクトルのY要素
-     * @param {Number} z1 - 開始のベクトルのZ要素
-     * @param {Number} x2 - 終了のベクトルのX要素
-     * @param {Number} y2 - 終了のベクトルのY要素
-     * @param {Number} z2 - 終了のベクトルのZ要素
-     * @param {Number} t - 補間係数
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x1 - 開始のベクトルのX要素
+     * @param {number} y1 - 開始のベクトルのY要素
+     * @param {number} z1 - 開始のベクトルのZ要素
+     * @param {number} x2 - 終了のベクトルのX要素
+     * @param {number} y2 - 終了のベクトルのY要素
+     * @param {number} z2 - 終了のベクトルのZ要素
+     * @param {number} t - 補間係数
      */
     ns.Vector3.lerp = function (d, d_off, x1, y1, z1, x2, y2, z2, t) {
         let t1 = 1.0 - t;
@@ -189,13 +186,13 @@
      *
      * @memberof xpl.Vector3
      * @function lerpv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v1 - 開始のベクトル
-     * @param {Number} v1_off - 開始のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 終了のベクトル
-     * @param {Number} v2_off - 終了のベクトルの配列インデックス
-     * @param {Number} t - 補間係数
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v1 - 開始のベクトル
+     * @param {number} v1_off - 開始のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 終了のベクトル
+     * @param {number} v2_off - 終了のベクトルの配列インデックス
+     * @param {number} t - 補間係数
      */
     ns.Vector3.lerpv = function (d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.lerp(
@@ -212,15 +209,15 @@
      *
      * @memberof xpl.Vector3
      * @function slerp
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x1 - 開始のベクトルのX要素
-     * @param {Number} y1 - 開始のベクトルのY要素
-     * @param {Number} z1 - 開始のベクトルのZ要素
-     * @param {Number} x2 - 終了のベクトルのX要素
-     * @param {Number} y2 - 終了のベクトルのY要素
-     * @param {Number} z2 - 終了のベクトルのZ要素
-     * @param {Number} t - 補間係数
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x1 - 開始のベクトルのX要素
+     * @param {number} y1 - 開始のベクトルのY要素
+     * @param {number} z1 - 開始のベクトルのZ要素
+     * @param {number} x2 - 終了のベクトルのX要素
+     * @param {number} y2 - 終了のベクトルのY要素
+     * @param {number} z2 - 終了のベクトルのZ要素
+     * @param {number} t - 補間係数
      */
     ns.Vector3.slerp = function (d, d_off, x1, y1, z1, x2, y2, z2, t) {
         // 開始ベクトルを正規化
@@ -284,13 +281,13 @@
      *
      * @memberof xpl.Vector3
      * @function slerpv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v1 - 開始のベクトル
-     * @param {Number} v1_off - 開始のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 終了のベクトル
-     * @param {Number} v2_off - 終了のベクトルの配列インデックス
-     * @param {Number} t - 補間係数
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v1 - 開始のベクトル
+     * @param {number} v1_off - 開始のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 終了のベクトル
+     * @param {number} v2_off - 終了のベクトルの配列インデックス
+     * @param {number} t - 補間係数
      */
     ns.Vector3.slerpv = function (d, d_off, v1, v1_off, v2, v2_off, t) {
         ns.Vector3.slerp(
@@ -307,13 +304,13 @@
      *
      * @memberof xpl.Vector3
      * @function dot
-     * @param {Number} x1 - 演算子の左側のベクトルのX要素
-     * @param {Number} y1 - 演算子の左側のベクトルのY要素
-     * @param {Number} z1 - 演算子の左側のベクトルのZ要素
-     * @param {Number} x2 - 演算子の右側のベクトルのX要素
-     * @param {Number} y2 - 演算子の右側のベクトルのY要素
-     * @param {Number} z2 - 演算子の右側のベクトルのZ要素
-     * @returns {Number} 内積値
+     * @param {number} x1 - 演算子の左側のベクトルのX要素
+     * @param {number} y1 - 演算子の左側のベクトルのY要素
+     * @param {number} z1 - 演算子の左側のベクトルのZ要素
+     * @param {number} x2 - 演算子の右側のベクトルのX要素
+     * @param {number} y2 - 演算子の右側のベクトルのY要素
+     * @param {number} z2 - 演算子の右側のベクトルのZ要素
+     * @returns {number} 内積値
      */
     ns.Vector3.dot = function (x1, y1, z1, x2, y2, z2) {
         return x1 * x2 + y1 * y2 + z1 * z2;
@@ -326,11 +323,11 @@
      *
      * @memberof xpl.Vector3
      * @function dotv
-     * @param {Array.<Number>} v1 - 演算子の左側のベクトル
-     * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 演算子の右側のベクトル
-     * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
-     * @returns {Number} 内積値
+     * @param {Array.<number>} v1 - 演算子の左側のベクトル
+     * @param {number} v1_off - 演算子の左側のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 演算子の右側のベクトル
+     * @param {number} v2_off - 演算子の右側のベクトルの配列インデックス
+     * @returns {number} 内積値
      */
     ns.Vector3.dotv = function (v1, v1_off, v2, v2_off) {
         return v1[v1_off + VX] * v2[v2_off + VX] +
@@ -345,14 +342,14 @@
      *
      * @memberof xpl.Vector3
      * @function cross
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x1 - 演算子の左側のベクトルのX要素
-     * @param {Number} y1 - 演算子の左側のベクトルのY要素
-     * @param {Number} z1 - 演算子の左側のベクトルのZ要素
-     * @param {Number} x2 - 演算子の右側のベクトルのX要素
-     * @param {Number} y2 - 演算子の右側のベクトルのY要素
-     * @param {Number} z2 - 演算子の右側のベクトルのZ要素
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x1 - 演算子の左側のベクトルのX要素
+     * @param {number} y1 - 演算子の左側のベクトルのY要素
+     * @param {number} z1 - 演算子の左側のベクトルのZ要素
+     * @param {number} x2 - 演算子の右側のベクトルのX要素
+     * @param {number} y2 - 演算子の右側のベクトルのY要素
+     * @param {number} z2 - 演算子の右側のベクトルのZ要素
      */
     ns.Vector3.cross = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, y1 * z2 - z1 * y2, z1 * x2 - x1 * z2, x1 * y2 - y1 * x2);
@@ -365,12 +362,12 @@
      *
      * @memberof xpl.Vector3
      * @function crossv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v1 - 演算子の左側のベクトル
-     * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 演算子の右側のベクトル
-     * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v1 - 演算子の左側のベクトル
+     * @param {number} v1_off - 演算子の左側のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 演算子の右側のベクトル
+     * @param {number} v2_off - 演算子の右側のベクトルの配列インデックス
      */
     ns.Vector3.crossv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.cross(
@@ -386,13 +383,13 @@
      *
      * @memberof xpl.Vector3
      * @function cos
-     * @param {Number} x1 - 演算子の左側のベクトルのX要素
-     * @param {Number} y1 - 演算子の左側のベクトルのY要素
-     * @param {Number} z1 - 演算子の左側のベクトルのZ要素
-     * @param {Number} x2 - 演算子の右側のベクトルのX要素
-     * @param {Number} y2 - 演算子の右側のベクトルのY要素
-     * @param {Number} z2 - 演算子の右側のベクトルのZ要素
-     * @returns {Number} 2つのベクトル間のcos値
+     * @param {number} x1 - 演算子の左側のベクトルのX要素
+     * @param {number} y1 - 演算子の左側のベクトルのY要素
+     * @param {number} z1 - 演算子の左側のベクトルのZ要素
+     * @param {number} x2 - 演算子の右側のベクトルのX要素
+     * @param {number} y2 - 演算子の右側のベクトルのY要素
+     * @param {number} z2 - 演算子の右側のベクトルのZ要素
+     * @returns {number} 2つのベクトル間のcos値
      */
     ns.Vector3.cos = function (x1, y1, z1, x2, y2, z2) {
         // 開始ベクトルを正規化
@@ -424,11 +421,11 @@
      *
      * @memberof xpl.Vector3
      * @function cosv
-     * @param {Array.<Number>} v1 - 演算子の左側のベクトル
-     * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 演算子の右側のベクトル
-     * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
-     * @returns {Number} 2つのベクトル間のcos値
+     * @param {Array.<number>} v1 - 演算子の左側のベクトル
+     * @param {number} v1_off - 演算子の左側のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 演算子の右側のベクトル
+     * @param {number} v2_off - 演算子の右側のベクトルの配列インデックス
+     * @returns {number} 2つのベクトル間のcos値
      */
     ns.Vector3.cosv = function (v1, v1_off, v2, v2_off) {
         return ns.Vector3.cos(
@@ -443,10 +440,10 @@
      *
      * @memberof xpl.Vector3
      * @function reversev
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
      */
     ns.Vector3.reversev = function (d, d_off, v, v_off) {
         ns.Vector3.load(d, d_off, -v[v_off + VX], -v[v_off + VY], -v[v_off + VZ]);
@@ -459,14 +456,14 @@
      *
      * @memberof xpl.Vector3
      * @function add
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x1 - 演算子の左側のベクトルのX要素
-     * @param {Number} y1 - 演算子の左側のベクトルのY要素
-     * @param {Number} z1 - 演算子の左側のベクトルのZ要素
-     * @param {Number} x2 - 演算子の右側のベクトルのX要素
-     * @param {Number} y2 - 演算子の右側のベクトルのY要素
-     * @param {Number} z2 - 演算子の右側のベクトルのZ要素
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x1 - 演算子の左側のベクトルのX要素
+     * @param {number} y1 - 演算子の左側のベクトルのY要素
+     * @param {number} z1 - 演算子の左側のベクトルのZ要素
+     * @param {number} x2 - 演算子の右側のベクトルのX要素
+     * @param {number} y2 - 演算子の右側のベクトルのY要素
+     * @param {number} z2 - 演算子の右側のベクトルのZ要素
      */
     ns.Vector3.add = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, x1 + x2, y1 + y2, z1 + z2);
@@ -479,12 +476,12 @@
      *
      * @memberof xpl.Vector3
      * @function addv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v1 - 演算子の左側のベクトル
-     * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 演算子の右側のベクトル
-     * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v1 - 演算子の左側のベクトル
+     * @param {number} v1_off - 演算子の左側のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 演算子の右側のベクトル
+     * @param {number} v2_off - 演算子の右側のベクトルの配列インデックス
      */
     ns.Vector3.addv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.add(
@@ -500,14 +497,14 @@
      *
      * @memberof xpl.Vector3
      * @function sub
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x1 - 演算子の左側のベクトルのX要素
-     * @param {Number} y1 - 演算子の左側のベクトルのY要素
-     * @param {Number} z1 - 演算子の左側のベクトルのZ要素
-     * @param {Number} x2 - 演算子の右側のベクトルのX要素
-     * @param {Number} y2 - 演算子の右側のベクトルのY要素
-     * @param {Number} z2 - 演算子の右側のベクトルのZ要素
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x1 - 演算子の左側のベクトルのX要素
+     * @param {number} y1 - 演算子の左側のベクトルのY要素
+     * @param {number} z1 - 演算子の左側のベクトルのZ要素
+     * @param {number} x2 - 演算子の右側のベクトルのX要素
+     * @param {number} y2 - 演算子の右側のベクトルのY要素
+     * @param {number} z2 - 演算子の右側のベクトルのZ要素
      */
     ns.Vector3.sub = function (d, d_off, x1, y1, z1, x2, y2, z2) {
         ns.Vector3.load(d, d_off, x1 - x2, y1 - y2, z1 - z2);
@@ -520,12 +517,12 @@
      *
      * @memberof xpl.Vector3
      * @function subv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v1 - 演算子の左側のベクトル
-     * @param {Number} v1_off - 演算子の左側のベクトルの配列インデックス
-     * @param {Array.<Number>} v2 - 演算子の右側のベクトル
-     * @param {Number} v2_off - 演算子の右側のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v1 - 演算子の左側のベクトル
+     * @param {number} v1_off - 演算子の左側のベクトルの配列インデックス
+     * @param {Array.<number>} v2 - 演算子の右側のベクトル
+     * @param {number} v2_off - 演算子の右側のベクトルの配列インデックス
      */
     ns.Vector3.subv = function (d, d_off, v1, v1_off, v2, v2_off) {
         ns.Vector3.sub(
@@ -541,12 +538,12 @@
      *
      * @memberof xpl.Vector3
      * @function mul
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Number} x - 対象のベクトルのX要素
-     * @param {Number} y - 対象のベクトルのY要素
-     * @param {Number} z - 対象のベクトルのZ要素
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {number} x - 対象のベクトルのX要素
+     * @param {number} y - 対象のベクトルのY要素
+     * @param {number} z - 対象のベクトルのZ要素
+     * @param {number} s - 対象のスカラ
      */
     ns.Vector3.mul = function (d, d_off, x, y, z, s) {
         ns.Vector3.load(d, d_off, x * s, y * s, z * s);
@@ -559,11 +556,11 @@
      *
      * @memberof xpl.Vector3
      * @function mulv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
+     * @param {number} s - 対象のスカラ
      */
     ns.Vector3.mulv = function (d, d_off, v, v_off, s) {
         ns.Vector3.mul(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
@@ -576,12 +573,12 @@
      *
      * @memberof xpl.Vector3
      * @function mulQuaternionv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} q - 対象の四元数
-     * @param {Number} q_off - 対象の四元数の配列インデックス
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} q - 対象の四元数
+     * @param {number} q_off - 対象の四元数の配列インデックス
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
      */
     ns.Vector3.mulQuaternionv = function (d, d_off, q, q_off, v, v_off) {
         let rp = q[q_off + CR];
@@ -624,13 +621,13 @@
      *
      * @memberof xpl.Vector3
      * @function mulMatrix4x4v
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} a1 - 演算子の左側の数値
-     * @param {Number} a1_off - 演算子の左側の数値の配列インデックス
-     * @param {Array.<Number>} a2 - 演算子の右側の数値
-     * @param {Number} a2_off - 演算子の右側の数値の配列インデックス
-     * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} a1 - 演算子の左側の数値
+     * @param {number} a1_off - 演算子の左側の数値の配列インデックス
+     * @param {Array.<number>} a2 - 演算子の右側の数値
+     * @param {number} a2_off - 演算子の右側の数値の配列インデックス
+     * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         column = ns.defaultValue(column, true);
@@ -676,13 +673,13 @@
      *
      * @memberof xpl.Vector3
      * @function mulMatrix4x4Axisv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} a1 - 演算子の左側の数値
-     * @param {Number} a1_off - 演算子の左側の数値の配列インデックス
-     * @param {Array.<Number>} a2 - 演算子の右側の数値
-     * @param {Number} a2_off - 演算子の右側の数値の配列インデックス
-     * @param {Boolean} [column=true] - 指定されている列ベクトルかどうか
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} a1 - 演算子の左側の数値
+     * @param {number} a1_off - 演算子の左側の数値の配列インデックス
+     * @param {Array.<number>} a2 - 演算子の右側の数値
+     * @param {number} a2_off - 演算子の右側の数値の配列インデックス
+     * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
         column = ns.defaultValue(column, true);
@@ -717,12 +714,12 @@
      *
      * @memberof xpl.Vector3
      * @function div
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} off - 出力先のベクトルの配列インデックス
-     * @param {Number} x - 対象のベクトルのX要素
-     * @param {Number} y - 対象のベクトルのY要素
-     * @param {Number} z - 対象のベクトルのZ要素
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} off - 出力先のベクトルの配列インデックス
+     * @param {number} x - 対象のベクトルのX要素
+     * @param {number} y - 対象のベクトルのY要素
+     * @param {number} z - 対象のベクトルのZ要素
+     * @param {number} s - 対象のスカラ
      */
     ns.Vector3.div = function (d, off, x, y, z, s) {
         ns.Vector3.load(d, off, x * s, y * s, z * s);
@@ -735,11 +732,11 @@
      *
      * @memberof xpl.Vector3
      * @function divv
-     * @param {Array.<Number>} d - 出力先のベクトル
-     * @param {Number} d_off - 出力先のベクトルの配列インデックス
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} v_off - 対象のベクトルの配列インデックス
-     * @param {Number} s - 対象のスカラ
+     * @param {Array.<number>} d - 出力先のベクトル
+     * @param {number} d_off - 出力先のベクトルの配列インデックス
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} v_off - 対象のベクトルの配列インデックス
+     * @param {number} s - 対象のスカラ
      */
     ns.Vector3.divv = function (d, d_off, v, v_off, s) {
         ns.Vector3.div(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], s);
@@ -750,8 +747,8 @@
      *
      * @memberof xpl.Vector3
      * @function convertToString
-     * @param {Array.<Number>} v - 対象のベクトル
-     * @param {Number} off - 対象のベクトルの配列オフセット
+     * @param {Array.<number>} v - 対象のベクトル
+     * @param {number} off - 対象のベクトルの配列オフセット
      * @returns {String} 変換された文字列
      */
     ns.Vector3.convertToString = function (v, off) {

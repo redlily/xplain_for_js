@@ -48,6 +48,12 @@
 
     Object.setPrototypeOf(ns.XModelParameter.prototype, ns.XModelStructure.prototype);
 
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
+
     /**
      * 変換構造の基礎構造です。
      *
@@ -62,6 +68,12 @@
     };
 
     Object.setPrototypeOf(ns.XModelTransform.prototype, ns.XModelParameter.prototype);
+
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
 
     /**
      * 軸回転の変換構造です。
@@ -157,6 +169,12 @@
         }
     });
 
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
+
     /**
      * 四元数の変換構造です。
      *
@@ -192,6 +210,12 @@
     };
 
     Object.setPrototypeOf(ns.XModelQuaternion.prototype, ns.XModelTransform.prototype);
+
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
 
     /**
      * 拡大の変換構造です。
@@ -229,6 +253,12 @@
 
     Object.setPrototypeOf(ns.XModelScale.prototype, ns.XModelTransform.prototype);
 
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
+
     /**
      * 平行移動の変換構造です。
      *
@@ -264,6 +294,12 @@
     };
 
     Object.setPrototypeOf(ns.XModelTranslate.prototype, ns.XModelTransform.prototype);
+
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
 
     /**
      * 行列の変換構造です。

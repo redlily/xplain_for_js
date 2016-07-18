@@ -46,7 +46,7 @@
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_CONTAINER);
 
         /**
-         * string : The container name.
+         * string : コンテナ名
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -55,7 +55,7 @@
         this.name = null;
 
         /**
-         * uint16_t : The Number of textures.
+         * uint16_t : テクスチャの数
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -64,7 +64,7 @@
         this.num_textures = 0;
 
         /**
-         * XModelTexture[num_textures] : The array of textures.
+         * XModelTexture[num_textures] : テクスチャの配列
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -73,7 +73,7 @@
         this.textures = null;
 
         /**
-         * uint16_t : The number of materials.
+         * uint16_t : 材質の数
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -82,7 +82,7 @@
         this.num_materials = 0;
 
         /**
-         * XModelMaterial[num_materials] : The array of materials.
+         * XModelMaterial[num_materials] : 材質の配列
          *
          * @instance
          * @memberof xpl.XModelContainer

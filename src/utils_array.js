@@ -38,7 +38,6 @@
      * 配列用のユーティリティクラスです。
      *
      * @namespace xpl.ArrayUtils
-     * @author Syuuhei Kuno
      */
     ns.ArrayUtils = function () {
         throw new Error("Unsupported operation!");
@@ -50,7 +49,7 @@
      * @callback xpl.ArrayUtils~comparator
      * @param {Object} v1 - 演算子の左側の値
      * @param {Object} v2 - 演算子の右側の値
-     * @returns {Number} 比較の結果、
+     * @returns {number} 比較の結果、
      *              値が0の場合は等しく、
      *              0以上の正の値の場合は左側の値の方が大きく
      *              0以下の負の数の場合は右側の値の方が大きくなります。
@@ -62,10 +61,10 @@
      * @memberof xpl.ArrayUtils
      * @function copy
      * @param {Array} src - 入力元の配列
-     * @param {Number} src_off - 入力元の配列オフセット
+     * @param {number} src_off - 入力元の配列オフセット
      * @param {Array} dest - The 出力先の配列
-     * @param {Number} dest_off - 出力先の配列オフセット
-     * @param {Number} len - コピーする要素の数
+     * @param {number} dest_off - 出力先の配列オフセット
+     * @param {number} len - コピーする要素の数
      */
     ns.ArrayUtils.copy = function (src, src_off, dest, dest_off, len) {
         for (let i = 0; i < len; ++i) {
@@ -79,9 +78,9 @@
      * @memberof xpl.ArrayUtils
      * @function fill
      * @param {Array} ary - 配列
-     * @param {Number} from - 配列の開始インデックス
-     * @param {Number} to - 配列の開始インデックス
-     * @param {Number} value - 指定の値
+     * @param {number} from - 配列の開始インデックス
+     * @param {number} to - 配列の開始インデックス
+     * @param {number} value - 指定の値
      */
     ns.ArrayUtils.fill = function (ary, from, to, value) {
         for (let i = from; i < to; ++i) {
@@ -95,11 +94,11 @@
      * @memberof xpl.ArrayUtils
      * @function binarySearch
      * @param {Array} ary - 配列
-     * @param {Number} from - 配列の開始インデックス
-     * @param {Number} to - 配列の開始インデックス
-     * @param {Number} key - 指定の値
+     * @param {number} from - 配列の開始インデックス
+     * @param {number} to - 配列の開始インデックス
+     * @param {number} key - 指定の値
      * @param {xpl.ArrayUtils~comparator} [comparator=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
-     * @returns {Number} 指定の値が発見された配列インデックス値、ゼロ以下の場合は指定の要素が見つからず
+     * @returns {number} 指定の値が発見された配列インデックス値、ゼロ以下の場合は指定の要素が見つからず
      */
     ns.ArrayUtils.binarySearch = function (ary, from, to, key, comparator) {
         to--;
@@ -129,8 +128,8 @@
      * @memberof xpl.ArrayUtils
      * @function convertSet
      * @param {Array} ary - 配列
-     * @param {Number} from - 配列の開始のインデックス
-     * @param {Number} to - 配列の終了のインデックス
+     * @param {number} from - 配列の開始のインデックス
+     * @param {number} to - 配列の終了のインデックス
      * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
      * @returns {Array} 重複が取り除かれた新たな配列
      */
@@ -156,13 +155,13 @@
      * @memberof xpl.ArrayUtils
      * @function isContained
      * @param {Array} superset - 上位集合
-     * @param {Number} super_from - 上位集合の配列の開始インデックス
-     * @param {Number} super_to - 上位集合の配列の終了インデックス
+     * @param {number} super_from - 上位集合の配列の開始インデックス
+     * @param {number} super_to - 上位集合の配列の終了インデックス
      * @param {Array} subset - 下位集合
-     * @param {Number} sub_from - 下位集合の配列の開始インデックス
-     * @param {Number} sub_to - 下位集合の配列の終了インデックス
+     * @param {number} sub_from - 下位集合の配列の開始インデックス
+     * @param {number} sub_to - 下位集合の配列の終了インデックス
      * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
-     * @return {Boolean} 内包されているかどうか
+     * @return {boolean} 内包されているかどうか
      */
     ns.ArrayUtils.isContained = function (superset, super_from, super_to, subset, sub_from, sub_to, comp) {
         if (sub_to - sub_from <= super_to - super_from) {

@@ -37,8 +37,7 @@
     /**
      * システムのユーティリティクラスです。
      *
-     * @author Syuuhei Kuno
-     * @namespace xpl.StringUtils
+     * @namespace xpl.SystemUtils
      */
     ns.SystemUtils = function () {
         throw new Error("Unsupported operation!");
@@ -92,7 +91,7 @@
         /**
          * フルスクリーンをサポートしているかどうかを調べます。
          *
-         * @returns {Boolean} フルスクリーンをサポートしているかどうか
+         * @returns {boolean} フルスクリーンをサポートしているかどうか
          */
         ns.SystemUtils.isSupportedFullScreen = function (target_element) {
             return (target_element.requestFullscreen ||
@@ -107,7 +106,7 @@
          * @memberof xpl.SystemUtils
          * @function requestFullScreen
          * @param {Element} target_element - フルスクリーンの対象になる対象の要素
-         * @returns {Boolean} フルスクリーンに成功したかどうか
+         * @returns {boolean} フルスクリーンに成功したかどうか
          */
         ns.SystemUtils.requestFullScreen = function (target_element) {
             if (typeof target_element.requestFullscreen == "function") {
@@ -131,7 +130,7 @@
         /**
          * フルスクリーンかどうかを調べます。
          *
-         * @returns {Boolean} フルスクリーンかどうか
+         * @returns {boolean} フルスクリーンかどうか
          */
         ns.SystemUtils.isFullScreen = function () {
             return window.innerWidth == screen.width && window.innerHeight == screen.height;
@@ -144,7 +143,9 @@
          * @function cancelFullScreen
          */
         ns.SystemUtils.cancelFullScreen = function () {
-            exitFullscreen()
+            if (exitFullscreen != null) {
+                exitFullscreen();
+            }
         };
     }
 

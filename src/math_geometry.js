@@ -38,7 +38,6 @@
      * 幾何学ユーティリティの基底クラスです。
      *
      * @namespace xpl.Geometry
-     * @author Syuuhei Kuno
      */
     ns.Geometry = function () {
         throw new Error("Unsupported operation!");
@@ -50,12 +49,10 @@
          * ベクトルのX要素のインデックス
          *
          * @constant
-         * @memberof Geometry
+         * @memberof xpl.Geometry
          * @member {xpl.enum_t} VY
          */
-        "VX": {
-            value: 0
-        },
+        "VX": {value: 0},
 
         /**
          * ベクトルのY要素のインデックス
@@ -64,9 +61,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} VY
          */
-        "VY": {
-            value: 1
-        },
+        "VY": {value: 1},
 
         /**
          * ベクトルのZ要素のインデックス
@@ -75,9 +70,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} VZ
          */
-        "VZ": {
-            value: 2
-        },
+        "VZ": {value: 2},
 
         /**
          * ベクトルのW要素のインデックス
@@ -86,9 +79,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} VW
          */
-        "VW": {
-            value: 3
-        },
+        "VW": {value: 3},
 
         /**
          * 3次元ベクトルのサイズ
@@ -97,9 +88,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
-        "SIZE_VECTOR_3": {
-            value: 3
-        },
+        "SIZE_VECTOR_3": {value: 3},
 
         /**
          * 複素数の実数要素のインデックス
@@ -108,9 +97,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} CR
          */
-        "CR": {
-            value: 0
-        },
+        "CR": {value: 0},
 
         /**
          * 複素数の虚数I要素のインデックス
@@ -119,9 +106,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} CI
          */
-        "CI": {
-            value: 1
-        },
+        "CI": {value: 1},
 
         /**
          * 複素数の虚数J要素のインデックス
@@ -130,9 +115,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} CJ
          */
-        "CJ": {
-            value: 2
-        },
+        "CJ": {value: 2},
 
         /**
          * 複素数の虚数K要素のインデックス
@@ -141,9 +124,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} CK
          */
-        "CK": {
-            value: 3
-        },
+        "CK": {value: 3},
 
         /**
          * 四元数のサイズ
@@ -152,9 +133,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_QUATERNION
          */
-        "SIZE_QUATERNION": {
-            value: 4
-        },
+        "SIZE_QUATERNION": {value: 4},
 
         /**
          * 4×4の行列の要素 0, 0 のインデックス
@@ -163,9 +142,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_00
          */
-        "M4X4_00": {
-            value: 0
-        },
+        "M4X4_00": {value: 0},
 
         /**
          * 4×4の行列の要素 1, 0 のインデックス
@@ -174,9 +151,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_10
          */
-        "M4X4_10": {
-            value: 1
-        },
+        "M4X4_10": {value: 1},
 
         /**
          * 4×4の行列の要素 2, 0 のインデックス
@@ -185,9 +160,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_20
          */
-        "M4X4_20": {
-            value: 2
-        },
+        "M4X4_20": {value: 2},
 
         /**
          * 4×4の行列の要素 3, 0 のインデックス
@@ -196,9 +169,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_30
          */
-        "M4X4_30": {
-            value: 3
-        },
+        "M4X4_30": {value: 3},
 
         /**
          * 4×4の行列の要素 0, 1 のインデックス
@@ -207,9 +178,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_01
          */
-        "M4X4_01": {
-            value: 4
-        },
+        "M4X4_01": {value: 4},
 
         /**
          * 4×4の行列の要素 1, 1 のインデックス
@@ -218,9 +187,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_11
          */
-        "M4X4_11": {
-            value: 5
-        },
+        "M4X4_11": {value: 5},
 
         /**
          * 4×4の行列の要素 2, 1 のインデックス
@@ -229,9 +196,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_21
          */
-        "M4X4_21": {
-            value: 6
-        },
+        "M4X4_21": {value: 6},
 
         /**
          * 4×4の行列の要素 3, 1 のインデックス
@@ -240,9 +205,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_31
          */
-        "M4X4_31": {
-            value: 7
-        },
+        "M4X4_31": {value: 7},
 
         /**
          * 4×4の行列の要素 0, 2 のインデックス
@@ -251,9 +214,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_02
          */
-        "M4X4_02": {
-            value: 8
-        },
+        "M4X4_02": {value: 8},
 
         /**
          * 4×4の行列の要素 1, 2 のインデックス
@@ -262,9 +223,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_12
          */
-        "M4X4_12": {
-            value: 9
-        },
+        "M4X4_12": {value: 9},
 
         /**
          * 4×4の行列の要素 2, 2 のインデックス
@@ -273,9 +232,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_22
          */
-        "M4X4_22": {
-            value: 10
-        },
+        "M4X4_22": {value: 10},
 
         /**
          * 4×4の行列の要素 3, 2 のインデックス
@@ -284,9 +241,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_32
          */
-        "M4X4_32": {
-            value: 11
-        },
+        "M4X4_32": {value: 11},
 
         /**
          * 4×4の行列の要素 0, 3 のインデックス
@@ -295,9 +250,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_03
          */
-        "M4X4_03": {
-            value: 12
-        },
+        "M4X4_03": {value: 12},
 
         /**
          * 4×4の行列の要素 1, 3 のインデックス
@@ -306,9 +259,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_13
          */
-        "M4X4_13": {
-            value: 13
-        },
+        "M4X4_13": {value: 13},
 
         /**
          * 4×4の行列の要素 2, 3 のインデックス
@@ -317,9 +268,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_23
          */
-        "M4X4_23": {
-            value: 14
-        },
+        "M4X4_23": {value: 14},
 
         /**
          * 4×4の行列の要素 3, 3 のインデックス
@@ -328,9 +277,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.enum_t} M4X4_33
          */
-        "M4X4_33": {
-            value: 15
-        },
+        "M4X4_33": {value: 15},
 
         /**
          * 4×4の行列のサイズ
@@ -339,9 +286,7 @@
          * @memberof xpl.Geometry
          * @member {xpl.size_t} SIZE_MATRIX_4X4
          */
-        "SIZE_MATRIX_4X4": {
-            value: 16
-        }
+        "SIZE_MATRIX_4X4": {value: 16}
     });
 
 })(xpl);

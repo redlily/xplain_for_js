@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelMeshBase
      * @augments xpl.XModelStructure
-     * @author Syuuhei Kuno
      */
     ns.XModelMeshBase = function (structure_type) {
         ns.XModelExtensible.call(this, structure_type);
@@ -48,7 +47,7 @@
         // 作業変数
 
         /**
-         * Object : The vertex buffer object.
+         * Object : 頂点バッファのオブジェクト
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -57,7 +56,7 @@
         this.vertex_buffer = null;
 
         /**
-         * Object : The vertex array object.
+         * Object : 頂点配列のオブジェクト
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -66,7 +65,7 @@
         this.vertex_array = null;
 
         /**
-         * Object : The element buffer object.
+         * Object : 要素バッファのオブジェクト
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -89,13 +88,12 @@
      * @class
      * @alias xpl.XModelMesh
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelMesh = function () {
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH);
 
         /**
-         * string : The mesh name.
+         * string : メッシュ名
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -104,7 +102,7 @@
         this.name = null;
 
         /**
-         * uint32_t : The number of positions.
+         * uint32_t : 位置の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -113,7 +111,7 @@
         this.num_positions = 0;
 
         /**
-         * uint8_t : The vector size of position.
+         * uint8_t : 位置のサイズ
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -122,7 +120,7 @@
         this.position_size = 0;
 
         /**
-         * float32_t[position_size * num_positions] : The position array.
+         * float32_t[position_size * num_positions] : 位置の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -131,7 +129,7 @@
         this.positions = null;
 
         /**
-         * uint32_t : The number of normals.
+         * uint32_t : 法線の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -140,7 +138,7 @@
         this.num_normals = 0;
 
         /**
-         * uint8_t : The vector size of normal.
+         * uint8_t : 法線のサイズ
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -149,7 +147,7 @@
         this.normal_size = 0;
 
         /**
-         * float32_t[normal_size * num_normals] : The normal array.
+         * float32_t[normal_size * num_normals] : 法線の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -158,7 +156,7 @@
         this.normals = null;
 
         /**
-         * uint32_t : The number of colors.
+         * uint32_t : 色の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -167,7 +165,7 @@
         this.num_colors = 0;
 
         /**
-         * uint8_t : The vector size of color.
+         * uint8_t : 色のサイズ
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -176,7 +174,7 @@
         this.color_size = 0;
 
         /**
-         * float32_t[color_size * num_colors] : The color array.
+         * float32_t[color_size * num_colors] : 色の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -185,7 +183,7 @@
         this.colors = null;
 
         /**
-         * uint32_t : The number of texture coordinates.
+         * uint32_t : テクスチャ座標の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -194,7 +192,7 @@
         this.num_tex_coords = 0;
 
         /**
-         * uint8_t : The vector size of texture coordinate.
+         * uint8_t : テクスチャ座標のサイズ
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -203,7 +201,7 @@
         this.tex_coord_size = 0;
 
         /**
-         * float32_t[tex_coord_size * num_tex_coords] : The texture coordinate array.
+         * float32_t[tex_coord_size * num_tex_coords] : テクスチャ座標の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -212,7 +210,7 @@
         this.tex_coords = null;
 
         /**
-         * XModelSkin : The skin structure.
+         * XModelSkin : スキン構造
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -221,7 +219,7 @@
         this.skin = null;
 
         /**
-         * uint32_t : The number of vertices.
+         * uint32_t : 頂点の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -230,7 +228,7 @@
         this.num_vertices = 0;
 
         /**
-         * XModelVertex[num_vertices] : The vertex array.
+         * XModelVertex[num_vertices] : 頂点の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -239,7 +237,7 @@
         this.vertices = null;
 
         /**
-         * uint16_t : The number of materials.
+         * uint16_t : 材質の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -248,7 +246,7 @@
         this.num_materials = 0;
 
         /**
-         * XModelMaterial[num_materials] : The material array.
+         * XModelMaterial[num_materials] : 材質の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -257,7 +255,7 @@
         this.materials = null;
 
         /**
-         * uint32_t : The number of elements.
+         * uint32_t : 要素の数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -266,7 +264,7 @@
         this.num_elements = 0;
 
         /**
-         * XModelElement[num_elements] : The element array.
+         * XModelElement[num_elements] : 要素の配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -275,7 +273,7 @@
         this.elements = null;
 
         /**
-         * int16_t : The number of subset meshs of this mesh.
+         * int16_t : サブセットの数
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -284,7 +282,7 @@
         this.num_subsets = 0;
 
         /**
-         * XModelMeshSubset[num_subset] : The subset mesh array of this mesh.
+         * XModelMeshSubset[num_subset] : サブセットの配列
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -295,7 +293,7 @@
         // 作業変数
 
         /**
-         * XModelNode : The parent of this mesh.
+         * XModelNode : 親のノード
          *
          * @instance
          * @memberof xpl.XModelMesh
@@ -333,12 +331,12 @@
     });
 
     /**
-     * Get the name of this mesh.
+     * メッシュ名を取得します。
      *
      * @instance
      * @memberof xpl.XModelMesh
      * @function toString
-     * @returns {String} The name of this mesh.
+     * @returns {String} メッシュ名
      */
     ns.XModelMesh.prototype.toString = function () {
         return this.name;
@@ -361,7 +359,7 @@
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
 
         /**
-         * uint32_t : The number of bone indices.
+         * uint32_t : ボーンの数
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -370,7 +368,7 @@
         this.num_bones = 0;
 
         /**
-         * uint32_t[num_bones] : The indices of bone indices that are sorted in ascending order.
+         * uint32_t[num_bones] : ボーンの配列
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -379,7 +377,7 @@
         this.bones = null;
 
         /**
-         * uint32_t : The number of vertices.
+         * uint32_t : 頂点の数
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -388,7 +386,7 @@
         this.num_vertices = 0;
 
         /**
-         * uint32_t[num_vertices] : The indices of vertices that are sorted in ascending order.
+         * uint32_t[num_vertices] : 頂点の配列
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -397,7 +395,7 @@
         this.vertices = null;
 
         /**
-         * uint32_t : The number of elements.
+         * uint32_t : 要素の数
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -406,7 +404,7 @@
         this.num_elements = 0;
 
         /**
-         * XModelElement[num_elements] : The indices of element that are sorted in ascending order.
+         * XModelElement[num_elements] : 要素の配列
          *
          * @instance
          * @memberof xpl.XModelMeshSubset

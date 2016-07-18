@@ -34,7 +34,6 @@
  * xPlainのネームスペースの定義です。
  *
  * @namespace xpl
- * @author Syuuhei Kuno
  */
 var xpl = null;
 if (typeof module == "object") {
@@ -75,13 +74,11 @@ if (typeof module == "object") {
         /**
          * Node.jsで動作している場合の識別子
          *
-         * @constant
+         * @const
          * @memberof xpl
-         * @member {String} RUNTYPE_NODE_JS
+         * @member {string} RUNTYPE_NODE_JS
          */
-        "RUNTYPE_NODE_JS": {
-            value: "Node.js"
-        },
+        "RUNTYPE_NODE_JS": {value: "Node.js"},
 
         /**
          * CommonJSで動作している場合の識別子
@@ -90,9 +87,7 @@ if (typeof module == "object") {
          * @memberof xpl
          * @member {String} RUNTYPE_COMMON_JS
          */
-        "RUNTYPE_COMMON_JS": {
-            value: "CommonJS"
-        },
+        "RUNTYPE_COMMON_JS": {value: "CommonJS"},
 
         /**
          * 直接的なリンクで動作している場合の識別子
@@ -101,9 +96,7 @@ if (typeof module == "object") {
          * @memberof xpl
          * @member {String} RUNTYPE_DIRECT_LINK
          */
-        "RUNTYPE_DIRECT_LINK": {
-            value: "Direct Link"
-        }
+        "RUNTYPE_DIRECT_LINK": {value: "Direct Link"}
     });
 
     /**
@@ -123,9 +116,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} NAME
          */
-        "NAME": {
-            value: "xPlain for JavaScript"
-        },
+        "NAME": {value: "xPlain for JavaScript"},
 
         /**
          * このライブラリのコードネーム
@@ -134,9 +125,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} CODE_NAME
          */
-        "CODE_NAME": {
-            value: "ORBIS"
-        },
+        "CODE_NAME": {value: "ORBIS"},
 
         /**
          * このライブラリの管理用の整数バージョン
@@ -145,9 +134,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {Number} VERSION_CODE
          */
-        "VERSION_CODE": {
-            value: 1
-        },
+        "VERSION_CODE": {value: 1},
 
         /**
          * このライブラリの表示用の文字列バージョン
@@ -156,9 +143,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} VERSION_NAME
          */
-        "VERSION_NAME": {
-            value: "0.9.0"
-        },
+        "VERSION_NAME": {value: "0.9.0"},
 
         /**
          * このライブラリの開発者
@@ -178,9 +163,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} COPYRIGHT
          */
-        "COPYRIGHT": {
-            value: "Copyright (c) 2016, xPlain All rights reserved."
-        },
+        "COPYRIGHT": {value: "Copyright (c) 2016, xPlain All rights reserved."},
 
         /**
          * このライブラリのライセンス
@@ -189,9 +172,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} LICENSE
          */
-        "LICENSE": {
-            value: "http://opensource.org/licenses/BSD-3-Clause"
-        },
+        "LICENSE": {value: "http://opensource.org/licenses/BSD-3-Clause"},
 
         /**
          * このライブラリのGitリポジトリURL
@@ -200,9 +181,7 @@ if (typeof module == "object") {
          * @memberof xpl.about
          * @member {String} REPOSITORY
          */
-        "REPOSITORY": {
-            value: "git@github.com:redlily/xplain_for_js.git"
-        }
+        "REPOSITORY": {value: "git@github.com:redlily/xplain_for_js.git"}
     });
 
     /**
@@ -238,17 +217,17 @@ if (typeof module == "object") {
     // JsDoc用の型定義
 
     /**
-     * @typedef {Number} xpl.size_t
-     * @typedef {Number} xpl.ptrdiff_t
-     * @typedef {Number} xpl.int8_t
-     * @typedef {Number} xpl.uint8_t
-     * @typedef {Number} xpl.int16_t
-     * @typedef {Number} xpl.uint16_t
-     * @typedef {Number} xpl.int32_t
-     * @typedef {Number} xpl.uint32_t
-     * @typedef {Number} xpl.float32_t
-     * @typedef {Number} xpl.float64_t
-     * @typedef {Number} xpl.enum_t
+     * @typedef {number} xpl.size_t
+     * @typedef {number} xpl.ptrdiff_t
+     * @typedef {number} xpl.int8_t
+     * @typedef {number} xpl.uint8_t
+     * @typedef {number} xpl.int16_t
+     * @typedef {number} xpl.uint16_t
+     * @typedef {number} xpl.int32_t
+     * @typedef {number} xpl.uint32_t
+     * @typedef {number} xpl.float32_t
+     * @typedef {number} xpl.float64_t
+     * @typedef {number} xpl.enum_t
      */
 
     /**

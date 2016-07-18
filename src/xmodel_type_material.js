@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelTexture
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelTexture = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_TEXTURE);
@@ -50,7 +49,7 @@
          *
          * @instance
          * @memberof xpl.XModelTexture
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
@@ -59,7 +58,7 @@
          *
          * @instance
          * @memberof xpl.XModelTexture
-         * @member {String} ref
+         * @member {string} ref
          */
         this.ref = null;
 
@@ -77,7 +76,7 @@
          *
          * @instance
          * @memberof xpl.XModelTexture
-         * @member {Uint8Array|Int8Array} data
+         * @member {Uint8Array} data
          */
         this.data = null;
 
@@ -129,7 +128,7 @@
      * @instance
      * @memberof xpl.XModelTexture
      * @function toString
-     * @returns {String} テクスチャ名
+     * @returns {string} テクスチャ名
      */
     ns.XModelTexture.prototype.toString = function () {
         return this.name;
@@ -147,7 +146,6 @@
      * @class
      * @alias xpl.XModelMaterial
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelMaterial = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_MATERIAL);
@@ -157,7 +155,7 @@
          *
          * @instance
          * @memberof xpl.XModelMaterial
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
@@ -334,7 +332,7 @@
      * @instance
      * @memberof xpl.XModelMaterial
      * @function toString
-     * @returns {String} マテリアル名
+     ß* @returns {string} マテリアル名
      */
     ns.XModelMaterial.prototype.toString = function () {
         return this.name;

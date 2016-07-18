@@ -1,27 +1,4 @@
 <html>
-<body>
-    <div id="screen_element" style="position:relative;">
-        <canvas id="main_canvas" class="main_canvas"></canvas>
-        <span id="load_spinner" class="load_spinner">
-            <img src="./image/spin.svg" width="100px" height="100px"/>
-        </span>
-        <div id="play_controller" class="play_controller">
-            <span id="play_button" class="control-button">
-                <img src="./image/start.svg" width="24px" height="24px"/>
-            </span>
-            <span id="next_button" class="control-button">
-                <img src="./image/prev.svg" width="24px" height="24px"/>
-            </span>
-            <span id="prev_button" class="control-button">
-                <img src="./image/next.svg" width="24px" height="24px"/>
-            </span>
-            <span id="screen_mode_button" class="control-button">
-                <img src="./image/full.svg" width="24px" height="24px"/>
-            </span>
-        </div>
-        <div class="fps_text" id="fps_textfield" style="">FPS:0</div>
-    </div>
-</body>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
@@ -41,7 +18,13 @@
     <script type="text/javascript" src="../../src/math_matrix4x4.js"></script>
     <script type="text/javascript" src="../../src/math_matrix4x4_dim.js"></script>
     <script type="text/javascript" src="../../src/math_vector3.js"></script>
-    <script type="text/javascript" src="../../src/xmodel_types.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_base.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_parameter.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_container.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_kinematics.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_material.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_mesh.js"></script>
+    <script type="text/javascript" src="../../src/xmodel_type_animation.js"></script>
     <script type="text/javascript" src="../../src/xmodel_codec.js"></script>
     <script type="text/javascript" src="../../src/xmodel_decoder.js"></script>
     <script type="text/javascript" src="../../src/xmodel_utils_transform.js"></script>
@@ -190,4 +173,27 @@
 
     </script>
 </head>
+<body>
+    <div id="screen_element" style="position:relative;">
+        <canvas id="main_canvas" class="main_canvas"></canvas>
+        <span id="load_spinner" class="load_spinner">
+            <img src="./image/spin.svg" width="100px" height="100px"/>
+        </span>
+        <div id="play_controller" class="play_controller">
+            <span id="play_button" class="control-button">
+                <img src="./image/start.svg" width="24px" height="24px"/>
+            </span>
+            <span id="next_button" class="control-button">
+                <img src="./image/prev.svg" width="24px" height="24px"/>
+            </span>
+            <span id="prev_button" class="control-button">
+                <img src="./image/next.svg" width="24px" height="24px"/>
+            </span>
+            <span id="screen_mode_button" class="control-button">
+                <img src="./image/full.svg" width="24px" height="24px"/>
+            </span>
+        </div>
+        <div class="fps_text" id="fps_textfield" style="">FPS:0</div>
+    </div>
+</body>
 </html>

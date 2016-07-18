@@ -37,7 +37,6 @@
     /**
      * 数値と数学のユーティリティクラスです。
      *
-     * @author Syuuhei Kuno
      * @namespace xpl.MathUtils
      */
     ns.MathUtils = function () {
@@ -49,10 +48,10 @@
      *
      * @memberof xpl.MathUtils
      * @function min
-     * @param {Number} v1 - 第1引数
-     * @param {Number} v2 - 第2引数
-     * @param {Number} v3 - 第3引数
-     * @returns {Number} 結果
+     * @param {number} v1 - 第1引数
+     * @param {number} v2 - 第2引数
+     * @param {number} v3 - 第3引数
+     * @returns {number} 結果
      */
     ns.MathUtils.min = function (v1, v2, v3) {
         return v1 < v2 ? (v1 < v3 ? v1 : v3) : (v2 < v3 ? v2 : v3);
@@ -63,10 +62,10 @@
      *
      * @memberof xpl.MathUtils
      * @function mid
-     * @param {Number} v1 - 第1引数
-     * @param {Number} v2 - 第2引数
-     * @param {Number} v3 - 第3引数
-     * @returns {Number} 結果
+     * @param {number} v1 - 第1引数
+     * @param {number} v2 - 第2引数
+     * @param {number} v3 - 第3引数
+     * @returns {number} 結果
      */
     ns.MathUtils.mid = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v2 : (v3 < v1 ? v1 : v3)) : (v1 < v3 ? v1 : (v3 < v2 ? v2 : v3));
@@ -77,10 +76,10 @@
      *
      * @memberof xpl.MathUtils
      * @function max
-     * @param {Number} v1 - 第1引数
-     * @param {Number} v2 - 第2引数
-     * @param {Number} v3 - 第3引数
-     * @returns {Number} 結果
+     * @param {number} v1 - 第1引数
+     * @param {number} v2 - 第2引数
+     * @param {number} v3 - 第3引数
+     * @returns {number} 結果
      */
     ns.MathUtils.max = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v3 : v2) : (v1 < v3 ? v3 : v1);
@@ -91,9 +90,9 @@
      *
      * @memberof xpl.MathUtils
      * @function log
-     * @param {Number} base - 基数
-     * @param {Number} index - 指数
-     * @returns {Number} 結果
+     * @param {number} base - 基数
+     * @param {number} index - 指数
+     * @returns {number} 結果
      */
     ns.MathUtils.log = function (base, index) {
         return Math.log(index) / Math.log(base);
@@ -104,8 +103,8 @@
      *
      * @memberof xpl.MathUtils
      * @function cqrt
-     * @param {Number} v - 対象値
-     * @returns {Number} 結果
+     * @param {number} v - 対象値
+     * @returns {number} 結果
      */
     ns.MathUtils.cqrt = function (v) {
         return 0 <= v ? Math.pow(v, 1.0 / 3.0) : -Math.pow(-v, 1.0 / 3.0);
@@ -116,8 +115,8 @@
      *
      * @memberof xpl.MathUtils
      * @function floorPow2
-     * @param {Number} value - 対象値
-     * @returns {Number} 結果
+     * @param {number} value - 対象値
+     * @returns {number} 結果
      */
     ns.MathUtils.floorPow2 = function (value) {
         value = Math.floor(value);
@@ -135,8 +134,8 @@
      *
      * @memberof xpl.MathUtils
      * @function ceilPow2
-     * @param {Number} value - 対象値
-     * @returns {Number} 結果
+     * @param {number} value - 対象値
+     * @returns {number} 結果
      */
     ns.MathUtils.ceilPow2 = function (value) {
         value = Math.floor(value);

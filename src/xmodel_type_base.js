@@ -38,7 +38,6 @@
      * xModelのインスタンスを判別するための識別子
      *
      * @private
-     * @static
      * @memberof xpl.XModelStructure
      * @member {xpl.uint32_t} identifier_counter
      */
@@ -57,7 +56,6 @@
         /**
          * enum_t : 構造種別
          *
-         * @constant
          * @instance
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} structure_type
@@ -68,7 +66,6 @@
          * uint32_t : 識別子
          *
          * @private
-         * @constant
          * @instance
          * @memberof xpl.XModelStructure
          * @member {xpl.uint32_t} identifier
@@ -122,9 +119,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_UNDEFINED
          */
-        "TYPE_UNDEFINED": {
-            value: -1
-        },
+        "TYPE_UNDEFINED": {value: -1},
 
         /**
          * 空の構造種別
@@ -133,9 +128,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_NULL
          */
-        "TYPE_NULL": {
-            value: 0
-        },
+        "TYPE_NULL": {value: 0},
 
         /**
          * 軸回転の構造種別
@@ -144,9 +137,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_AXIS_ROTATE
          */
-        "TYPE_AXIS_ROTATE": {
-            value: 1
-        },
+        "TYPE_AXIS_ROTATE": {value: 1},
 
         /**
          * 四元数の構造種別
@@ -155,9 +146,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_QUATERNION
          */
-        "TYPE_QUATERNION": {
-            value: 2
-        },
+        "TYPE_QUATERNION": {value: 2},
 
         /**
          * 拡大の構造種別
@@ -166,9 +155,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_SCALE
          */
-        "TYPE_SCALE": {
-            value: 3
-        },
+        "TYPE_SCALE": {value: 3},
 
         /**
          * 平行移動の構造種別
@@ -177,9 +164,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_TRANSLATE
          */
-        "TYPE_TRANSLATE": {
-            value: 4
-        },
+        "TYPE_TRANSLATE": {value: 4},
 
         /**
          * 行列の構造種別
@@ -188,9 +173,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MATRIX
          */
-        "TYPE_MATRIX": {
-            value: 5
-        },
+        "TYPE_MATRIX": {value: 5},
 
         /**
          * コンテナの構造種別
@@ -199,9 +182,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_CONTAINER
          */
-        "TYPE_CONTAINER": {
-            value: 6
-        },
+        "TYPE_CONTAINER": {value: 6},
 
         /**
          * テクスチャの構造種別
@@ -210,9 +191,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_TEXTURE
          */
-        "TYPE_TEXTURE": {
-            value: 7
-        },
+        "TYPE_TEXTURE": {value: 7},
 
         /**
          * 材質の構造種別
@@ -221,9 +200,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MATERIAL
          */
-        "TYPE_MATERIAL": {
-            value: 8
-        },
+        "TYPE_MATERIAL": {value: 8},
 
         /**
          * メッシュの構造種別
@@ -232,9 +209,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MESH
          */
-        "TYPE_MESH": {
-            value: 9
-        },
+        "TYPE_MESH": {value: 9},
 
         /**
          * メッシュのサブセットの構造種別
@@ -243,9 +218,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_MESH_SUBSET
          */
-        "TYPE_MESH_SUBSET": {
-            value: 15
-        },
+        "TYPE_MESH_SUBSET": {value: 15},
 
         /**
          * ノードの構造種別
@@ -254,9 +227,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_NODE
          */
-        "TYPE_NODE": {
-            value: 10
-        },
+        "TYPE_NODE": {value: 10},
 
         /**
          * 逆運動学の構造種別
@@ -265,9 +236,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_IK
          */
-        "TYPE_IK": {
-            value: 11
-        },
+        "TYPE_IK": {value: 11},
 
         /**
          * アニメーションの構造種別
@@ -276,9 +245,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION
          */
-        "TYPE_ANIMATION": {
-            value: 12
-        },
+        "TYPE_ANIMATION": {value: 12},
 
         /**
          * アニメーションキーの構造種別
@@ -287,9 +254,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION_KEY
          */
-        "TYPE_ANIMATION_KEY": {
-            value: 13
-        },
+        "TYPE_ANIMATION_KEY": {value: 13},
 
         /**
          * アニメーションセットの構造種別
@@ -298,9 +263,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.enum_t} TYPE_ANIMATION_SET
          */
-        "TYPE_ANIMATION_SET": {
-            value: 14
-        },
+        "TYPE_ANIMATION_SET": {value: 14},
 
         /**
          * RGBAのパラメータのサイズ
@@ -309,9 +272,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_RGBA
          */
-        "SIZE_RGBA": {
-            value: 4
-        },
+        "SIZE_RGBA": {value: 4},
 
         /**
          * 3次元ベクトルのパラメータのサイズ
@@ -320,9 +281,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_VECTOR_3
          */
-        "SIZE_VECTOR_3": {
-            value: 3
-        },
+        "SIZE_VECTOR_3": {value: 3},
 
         /**
          * 軸回転のパラメータのサイズ
@@ -331,9 +290,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_AXIS_ROTATE
          */
-        "SIZE_AXIS_ROTATE": {
-            value: 4
-        },
+        "SIZE_AXIS_ROTATE": {value: 4},
 
         /**
          * 四元数のパラメータのサイズ
@@ -342,9 +299,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_QUATERNION
          */
-        "SIZE_QUATERNION": {
-            value: 4
-        },
+        "SIZE_QUATERNION": {value: 4},
 
         /**
          * 拡大のパラメータのサイズ
@@ -353,9 +308,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_SCALE
          */
-        "SIZE_SCALE": {
-            value: 3
-        },
+        "SIZE_SCALE": {value: 3},
 
         /**
          * 平行移動のパラメータのサイズ
@@ -364,9 +317,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_TRANSLATE
          */
-        "SIZE_TRANSLATE": {
-            value: 3
-        },
+        "SIZE_TRANSLATE": {value: 3},
 
         /**
          * 行列のパラメータのサイズ
@@ -375,9 +326,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} SIZE_MATRIX
          */
-        "SIZE_MATRIX": {
-            value: 16
-        },
+        "SIZE_MATRIX": {value: 16},
 
         /**
          * ブレンドのためのスロットの数
@@ -386,9 +335,7 @@
          * @memberof xpl.XModelStructure
          * @member {xpl.size_t} NUM_BLEND_SLOT
          */
-        "NUM_BLEND_SLOT": {
-            value: 2
-        }
+        "NUM_BLEND_SLOT": {value: 2}
     });
 
 })(xpl);
@@ -416,7 +363,7 @@
         this.data_size = 0;
 
         /**
-         * (uint8_t|int8_t)[data_size] : データ
+         * uint8_t[data_size] : データ
          *
          * @instance
          * @memberof xpl.XModelUserData

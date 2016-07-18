@@ -32,8 +32,6 @@
 
 /**
  * 3次元の幾何学に特化した機能を四元数のユーティリティクラスに追加する拡張です。
- *
- * @author Syuuhei Kuno
  */
 (function (ns) {
 
@@ -53,9 +51,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadIAxisRotate
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadIAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -69,9 +67,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadJAxisRotate
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadJAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -85,9 +83,9 @@
      *
      * @memberof xpl.Quaternion
      * @function loadKAxisRotate
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.loadKAxisRotate = function (d, d_off, rad) {
         rad *= 0.5;
@@ -101,12 +99,12 @@
      *
      * @memberof xpl.Quaternion
      * @function loadRotate
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Number} ip - 入力元の四元数の虚数I部
-     * @param {Number} jp - 入力元の四元数の虚数J部
-     * @param {Number} kp - 入力元の四元数の虚数K部
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {number} ip - 入力元の四元数の虚数I部
+     * @param {number} jp - 入力元の四元数の虚数J部
+     * @param {number} kp - 入力元の四元数の虚数K部
+     * @param {number} rad - 回転のラジアン値
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, norm) {
@@ -138,17 +136,17 @@
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Number} fx - 開始のベクトルのX要素
-     * @param {Number} fy - 開始のベクトルのY要素
-     * @param {Number} fz - 開始のベクトルのZ要素
-     * @param {Boolean} fv_norm - 開始のベクトルを正規化するかどうか
-     * @param {Number} tx - 終了のベクトルのX要素
-     * @param {Number} ty - 終了のベクトルのY要素
-     * @param {Number} tz - 終了のベクトルのZ要素
-     * @param {Boolean} tv_norm - 終了のベクトルを正規化するかどうか
-     * @param {Number} [t=1] - 補完係数
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {number} fx - 開始のベクトルのX要素
+     * @param {number} fy - 開始のベクトルのY要素
+     * @param {number} fz - 開始のベクトルのZ要素
+     * @param {boolean} fv_norm - 開始のベクトルを正規化するかどうか
+     * @param {number} tx - 終了のベクトルのX要素
+     * @param {number} ty - 終了のベクトルのY要素
+     * @param {number} tz - 終了のベクトルのZ要素
+     * @param {boolean} tv_norm - 終了のベクトルを正規化するかどうか
+     * @param {number} [t=1.0] - 補完係数
      */
     ns.Quaternion.loadRotateVector3 = function (d, d_off, fx, fy, fz, fv_norm, tx, ty, tz, tv_norm, t) {
         t = ns.defaultValue(t, 1.0);
@@ -220,15 +218,15 @@
      *
      * @memberof xpl.Quaternion
      * @function loadRotateVector3v
-     * @param {Array.<Number>} d - 出力先の四元数
-     * @param {Number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<Number>} fv - 開始のベクトル
-     * @param {Number} fv_off - 開始のベクトルの配列インデックス
-     * @param {Boolean} fv_norm - 開始のベクトルを正規化するかどうか
-     * @param {Array.<Number>} tv - 終了のベクトル
-     * @param {Number} tv_off - 終了のベクトルの配列インデックス
-     * @param {Boolean} tv_norm - 終了のベクトルの配列インデックス
-     * @param {Number} [t=1] - 補完係数
+     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number} d_off - 出力先の四元数の配列インデックス
+     * @param {Array.<number>} fv - 開始のベクトル
+     * @param {number} fv_off - 開始のベクトルの配列インデックス
+     * @param {boolean} fv_norm - 開始のベクトルを正規化するかどうか
+     * @param {Array.<number>} tv - 終了のベクトル
+     * @param {number} tv_off - 終了のベクトルの配列インデックス
+     * @param {boolean} tv_norm - 終了のベクトルの配列インデックス
+     * @param {number} [t=1.0] - 補完係数
      */
     ns.Quaternion.loadRotateVector3v = function (d, d_off, fv, fv_off, fv_norm, tv, tv_off, tv_norm, t) {
         ns.Quaternion.loadRotateVector3(
@@ -245,9 +243,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulIAxisRotate
-     * @param {Array.<Number>} q - 対象の四元数
-     * @param {Number} q_off - 対象の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} q - 対象の四元数
+     * @param {number} q_off - 対象の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulIAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = sn(rad * 0.5), j = 0, k = 0
@@ -277,9 +275,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulJAxisRotate
-     * @param {Array.<Number>} q - 対象の四元数
-     * @param {Number} q_off - 対象の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} q - 対象の四元数
+     * @param {number} q_off - 対象の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulJAxisRotate = function (q, q_off, rad) {
         // r = cs(rad * 0.5), i = 0, j = sn(rad * 0.5), k = 0
@@ -309,9 +307,9 @@
      *
      * @memberof xpl.Quaternion
      * @function mulKAxisRotate
-     * @param {Array.<Number>} q - 対象の四元数
-     * @param {Number} q_off - 対象の四元数の配列インデックス
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} q - 対象の四元数
+     * @param {number} q_off - 対象の四元数の配列インデックス
+     * @param {number} rad - 回転のラジアン値
      */
     ns.Quaternion.mulKAxisRotate = function (q, q_off, rad) {
         // r = cs(rad), i = 0, j = 0, k = sn(rad)
@@ -341,12 +339,12 @@
      *
      * @memberof xpl.Quaternion
      * @function mulRotate
-     * @param {Array.<Number>} q - 対象の四元数
-     * @param {Number} q_off - 対象の四元数の配列インデックス
-     * @param {Number} ip - 入力元の四元数の虚数I部
-     * @param {Number} jp - 入力元の四元数の虚数J部
-     * @param {Number} kp - 入力元の四元数の虚数K部
-     * @param {Number} rad - 回転のラジアン値
+     * @param {Array.<number>} q - 対象の四元数
+     * @param {number} q_off - 対象の四元数の配列インデックス
+     * @param {number} ip - 入力元の四元数の虚数I部
+     * @param {number} jp - 入力元の四元数の虚数J部
+     * @param {number} kp - 入力元の四元数の虚数K部
+     * @param {number} rad - 回転のラジアン値
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, norm) {

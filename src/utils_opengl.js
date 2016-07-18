@@ -38,7 +38,6 @@
      * WebGL用のユーティリティクラスです。
      *
      * @namespace xpl.GLUtils
-     * @author Syuuhei Kuno
      */
     ns.GLUtils = function () {
         throw new Error("Unsupported operation!");
@@ -51,7 +50,7 @@
          *
          * @constant
          * @memberof xpl.GLUtils
-         * @member {String} TYPE_VERTEX_SHADER
+         * @member {string} TYPE_VERTEX_SHADER
          */
         "TYPE_VERTEX_SHADER": {
             value: "OpenGL Vertex Shader"
@@ -62,7 +61,7 @@
          *
          * @constant
          * @memberof xpl.GLUtils
-         * @member {String} TYPE_FRAGMENT_SHADER
+         * @member {string} TYPE_FRAGMENT_SHADER
          */
         "TYPE_FRAGMENT_SHADER": {
             value: "OpenGL Fragment Shader"
@@ -73,7 +72,7 @@
          *
          * @constant
          * @memberof xpl.GLUtils
-         * @member {String} TYPE_PROGRAM
+         * @member {string} TYPE_PROGRAM
          */
         "TYPE_PROGRAM": {
             value: "OpenGL Program"
@@ -84,8 +83,8 @@
      * エラーが発生した場合のコールバック関数
      *
      * @callback xpl.GLUtils~buildErrorCallback
-     * @param {String} type - エラー種別
-     * @param {String} message - エラーメッセージ
+     * @param {string} type - エラー種別
+     * @param {string} message - エラーメッセージ
      */
 
     /**
@@ -94,9 +93,9 @@
      * @memberof xpl.GLUtils
      * @function createBuffer
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
-     * @param {Number} type - バッファ種別
-     * @param {Number} data - データ配列
-     * @param {Number} usage - バッファの使用方法
+     * @param {number} type - バッファ種別
+     * @param {number} data - データ配列
+     * @param {number} usage - バッファの使用方法
      * @returns {WebGLBuffer} バッファのインスタンス
      */
     ns.GLUtils.createBuffer = function (gl, type, data, usage) {
@@ -117,14 +116,14 @@
      * @memberof xpl.GLUtils
      * @function createTexture2D
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
-     * @param {Number} format - 色のフォーマット
-     * @param {Number} type - データ種別
-     * @param {Number} width - テクスチャの幅
-     * @param {Number} height - テクスチャの高さ
+     * @param {number} format - 色のフォーマット
+     * @param {number} type - データ種別
+     * @param {number} width - テクスチャの幅
+     * @param {number} height - テクスチャの高さ
      * @param {Object} [pixels=null] - ピクセル配列
-     * @param {Boolean} [mipmap=false] - ミップマップを生成するかどうか
-     * @param {Array.<Number>} [size=null] - テクスチャサイズ
-     * @param {Number} [size_off=0] - テクスチャサイズの配列インデックス
+     * @param {boolean} [mipmap=false] - ミップマップを生成するかどうか
+     * @param {Array.<number>} [size=null] - テクスチャサイズ
+     * @param {number} [size_off=0] - テクスチャサイズの配列インデックス
      * @returns {WebGLTexture} テクスチャのインスタンス
      */
     ns.GLUtils.createTexture2D = function (gl,
@@ -185,8 +184,8 @@
      * @memberof xpl.GLUtils
      * @function createTexture2DFromImage
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
-     * @param {Number} format - 色のフォーマット
-     * @param {Number} type - データ種別
+     * @param {number} format - 色のフォーマット
+     * @param {number} type - データ種別
      * @param {Object} object - 画像データ
      * @returns {WebGLTexture} テクスチャのインスタンス
      */
@@ -205,8 +204,8 @@
      * @memberof xpl.GLUtils
      * @function createShader
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
-     * @param {Number} type - シェーダの種別
-     * @param {String} code - シェーダのソースコード
+     * @param {number} type - シェーダの種別
+     * @param {string} code - シェーダのソースコード
      * @param {xpl.GLUtils~buildErrorCallback} [err_handle=null] - エラーをハンドルするためのコールバック関数
      * @returns {WebGLShader} シェーダのインスタンス
      */
@@ -249,7 +248,7 @@
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {WebGLShader} vs - 頂点シェーダ
      * @param {WebGLShader} fs - フラグメントシェーダ
-     * @param {Map.<String, Number>} attr_map - バインドする名前付きアトリビュート変数のマップ
+     * @param {Map.<string, number>} attr_map - バインドする名前付きアトリビュート変数のマップ
      * @param {xpl.GLUtils~buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */
@@ -292,9 +291,9 @@
      * @memberof xpl.GLUtils
      * @function createShaderProgram
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
-     * @param {String} vs_code - 頂点シェーダのソースコード
-     * @param {String} fs_code - フラグメントシェーダのソースコード
-     * @param {Map.<String, Number>} attr_map - バインドする名前付きアトリビュート変数のマップ
+     * @param {string} vs_code - 頂点シェーダのソースコード
+     * @param {string} fs_code - フラグメントシェーダのソースコード
+     * @param {Map.<string, number>} attr_map - バインドする名前付きアトリビュート変数のマップ
      * @param {xpl.GLUtils.buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */

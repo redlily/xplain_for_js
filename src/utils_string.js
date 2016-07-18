@@ -37,7 +37,6 @@
     /**
      * 文字列のユーティリティクラスです。
      *
-     * @author Syuuhei Kuno
      * @namespace xpl.StringUtils
      */
     ns.StringUtils = function () {
@@ -49,8 +48,8 @@
      *
      * @memberof xpl.StringUtils
      * @function encodeUTF8
-     * @param {String} str - JavaScriptの文字列
-     * @returns {Array} UTF-8の文字列
+     * @param {string} str - JavaScriptの文字列
+     * @returns {Array.<string>} UTF-8の文字列
      */
     ns.StringUtils.encodeUTF8 = function (str) {
         let ary = [];
@@ -111,8 +110,8 @@
      *
      * @memberof xpl.StringUtils
      * @function decodeUTF8
-     * @param {Array} ary - UTF-8の文字列
-     * @returns {String} JavaScriptの文字列
+     * @param {Array.<string>} ary - UTF-8の文字列
+     * @returns {string} JavaScriptの文字列
      */
     ns.StringUtils.decodeUTF8 = function (ary) {
         let str = "";
