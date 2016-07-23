@@ -46,7 +46,6 @@
      *
      * @namespace xpl.XModelKinematicsUtils
      * @see xpl.XModelNode
-     * @author Syuuhei Kuno
      */
     ns.XModelKinematicsUtils = function () {
         throw new Error("Unsupported operation");

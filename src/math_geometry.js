@@ -43,6 +43,7 @@
         throw new Error("Unsupported operation!");
     };
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.Geometry, {
 
         /**

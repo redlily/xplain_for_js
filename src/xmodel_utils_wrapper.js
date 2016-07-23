@@ -35,9 +35,7 @@
     "use strict";
 
     /**
-     * XModelの読み込み、描画の処理をラップしたユーティリティクラス
-     *
-     * @author Syuuhei Kuno
+     * XModelの読み込み、描画の処理をラップしたユーティリティクラスです。
      */
     ns.XModelWrapper = function () {
 

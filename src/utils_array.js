@@ -98,7 +98,8 @@
      * @param {number} to - 配列の開始インデックス
      * @param {number} key - 指定の値
      * @param {xpl.ArrayUtils~comparator} [comparator=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
-     * @returns {number} 指定の値が発見された配列インデックス値、ゼロ以下の場合は指定の要素が見つからず
+     * @returns {number} 指定の値が見つかった場合は、その要素の配列インデックス値を返し、
+     *              見つからなかった場合は指定の要素以下の値を持つ最も近い要素の配列インデックスの負数のプラス1の値を返します。
      */
     ns.ArrayUtils.binarySearch = function (ary, from, to, key, comparator) {
         to--;

@@ -353,7 +353,6 @@
      *
      * @class
      * @alias xpl.XModelSubsetMesh
-     * @author Syuuhei Kuno
      */
     ns.XModelMeshSubset = function () {
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
@@ -426,7 +425,6 @@
      *
      * @class
      * @alias xpl.XModelMesh
-     * @author Syuuhei Kuno
      */
     ns.XModelSkin = function () {
 
@@ -524,7 +522,6 @@
      *
      * @class
      * @alias xpl.XModelVertex
-     * @author Syuuhei Kuno
      */
     ns.XModelVertex = function () {
 
@@ -620,7 +617,6 @@
      *
      * @class
      * @alias xpl.XModelElement
-     * @author Syuuhei Kuno
      */
     ns.XModelElement = function () {
 

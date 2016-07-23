@@ -108,7 +108,7 @@
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, norm) {
-        norm = ns.defaultValue(norm, true);
+        norm = xplDefVal(norm, true);
 
         // 四元数を正規化
         if (norm) {
@@ -149,7 +149,7 @@
      * @param {number} [t=1.0] - 補完係数
      */
     ns.Quaternion.loadRotateVector3 = function (d, d_off, fx, fy, fz, fv_norm, tx, ty, tz, tv_norm, t) {
-        t = ns.defaultValue(t, 1.0);
+        t = xplDefVal(t, 1.0);
 
         // 開始のベクトルを正規化
         if (fv_norm) {
@@ -348,7 +348,7 @@
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
     ns.Quaternion.mulRotate = function (q, q_off, ip, jp, kp, rad, norm) {
-        norm = ns.defaultValue(norm, true);
+        norm = xplDefVal(norm, true);
 
         // 四元数の正規化
         if (norm) {

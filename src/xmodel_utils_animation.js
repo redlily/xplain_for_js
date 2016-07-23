@@ -39,7 +39,6 @@
      * @see xpl.XModelAnimationSet
      * @see xpl.XModelAnimation
      * @see xpl.XModelAnimationKey
-     * @author Syuuhei Kuno
      */
     ns.XModelAnimationUtils = function () {
         throw new Error("Unsupported operation");

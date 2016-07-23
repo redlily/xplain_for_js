@@ -630,7 +630,7 @@
      * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         if (column) {
             // 列ベクトル場合
@@ -682,7 +682,7 @@
      * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         if (column) {
             // 列ベクトルの場合

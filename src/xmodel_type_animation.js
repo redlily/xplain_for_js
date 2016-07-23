@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelAnimation
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelAnimation = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION);
@@ -135,7 +134,6 @@
      * @class
      * @alias xpl.XModelAnimationKey
      * @augments xpl.XModelStructure
-     * @author Syuuhei Kuno
      */
     ns.XModelAnimationKey = function () {
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_ANIMATION_KEY);
@@ -266,7 +264,6 @@
      * @class
      * @alias xpl.XModelAnimationSet
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelAnimationSet = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION_SET);

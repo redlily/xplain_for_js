@@ -84,7 +84,7 @@
                                   m20, m21, m22, m23,
                                   m30, m31, m32, m33,
                                   trans) {
-        trans = ns.defaultValue(trans, false);
+        trans = xplDefVal(trans, false);
 
         if (trans) {
             d[d_off + M00] = m00;

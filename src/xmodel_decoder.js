@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelDecoder
      * @augments xpl.XModelCodec
-     * @author Syuuhei Kuno
      */
     ns.XModelDecoder = function() {
 

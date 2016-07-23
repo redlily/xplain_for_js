@@ -51,23 +51,19 @@ if (typeof module == "object") {
     xpl.running_type = "Direct Link"
 }
 
+/**
+ * 指定の変数が未定義かチェックする。
+ * 指定の変数が未定義の場合は既定値を返し、そうでない場合は指定の値を返します。
+ *
+ * @param {*} val - チェックする値
+ * @param {*} defVal - 既定値
+ * @returns {*} チェック済みの値
+ */
+function xplDefVal(val, defVal) {
+    return val === undefined ? defVal : val;
+}
+
 (function (ns) {
-
-    "use strict";
-
-    /**
-     * 指定の変数が undefined かチェックする。
-     * 指定の変数が undefined の場合は既定値を返し、そうでない場合は指定の値を返します。
-     *
-     * @memberof xpl
-     * @function defaultValue
-     * @param value {*} - 検査する値
-     * @param defaultValue {*} - 既定値
-     * @returns {*} 検査済みの値
-     */
-    ns.defaultValue = function (value, defaultValue) {
-        return value === undefined ? defaultValue : value;
-    };
 
     Object.defineProperties(ns, {
 
@@ -85,7 +81,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl
-         * @member {String} RUNTYPE_COMMON_JS
+         * @member {string} RUNTYPE_COMMON_JS
          */
         "RUNTYPE_COMMON_JS": {value: "CommonJS"},
 
@@ -94,7 +90,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl
-         * @member {String} RUNTYPE_DIRECT_LINK
+         * @member {string} RUNTYPE_DIRECT_LINK
          */
         "RUNTYPE_DIRECT_LINK": {value: "Direct Link"}
     });
@@ -114,7 +110,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} NAME
+         * @member {string} NAME
          */
         "NAME": {value: "xPlain for JavaScript"},
 
@@ -123,7 +119,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} CODE_NAME
+         * @member {string} CODE_NAME
          */
         "CODE_NAME": {value: "ORBIS"},
 
@@ -141,7 +137,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} VERSION_NAME
+         * @member {string} VERSION_NAME
          */
         "VERSION_NAME": {value: "0.9.0"},
 
@@ -150,7 +146,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {Array.<String>} AUTHOR
+         * @member {Array.<string>} AUTHOR
          */
         "AUTHOR": {
             value: ["Syuuhei Kuno"]
@@ -161,7 +157,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} COPYRIGHT
+         * @member {string} COPYRIGHT
          */
         "COPYRIGHT": {value: "Copyright (c) 2016, xPlain All rights reserved."},
 
@@ -170,7 +166,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} LICENSE
+         * @member {string} LICENSE
          */
         "LICENSE": {value: "http://opensource.org/licenses/BSD-3-Clause"},
 
@@ -179,7 +175,7 @@ if (typeof module == "object") {
          *
          * @constant
          * @memberof xpl.about
-         * @member {String} REPOSITORY
+         * @member {string} REPOSITORY
          */
         "REPOSITORY": {value: "git@github.com:redlily/xplain_for_js.git"}
     });
@@ -189,7 +185,7 @@ if (typeof module == "object") {
      *
      * @memberof xpl
      * @function getAbout
-     * @returns {String} - 情報
+     * @returns {string} - 情報
      */
     ns.getAbout = function () {
         return ns.about.NAME + "\n" +
@@ -269,6 +265,7 @@ if (typeof module == "object") {
         return (Number.parseInt.apply(null, arguments) << 24) >> 24;
     };
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.int8_t, {
 
         /**
@@ -278,9 +275,7 @@ if (typeof module == "object") {
          * @memberof xpl.int8_t
          * @member {xpl.int8_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: -Math.pow(2, 7)
-        },
+        "MIN_VALUE": {value: -Math.pow(2, 7)},
 
         /**
          * 最大数値
@@ -289,9 +284,7 @@ if (typeof module == "object") {
          * @memberof xpl.int8_t
          * @member {xpl.int8_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 7) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 7) - 1}
     });
 
     /**
@@ -316,9 +309,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint8_t
          * @member {xpl.uint8_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: 0
-        },
+        "MIN_VALUE": {value: 0},
 
         /**
          * 最大数値
@@ -327,9 +318,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint8_t
          * @member {xpl.uint8_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 8) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 8) - 1}
     });
 
     /**
@@ -354,9 +343,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: 0
-        },
+        "MIN_VALUE": {value: 0},
 
         /**
          * 最大数値
@@ -365,9 +352,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 8) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 8) - 1}
     });
 
     /**
@@ -392,9 +377,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint16_t
          * @member {xpl.int16_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: 0
-        },
+        "MIN_VALUE": {value: 0},
 
         /**
          * 最大数値
@@ -403,9 +386,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint16_t
          * @member {xpl.uint16_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 16) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 16) - 1}
     });
 
     /**
@@ -430,9 +411,7 @@ if (typeof module == "object") {
          * @memberof xpl.int32_t
          * @member {xpl.int32_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: -Math.pow(2, 31)
-        },
+        "MIN_VALUE": {value: -Math.pow(2, 31)},
 
         /**
          * 最大数値
@@ -441,9 +420,7 @@ if (typeof module == "object") {
          * @memberof xpl.int32_t
          * @member {xpl.int32_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 31) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 31) - 1}
     });
 
     /**
@@ -468,9 +445,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint32_t
          * @member {xpl.uint32_t} MIN_VALUE
          */
-        "MIN_VALUE": {
-            value: 0
-        },
+        "MIN_VALUE": {value: 0},
 
         /**
          * 最大数値
@@ -479,9 +454,7 @@ if (typeof module == "object") {
          * @memberof xpl.uint32_t
          * @member {xpl.uint32_t} MIN_VALUE
          */
-        "MAX_VALUE": {
-            value: Math.pow(2, 32) - 1
-        }
+        "MAX_VALUE": {value: Math.pow(2, 32) - 1}
     });
 
     /**
@@ -503,7 +476,7 @@ if (typeof module == "object") {
      * @memberof xpl.float64_t
      * @function hashCode
      * @param {xpl.float32_t} value - The value.
-     * @return {String} ハッシュコード
+     * @return {string} ハッシュコード
      */
     ns.float32_t.hashCode = function (value) {
         workBuf.setFloat64(value);
@@ -529,7 +502,7 @@ if (typeof module == "object") {
      * @memberof xpl.float64_t
      * @function hashCode
      * @param {xpl.float64_t} value - The value.
-     * @return {String} ハッシュコード
+     * @return {string} ハッシュコード
      */
     ns.float64_t.hashCode = function (value) {
         workBuf.setFloat64(value);

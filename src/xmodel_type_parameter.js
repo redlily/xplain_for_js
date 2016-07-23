@@ -61,7 +61,6 @@
      * @alias xpl.XModelTransform
      * @augments xpl.XModelStructure
      * @param {xpl.enum_t} structure_type - 構造種別
-     * @author Syuuhei Kuno
      */
     ns.XModelTransform = function (structure_type) {
         ns.XModelStructure.call(this, structure_type);
@@ -81,7 +80,6 @@
      * @class
      * @alias xpl.XModelAxisRotate
      * @augments xpl.XModelTransform
-     * @author Syuuhei Kuno
      */
     ns.XModelAxisRotate = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_AXIS_ROTATE);
@@ -181,7 +179,6 @@
      * @class
      * @alias xpl.XModelQuaternion
      * @augments xpl.XModelTransform
-     * @author Syuuhei Kuno
      */
     ns.XModelQuaternion = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_QUATERNION);
@@ -223,7 +220,6 @@
      * @class
      * @alias xpl.XModelScale
      * @augments xpl.XModelTransform
-     * @author Syuuhei Kuno
      */
     ns.XModelScale = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_SCALE);
@@ -265,7 +261,6 @@
      * @class
      * @alias xpl.XModelTranslate
      * @augments xpl.XModelTransform
-     * @author Syuuhei Kuno
      */
     ns.XModelTranslate = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_TRANSLATE);
@@ -307,7 +302,6 @@
      * @class
      * @alias xpl.XModelMatrix
      * @augments xpl.XModelTransform
-     * @author Syuuhei Kuno
      */
     ns.XModelMatrix = function () {
         ns.XModelTransform.call(this, ns.XModelStructure.TYPE_MATRIX);

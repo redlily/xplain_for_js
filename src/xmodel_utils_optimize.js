@@ -41,7 +41,6 @@
      * @see xpl.XModelMesh
      * @see xpl.XModelMeshSubset
      * @see xpl.XModelSkin
-     * @author Syuuhei Kuno
      */
     ns.XModelOptimizeUtils = function () {
         throw new Error("Unsupported operation");

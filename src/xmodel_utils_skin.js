@@ -44,7 +44,6 @@
      * @see xpl.XModelNode
      * @see xpl.XModelMesh
      * @see xpl.XModelSkin
-     * @author Syuuhei Kuno
      */
     ns.XModelSkinUtils = function () {
         throw new Error("Unsupported operation");

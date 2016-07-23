@@ -71,12 +71,12 @@
         /**
          * アニメーションをキャンセルします。
          *
-         * @memberof ns.SystemUtils
+         * @memberof xpl.SystemUtils
          * @function cancelAnimationFrame
-         * @param {Object} timerId - タイマーID
+         * @param {Object} timer_id - タイマーID
          */
-        ns.SystemUtils.cancelAnimationFrame = function (timerId) {
-            cancelAnimationFrame(timerId);
+        ns.SystemUtils.cancelAnimationFrame = function (timer_id) {
+            cancelAnimationFrame(timer_id);
         };
     }
 

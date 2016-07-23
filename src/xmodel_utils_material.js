@@ -39,7 +39,6 @@
      *
      * @namespace xpl.XModelMaterialUtils
      * @see xpl.XModelMaterial
-     * @author Syuuhei Kuno
      */
     ns.XModelMaterialUtils = function () {
         throw new Error("Unsupported operation");

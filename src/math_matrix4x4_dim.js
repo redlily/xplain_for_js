@@ -32,8 +32,6 @@
 
 /**
  * 3次元の幾何学に特化した機能を4*4の行列のユーティリティクラスに追加する拡張です。
- *
- * @author Syuuhei Kuno
  */
 (function (ns) {
 
@@ -94,7 +92,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadTranslate = function (d, d_off, x, y, z, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         ns.Matrix4x4.load(
             d, d_off,
@@ -121,7 +119,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateXAxis = function (d, d_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
@@ -150,7 +148,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateYAxis = function (d, d_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
@@ -179,7 +177,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotateZAxis = function (d, d_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
@@ -212,8 +210,8 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.loadRotate = function (d, d_off, x, y, z, rad, norm, column) {
-        norm = ns.defaultValue(norm, true);
-        column = ns.defaultValue(column, true);
+        norm = xplDefVal(norm, true);
+        column = xplDefVal(column, true);
 
         let cs = Math.cos(rad);
         let sn = Math.sin(rad);
@@ -281,10 +279,10 @@
                                         center_x, center_y, center_z,
                                         upper_x, upper_y, upper_z,
                                         column) {
-        upper_x = ns.defaultValue(upper_x, 0.0);
-        upper_y = ns.defaultValue(upper_y, 1.0);
-        upper_z = ns.defaultValue(upper_z, 0.0);
-        column = ns.defaultValue(column, true);
+        upper_x = xplDefVal(upper_x, 0.0);
+        upper_y = xplDefVal(upper_y, 1.0);
+        upper_z = xplDefVal(upper_z, 0.0);
+        column = xplDefVal(column, true);
 
         // Z軸のベクトルを算出
         // (center - eye) / |center - eye|
@@ -341,7 +339,7 @@
      *
      * range_view = view_far - view_near
      * scaled_far = view_far * (device_far - device_near)
-     * 
+     *
      *     | view_near * device_width / view_width, 0,                                       0,                                     0                                    |
      * d = | 0,                                     view_near * device_height / view_height, 0,                                     0                                    |
      *     | 0,                                     0,                                       scaled_far / view_depth + device_near, view_near * scaled_far / -view_depth |
@@ -367,11 +365,11 @@
                                              device_width, device_height,
                                              device_near, device_far,
                                              column) {
-        device_width = ns.defaultValue(device_width, 2.0);
-        device_height = ns.defaultValue(device_height, 2.0);
-        device_near = ns.defaultValue(device_near, -1.0);
-        device_far = ns.defaultValue(device_far, 1.0);
-        column = ns.defaultValue(column, true);
+        device_width = xplDefVal(device_width, 2.0);
+        device_height = xplDefVal(device_height, 2.0);
+        device_near = xplDefVal(device_near, -1.0);
+        device_far = xplDefVal(device_far, 1.0);
+        column = xplDefVal(column, true);
 
         let view_depth = view_far - view_near;
         let scaled_far = view_far * (device_far - device_near);
@@ -463,7 +461,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulTranslate = function (m, m_off, x, y, z, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         if (column) {
             m[m_off + M03] += m[m_off + M00] * x + m[m_off + M01] * y + m[m_off + M02] * z;
@@ -506,7 +504,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateXAxis = function (m, m_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs, sn;
         if (column) {
@@ -546,7 +544,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateYAxis = function (m, m_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs, sn;
         if (column) {
@@ -586,7 +584,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotateZAxis = function (m, m_off, rad, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let cs, sn;
         if (column) {
@@ -630,8 +628,8 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulRotate = function (m, m_off, x, y, z, rad, norm, column) {
-        norm = ns.defaultValue(norm, true);
-        column = ns.defaultValue(column, true);
+        norm = xplDefVal(norm, true);
+        column = xplDefVal(column, true);
 
         let cs, sn;
         if (column) {
@@ -717,7 +715,7 @@
                                        center_x, center_y, center_z,
                                        upper_x, upper_y, upper_z,
                                        column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         // Z軸のベクトルを算出
         // (center - eye) / |center - eye|
@@ -806,7 +804,7 @@
      *
      * range_view = view_far - view_near
      * scaled_far = view_far * (device_far - device_near)
-     * 
+     *
      *      | view_near * device_width / view_width, 0,                                       0,                                     0                                    |
      * d *= | 0,                                     view_near * device_height / view_height, 0,                                     0                                    |
      *      | 0,                                     0,                                       scaled_far / view_depth + device_near, view_near * scaled_far / -view_depth |
@@ -832,11 +830,11 @@
                                             device_width, device_height,
                                             device_near, device_far,
                                             column) {
-        device_width = ns.defaultValue(device_width, 2.0);
-        device_height = ns.defaultValue(device_height, 2.0);
-        device_near = ns.defaultValue(device_near, -1.0);
-        device_far = ns.defaultValue(device_far, 1.0);
-        column = ns.defaultValue(column, true);
+        device_width = xplDefVal(device_width, 2.0);
+        device_height = xplDefVal(device_height, 2.0);
+        device_near = xplDefVal(device_near, -1.0);
+        device_far = xplDefVal(device_far, 1.0);
+        column = xplDefVal(column, true);
 
         // 共通項を算出
         let range_view = view_far - view_near;
@@ -910,7 +908,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.normalizeAxisv = function (d, d_off, m, m_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let xx, xy, xz, yx, yy, yz, zx, zy, zz;
         xx = m[m_off + M00];
@@ -1004,7 +1002,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.slrepAxisAndLrepOtherv = function (d, d_off, a, a_off, b, b_off, t, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         let t1 = 1.0 - t;
         let rxx, rxy, rxz, ryx, ryy, ryz, rzx, rzy, rzz;
@@ -1285,7 +1283,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.fromQuaternionv = function (m, m_off, q, q_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         //                               _
         // X-axis = q * (0; (1, 0, 0)) * q
@@ -1336,7 +1334,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulQuaternionv = function (m, m_off, q, q_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         //                               _
         // X-axis = q * (0; (1, 0, 0)) * q
@@ -1412,7 +1410,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.mulQuaternionAxisv = function (m, m_off, q, q_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         //                               _
         // X-axis = q * (0; (1, 0, 0)) * q
@@ -1475,8 +1473,8 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     ns.Matrix4x4.toQuaternionv = function (q, q_off, m, m_off, reverse, column) {
-        reverse = ns.defaultValue(reverse, false);
-        column = ns.defaultValue(column, true);
+        reverse = xplDefVal(reverse, false);
+        column = xplDefVal(column, true);
 
         //   X-axis,             Y-axis,             Z-axis,
         // | ii  + rr - kk - jj, ij2 - rk2,          ik2 + rj2,          n |
@@ -1602,7 +1600,7 @@
      * @returns {number} 回転のラジアン値
      */
     ns.Matrix4x4.toRotateAxisv = function (v, v_off, m, m_off, column) {
-        column = ns.defaultValue(column, true);
+        column = xplDefVal(column, true);
 
         //   X-axis,                     Y-axis,                 Z-axis,
         // | x^2 (1 - cosθ) +  cosθ, xy  (1 - cosθ) - zsinθ, xz  (1 - cosθ) + ysinθ, n |

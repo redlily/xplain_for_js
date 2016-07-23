@@ -39,7 +39,6 @@
      *
      * @namespace xpl.XModelMeshUtils
      * @see xpl.XModelMesh
-     * @author Syuuhei Kuno
      */
     ns.XModelMeshUtils = function () {
         throw new Error("Unsupported operation");

@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelIK
      * @augments xpl.XModelStructure
-     * @author Syuuhei Kuno
      */
     ns.XModelIK = function () {
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_IK);

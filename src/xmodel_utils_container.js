@@ -39,7 +39,6 @@
      *
      * @namespace xpl.XModelContainerUtils
      * @see xpl.XModelContainer
-     * @author Syuuhei Kuno
      */
     ns.XModelContainerUtils = function () {
         throw new Error("Unsupported operation");

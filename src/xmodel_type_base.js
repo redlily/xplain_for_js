@@ -49,7 +49,6 @@
      * @class
      * @alias xpl.XModelStructure
      * @param {xpl.enum_t} structure_type - 構造種別
-     * @author Syuuhei Kuno
      */
     ns.XModelStructure = function (structure_type) {
 
@@ -349,7 +348,6 @@
      *
      * @class
      * @alias xpl.XModelUserData
-     * @author Syuuhei Kuno
      */
     ns.XModelUserData = function () {
 
@@ -384,7 +382,6 @@
      * @class
      * @alias xpl.XModelExtensible
      * @augments xpl.XModelStructure
-     * @author Syuuhei Kuno
      */
     ns.XModelExtensible = function (structure_type) {
         ns.XModelStructure.call(this, structure_type);

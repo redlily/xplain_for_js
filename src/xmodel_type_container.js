@@ -40,7 +40,6 @@
      * @class
      * @alias xpl.XModelContainer
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelContainer = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_CONTAINER);
@@ -180,7 +179,6 @@
      * @class
      * @alias xpl.XModelNode
      * @augments xpl.XModelExtensible
-     * @author Syuuhei Kuno
      */
     ns.XModelNode = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_NODE);

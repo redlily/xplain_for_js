@@ -39,7 +39,6 @@
      *
      * @namespace xpl.XModelNodeUtils
      * @see xpl.XModelNode
-     * @author Syuuhei Kuno
      */
     ns.XModelNodeUtils = function () {
         throw new Error("Unsupported operation");
