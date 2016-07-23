@@ -97,7 +97,7 @@
     };
 
     /**
-     * このメソッドのインスタンスと引数で指定されたインスタンスが同じものかを調べます。
+     * このインスタンスと引数で指定されたインスタンスが同じものかを調べます。
      *
      * @instance
      * @memberof xpl.XModelStructure
@@ -109,6 +109,7 @@
         return this == other;
     };
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.XModelStructure, {
 
         /**

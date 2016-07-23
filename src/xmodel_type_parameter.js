@@ -55,11 +55,61 @@
     "use strict";
 
     /**
+     * float32_tの配列の構造です。
+     *
+     * @class
+     * @alias xpl.XModelFloat32Array
+     * @augments xpl.XModelParameter
+     * @param {xpl.enum_t} structure_type - 構造種別
+     * @param {xpl.size_t} len - float配列の
+     */
+    ns.XModelFloat32Array = function (structure_type, len) {
+        ns.XModelStructure.call(this, structure_type);
+
+        /**
+         * float32_t[len] : 初期値
+         *
+         * @instanceof
+         * @memberof xpl.XModelFloat32Array
+         * @member {Float32Array}
+         */
+        this.initial = new Float32Array(len);
+
+        // 作業用変数
+
+        /**
+         * 値のサイズ
+         *
+         * @instanceof
+         * @memberof xpl.XModelFloat32Array
+         * @member {xpl.size_t}
+         */
+        this.size = len;
+
+        /**
+         * float32[NUM_BLEND_SLOT * len] : 値
+         *
+         * @instanceof
+         * @memberof xpl.XModelFloat32Array
+         * @type {Float32Array}
+         */
+        this.value = new Float32Array(len);
+    };
+
+    Object.setPrototypeOf(ns.XModelFloat32Array.prototype, ns.XModelParameter.prototype);
+
+})(xpl);
+
+(function (ns) {
+
+    "use strict";
+
+    /**
      * 変換構造の基礎構造です。
      *
      * @class
      * @alias xpl.XModelTransform
-     * @augments xpl.XModelStructure
+     * @augments xpl.XModelParameter
      * @param {xpl.enum_t} structure_type - 構造種別
      */
     ns.XModelTransform = function (structure_type) {

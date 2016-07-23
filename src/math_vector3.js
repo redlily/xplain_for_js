@@ -630,7 +630,7 @@
      * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = xplDefVal(column, true);
+        column = ns.defaultValue(column, true);
 
         if (column) {
             // 列ベクトル場合
@@ -682,7 +682,7 @@
      * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
      */
     ns.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = xplDefVal(column, true);
+        column = ns.defaultValue(column, true);
 
         if (column) {
             // 列ベクトルの場合
@@ -749,7 +749,7 @@
      * @function convertToString
      * @param {Array.<number>} v - 対象のベクトル
      * @param {number} off - 対象のベクトルの配列オフセット
-     * @returns {String} 変換された文字列
+     * @returns {string} 変換された文字列
      */
     ns.Vector3.convertToString = function (v, off) {
         return "Vector3(" + v[off + VX] + ", " + v[off + VY] + ", " + v[off + VZ] + ")";

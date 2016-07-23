@@ -49,12 +49,12 @@
          *
          * @instance
          * @memberof xpl.XModelAnimation
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
         /**
-         * XModelStructure : The target.
+         * XModelStructure : 処理対象
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -63,7 +63,7 @@
         this.target = null;
 
         /**
-         * uint32_t : The index in elements of target.
+         * uint32_t : 対象の要素インデックス
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -72,7 +72,7 @@
         this.index = -1;
 
         /**
-         * uint16_t : The number of keys.
+         * uint16_t : キーフレームの数
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -81,7 +81,7 @@
         this.num_keys = 0;
 
         /**
-         * XModelAnimationKey[num_keys] : The array of keys.
+         * XModelAnimationKey[num_keys] : キーフレームの配列
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -90,7 +90,7 @@
         this.keys = null;
 
         /**
-         * uint16_t : The number of children.
+         * uint16_t : 子のアニメーションの数
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -99,7 +99,7 @@
         this.num_children = 0;
 
         /**
-         * XModelAnimation[] : The array of children.
+         * XModelAnimation[] : 子のアニメーションの配列
          *
          * @instance
          * @memberof xpl.XModelAnimation
@@ -116,7 +116,7 @@
      * @instance
      * @memberof xpl.XModelAnimation
      * @function toString
-     * @returns {String} The name of this animation structure.
+     * @returns {string} The name of this animation structure.
      */
     ns.XModelAnimation.prototype.toString = function () {
         return this.name;
@@ -139,7 +139,7 @@
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_ANIMATION_KEY);
 
         /**
-         * uint8_t : The interpolate.
+         * uint8_t : 補間の種別
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -148,7 +148,7 @@
         this.interpolate = ns.XModelAnimationKey.INTERPOLATE_UNKNOWN;
 
         /**
-         * float64_t : The time.
+         * float64_t : 時間
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -157,7 +157,7 @@
         this.time = 0;
 
         /**
-         * float64_t : The before control time.
+         * float64_t : 始点の時間
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -166,7 +166,7 @@
         this.before_time = 0;
 
         /**
-         * float64_t : The after control time.
+         * float64_t : 終点の時間
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -175,7 +175,7 @@
         this.after_time = 0;
 
         /**
-         * uint32_t : The value size.
+         * uint32_t : 値のサイズ
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -184,7 +184,7 @@
         this.value_size = 0;
 
         /**
-         * float32_t[value_size | 2 * value_size] : The value.
+         * float32_t[value_size] : 値
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -193,7 +193,7 @@
         this.value = null;
 
         /**
-         * float32_t[value_size] : The before control value.
+         * float32_t[value_size] : 始点の値
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -202,7 +202,7 @@
         this.before_value = null;
 
         /**
-         * float32_t[value_size] : The after control value.
+         * float32_t[value_size] : 終点の値
          *
          * @instance
          * @memberof xpl.XModelAnimationKey
@@ -213,43 +213,35 @@
 
     Object.setPrototypeOf(ns.XModelAnimationKey.prototype, ns.XModelStructure.prototype);
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.XModelAnimationKey, {
 
         /**
-         * Interpolate by unknown.
+         * 補間の種別不明
          *
          * @constant
          * @memberof xpl.XModelAnimationKey
          * @member {xpl.enum_t} INTERPOLATE_UNKNOWN
          */
-        "INTERPOLATE_UNKNOWN": {
-
-            value: -1
-        },
+        "INTERPOLATE_UNKNOWN": {value: -1},
 
         /**
-         * Interpolate by liner.
+         * 線形補間
          *
          * @constant
          * @memberof xpl.XModelAnimationKey
          * @member {xpl.enum_t} INTERPOLATE_LINER
          */
-        "INTERPOLATE_LINER": {
-
-            value: 0
-        },
+        "INTERPOLATE_LINER": {value: 0},
 
         /**
-         * Interpolate by bezier.
+         * ベジェ補間
          *
          * @constant
          * @memberof xpl.XModelAnimationKey
          * @member {xpl.enum_t} INTERPOLATE_BEZIER
          */
-        "INTERPOLATE_BEZIER": {
-
-            value: 1
-        }
+        "INTERPOLATE_BEZIER": {value: 1}
     });
 
 })(xpl);
@@ -259,7 +251,7 @@
     "use strict";
 
     /**
-     * Animation set structure of the xModel.
+     * アニメーションセットの構造です。
      *
      * @class
      * @alias xpl.XModelAnimationSet
@@ -269,16 +261,16 @@
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION_SET);
 
         /**
-         * string : The animation set name.
+         * string : アニメーションセット名
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
         /**
-         * uint16_t : The number of animations.
+         * uint16_t : アニメーション数
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
@@ -287,7 +279,7 @@
         this.num_animations = 0;
 
         /**
-         * XModelAnimation[num_animations] : The array of animations.
+         * XModelAnimation[num_animations] : アニメーションの配列
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
@@ -299,12 +291,12 @@
     Object.setPrototypeOf(ns.XModelAnimationSet.prototype, ns.XModelExtensible.prototype);
 
     /**
-     * Get the name of this animation set.
+     * アニメーションセット名を取得します。
      *
      * @instance
      * @memberof xpl.XModelAnimationSet
      * @function toString
-     * @returns {String} The name of this animation set.
+     * @returns {string} アニメーションセット名
      */
     ns.XModelAnimationSet.prototype.toString = function () {
         return this.name;

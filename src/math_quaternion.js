@@ -812,7 +812,7 @@
      * @function convertToString
      * @param {Array.<number>} q - 対象の四元数
      * @param {number} off - 対象の四元数の配列インデックス
-     * @returns {String} 変換された文字列
+     * @returns {string} 変換された文字列
      */
     ns.Quaternion.convertToString = function (q, off) {
         return "Quaternion(" + q[off + CR] + ", " + q[off + CI] + ", " + q[off + CJ] + ", " + q[off + CK] + ")";

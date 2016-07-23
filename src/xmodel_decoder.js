@@ -378,7 +378,7 @@
      * @instance
      * @memberof xpl.XModelDecoder
      * @function _getString
-     * @returns {String} The string value.
+     * @returns {string} The string value.
      */
     ns.XModelDecoder.prototype._getString = function() {
         let len = this._getInt16();
@@ -396,9 +396,9 @@
      * @protected
      * @instance
      * @memberof xpl.XModelDecoder
-     * @param {Array.<String>} buf - The destination array.
-     * @param {Number} off - Starting position in the destination array.
-     * @param {Number} len - The number of array elements.
+     * @param {Array.<string>} buf - The destination array.
+     * @param {number} off - Starting position in the destination array.
+     * @param {number} len - The number of array elements.
      */
     ns.XModelDecoder.prototype._getStringArray = function(buf, off, len) {
         for (let i = 0; i < len; ++i) {
@@ -780,7 +780,7 @@
      * @param {xpl.XModelContainer} inst - The container object.
      */
     ns.XModelDecoder.prototype._getContainer = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
         // textures.
@@ -790,7 +790,7 @@
             this._getStructureArray(inst.textures, 0, inst.num_textures);
         }
 
-        // materials.
+        // 材質配列
         inst.num_materials = this._getInt16();
         if (0 < inst.num_materials) {
             inst.materials = new Array(inst.num_materials);
@@ -835,7 +835,7 @@
      * @param {xpl.XModelTexture} inst - The texture object.
      */
     ns.XModelDecoder.prototype._getTexture = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
         // identifier.
@@ -898,10 +898,10 @@
      * @param {xpl.XModelMesh} inst - The mesh object.
      */
     ns.XModelDecoder.prototype._getMesh = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
-        // positions.
+        // 位置配列
         inst.num_positions = this._getInt32();
         if (0 < inst.num_positions) {
             inst.position_size = this._getInt8();
@@ -961,7 +961,7 @@
             }
         }
 
-        // materials.
+        // 材質配列
         inst.num_materials = this._getInt16();
         if (0 < inst.num_materials) {
             inst.materials = new Array(inst.num_materials);
@@ -1135,7 +1135,7 @@
      * @param {xpl.XModelNode} inst - The node object.
      */
     ns.XModelDecoder.prototype._getNode = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
         // connected.
@@ -1223,7 +1223,7 @@
      * @param {xpl.XModelAnimation} inst - The animation object.
      */
     ns.XModelDecoder.prototype._getAnimation = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
         // structure of processing target.
@@ -1284,7 +1284,7 @@
      * @param {xpl.XModelAnimationSet} inst - The animation set.
      */
     ns.XModelDecoder.prototype._getAnimationSet = function(inst) {
-        // name.
+        // 名前
         inst.name = this._getString();
 
         // animations.

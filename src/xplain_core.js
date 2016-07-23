@@ -59,12 +59,26 @@ if (typeof module == "object") {
  * @param {*} defVal - 既定値
  * @returns {*} チェック済みの値
  */
-function xplDefVal(val, defVal) {
+function ns.defaultValue(val, defVal) {
     return val === undefined ? defVal : val;
 }
 
 (function (ns) {
 
+    /**
+     *
+     * 指定の変数が未定義かチェックする。
+     * 指定の変数が未定義の場合は既定値を返し、そうでない場合は指定の値を返します。
+     * 
+     * @param {*} value - チェックする値
+     * @param {*} default_value - 既定値
+     * @returns {*} チェック済みの値
+     */
+    ns.defaultValue = function (value, default_value) {
+        return value === undefined ? default_value : value;
+    };
+
+    //noinspection JSValidateTypes
     Object.defineProperties(ns, {
 
         /**
@@ -128,7 +142,7 @@ function xplDefVal(val, defVal) {
          *
          * @constant
          * @memberof xpl.about
-         * @member {Number} VERSION_CODE
+         * @member {number} VERSION_CODE
          */
         "VERSION_CODE": {value: 1},
 

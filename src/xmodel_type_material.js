@@ -83,7 +83,7 @@
         // 作業変数
 
         /**
-         * void* : テクスチャのインスタンス
+         * Object : テクスチャのインスタンス
          *
          * @instance
          * @memberof xpl.XModelTexture
@@ -279,6 +279,7 @@
 
     Object.setPrototypeOf(ns.XModelMaterial.prototype, ns.XModelExtensible.prototype);
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.XModelMaterial, {
 
         /**
@@ -288,9 +289,7 @@
          * @memberof xpl.XModelMaterial
          * @member {xpl.uint32_t} DRAW_MODE_FACE_NONE_BITS
          */
-        "DRAW_MODE_FACE_NONE_BITS": {
-            value: 0
-        },
+        "DRAW_MODE_FACE_NONE_BITS": {value: 0},
 
         /**
          * 表面描画のモード
@@ -299,9 +298,7 @@
          * @memberof xpl.XModelMaterial
          * @member {xpl.uint32_t} DRAW_MODE_FACE_FRONT_BITS
          */
-        "DRAW_MODE_FACE_FRONT_BITS": {
-            value: 0x1 << 0
-        },
+        "DRAW_MODE_FACE_FRONT_BITS": {value: 0x1 << 0},
 
         /**
          * 裏面描画の描画モード
@@ -310,9 +307,7 @@
          * @memberof xpl.XModelMaterial
          * @member {xpl.uint32_t} DRAW_MODE_FACE_BACK_BITS
          */
-        "DRAW_MODE_FACE_BACK_BITS": {
-            value: 0x1 << 1
-        },
+        "DRAW_MODE_FACE_BACK_BITS": {value: 0x1 << 1},
 
         /**
          * 両面描画の描画モード

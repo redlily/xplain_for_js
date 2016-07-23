@@ -131,10 +131,10 @@
                                            width, height,
                                            pixels, mipmap,
                                            size, size_off) {
-        pixels = xplDefVal(pixels, null);
-        mipmap = xplDefVal(mipmap, false);
-        size = xplDefVal(size, null);
-        size_off = xplDefVal(size_off, 0);
+        pixels = ns.defaultValue(pixels, null);
+        mipmap = ns.defaultValue(mipmap, false);
+        size = ns.defaultValue(size, null);
+        size_off = ns.defaultValue(size_off, 0);
 
         // テクスチャのインスタンス生成
         let tex = gl.createTexture();
@@ -210,7 +210,7 @@
      * @returns {WebGLShader} シェーダのインスタンス
      */
     ns.GLUtils.createShader = function (gl, type, code, err_handle) {
-        err_handle = xplDefVal(err_handle, null);
+        err_handle = ns.defaultValue(err_handle, null);
 
         if (type == gl.VERTEX_SHADER || type == gl.FRAGMENT_SHADER) {
             // シェーダのインスタンスを生成

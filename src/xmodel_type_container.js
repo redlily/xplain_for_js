@@ -49,7 +49,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
@@ -90,7 +90,7 @@
         this.materials = null;
 
         /**
-         * uint16_t : The number of meshes.
+         * uint16_t : メッシュの数
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -99,7 +99,7 @@
         this.num_meshes = 0;
 
         /**
-         * XModelMesh[num_meshes] : The array of meshes.
+         * XModelMesh[num_meshes] : メッシュの配列
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -108,7 +108,7 @@
         this.meshes = null;
 
         /**
-         * uint16_t : The number of nodes.
+         * uint16_t : ノードの数
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -117,7 +117,7 @@
         this.num_nodes = 0;
 
         /**
-         * XModelNode[num_nodes] : The array of nodes.
+         * XModelNode[num_nodes] : ノードの配列
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -126,7 +126,7 @@
         this.nodes = null;
 
         /**
-         * float64_t : The time rate of unit number of sec.
+         * float64_t : 一秒間の時間拡大率
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -135,7 +135,7 @@
         this.time_rate = 1.0;
 
         /**
-         * uint16_t : The number of animation sets.
+         * uint16_t : アニメーションセットの数
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -144,7 +144,7 @@
         this.num_animation_sets = 0;
 
         /**
-         * XModelAnimationSet[num_animation_sets] : The array of animation sets.
+         * XModelAnimationSet[num_animation_sets] : アニメーションセットの配列
          *
          * @instance
          * @memberof xpl.XModelContainer
@@ -161,7 +161,7 @@
      * @instance
      * @memberof xpl.XModelContainer
      * @function toString
-     * @returns {String} The name of this container.
+     * @returns {string} The name of this container.
      */
     ns.XModelContainer.prototype.toString = function () {
         return this.name;
@@ -184,16 +184,16 @@
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_NODE);
 
         /**
-         * string : The node name.
+         * string : ノード名
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
         /**
-         * boolean_t : The connected parent.
+         * boolean_t : 親のノードと接続されているかどうか
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -202,7 +202,7 @@
         this.connected = true;
 
         /**
-         * boolean_t[SIZE_VECTOR_3] : Lock the rotation of axis for kinematics.
+         * boolean_t[SIZE_VECTOR_3] : 各軸が固定されているかどうか
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -211,7 +211,7 @@
         this.lock_axises = new Uint8Array([false, false, false]);
 
         /**
-         * boolean_t[SIZE_VECTOR_3] : Limit the angle of axis rotate for kinematics.
+         * boolean_t[SIZE_VECTOR_3] : 各軸に角度制限があるかどうか
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -220,7 +220,7 @@
         this.limit_angles = new Uint8Array([false, false, false]);
 
         /**
-         * float32_t[SIZE_VECTOR_3] : The minimum angle for kinematics limits.
+         * float32_t[SIZE_VECTOR_3] : 各軸の最小角度
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -229,7 +229,7 @@
         this.min_angles = new Float32Array([-Math.PI, -Math.PI, -Math.PI]);
 
         /**
-         * float32_t[SIZE_VECTOR_3] : The maximum angle for kinematics limits.
+         * float32_t[SIZE_VECTOR_3] : 各軸の最大角度
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -238,7 +238,7 @@
         this.max_angles = new Float32Array([Math.PI, Math.PI, Math.PI]);
 
         /**
-         * float32_t[SIZE_VECTOR_3] : The location of bone tail.
+         * float32_t[SIZE_VECTOR_3] : ボーンの端の位置
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -247,7 +247,7 @@
         this.bone_tail = new Float32Array([0.0, 0.0, 0.0]);
 
         /**
-         * XModelTransform[NUM_TRANSFORMS] : The array of transforms.
+         * XModelTransform[NUM_TRANSFORMS] : 変換の配列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -256,7 +256,7 @@
         this.transforms = [null, null, null, null];
 
         /**
-         * uint16_t : The number of inverse kinematics.
+         * uint16_t : 逆運動学の構造の数
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -265,7 +265,7 @@
         this.num_iks = 0;
 
         /**
-         * XModelIK[num_iks] : The array of inverse kinematics.
+         * XModelIK[num_iks] : 逆運動学の構造の配列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -274,7 +274,7 @@
         this.iks = null;
 
         /**
-         * uint16_t : The number of meshes.
+         * uint16_t : メッシュの数
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -283,7 +283,7 @@
         this.num_meshes = 0;
 
         /**
-         * XModelMesh[num_meshes] : The array of meshes.
+         * XModelMesh[num_meshes] : メッシュの配列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -292,7 +292,7 @@
         this.meshes = null;
 
         /**
-         * uint16_t : The number of children.
+         * uint16_t : 子のノードの数
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -301,7 +301,7 @@
         this.num_children = 0;
 
         /**
-         * XModelFrame[num_children] : The array of children.
+         * XModelFrame[num_children] : 子のノードの配列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -312,16 +312,16 @@
         // 作業変数
 
         /**
-         * XModelNode : this object is parent of this node.
+         * XModelNode : 親のノード
          *
          * @instance
          * @memberof xpl.XModelNode
          * @member {xpl.XModelNode} parent
          */
-        this.parent = null; // weak reference.
+        this.parent = null; // 弱参照
 
         /**
-         * float32_t[SIZE_MATRIX] : offset matrix.
+         * float32_t[SIZE_MATRIX] : オフセット行列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -334,7 +334,7 @@
             0.0, 0.0, 0.0, 1.0]);
 
         /**
-         * float32_t[SIZE_MATRIX] : The combined matrix.
+         * float32_t[SIZE_MATRIX] : 合成された行列
          *
          * @instance
          * @memberof xpl.XModelNode
@@ -349,72 +349,62 @@
 
     Object.setPrototypeOf(ns.XModelNode.prototype, ns.XModelExtensible.prototype);
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.XModelNode, {
 
         /**
-         * Transform of the matrix.
+         * 行列の変換構造
          *
          * @constant
          * @memberof xpl.XModelNode
-         * @member {xpl.size_t} TRANSFORM_MATRIX
+         * @member {xpl.enum_t} TRANSFORM_MATRIX
          */
-        "TRANSFORM_MATRIX": {
-            value: 0
-        },
+        "TRANSFORM_MATRIX": {value: 0},
 
         /**
-         * Transform of the translate.
+         * 平行移動の変換構造
          *
          * @constant
          * @memberof xpl.XModelNode
-         * @member {xpl.size_t} TRANSFORM_TRANSLATE
+         * @member {xpl.enum_t} TRANSFORM_TRANSLATE
          */
-        "TRANSFORM_TRANSLATE": {
-            value: 1
-        },
+        "TRANSFORM_TRANSLATE": {value: 1},
 
         /**
-         * Transform of the scale.
+         * 拡大の変換構造
          *
          * @constant
          * @memberof xpl.XModelNode
          * @member {xpl.size_t} TRANSFORM_SCALE
          */
-        "TRANSFORM_SCALE": {
-            value: 2
-        },
+        "TRANSFORM_SCALE": {value: 2},
 
         /**
-         * Transform of the rotate.
+         * 回転の変換構造
          *
          * @constant
          * @memberof xpl.XModelNode
          * @member {xpl.size_t} TRANSFORM_ROTATE
          */
-        "TRANSFORM_ROTATE": {
-            value: 3
-        },
+        "TRANSFORM_ROTATE": {value: 3},
 
         /**
-         * Number of the transforms.
+         * 変換構造の数
          *
          * @constant
          * @memberof xpl.XModelNode
          * @member {xpl.size_t} NUM_TRANSFORMS
          */
-        "NUM_TRANSFORMS": {
-
-            value: 4
-        }
+        "NUM_TRANSFORMS": {value: 4}
     });
 
     /**
-     * Get the name of this node.
+     * ノード名を取得します。
      *
      * @instance
      * @memberof xpl.XModelNode
      * @function toString
-     * @returns {String} The name of this node.
+     * @returns {string} ノード名
      */
     ns.XModelNode.prototype.toString = function () {
         return this.name;

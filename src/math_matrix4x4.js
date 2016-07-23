@@ -84,7 +84,7 @@
                                   m20, m21, m22, m23,
                                   m30, m31, m32, m33,
                                   trans) {
-        trans = xplDefVal(trans, false);
+        trans = ns.defaultValue(trans, false);
 
         if (trans) {
             d[d_off + M00] = m00;
@@ -884,7 +884,7 @@
      * @function convertToString
      * @param {Array.<number>} m - 入力元の行列
      * @param {number} m_off - 入力元の行列の配列インデックス
-     * @returns {String} The converted matrix to string.
+     * @returns {string} The converted matrix to string.
      */
     ns.Matrix4x4.convertToString = function (m, m_off) {
         return "Matrix4x4(" + "\n" +

@@ -97,7 +97,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {String} name
+         * @member {string} name
          */
         this.name = null;
 
@@ -299,11 +299,12 @@
          * @memberof xpl.XModelMesh
          * @member {xpl.XModelNode} parent
          */
-        this.parent = null; // weak reference.
+        this.parent = null; // 弱参照
     };
 
     Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelMeshBase.prototype);
 
+    //noinspection JSValidateTypes
     Object.defineProperties(ns.XModelMesh, {
 
         /**
@@ -313,9 +314,7 @@
          * @memberof xpl.XModelMesh
          * @member {xpl.enum_t} TYPE_POSITION
          */
-        "TYPE_POSITION": {
-            value: 0
-        },
+        "TYPE_POSITION": {value: 0},
 
         /**
          * 法線の型
@@ -325,9 +324,7 @@
          * @member {xpl.enum_t} TYPE_NORMAL
          *
          */
-        "TYPE_NORMAL": {
-            value: 1
-        }
+        "TYPE_NORMAL": {value: 1}
     });
 
     /**
@@ -336,7 +333,7 @@
      * @instance
      * @memberof xpl.XModelMesh
      * @function toString
-     * @returns {String} メッシュ名
+     * @returns {string} メッシュ名
      */
     ns.XModelMesh.prototype.toString = function () {
         return this.name;
@@ -358,7 +355,7 @@
         ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH_SUBSET);
 
         /**
-         * uint32_t : ボーンの数
+         * uint32_t : ボーンのインデックスの数
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -367,7 +364,7 @@
         this.num_bones = 0;
 
         /**
-         * uint32_t[num_bones] : ボーンの配列
+         * uint32_t[num_bones] : ボーンのインデックスの配列
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -376,7 +373,7 @@
         this.bones = null;
 
         /**
-         * uint32_t : 頂点の数
+         * uint32_t : 頂点のインデックスの数
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -385,7 +382,7 @@
         this.num_vertices = 0;
 
         /**
-         * uint32_t[num_vertices] : 頂点の配列
+         * uint32_t[num_vertices] : 頂点のインデクスの配列
          *
          * @instance
          * @memberof xpl.XModelMeshSubset
@@ -526,7 +523,7 @@
     ns.XModelVertex = function () {
 
         /**
-         * uint32_t : The position index.
+         * uint32_t : 位置のインデックス
          *
          * @instance
          * @memberof xpl.XModelVertex
@@ -535,7 +532,7 @@
         this.position = -1;
 
         /**
-         * uint32_t : The normal index.
+         * uint32_t : 法線のインデックス
          *
          * @instance
          * @memberof xpl.XModelVertex
@@ -544,7 +541,7 @@
         this.normal = -1;
 
         /**
-         * uint32_t : The color index.
+         * uint32_t : 色のインデックス
          *
          * @instance
          * @memberof xpl.XModelVertex
@@ -553,7 +550,7 @@
         this.color = -1;
 
         /**
-         * uint32_t : The texture coordinate index.
+         * uint32_t : テクスチャ座標のインデックス
          *
          * @instance
          * @memberof xpl.XModelVertex
@@ -572,19 +569,19 @@
     };
 
     /**
-     * Get the hash code of instance.
+     * ハッシュ値を湯得します。
      *
      * @instance
      * @memberof xpl.XModelVertex
      * @function hashCode
-     * @returns {xpl.uint32_t} The hash code.
+     * @returns {xpl.uint32_t} ハッシュ値
      */
     ns.XModelVertex.prototype.hashCode = function () {
         return this.position ^ this.normal ^ this.color ^ this.tex_coord ^ this.skinning;
     };
 
     /**
-     * Compares this instance with specified object.
+     * このインスタンスと引数で指定されたインスタンスが同じものかを調べます。
      *
      * @instance
      * @memberof xpl.XModelVertex
@@ -621,7 +618,7 @@
     ns.XModelElement = function () {
 
         /**
-         * uint16_t : The material index.
+         * uint16_t : 材質のインデックス
          *
          * @instance
          * @memberof xpl.XModelElement
@@ -630,7 +627,7 @@
         this.material = -1;
 
         /**
-         * uint8_t : The number of vertex indices.
+         * uint8_t : 頂点のインデックスの数
          *
          * @instance
          * @memberof xpl.XModelElement
@@ -639,7 +636,7 @@
         this.num_vertices = 0;
 
         /**
-         * uint32_t[num_vertices] : The vertex index array.
+         * uint32_t[num_vertices] : 頂点のインデックスの配列
          *
          * @instance
          * @memberof xpl.XModelElement
@@ -649,12 +646,12 @@
     };
 
     /**
-     * Get the hash code of instance.
+     * ハッシュ値を湯得します。
      *
      * @instance
      * @memberof xpl.XModelElement
      * @function hashCode
-     * @returns {xpl.uint32_t} The hash code.
+     * @returns {xpl.uint32_t} ハッシュ値
      */
     ns.XModelElement.prototype.hashCode = function () {
         var vertices_hash_code = 0;
@@ -665,7 +662,7 @@
     };
 
     /**
-     * Compares this instance with specified object.
+     * このインスタンスと引数で指定されたインスタンスが同じものかを調べます。
      *
      * @instance
      * @memberof xpl.XModelElement
@@ -674,18 +671,18 @@
      * @returns {Boolean} 比較の結果
      */
     ns.XModelElement.prototype.equals = function (other) {
-        if (this === other) {
-            return true;
-        }
-        if (other && other instanceof ns.XModelElement) {
-            for (var i = 0; i < this.num_vertices && i < other.num_vertices; ++i) {
-                if (this.vertices[i] != other.vertices[i]) {
-                    return false;
+        if (this !== other) {
+            if (other && other instanceof ns.XModelElement) {
+                for (var i = 0; i < this.num_vertices && i < other.num_vertices; ++i) {
+                    if (this.vertices[i] != other.vertices[i]) {
+                        return false;
+                    }
                 }
+                return this.material == other.material && this.num_vertices == other.num_vertices;
             }
-            return this.material == other.material && this.num_vertices == other.num_vertices;
+            return false;
         }
-        return false;
+        return true;
     };
 
 })(xpl);

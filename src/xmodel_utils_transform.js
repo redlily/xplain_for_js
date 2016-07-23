@@ -60,7 +60,7 @@
      * @param {xpl.float32_t} [blend_rate=0.0] - 2つのスロットのブレンド率
      */
     ns.XModeParameterUtils.applyTransform = function (transform, m, m_off, blend_rate) {
-        blend_rate = xplDefVal(blend_rate, 0.0);
+        blend_rate = ns.defaultValue(blend_rate, 0.0);
 
         if (transform != null) {
             var value;
@@ -221,7 +221,7 @@
      * @param {xpl.uint32_t} [slot=0] - リセットするスロット番号
      */
     ns.XModeParameterUtils.resetParameter = function (transform, slot) {
-        slot = xplDefVal(slot, 0);
+        slot = ns.defaultValue(slot, 0);
 
         if (transform != null) {
             switch (transform.structure_type) {

@@ -45,7 +45,7 @@
         ns.XModelStructure.call(this, ns.XModelStructure.TYPE_IK);
 
         /**
-         * XModelNode : The target node.
+         * XModelNode : 対象のノード
          *
          * @instance
          * @memberof xpl.XModelIK
@@ -54,7 +54,7 @@
         this.target = null;
 
         /**
-         * uint16_t : The max number of iterations.
+         * uint16_t : 繰り返しの最大数
          *
          * @instance
          * @memberof xpl.XModelIK
@@ -63,7 +63,7 @@
         this.max_iterations = 500;
 
         /**
-         * uint16_t : The chain length of nodes.
+         * uint16_t : チェインの数
          *
          * @instance
          * @memberof xpl.XModelIK
@@ -72,7 +72,7 @@
         this.chain_length = 1;
 
         /**
-         * float32_t : The influence on transform of bone.
+         * float32_t : 影響度
          *
          * @instance
          * @memberof xpl.XModelIK
@@ -82,17 +82,5 @@
     };
 
     Object.setPrototypeOf(ns.XModelIK.prototype, ns.XModelStructure.prototype);
-
-    /**
-     * Get the name of this inverse kinematics structure.
-     *
-     * @instance
-     * @memberof xpl.XModelIK
-     * @function toString
-     * @returns {String} The name of this inverse kinematics structure.
-     */
-    ns.XModelIK.prototype.toString = function () {
-        return this.name;
-    };
 
 })(xpl);
