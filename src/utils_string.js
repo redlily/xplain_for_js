@@ -30,28 +30,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * 文字列のユーティリティクラスです。
      *
-     * @namespace xpl.StringUtils
+     * @constructor
      */
-    ns.StringUtils = function () {
+    xpl.StringUtils = function () {
         throw new Error("Unsupported operation!");
     };
 
     /**
      * JavaScript内部の文字列表現からUTF-8の文字列にエンコードします。
      *
-     * @memberof xpl.StringUtils
-     * @function encodeUTF8
      * @param {string} str - JavaScriptの文字列
-     * @returns {Array.<string>} UTF-8の文字列
+     * @returns {string[]} UTF-8の文字列
      */
-    ns.StringUtils.encodeUTF8 = function (str) {
+    xpl.StringUtils.encodeUTF8 = function (str) {
         let ary = [];
         for (let i = 0; i < str.length; ++i) {
             // UTF-16からUnicodeへ変換
@@ -108,12 +106,10 @@
     /**
      * UTF-8の文字列からJavaScript内部の文字列表現にデコードします。
      *
-     * @memberof xpl.StringUtils
-     * @function decodeUTF8
-     * @param {Array.<string>} ary - UTF-8の文字列
+     * @param {string[]} ary - UTF-8の文字列
      * @returns {string} JavaScriptの文字列
      */
-    ns.StringUtils.decodeUTF8 = function (ary) {
+    xpl.StringUtils.decodeUTF8 = function (ary) {
         let str = "";
         for (let i = 0; i < ary.length;) {
             // UTF-8からUnicodeへ変換

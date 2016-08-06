@@ -1,8 +1,15 @@
 #!/bin/sh
 
 jsdoc -d doc \
-src/xplain_core.js \
-src/math_geometry.js \
-src/math_vector3.js \
-src/math_quaternion.js \
-src/math_quaternion_dim.js
+./src/xplain_core.js \
+./src/utils_system.js \
+./src/utils_math.js \
+./src/utils_array.js \
+./src/utils_string.js \
+./src/math_geometry.js \
+./src/math_matrix4x4.js \
+./src/math_matrix4x4_dim.js \
+./src/math_quaternion.js \
+./src/math_quaternion_dim.js \
+./src/math_vector3.js \
+./src/utils_opengl.js

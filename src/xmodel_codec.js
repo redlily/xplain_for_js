@@ -30,27 +30,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * xModelのデコーダの定義クラスです。
      *
-     * @class
-     * @alias xpl.XModelCodec
+     * @constructor
      */
-    ns.XModelCodec = function () {
+    xpl.XModelCodec = function () {
     };
 
-    Object.defineProperties(ns.XModelCodec, {
+    Object.defineProperties(xpl.XModelCodec, {
 
         /**
          * コードネーム.
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {string} CODE_NAME
+         * @const {string} CODE_NAME
          */
         "CODE_NAME": {
             value: "EX-MACHINA"
@@ -59,9 +57,8 @@
         /**
          * マジックナンバー (XModel DAta).
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {xpl.uint32_t} MAGIC_NUMBER
+         * @const {xpl.uint32_t} MAGIC_NUMBER
          */
         "MAGIC_NUMBER": {
             value: ((0xff & "x".charCodeAt(0)) << 0) |
@@ -73,9 +70,8 @@
         /**
          * 終端識別子 (End Of xModel Data).
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {xpl.uint32_t} END_OF_DATA
+         * @const {xpl.uint32_t} END_OF_DATA
          */
         "END_OF_DATA": {
             value: ((0xff & "e".charCodeAt(0)) << 0) |
@@ -87,46 +83,34 @@
         /**
          * バージョン数
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {xpl.uint32_t} VERSION
+         * @const {xpl.uint32_t} VERSION
          */
-        "VERSION": {
-            value: 35
-        },
+        "VERSION": {value: 35},
 
         /**
          * 互換のあるバージョン数
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {xpl.uint32_t} COMPATIBILITY_VERSION
+         * @const {xpl.uint32_t} COMPATIBILITY_VERSION
          */
-        "COMPATIBILITY_VERSION": {
-            value: 35
-        },
+        "COMPATIBILITY_VERSION": {value: 35},
 
         /**
          * バージョン文字列
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {string} VERSION_NAME
+         * @const {string} VERSION_NAME
          */
-        "VERSION_NAME": {
-            value: "0.9.90"
-        },
+        "VERSION_NAME": {value: "0.9.90"},
 
         /**
          * 互換のあるバージョン文字列
          *
-         * @constant
          * @memberof xpl.XModelCodec
-         * @member {string} COMPATIBILITY_VERSION_NAME
+         * @const {string} COMPATIBILITY_VERSION_NAME
          */
-        "COMPATIBILITY_VERSION_NAME": {
-            value: "0.9.90"
-        }
+        "COMPATIBILITY_VERSION_NAME": {value: "0.9.90"}
     });
 
 })(xpl);

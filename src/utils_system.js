@@ -30,27 +30,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * システムのユーティリティクラスです。
      *
-     * @namespace xpl.SystemUtils
+     * @constructor
      */
-    ns.SystemUtils = function () {
+    xpl.SystemUtils = function () {
         throw new Error("Unsupported operation!");
     };
 
     if (typeof window == "object") {
 
-        var requestAnimationFrame =
+        const requestAnimationFrame =
             window.requestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.msRequestAnimationFrame;
-        var cancelAnimationFrame =
+        const cancelAnimationFrame =
             window.cancelAnimationFrame ||
             window.mozCancelAnimationFrame ||
             window.webkitCancelAnimationFrame ||
@@ -59,30 +59,26 @@
         /**
          * アニメーションの開始を要求します。
          *
-         * @memberof ns.SystemUtils
-         * @function requestAnimationFrame
          * @param {Function} callback - 定期的に呼び出すコールバック関数
-         * @returns {Object} タイマーID
+         * @returns {number} タイマーID
          */
-        ns.SystemUtils.requestAnimationFrame = function (callback) {
+        xpl.SystemUtils.requestAnimationFrame = function (callback) {
             return requestAnimationFrame(callback);
         };
 
         /**
          * アニメーションをキャンセルします。
          *
-         * @memberof xpl.SystemUtils
-         * @function cancelAnimationFrame
-         * @param {Object} timer_id - タイマーID
+         * @param {number} timer_id - タイマーID
          */
-        ns.SystemUtils.cancelAnimationFrame = function (timer_id) {
+        xpl.SystemUtils.cancelAnimationFrame = function (timer_id) {
             cancelAnimationFrame(timer_id);
         };
     }
 
     if (typeof document == "object") {
 
-        var exitFullscreen =
+        const exitFullscreen =
             document.exitFullscreen ||
             document.mozCancelFullScreen ||
             document.webkitExitFullscreen ||
@@ -93,7 +89,7 @@
          *
          * @returns {boolean} フルスクリーンをサポートしているかどうか
          */
-        ns.SystemUtils.isSupportedFullScreen = function (target_element) {
+        xpl.SystemUtils.isSupportedFullScreen = function (target_element) {
             return (target_element.requestFullscreen ||
                 target_element.mozRequestFullScreen ||
                 target_element.webkitRequestFullscreen ||
@@ -103,12 +99,10 @@
         /**
          * 指定の要素をフルスクリーン化を要求します。
          *
-         * @memberof xpl.SystemUtils
-         * @function requestFullScreen
          * @param {Element} target_element - フルスクリーンの対象になる対象の要素
          * @returns {boolean} フルスクリーンに成功したかどうか
          */
-        ns.SystemUtils.requestFullScreen = function (target_element) {
+        xpl.SystemUtils.requestFullScreen = function (target_element) {
             if (typeof target_element.requestFullscreen == "function") {
                 // HTML5 API.
                 target_element.requestFullscreen();
@@ -132,17 +126,14 @@
          *
          * @returns {boolean} フルスクリーンかどうか
          */
-        ns.SystemUtils.isFullScreen = function () {
+        xpl.SystemUtils.isFullScreen = function () {
             return window.innerWidth == screen.width && window.innerHeight == screen.height;
         };
 
         /**
          * フルスクリーンをキャンセルします。
-         *
-         * @memberof xpl.SystemUtils
-         * @function cancelFullScreen
          */
-        ns.SystemUtils.cancelFullScreen = function () {
+        xpl.SystemUtils.cancelFullScreen = function () {
             if (exitFullscreen != null) {
                 exitFullscreen();
             }

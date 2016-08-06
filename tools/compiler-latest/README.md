@@ -114,7 +114,7 @@ the command line.
 If you're using globs or many files, you may start to run into
 problems with managing dependencies between scripts. In this case, you should
 use the [Closure Library](https://developers.google.com/closure/library/). It
-contains functions for enforcing dependencies between scripts, and Closure Compiler
+containss for enforcing dependencies between scripts, and Closure Compiler
 will re-order the inputs automatically.
 
 ## How to Contribute
@@ -517,3 +517,4 @@ without make's wrinkles and with the full portability of pure java code.</td>
     <td>Substantial changes to make them compatible with NpmCommandLineRunner.</td>
   </tr>
 </table>
+=>

@@ -1,31 +1,31 @@
-/*
- * Copyright (c) 2015, Syuuhei Kuno
+/**
+ * Copyright (c) 2016, Syuuhei Kuno
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  1. Redistributions of source code must retain the above copyright notice, this
- *     list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
  *
- *  2. Redistributions in binary form must reproduce the above copyright notice,
- *     this list of conditions and the following disclaimer in the documentation
- *     and/or other materials provided with the distribution.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
  *
- *  3. Neither the name of the copyright holder nor the names of its contributors
- *     may be used to endorse or promote products derived from this software
- *     without specific prior written permission.
+ * 3. Neither the name of xplain_for_js nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 (function () {
@@ -119,7 +119,7 @@
     var is_play_anim = true;
 
     // create shader program.
-    var createShaderProgram = function (gl, vs, fs, failed_callback) {
+    var createShaderProgram = (gl, vs, fs, failed_callback) =>{
         var inst = {};
         inst.program = xpl.GLUtils.createShaderProgram(
             gl, vs, fs, ATTRIBUTE_MAP, failed_callback);
@@ -133,12 +133,12 @@
     };
 
     // initialize the OpenGL.
-    var onInitializeGL = function () {
+    var onInitializeGL = () =>{
         onRestoreGL();
     };
 
     // restore the OpenGL.
-    var onRestoreGL = function () {
+    var onRestoreGL = () =>{
         enable_rotation = false;
 
         gl.clearColor(0.5, 0.5, 0.5, 1.0);
@@ -153,14 +153,14 @@
             gl,
             document.getElementById("model_vertex_shader").text,
             document.getElementById("model_fragment_shader").text,
-            function (type, message) {
+            (type, message) =>{
                 alert("Compile failed for model be rendering.\n" + type + "\n" + message);
             });
         guide_shader = createShaderProgram(
             gl,
             document.getElementById("guide_vertex_shader").text,
             document.getElementById("guide_fragment_shader").text,
-            function (type, message) {
+            (type, message) =>{
                 alert("Compile failed for guide be rendering.\n" + type + "\n" + message);
             });
 
@@ -184,7 +184,7 @@
     };
 
     // refresh the OpenGL.
-    var onRefreshGL = function (width, height, delta) {
+    var onRefreshGL = (width, height, delta) =>{
         gl.viewport(0, 0, width, height);
 
         // draw the model.
@@ -289,29 +289,29 @@
     };
 
     // terminate the OpenGL.
-    var onTerminateGL = function () {
+    var onTerminateGL = () =>{
         if (model != null) {
         }
     };
 
     // resume event.
-    var onCreate = function (event) {
+    var onCreate = (event) =>{
         console.log("create");
 
         // initalize the context.
         screen_element = document.getElementById("screen_element");
         fps_textfield = document.getElementById("fps_textfield");
         play_controller = document.getElementById("play_controller");
-        play_controller.onselectstart = function () {
+        play_controller.onselectstart = () =>{
             return false;
         }
         load_spinner = document.getElementById("load_spinner");
-        load_spinner.onselectstart = function () {
+        load_spinner.onselectstart = () =>{
             return false;
         }
         main_canvas = document.getElementById("main_canvas");
         onResize();
-        main_canvas.onselectstart = function () {
+        main_canvas.onselectstart = () =>{
             return false;
         };
 
@@ -348,7 +348,7 @@
     };
 
     // resize event.
-    var onResize = function () {
+    var onResize = () =>{
         // FPS.
         if (fps_textfield != null) {
             fps_textfield.style.left = 5;
@@ -381,7 +381,7 @@
     };
 
     // mouse event.
-    var onMouseEvent = function (event) {
+    var onMouseEvent = (event) =>{
         switch (event.type) {
             case "mousedown":
                 enable_rotation = true;
@@ -410,7 +410,7 @@
     };
 
     // touch event.
-    var onTouchEvent = function (event) {
+    var onTouchEvent = (event) =>{
         event.preventDefault();
         switch (event.type) {
             case "touchstart":
@@ -441,7 +441,7 @@
     };
 
     // change play animation.
-    var onPlayAnim = function (event) {
+    var onPlayAnim = (event) =>{
         console.log("change play animation");
         if (is_play_anim) {
             is_play_anim = false;
@@ -451,7 +451,7 @@
     };
 
     // change prev animation.
-    var onPrevAnim = function (event) {
+    var onPrevAnim = (event) =>{
         console.log("change prev animation");
         if (model != null && model.isCompleted && 0 < model.numAnimationSets) {
             anim_index--;
@@ -464,7 +464,7 @@
     };
 
     // change next animation.
-    var onNextAnim = function (event) {
+    var onNextAnim = (event) =>{
         console.log("change next animation");
         if (model != null && model.isCompleted && 0 < model.numAnimationSets) {
             anim_index++;
@@ -474,7 +474,7 @@
     };
 
     // change screen mode.
-    var onChangeScreenMode = function (event) {
+    var onChangeScreenMode = (event) =>{
         console.log("change screen mode");
         if (xpl.SystemUtils.isSupportedFullScreen(screen_element)) {
             if (!xpl.SystemUtils.isFullScreen(screen_element)) {
@@ -488,19 +488,19 @@
     };
 
     // resume event.
-    var onResume = function (event) {
+    var onResume = (event) =>{
         console.log("resume");
         startRefresh();
     };
 
     // restore WebGL context.
-    var onRestoreWebGLContext = function (event) {
+    var onRestoreWebGLContext = (event) =>{
         console.log("restore");
         onRestoreGL();
     };
 
     // start refresh.
-    var startRefresh = function () {
+    var startRefresh = () =>{
         if (!refresh_enable) {
             refresh_timer = xpl.SystemUtils.requestAnimationFrame(onRefresh);
             refresh_enable = true;
@@ -511,16 +511,16 @@
     };
 
     // stop refresh.
-    var stoprefresh = function () {
+    var stoprefresh = () =>{
         if (refresh_enable) {
-            cancelTimeout(refresh_timer);
+            xpl.SystemUtils.cancelAnimationFrame(refresh_timer);
             refresh_timer = null;
             refresh_enable = false;
         }
     };
 
     // refresh event.
-    var onRefresh = function () {
+    var onRefresh = () =>{
         var now_time = Date.now();
 
         if (!gl.isContextLost()) {
@@ -543,13 +543,13 @@
     };
 
     // suspend event.
-    var onSuspend = function (event) {
+    var onSuspend = (event) =>{
         console.log("suspend");
         stoprefresh();
     };
 
     // unload event.
-    var onDestroy = function (event) {
+    var onDestroy = (event) =>{
         onSuspend(event);
         console.log("destroy");
 

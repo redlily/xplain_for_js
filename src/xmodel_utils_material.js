@@ -50,7 +50,7 @@
      * @memberof xpl.XModelMaterialUtils
      * @function getTextures
      * @param {xpl.XModelMaterial?} material - The material instance.
-     * @param {Array.<xpl.XModelTexture>?} dest -
+     * @param {xpl.XModelTexture[]?} dest -
      *              The destination array for texture.
      *              Can specified the null if not needed it.
      * @param {xpl.size_t} off - Starting position the in the destination array.

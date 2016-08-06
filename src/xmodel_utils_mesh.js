@@ -30,217 +30,168 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
-     * Utilities for the xModel mesh structure.
+     * 材質構造用のユーティリティクラスです。
      *
      * @namespace xpl.XModelMeshUtils
      * @see xpl.XModelMesh
      */
-    ns.XModelMeshUtils = function () {
+    xpl.XModelMeshUtils = function () {
         throw new Error("Unsupported operation");
     };
 
-    Object.defineProperties(ns.XModelMeshUtils, {
+    Object.defineProperties(xpl.XModelMeshUtils, {
 
         /**
-         * Attribute index of the structure size.
+         * 構造のサイズの属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_STRUCTURE_SIZE
+         * @const {xpl.enum_t} ATTRIBUTE_STRUCTURE_SIZE
          */
-        "ATTRIBUTE_STRUCTURE_SIZE": {
-
-            value: 0
-        },
+        ATTRIBUTE_STRUCTURE_SIZE: {value: 0},
 
         /**
-         * Attribute index of the position.
+         * 位置の属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_POSITION
+         * @const {xpl.enum_t} ATTRIBUTE_POSITION
          */
-        "ATTRIBUTE_POSITION": {
-
-            value: 1
-        },
+        ATTRIBUTE_POSITION: {value: 1},
 
         /**
-         * Attribute index of the normal.
+         * 法線の属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_NORMAL
+         * @const {xpl.enum_t} ATTRIBUTE_NORMAL
          */
-        "ATTRIBUTE_NORMAL": {
-
-            value: 2
-        },
+        ATTRIBUTE_NORMAL: {value: 2},
 
         /**
-         * Attribute index of the color.
+         * 色の属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_COLOR
+         * @const {xpl.enum_t} ATTRIBUTE_COLOR
          */
-        "ATTRIBUTE_COLOR": {
-
-            value: 3
-        },
+        ATTRIBUTE_COLOR: {value: 3},
 
         /**
-         * Attribute index of the texture coordinate.
+         * テクスチャ座標の属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_TEXCOORD
+         * @const {xpl.enum_t} ATTRIBUTE_TEXCOORD
          */
-        "ATTRIBUTE_TEXCOORD": {
-
-            value: 4
-        },
+        ATTRIBUTE_TEXCOORD: {value: 4},
 
         /**
-         * Attribute index of the bone length.
+         * ボーンの長さの属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_BONELENGTH
+         * @const {xpl.enum_t} ATTRIBUTE_BONELENGTH
          */
-        "ATTRIBUTE_BONELENGTH": {
-
-            value: 5
-        },
+        ATTRIBUTE_BONELENGTH: {value: 5},
 
         /**
-         * Attribute index of the bone indices.
+         * ボーンのインデックスの属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_BONEINDICES
+         * @const {xpl.enum_t} ATTRIBUTE_BONEINDICES
          */
-        "ATTRIBUTE_BONEINDICES": {
-
-            value: 6
-        },
+        ATTRIBUTE_BONEINDICES: {value: 6},
 
         /**
-         * Attribute index of the bone weights.
+         * ボーンの重みの属性
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} ATTRIBUTE_BONEWEIGHTS
+         * @const {xpl.enum_t} ATTRIBUTE_BONEWEIGHTS
          */
-        "ATTRIBUTE_BONEWEIGHTS": {
-
-            value: 7
-        },
+        ATTRIBUTE_BONEWEIGHTS: {value: 7},
 
         /**
-         * Maximum number of the attributes.
+         * 属性の定義数
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} MAX_ATTRIBUTE
+         * @const {xpl.size_t} MAX_ATTRIBUTE
          */
-        "MAX_ATTRIBUTE": {
-
-            value: 8
-        },
+        MAX_ATTRIBUTE: {value: 8},
 
         /**
-         * Type of the void.
+         * 型なし
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} TYPE_VOID
+         * @const {xpl.enum_t} TYPE_VOID
          */
-        "TYPE_VOID": {
-
-            value: 0
-        },
+        TYPE_VOID: {value: 0},
 
         /**
-         * Type of 8 bits unsigned integer.
+         * 符号なし8ビット整数型
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} TYPE_UNSIGNED_BYTE
+         * @const {xpl.enum_t} TYPE_UNSIGNED_BYTE
          */
-        "TYPE_UNSIGNED_BYTE": {
-
-            value: 1
-        },
+        TYPE_UNSIGNED_BYTE: {value: 1},
 
         /**
-         * Type of 16 bits unsigned integer.
+         * 符号なし16ビット整数型
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} TYPE_UNSIGNED_SHORT
+         * @const {xpl.enum_t} TYPE_UNSIGNED_SHORT
          */
-        "TYPE_UNSIGNED_SHORT": {
-
-            value: 2
-        },
+        TYPE_UNSIGNED_SHORT: {value: 2},
 
         /**
-         * Type of 32 bits unsigned integer.
+         * 符号なし32ビット整数型
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} TYPE_UNSIGNED_INT
+         * @const {xpl.enum_t} TYPE_UNSIGNED_INT
          */
-        "TYPE_UNSIGNED_INT": {
-
-            value: 3
-        },
+        TYPE_UNSIGNED_INT: {value: 3},
 
         /**
-         * Type of 32 bits float number.
+         * 32ビット浮動小数点数型
          *
-         * @constant
          * @memberof xpl.XModelMeshUtils
-         * @member {xpl.enum_t} TYPE_FLOAT
+         * @const {xpl.enum_t} TYPE_FLOAT
          */
-        "TYPE_FLOAT": {
-
-            value: 4
-        }
+        TYPE_FLOAT: {value: 4}
     });
 
     /**
-     * Get the positions data that be included in the mesh.
      *
-     * @memberof xpl.XModelMesh
-     * @function getPositions
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {xpl.size_t} size - Size of the position structure.
-     * @param {xpl.size_t} stride - Size of the position structure.
-     * @param {Float32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} [subset=-1] -
-     *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @param {xpl.XModelMesh} mesh -
+     * @param {xpl.enum_t} attr -
+     * @param {Float32Array} buff -
+     * @param {} off -
+     * @param {} size -
+     * @param {} stride -
+     * @param {} subset -
      */
-    ns.XModelMeshUtils.getPositions = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getAttributeValues = function (mesh, attr, buff, off, size, stride, subset) {
+        off = xpl.defaultValue(off, 0);
+        size = xpl.defaultValue(size, 1);
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        var value_size;
+        var values;
+        switch (attr) {
+            case xpl.XModelMeshUtils.ATTRIBUTE_POSITION:
+                value_size = mesh.position_size;
+                values = mesh.positions;
+                break;
+        }
+
+        let count = 0;
         if (mesh != null && mesh.positions != null && 0 < mesh.position_size) {
-            if (subset === undefined) {
-                subset = -1;
-            }
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -249,26 +200,26 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.position != -1) {
-                    // exist the element.
-                    var ind = mesh.position_size * v.position;
-                    var j = 0;
+                    // 要素が存在する場合
+                    let ind = mesh.position_size * v.position;
+                    let j = 0;
                     for (; j < size && j < mesh.position_size; ++j) {
                         buf[off + j] = mesh.positions[ind++];
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
-                    // the element is not exist.
-                    for (var j = 0; j < size; ++j) {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -280,31 +231,32 @@
     };
 
     /**
-     * Get the normals data that be included in the mesh.
+     * 頂点の位置を取得します。
      *
      * @memberof xpl.XModelMesh
-     * @function getNormals
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {xpl.size_t} size - Size of the normal structure.
-     * @param {xpl.size_t} stride - Size of the normal structure.
-     * @param {Float32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
-     * @param {xpl.int16_t} [subset=-1] -
-     *              The subset number of mesh.
-     *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @function getPositions
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
+     * @param {Float32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} [off=0] - 書き出し先のバッファの配列オフセット
+     * @param {xpl.size_t} [size=3] - 位置の構造のサイズ
+     * @param {xpl.size_t} [stride=0] - 位置の要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {xpl.int16_t} [subset=-1] - サブセットの番号
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getNormals = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
-        if (mesh != null && mesh.normals != null && 0 < mesh.normal_size) {
-            if (subset === undefined) {
-                subset = -1;
-            }
+    xpl.XModelMeshUtils.getPositions = function (mesh, buf, off, size, stride, subset) {
+        off = xpl.defaultValue(off, 0);
+        size = xpl.defaultValue(size, 3);
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
+        if (mesh != null && mesh.positions != null && 0 < mesh.position_size) {
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -313,26 +265,91 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
-                if (v.normal != -1) {
-                    // exist the element.
-                    var ind = mesh.normal_size * v.normal;
-                    var j = 0;
-                    for (; j < size && j < mesh.normal_size; ++j) {
-                        buf[off + j] = mesh.normals[ind++];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+                if (v.position != -1) {
+                    // 要素が存在する場合
+                    let ind = mesh.position_size * v.position;
+                    let j = 0;
+                    for (; j < size && j < mesh.position_size; ++j) {
+                        buf[off + j] = mesh.positions[ind++];
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
-                    // the element is not exist.
-                    for (var j = 0; j < size; ++j) {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
+                        buf[off + j] = 0;
+                        count++;
+                    }
+                }
+                off += stride;
+            }
+        }
+        return count;
+    };
+
+    /**
+     * 頂点の法線を取得します。
+     *
+     * @memberof xpl.XModelMesh
+     * @function getNormals
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
+     * @param {xpl.size_t} size - 法線の構造のサイズ
+     * @param {xpl.size_t} stride - 法線の要素の配置間隔、0を指定した場合はデフォルト値を使用します。
+     * @param {Float32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
+     * @param {xpl.int16_t} [subset=-1] -
+     * @returns {xpl.size_t} 実際に書き出した要素数
+     */
+    xpl.XModelMeshUtils.getNormals = function (mesh, size, stride, buf, off, subset) {
+        off = xpl.defaultValue(off, 0);
+        size = xpl.defaultValue(size, 3);
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
+        if (mesh != null && mesh.normals != null && 0 < mesh.normal_size) {
+            if (stride < size) {
+                stride = size;
+            }
+
+            let sub;
+            let num_vertices;
+            if (subset == -1) {
+                sub = null;
+                num_vertices = mesh.num_vertices;
+            } else {
+                sub = mesh.subsets[subset];
+                num_vertices = sub.num_vertices;
+            }
+
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+                if (v.normal != -1) {
+                    // 要素が存在する場合
+                    let ind = mesh.normal_size * v.normal;
+                    let j = 0;
+                    for (; j < size && j < mesh.normal_size; ++j) {
+                        buf[off + j] = mesh.normals[ind++];
+                        count++;
+                    }
+
+                    // 残りの要素を0で埋める
+                    for (; j < size; ++j) {
+                        buf[off + j] = 0;
+                        count++;
+                    }
+                } else {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -348,18 +365,23 @@
      *
      * @memberof xpl.XModelMesh
      * @function getColors
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} size - Size of the color structure.
      * @param {xpl.size_t} stride - Size of the color structure.
-     * @param {Uint8Array|Float32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Uint8Array|Float32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getColors = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getColors = function (mesh, size, stride, buf, off, subset) {
+        off = xpl.defaultValue(off, 0);
+        size = xpl.defaultValue(size, 4);
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
         if (mesh != null && mesh.colors != null && 0 < mesh.color_size) {
             if (subset === undefined) {
                 subset = -1;
@@ -367,8 +389,8 @@
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -378,29 +400,29 @@
             }
 
             // scaling.
-            var value_scale =
+            let value_scale =
                 (buf instanceof Uint8Array || buf instanceof Int8Array) ? 255 : 1;
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.color != -1) {
-                    // exist the element.
-                    var ind = mesh.color_size * v.color;
-                    var j = 0;
+                    // 要素が存在する場合
+                    let ind = mesh.color_size * v.color;
+                    let j = 0;
                     for (; j < size && j < mesh.color_size; ++j) {
                         buf[off + j] = mesh.colors[ind++] * value_scale;
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
-                    // the element is not exist.
-                    for (var j = 0; j < size; ++j) {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -416,18 +438,23 @@
      *
      * @memberof xpl.XModelMesh
      * @function getTexCoords
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} size - Size of the texture coordinate structure.
      * @param {xpl.size_t} stride - Size of the texture coordinate structure.
-     * @param {Float32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Float32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getTexCoords = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getTexCoords = function (mesh, size, stride, buf, off, subset) {
+        off = xpl.defaultValue(off, 0);
+        size = xpl.defaultValue(size, 2);
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
         if (mesh != null && mesh.tex_coords != null && 0 < mesh.tex_coord_size) {
             if (subset === undefined) {
                 subset = -1;
@@ -435,8 +462,8 @@
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -445,26 +472,26 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.tex_coord != -1) {
-                    // exist the element.
-                    var ind = mesh.tex_coord_size * v.tex_coord;
-                    var j = 0;
+                    // 要素が存在する場合
+                    let ind = mesh.tex_coord_size * v.tex_coord;
+                    let j = 0;
                     for (; j < size && j < mesh.tex_coord_size; ++j) {
                         buf[off + j] = mesh.tex_coords[ind++];
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
-                    // the element is not exist.
-                    for (var j = 0; j < size; ++j) {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -480,17 +507,17 @@
      *
      * @memberof xpl.XModelMesh
      * @function getSkinBoneLengths
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} stride - Size of the bone lengths structure.
-     * @param {Uint16Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Uint16Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getSkinBoneLengths = function (mesh, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getSkinBoneLengths = function (mesh, stride, buf, off, subset) {
+        let count = 0;
         if (mesh != null && mesh.skin != null && 1 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
                 subset = -1;
@@ -498,8 +525,8 @@
             if (stride < 1) {
                 stride = 1;
             }
-            var sub;
-            var num_vertices;
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -508,14 +535,14 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.skinning != -1) {
-                    // exist the element.
+                    // 要素が存在する場合
                     buf[off] = mesh.skin.weighted_index_sizes[v.skinning];
                 } else {
-                    // the element is not exist.
+                    // 要素が存在しない場合
                     buf[off] = 0;
                 }
             }
@@ -528,18 +555,21 @@
      *
      * @memberof xpl.XModelMesh
      * @function
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} size - Size of the bone indices structure.
      * @param {xpl.size_t} stride - Size of the bone indices structure.
-     * @param {Uint8Array|Uint16Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Uint8Array|Uint16Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getSkinBoneIndices = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getSkinBoneIndices = function (mesh, size, stride, buf, off, subset) {
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
                 subset = -1;
@@ -547,8 +577,8 @@
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -557,36 +587,36 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
 
                 // the element is exist.
                 if (v.skinning != -1) {
-                    var len = mesh.skin.weighted_index_sizes[v.skinning];
-                    var ind = mesh.skin.weighted_index_stride * v.skinning;
-                    var j = 0;
+                    let len = mesh.skin.weighted_index_sizes[v.skinning];
+                    let ind = mesh.skin.weighted_index_stride * v.skinning;
+                    let j = 0;
                     for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
                         if (sub == null) {
                             // use the superset.
                             buf[off + j] = mesh.skin.indices[ind++];
                         } else {
                             // use the subset.
-                            var index = ns.ArrayUtils.binarySearch(
+                            let index = xpl.ArrayUtils.binarySearch(
                                 sub.bones, 0, sub.num_bones, mesh.skin.indices[ind++]);
                             buf[off + j] = 0 <= index ? index : 0;
                         }
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
-                    // the element is not exist.
-                    for (var j = 0; j < size; ++j) {
+                    // 要素が存在しない場合
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -602,18 +632,21 @@
      *
      * @memberof xpl.XModelMesh
      * @function
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} size - Size of the bone weights structure.
      * @param {xpl.size_t} stride - Size of the bone weights structure.
-     * @param {Float32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Float32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
-     * @returns {xpl.size_t} Number of written the elements.
+     * @returns {xpl.size_t} 実際に書き出した要素数
      */
-    ns.XModelMeshUtils.getSkinBoneWeights = function (mesh, size, stride, buf, off, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getSkinBoneWeights = function (mesh, size, stride, buf, off, subset) {
+        stride = xpl.defaultValue(stride, 0);
+        subset = xpl.defaultValue(subset, -1);
+
+        let count = 0;
         if (mesh != null && mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
             if (subset === undefined) {
                 subset = -1;
@@ -621,8 +654,8 @@
             if (stride < size) {
                 stride = size;
             }
-            var sub;
-            var num_vertices;
+            let sub;
+            let num_vertices;
             if (subset == -1) {
                 sub = null;
                 num_vertices = mesh.num_vertices;
@@ -631,27 +664,27 @@
                 num_vertices = sub.num_vertices;
             }
 
-            // scanning the all vertex.
-            for (var i = 0; i < num_vertices; ++i) {
-                var v = mesh.vertices[sub == null ? i : sub.vertices[i]];
+            // 全ての頂点を走査
+            for (let i = 0; i < num_vertices; ++i) {
+                let v = mesh.vertices[sub == null ? i : sub.vertices[i]];
                 if (v.skinning != -1) {
                     // the element is exist.
-                    var len = mesh.skin.weighted_index_sizes[v.skinning];
-                    var ind = mesh.skin.weighted_index_stride * v.skinning;
-                    var j = 0;
+                    let len = mesh.skin.weighted_index_sizes[v.skinning];
+                    let ind = mesh.skin.weighted_index_stride * v.skinning;
+                    let j = 0;
                     for (; j < size && j < len && mesh.skin.weighted_index_stride; ++j) {
                         buf[off + j] = mesh.skin.weights[ind++];
                         count++;
                     }
 
-                    // fill the zero to the residual elements.
+                    // 残りの要素を0で埋める
                     for (; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
                 } else {
                     // not exist element.
-                    for (var j = 0; j < size; ++j) {
+                    for (let j = 0; j < size; ++j) {
                         buf[off + j] = 0;
                         count++;
                     }
@@ -667,7 +700,7 @@
      *
      * @memberof xpl.XModelMesh
      * @function getVerticesSize
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {Boolean} is_structured -
      *              Set true if output the structured information, set false
      *              if output the discreted information.
@@ -681,7 +714,7 @@
      * @param {xpl.size_t} bone_length_size - The byte size of length of bones.
      * @param {xpl.size_t} bone_indices_size - The byte size of bone index.
      * @param {xpl.size_t} bone_weights_size - The byte size of bone weight.
-     * @param {Array.<xpl.size_t>} attrs -
+     * @param {xpl.size_t[]} attrs -
      *              The destination byte size of each attribute.
      *              -1 set if it attribute is not exit the index.
      * @param {xpl.size_t} off - Starting position in the destination attribute indices.
@@ -690,7 +723,7 @@
      *              But if specified -1, it get superset information (first arguments).
      * @returns {xpl.size_t} byte size of the all attributes.
      */
-    ns.XModelMeshUtils.getVerticesSize = function (mesh,
+    xpl.XModelMeshUtils.getVerticesSize = function (mesh,
                                                    is_structured,
                                                    alignment_size,
                                                    position_size,
@@ -702,21 +735,25 @@
                                                    bone_weights_size,
                                                    attrs, off,
                                                    subset) {
+        attrs = xpl.defaultValue(attrs, null);
+        off = xpl.defaultValue(off, 0);
+        subset = xpl.defaultValue(subset, -1);
+
         if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
             if (subset === undefined) {
                 subset = -1;
             }
             if (attrs != null) {
-                ns.ArrayUtils.fill(attrs, off, off + ns.XModelMeshUtils.MAX_ATTRIBUTE, -1);
+                xpl.ArrayUtils.fill(attrs, off, off + xpl.XModelMeshUtils.MAX_ATTRIBUTE, -1);
             }
-            var size = 0;
-            var num_vertices = is_structured ?
+            let size = 0;
+            let num_vertices = is_structured ?
                 1 : (subset == -1 ? mesh.num_vertices : mesh.subsets[subset].num_vertices);
 
             // position.
             if (0 < position_size && 0 < mesh.position_size) {
                 if (attrs != null) {
-                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_POSITION] = size;
+                    attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_POSITION] = size;
                 }
                 size += num_vertices * mesh.position_size * position_size;
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -725,7 +762,7 @@
             // normal.
             if (0 < normal_size && 0 < mesh.normal_size) {
                 if (attrs != null) {
-                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL] = size;
+                    attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_NORMAL] = size;
                 }
                 size += num_vertices * mesh.normal_size * normal_size;
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -734,7 +771,7 @@
             // color.
             if (0 < color_size && 0 < mesh.color_size) {
                 if (attrs != null) {
-                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_COLOR] = size;
+                    attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_COLOR] = size;
                 }
                 size += num_vertices * mesh.color_size * color_size;
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -743,7 +780,7 @@
             // texture coordinate.
             if (0 < tex_coord_size && 0 < mesh.tex_coord_size) {
                 if (attrs != null) {
-                    attrs[off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD] = size;
+                    attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_TEXCOORD] = size;
                 }
                 size += num_vertices * mesh.tex_coord_size * tex_coord_size;
                 size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -755,7 +792,7 @@
                 // weighted indices of the bones.
                 if (0 < bone_length_size) {
                     if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
+                        attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_BONELENGTH] = size;
                     }
                     size += num_vertices * bone_length_size;
                     size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -764,7 +801,7 @@
                 // indices of the bones.
                 if (0 < bone_indices_size) {
                     if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
+                        attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_BONEINDICES] = size;
                     }
                     size += num_vertices * mesh.skin.weighted_index_stride * bone_indices_size;
                     size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -773,7 +810,7 @@
                 // weights of the bones.
                 if (0 < bone_weights_size) {
                     if (attrs != null) {
-                        attrs[off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
+                        attrs[off + xpl.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS] = size;
                     }
                     size += num_vertices * mesh.skin.weighted_index_stride * bone_weights_size;
                     size = alignment_size * Math.floor((size + alignment_size - 1) / alignment_size);
@@ -782,11 +819,11 @@
 
             // structured size.
             if (is_structured) {
-                attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
+                attrs[xpl.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = size;
                 return (subset == -1 ?
                         mesh.num_vertices : mesh.subsets[subset].num_vertices) * size;
             } else {
-                attrs[ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
+                attrs[xpl.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE] = 0;
                 return size;
             }
         }
@@ -798,7 +835,7 @@
      *
      * @memberof xpl.XModelMesh
      * @function getDividedVertices
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} position_type - The type of the position.
      * @param {xpl.size_t} normal_type - The type of normal.
      * @param {xpl.size_t} color_type - The type of color.
@@ -814,7 +851,7 @@
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
      */
-    ns.XModelMeshUtils.getVertices = function (mesh,
+    xpl.XModelMeshUtils.getVertices = function (mesh,
                                                position_type,
                                                normal_type,
                                                color_type,
@@ -826,37 +863,33 @@
                                                buf, buf_off,
                                                subset) {
         if (mesh != null && mesh.vertices != null && 0 < mesh.num_vertices) {
-            var stride = attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
-            var num_vertices = stride <= 0 ? mesh.num_vertices : 1;
-            var offset;
+            let stride = attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_STRUCTURE_SIZE];
+            let num_vertices = stride <= 0 ? mesh.num_vertices : 1;
+            let offset;
 
             // write the positions.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION]) {
+            if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_POSITION]) {
                 offset = buf_off +
-                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_POSITION];
+                    attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_POSITION];
                 switch (position_type) {
-                    case ns.XModelMeshUtils.TYPE_FLOAT:
-                        ns.XModelMeshUtils.getPositions(
-                            mesh,
-                            mesh.position_size,
+                    case xpl.XModelMeshUtils.TYPE_FLOAT:
+                        xpl.XModelMeshUtils.getPositions(mesh, new Float32Array(
+                            buf,
+                            offset,
+                            Math.floor((buf.byteLength - offset) / 4)), 0, mesh.position_size,
                             stride / 4,
-                            new Float32Array(
-                                buf,
-                                offset,
-                                Math.floor((buf.byteLength - offset) / 4)),
-                            0,
                             subset);
                         break;
                 }
             }
 
             // write the normals.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
+            if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_NORMAL]) {
                 offset = buf_off +
-                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_NORMAL];
+                    attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_NORMAL];
                 switch (normal_type) {
-                    case ns.XModelMeshUtils.TYPE_FLOAT:
-                        ns.XModelMeshUtils.getNormals(
+                    case xpl.XModelMeshUtils.TYPE_FLOAT:
+                        xpl.XModelMeshUtils.getNormals(
                             mesh,
                             mesh.normal_size,
                             stride / 4,
@@ -871,12 +904,12 @@
             }
 
             // write the colors.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR]) {
+            if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_COLOR]) {
                 offset = buf_off +
-                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_COLOR];
+                    attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_COLOR];
                 switch (color_type) {
-                    case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                        ns.XModelMeshUtils.getColors(
+                    case xpl.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                        xpl.XModelMeshUtils.getColors(
                             mesh,
                             mesh.color_size,
                             stride,
@@ -887,8 +920,8 @@
                             subset);
                         break;
 
-                    case ns.XModelMeshUtils.TYPE_FLOAT:
-                        ns.XModelMeshUtils.getColors(
+                    case xpl.XModelMeshUtils.TYPE_FLOAT:
+                        xpl.XModelMeshUtils.getColors(
                             mesh,
                             mesh.color_size,
                             stride / 4,
@@ -903,12 +936,12 @@
             }
 
             // write the texture coordnates.
-            if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
+            if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_TEXCOORD]) {
                 offset = buf_off +
-                    attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
+                    attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_TEXCOORD];
                 switch (tex_coord_type) {
-                    case ns.XModelMeshUtils.TYPE_FLOAT:
-                        ns.XModelMeshUtils.getTexCoords(
+                    case xpl.XModelMeshUtils.TYPE_FLOAT:
+                        xpl.XModelMeshUtils.getTexCoords(
                             mesh,
                             mesh.tex_coord_size,
                             stride / 4,
@@ -925,12 +958,12 @@
             if (mesh.skin != null && 0 < mesh.skin.weighted_index_stride) {
                 // has the skin.
                 // write the number of bones.
-                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
+                if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONELENGTH]) {
                     offset = buf_off +
-                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONELENGTH];
+                        attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONELENGTH];
                     switch (bone_length_type) {
-                        case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                            ns.XModelMeshUtils.getSkinBoneLengths(
+                        case xpl.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                            xpl.XModelMeshUtils.getSkinBoneLengths(
                                 mesh,
                                 stride,
                                 new Uint8Array(
@@ -943,12 +976,12 @@
                 }
 
                 // write the bone indices.
-                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
+                if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONEINDICES]) {
                     offset = buf_off +
-                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
+                        attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONEINDICES];
                     switch (bone_indices_type) {
-                        case ns.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
-                            ns.XModelMeshUtils.getSkinBoneIndices(
+                        case xpl.XModelMeshUtils.TYPE_UNSIGNED_BYTE:
+                            xpl.XModelMeshUtils.getSkinBoneIndices(
                                 mesh,
                                 mesh.skin.weighted_index_stride,
                                 stride,
@@ -959,8 +992,8 @@
                                 subset);
                             break;
 
-                        case ns.XModelMeshUtils.TYPE_UNSIGNED_SHORT:
-                            ns.XModelMeshUtils.getSkinBoneIndices(
+                        case xpl.XModelMeshUtils.TYPE_UNSIGNED_SHORT:
+                            xpl.XModelMeshUtils.getSkinBoneIndices(
                                 mesh,
                                 mesh.skin.weighted_index_stride,
                                 stride / 2,
@@ -975,12 +1008,12 @@
                 }
 
                 // write the bone weights.
-                if (0 <= attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
+                if (0 <= attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS]) {
                     offset = buf_off +
-                        attrs[attrs_off + ns.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
+                        attrs[attrs_off + xpl.XModelMeshUtils.ATTRIBUTE_BONEWEIGHTS];
                     switch (bone_weights_type) {
-                        case ns.XModelMeshUtils.TYPE_FLOAT:
-                            ns.XModelMeshUtils.getSkinBoneWeights(
+                        case xpl.XModelMeshUtils.TYPE_FLOAT:
+                            xpl.XModelMeshUtils.getSkinBoneWeights(
                                 mesh,
                                 mesh.skin.weighted_index_stride,
                                 stride / 4,
@@ -1002,33 +1035,33 @@
      *
      * @memberof xpl.XModelMesh
      * @function getNumTriangledFaceIndices
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.size_t} material - The index of material.
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getNumTriangledFaceIndices = function (mesh, material, subset) {
-        var count = 0;
+    xpl.XModelMeshUtils.getNumTriangledFaceIndices = function (mesh, material, subset) {
+        let count = 0;
         if (mesh != null) {
             if (subset === undefined) {
                 subset = -1
             }
-            var num_elements;
-            var elements;
+            let num_elements;
+            let elements;
             if (subset == -1) {
                 num_elements = mesh.num_elements;
                 elements = mesh.elements;
             } else {
-                var sub = mesh.subsets[subset];
+                let sub = mesh.subsets[subset];
                 num_elements = sub.num_elements;
                 elements = sub.elements;
             }
 
             // count the triangle faces.
-            for (var i = 0; i < num_elements; ++i) {
-                var element = elements[i];
+            for (let i = 0; i < num_elements; ++i) {
+                let element = elements[i];
                 if (element.material == material) {
                     if (3 <= element.num_vertices) {
                         count += (element.num_vertices - 2) * 3;
@@ -1045,14 +1078,14 @@
      *
      * @memberof xpl.XModelMesh
      * @function getNumAllTriangledFaceIndices
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {Array.<xpl.size_t>} offs -
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
+     * @param {xpl.size_t[]} offs -
      *              The destination array of each offset.
      *              Can specified the null if not needed it.
      * @param {xpl.size_t} offs_off -
      *              Starting position in the destination
      *              array of each offset.
-     * @param {Array.<xpl.size_t>} sizes -
+     * @param {xpl.size_t[]} sizes -
      *              The destination array of each size.
      *              Can specified the null if not needed it.
      * @param {xpl.size_t} sizes_off -
@@ -1064,18 +1097,18 @@
      * @returns {xpl.size_t}
      *              The number of elements.
      */
-    ns.XModelMeshUtils.getNumAllTriangledFaceIndices = function (mesh,
+    xpl.XModelMeshUtils.getNumAllTriangledFaceIndices = function (mesh,
                                                                  offs, offs_off,
                                                                  sizes, sizes_off,
                                                                  subset) {
-        var count = 0;
+        let count = 0;
         if (mesh != null) {
             // listed the materials.
-            for (var i = 0; i < mesh.num_materials; ++i) {
+            for (let i = 0; i < mesh.num_materials; ++i) {
                 if (offs != null) {
                     offs[offs_off + i] = count;
                 }
-                var num = ns.XModelMeshUtils.getNumTriangledFaceIndices(mesh, i, subset);
+                let num = xpl.XModelMeshUtils.getNumTriangledFaceIndices(mesh, i, subset);
                 if (sizes != null) {
                     sizes[sizes_off + i] = num;
                 }
@@ -1086,7 +1119,7 @@
             if (offs != null) {
                 offs[offs_off + mesh.num_materials] = count;
             }
-            var num = ns.XModelMeshUtils.getNumTriangledFaceIndices(mesh, -1, subset);
+            let num = xpl.XModelMeshUtils.getNumTriangledFaceIndices(mesh, -1, subset);
             if (sizes != null) {
                 sizes[sizes_off + mesh.num_materials] = num;
             }
@@ -1100,40 +1133,40 @@
      *
      * @memberof xpl.XModelMesh
      * @function getTriangledFaceIndices
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {xpl.int16_t} material - The index of material.
      * @param {Boolean} reverse -
      *              Set the true if reverse the faces,
      *              Set the false if not reverse the faces.
-     * @param {Uint16Array|Uint32Array} buf - The destination buffer.
-     * @param {xpl.size_t} off - Starting position in the buffer.
+     * @param {Uint16Array|Uint32Array} buf - 書き出し先のバッファ
+     * @param {xpl.size_t} off - 書き出し先のバッファの配列オフセット
      * @param {xpl.int16_t} [subset=-1] -
      *              The subset number of mesh.
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getTriangledFaceIndices = function (mesh,
+    xpl.XModelMeshUtils.getTriangledFaceIndices = function (mesh,
                                                            material, reverse,
                                                            buf, off,
                                                            subset) {
-        var count = 0;
+        let count = 0;
         if (mesh != null) {
             if (subset === undefined) {
                 subset = -1;
             }
-            var num_elements;
-            var elements;
+            let num_elements;
+            let elements;
             if (subset == -1) {
                 num_elements = mesh.num_elements;
                 elements = mesh.elements;
             } else {
-                var sub = mesh.subsets[subset];
+                let sub = mesh.subsets[subset];
                 num_elements = sub.num_elements;
                 elements = sub.elements;
             }
 
             // triangle order.
-            var sq0, sq1, sq2;
+            let sq0, sq1, sq2;
             if (reverse) {
                 sq0 = 0;
                 sq1 = 2;
@@ -1145,10 +1178,10 @@
             }
 
             // write the vertex indices of face to the buffer.
-            for (var i = 0; i < num_elements; ++i) {
-                var element = elements[i];
+            for (let i = 0; i < num_elements; ++i) {
+                let element = elements[i];
                 if (element.material == material) {
-                    for (var j = 0, j_end = element.num_vertices - 2; j < j_end; ++j) {
+                    for (let j = 0, j_end = element.num_vertices - 2; j < j_end; ++j) {
                         buf[off + sq0] = element.vertices[0];
                         buf[off + sq1] = element.vertices[j + 1];
                         buf[off + sq2] = element.vertices[j + 2];
@@ -1166,11 +1199,11 @@
      *
      * @memberof xpl.XModelMesh
      * @function getAllTriangledFaceIndices
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      * @param {Boolean} reverse -
      *              Set the true if reverse the faces,
      *              Set the false if not reverse the faces.
-     * @param {Array.<xpl.size_t>} offs - The offset of array.
+     * @param {xpl.size_t[]} offs - The offset of array.
      * @param {xpl.size_t} offs_off - The offset of offset array.
      * @param {Uint16Array|Uint32Array} buf - The buffer of writing destination.
      * @param {xpl.size_t} buf_off - The offset of buffer.
@@ -1179,15 +1212,15 @@
      *              But if specified -1, it get superset information (first argument).
      * @returns {xpl.size_t} The number of elements.
      */
-    ns.XModelMeshUtils.getAllTriangledFaceIndices = function (mesh,
+    xpl.XModelMeshUtils.getAllTriangledFaceIndices = function (mesh,
                                                               reverse,
                                                               offs, offs_off,
                                                               buf, buf_off,
                                                               subset) {
-        var count = 0;
+        let count = 0;
         if (mesh != null) {
-            for (var i = 0; i < mesh.num_materials; ++i) {
-                count += ns.XModelMeshUtils.getTriangledFaceIndices(
+            for (let i = 0; i < mesh.num_materials; ++i) {
+                count += xpl.XModelMeshUtils.getTriangledFaceIndices(
                     mesh, i, reverse, buf, buf_off + offs[offs_off + i], subset);
             }
         }
@@ -1199,9 +1232,9 @@
      *
      * @memberof xpl.XModelMesh
      * @function releaseShape
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      */
-    ns.XModelMeshUtils.releaseShape = function (mesh) {
+    xpl.XModelMeshUtils.releaseShape = function (mesh) {
         if (mesh != null) {
             mesh.positions = null;
             mesh.normals = null;
@@ -1215,8 +1248,8 @@
             }
             mesh.elements = null;
             if (mesh.subsets != null) {
-                for (var i = 0; i < mesh.num_subsets; ++i) {
-                    var subset = mesh.subsets[i];
+                for (let i = 0; i < mesh.num_subsets; ++i) {
+                    let subset = mesh.subsets[i];
                     subset.vertices = null;
                     subset.elements = null;
                 }
@@ -1229,19 +1262,19 @@
      *
      * @memberof xpl.XModelMesh
      * @function getTextures
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
-     * @param {Array.<xpl.XModelTexture>} dest -
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
+     * @param {xpl.XModelTexture[]} dest -
      *              The destination array for texture.
      *              Can specified the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination array.
      * @param {xpl.size_t} len - maximum number of the elements to be copied.
      * @returns {xpl.size_t} Number of the texture.
      */
-    ns.XModelMeshUtils.getTextures = function (mesh, dest, off, len) {
-        var count = 0;
+    xpl.XModelMeshUtils.getTextures = function (mesh, dest, off, len) {
+        let count = 0;
         if (mesh != null) {
-            for (var i = 0; i < mesh.num_materials; ++i) {
-                var num = ns.XModelMaterialUtils.getTextures(
+            for (let i = 0; i < mesh.num_materials; ++i) {
+                let num = xpl.XModelMaterialUtils.getTextures(
                     mesh.materials[i], dest, off, len);
                 off += num;
                 len -= num;
@@ -1256,12 +1289,12 @@
      *
      * @memberof xpl.XModelMesh
      * @function releaseTextures
-     * @param {xpl.XModelMesh} mesh - The mesh instance.
+     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
      */
-    ns.XModelMeshUtils.releaseTextures = function (mesh) {
+    xpl.XModelMeshUtils.releaseTextures = function (mesh) {
         if (mesh != null) {
-            for (var i = 0; i < mesh.num_materials; ++i) {
-                ns.XModelMaterialUtils.releaseTexture(mesh.materials[i]);
+            for (let i = 0; i < mesh.num_materials; ++i) {
+                xpl.XModelMaterialUtils.releaseTexture(mesh.materials[i]);
             }
         }
     };

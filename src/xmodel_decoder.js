@@ -30,103 +30,97 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
-     * Binary decoder for the xModel data.
+     * xModelのバイナリデータをデコードするためのクラスです。
      *
-     * @class
-     * @alias xpl.XModelDecoder
-     * @augments xpl.XModelCodec
+     * @constructor
      */
-    ns.XModelDecoder = function() {
+    xpl.XModelDecoder = function () {
 
         /**
-         * The data view.
+         * バイナリデータへのビュー
          *
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @member {DataView} __data_view
+         * @var {DataView} __data_view
          */
         this.__data_view = null;
 
         /**
-         * The offset of data view.
+         * データオフセット
          *
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @member {xpl.size_t} __data_offset
+         * @var {xpl.size_t} __data_offset
          */
         this.__data_offset = 0;
 
         /**
-         * Strong reference the instance map,
-         * key is the identifier,
-         * value is the structure.
+         * インスタンスマップ
          *
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @member {Map.<uint32_t, XModelStructure>} __inst_map
+         * @var {Map.<uint32_t, XModelStructure>}
          */
         this.__inst_map = null;
 
         /**
-         * Weak reference the instance map,
-         * key is the identifier,
-         * value is the structure.
+         * 弱参照のインスタンスマップ
          *
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @member {Map.<uint32_t, XModelStructure>} __weak_inst_map
+         * @var {Map.<uint32_t, XModelStructure>}
          */
         this.__weak_inst_map = null;
     };
 
-    Object.setPrototypeOf(ns.XModelDecoder.prototype, ns.XModelCodec.prototype);
+    Object.setPrototypeOf(xpl.XModelDecoder.prototype, xpl.XModelCodec.prototype);
 
     /**
-     * Decode from the instance of target ArrayBuffer.
+     * デコード処理を行います。
      *
      * @instance
      * @memberof xpl.XModelDecoder
      * @function decode
-     * @param {ArrayBuffer} buf - The instance of target ArrayBuffer.
-     * @returns {xpl.XModelStructure} The decoded xModel instance.
+     * @param {ArrayBuffer} buf - デコード対象のデータバッファ
+     * @returns {xpl.XModelStructure} デコードされたインスタンス
      */
-    ns.XModelDecoder.prototype.decode = function(buf) {
+    xpl.XModelDecoder.prototype.decode = function (buf) {
         this.__data_view = new DataView(buf);
         this.__data_offset = 0;
         this.__inst_map = {};
         this.__weak_inst_map = {};
 
-        // magic number.
+        // マジックナンバー
         let magicNumber = this._getInt32();
-        if (magicNumber != ns.XModelCodec.MAGIC_NUMBER) {
+        if (magicNumber != xpl.XModelCodec.MAGIC_NUMBER) {
             this._recycle();
             return null;
         }
 
-        // version.
+        // バージョン
         let version = this._getInt32();
-        if (version < ns.XModelCodec.COMPATIBILITY_VERSION) {
+        if (version < xpl.XModelCodec.COMPATIBILITY_VERSION) {
             this._recycle();
             return null;
         }
 
-        // read the structure.
+        // 構造読み込み
         let type = this._getInt32();
         let inst = this._createStructureProcedure(type);
         this._getStructureProcedure(inst);
 
-        // terminator.
+        // 終端子
         let end = this._getInt32();
-        if (end != ns.XModelCodec.END_OF_DATA) {
+        if (end != xpl.XModelCodec.END_OF_DATA) {
             console.error("Warning! This data doesn't has a terminator in the binary!")
         }
 
@@ -135,14 +129,12 @@
     };
 
     /**
-     * Recycle at the this instance.
+     * このインスタンスをリサイクルします。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _recycle
      */
-    ns.XModelDecoder.prototype._recycle = function() {
+    xpl.XModelDecoder.prototype._recycle = function () {
         this.__data_view = null;
         this.__data_offset = 0;
         this.__inst_map = null;
@@ -150,288 +142,255 @@
     };
 
     /**
-     * Get the 8bit size integer.
+     * 8bitの符号あり整数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt8
-     * @returns {xpl.int8_t} The integer value of 8 bits.
+     * @returns {xpl.int8_t} 8bitの符号あり整数
      */
-    ns.XModelDecoder.prototype._getInt8 = function() {
+    xpl.XModelDecoder.prototype._getInt8 = function () {
         let value = this.__data_view.getInt8(this.__data_offset);
         this.__data_offset += 1;
         return value;
     };
 
     /**
-     * Get the 8bit size unsigned integer.
+     * 8bitの符号なし整数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getUint8
-     * @returns {xpl.uint8_t} The integer value of 8 bits.
+     * @returns {xpl.uint8_t} 8bitの符号なし整数
      */
-    ns.XModelDecoder.prototype._getUint8 = function() {
+    xpl.XModelDecoder.prototype._getUint8 = function () {
         let value = this.__data_view.getUint8(this.__data_offset);
         this.__data_offset += 1;
         return value;
     };
 
     /**
-     * Get the 16bit size integer.
+     * 16bitの符号あり整数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt16
-     * @returns {xpl.int16_t} The integer value of 16 bits.
+     * @returns {xpl.int16_t} 16bitの符号あり整数
      */
-    ns.XModelDecoder.prototype._getInt16 = function() {
+    xpl.XModelDecoder.prototype._getInt16 = function () {
         let value = this.__data_view.getInt16(this.__data_offset, true);
         this.__data_offset += 2;
         return value;
     };
 
     /**
-     * Get the 32bit size integer.
+     * 32bitの符号あり整数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt32
-     * @returns {xpl.int32_t} The integer value of 32 bits.
+     * @returns {xpl.int32_t} 32bitの符号あり整数
      */
-    ns.XModelDecoder.prototype._getInt32 = function() {
+    xpl.XModelDecoder.prototype._getInt32 = function () {
         let value = this.__data_view.getInt32(this.__data_offset, true);
         this.__data_offset += 4;
         return value;
     };
 
     /**
-     * Get the 32bit size float number.
+     * 32bitの浮動小数点数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getFloat32
-     * @returns {xpl.float32_t} The float number of 32 bits.
+     * @returns {xpl.float32_t} 32bitの浮動小数点数
      */
-    ns.XModelDecoder.prototype._getFloat32 = function() {
+    xpl.XModelDecoder.prototype._getFloat32 = function () {
         let value = this.__data_view.getFloat32(this.__data_offset, true);
         this.__data_offset += 4;
         return value;
     };
 
     /**
-     * Get the 64bit size float number.
+     * 64bitの浮動小数点数を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getFloat64
-     * @returns {xpl.float64_t} The float number of 64 bits.
+     * @returns {xpl.float64_t} 64bitの浮動小数点数
      */
-    ns.XModelDecoder.prototype._getFloat64 = function() {
+    xpl.XModelDecoder.prototype._getFloat64 = function () {
         let value = this.__data_view.getFloat64(this.__data_offset, true);
         this.__data_offset += 8;
         return value;
     };
 
     /**
-     * Get the 8bit size integer array.
+     * 8bitの符号あり整数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt8Array
-     * @param {Int8Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of array elements.
+     * @param {Int8Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getInt8Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getInt8Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt8();
         }
     };
 
     /**
-     * Get the 8bit size unsigned integer array.
+     * 8bitの符号なし整数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getUint8Array
-     * @param {Uint8Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Uint8Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getUint8Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getUint8Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getUint8();
         }
     };
 
     /**
-     * Get the 16bit size integer array.
+     * 16bitの符号ありの整数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt16Array
-     * @param {Int16Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Int16Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getInt16Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getInt16Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt16();
         }
     };
 
     /**
-     * Get the 32bit size integer array.
+     * 32bitの符号ありの整数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getInt32Array
-     * @param {Int32Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Int32Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getInt32Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getInt32Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getInt32();
         }
     };
 
     /**
-     * Get the 32bit size float number array.
+     * 32bitの浮動小数点数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getFloat32Array
-     * @param {Float32Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Float32Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getFloat32Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getFloat32Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getFloat32();
         }
     };
 
     /**
-     * Get the 32bit size float number array.
+     * 64bitの浮動小数点数の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getFloat64Array
-     * @param {Float64Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Float64Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getFloat64Array = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getFloat64Array = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getFloat64();
         }
     };
 
     /**
-     * Get the boolean.
+     * 真偽値を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getBool
-     * @returns {Boolean} The boolean value.
+     * @returns {Boolean} 真偽値
      */
-    ns.XModelDecoder.prototype._getBool = function() {
+    xpl.XModelDecoder.prototype._getBool = function () {
         return this._getInt8() != 0;
     };
 
     /**
-     * Get the boolean array.
+     * 真偽値の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getBoolArray
-     * @param {Uint8Array} buf - The destination array.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {Uint8Array} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getBoolArray = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getBoolArray = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getBool();
         }
     };
 
     /**
-     * Get the string.
+     * 文字列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getString
      * @returns {string} The string value.
      */
-    ns.XModelDecoder.prototype._getString = function() {
+    xpl.XModelDecoder.prototype._getString = function () {
         let len = this._getInt16();
         if (0 < len) {
             let str = new Array(len);
             this._getUint8Array(str, 0, len);
-            return ns.StringUtils.decodeUTF8(str);
+            return xpl.StringUtils.decodeUTF8(str);
         }
-        return null;
+        return "";
     };
 
     /**
-     * Get the string array.
+     * 文字列の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @param {Array.<string>} buf - The destination array.
-     * @param {number} off - Starting position in the destination array.
-     * @param {number} len - The number of array elements.
+     * @param {string[]} buf - 出力先の配列
+     * @param {number} off - 出力先の配列の開始位置
+     * @param {number} len - The 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getStringArray = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getStringArray = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off + i] = this._getString();
         }
     };
 
     /**
-     * Get the xModel structure as instance owner.
+     * 構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getStructure
-     * @returns {xpl.XModelStructure} The xModel structure.
+     * @returns {xpl.XModelStructure} 構造
      */
-    ns.XModelDecoder.prototype._getStructure = function() {
-        // identifier.
+    xpl.XModelDecoder.prototype._getStructure = function () {
+        // 識別子
         let inst_id = this._getInt32();
         if (inst_id == 0) {
             return null;
         }
 
-        // type.
+        // 種別
         let type = this._getInt32();
 
-        // search structure.
+        // 検索
         let value = this.__inst_map[inst_id];
         if (value != null) {
             return value;
         }
 
-        // structure.
+        // 生成
         value = this.__weak_inst_map[inst_id];
         if (value != null) {
             delete this.__weak_inst_map[inst_id];
@@ -439,75 +398,69 @@
             value = this._createStructureProcedure(type);
         }
 
-        // add a created structure.
+        // 追加
         this.__inst_map[inst_id] = value;
 
-        // initialize structure.
+        // 初期化
         this._getStructureProcedure(value);
         return value;
     };
 
     /**
-     * Get the xModel structure array as instance owner.
+     * 構造の配列を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getStructureArray
-     * @param {Array.<xpl.XModelStructure>} buf - The destination array of the xModel structures.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {xpl.XModelStructure[]} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getStructureArray = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getStructureArray = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off++] = this._getStructure();
         }
     };
 
     /**
-     * Get the xModel structure.
+     * 構造を弱参照で取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getStructureWeekRef
      * @returns {xpl.XModelStructure} The read xModel structure.
      */
-    ns.XModelDecoder.prototype._getStructureRef = function() {
-        // identifier.
+    xpl.XModelDecoder.prototype._getStructureRef = function () {
+        // 識別子
         let inst_id = this._getInt32();
         if (inst_id == 0) {
             return null;
         }
 
-        // type.
+        // 種別
         let type = this._getInt32();
 
-        // search structure.
-        let value = this.__inst_map[inst_id] | this.__weak_inst_map[inst_id];
+        // 検索
+        let value = this.__inst_map[inst_id] || this.__weak_inst_map[inst_id];
         if (value != null) {
             return value;
         }
 
-        // structure.
+        // 生成
         value = this._createStructureProcedure(type);
 
-        // add a created structure.
+        // 追加
         this.__weak_inst_map[inst_id] = value;
     };
 
     /**
-     * Get the xModel structure array.
+     * 構造の配列を弱参照で取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getStructRefArray
-     * @param {Array.<xpl.XModelStructure>} buf - The destination array of the xModel structures.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - Number of the array elements.
+     * @param {xpl.XModelStructure[]} buf - 出力先の配列
+     * @param {xpl.size_t} off - 出力先の配列の開始位置
+     * @param {xpl.size_t} len - 出力先の配列の要素数
      */
-    ns.XModelDecoder.prototype._getStructureRefArray = function(buf, off, len) {
+    xpl.XModelDecoder.prototype._getStructureRefArray = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
             buf[off++] = this._getStructRef();
         }
@@ -516,70 +469,69 @@
     /**
      * It is a procedure that create the xModel structure.
      *
+     *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _createStructureProcedure
      * @param {xpl.int32_t} struct_type - Will create the structure type.
      * @returns {xpl.XModelStructure} The created instance.
      */
-    ns.XModelDecoder.prototype._createStructureProcedure = function(struct_type) {
-        switch(struct_type) {
-            case ns.XModelStructure.TYPE_AXIS_ROTATE:
-                // axis rotate.
-                return new ns.XModelAxisRotate();
+    xpl.XModelDecoder.prototype._createStructureProcedure = function (struct_type) {
+        switch (struct_type) {
+            case xpl.XModelStructure.TYPE_AXIS_ROTATE:
+                // 軸回転
+                return new xpl.XModelAxisRotate();
 
-            case ns.XModelStructure.TYPE_QUATERNION:
-                // quaternion.
-                return new ns.XModelQuaternion();
+            case xpl.XModelStructure.TYPE_QUATERNION:
+                // 四元数
+                return new xpl.XModelQuaternion();
 
-            case ns.XModelStructure.TYPE_SCALE:
-                // scale.
-                return new ns.XModelScale();
+            case xpl.XModelStructure.TYPE_SCALE:
+                // 拡大
+                return new xpl.XModelScale();
 
-            case ns.XModelStructure.TYPE_TRANSLATE:
-                // translate.
-                return new ns.XModelTranslate();
+            case xpl.XModelStructure.TYPE_TRANSLATE:
+                // 平行移動
+                return new xpl.XModelTranslate();
 
-            case ns.XModelStructure.TYPE_MATRIX:
-                // matrix.
-                return new ns.XModelMatrix();
+            case xpl.XModelStructure.TYPE_MATRIX:
+                // 行列
+                return new xpl.XModelMatrix();
 
-            case ns.XModelStructure.TYPE_CONTAINER:
-                // container.
-                return new ns.XModelContainer();
+            case xpl.XModelStructure.TYPE_CONTAINER:
+                // コンテナ
+                return new xpl.XModelContainer();
 
-            case ns.XModelStructure.TYPE_TEXTURE:
-                // texture.
-                return new ns.XModelTexture();
+            case xpl.XModelStructure.TYPE_TEXTURE:
+                // テクスチャ
+                return new xpl.XModelTexture();
 
-            case ns.XModelStructure.TYPE_MATERIAL:
-                // material.
-                return new ns.XModelMaterial();
+            case xpl.XModelStructure.TYPE_MATERIAL:
+                // 材質
+                return new xpl.XModelMaterial();
 
-            case ns.XModelStructure.TYPE_MESH:
-                // nesh.
-                return new ns.XModelMesh();
+            case xpl.XModelStructure.TYPE_MESH:
+                // メッシュ
+                return new xpl.XModelMesh();
 
-            case ns.XModelStructure.TYPE_NODE:
-                // node.
-                return new ns.XModelNode();
+            case xpl.XModelStructure.TYPE_NODE:
+                // ノード
+                return new xpl.XModelNode();
 
-            case ns.XModelStructure.TYPE_IK:
-                // inverse kinematics.
-                return new ns.XModelIK();
+            case xpl.XModelStructure.TYPE_IK:
+                // 逆運動学
+                return new xpl.XModelIK();
 
-            case ns.XModelStructure.TYPE_ANIMATION:
-                // animation.
-                return new ns.XModelAnimation();
+            case xpl.XModelStructure.TYPE_ANIMATION:
+                // アニメーション
+                return new xpl.XModelAnimation();
 
-            case ns.XModelStructure.TYPE_ANIMATION_KEY:
-                // animation key.
-                return new ns.XModelAnimationKey();
+            case xpl.XModelStructure.TYPE_ANIMATION_KEY:
+                // アニメーションキー
+                return new xpl.XModelAnimationKey();
 
-            case ns.XModelStructure.TYPE_ANIMATION_SET:
-                // animation set.
-                return new ns.XModelAnimationSet();
+            case xpl.XModelStructure.TYPE_ANIMATION_SET:
+                // アニメーションセット
+                return new xpl.XModelAnimationSet();
         }
         return null;
     };
@@ -594,75 +546,75 @@
      * @param {xpl.XModelStructure} inst - The xModel instance uninitialized.
      * @returns {Boolean} Returns true if successful, returns false if failed.
      */
-    ns.XModelDecoder.prototype._getStructureProcedure = function(inst) {
-        switch(inst.structure_type) {
-            case ns.XModelStructure.TYPE_AXIS_ROTATE:
+    xpl.XModelDecoder.prototype._getStructureProcedure = function (inst) {
+        switch (inst.structure_type) {
+            case xpl.XModelStructure.TYPE_AXIS_ROTATE:
                 // axis rotate.
                 this._getAxisRotate(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_QUATERNION:
+            case xpl.XModelStructure.TYPE_QUATERNION:
                 // quaternion.
                 this._getQuaternion(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_SCALE:
+            case xpl.XModelStructure.TYPE_SCALE:
                 // scale.
                 this._getScale(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_TRANSLATE:
+            case xpl.XModelStructure.TYPE_TRANSLATE:
                 // translate.
                 this._getTranslate(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_MATRIX:
+            case xpl.XModelStructure.TYPE_MATRIX:
                 // matrix.
                 this._getMatrix(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_CONTAINER:
+            case xpl.XModelStructure.TYPE_CONTAINER:
                 // container.
                 this._getContainer(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_TEXTURE:
-                // texture.
+            case xpl.XModelStructure.TYPE_TEXTURE:
+                // テクスチャ
                 this._getTexture(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_MATERIAL:
+            case xpl.XModelStructure.TYPE_MATERIAL:
                 // material.
                 this._getMaterial(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_MESH:
+            case xpl.XModelStructure.TYPE_MESH:
                 // mesh.
                 this._getMesh(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_NODE:
+            case xpl.XModelStructure.TYPE_NODE:
                 // node.
                 this._getNode(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_IK:
+            case xpl.XModelStructure.TYPE_IK:
                 // inverse kinematics.
                 this._getIK(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_ANIMATION:
+            case xpl.XModelStructure.TYPE_ANIMATION:
                 // animation.
                 this._getAnimation(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_ANIMATION_KEY:
+            case xpl.XModelStructure.TYPE_ANIMATION_KEY:
                 // animation key.
                 this._getAnimationKey(inst);
                 return true;
 
-            case ns.XModelStructure.TYPE_ANIMATION_SET:
-                // animation set.
+            case xpl.XModelStructure.TYPE_ANIMATION_SET:
+                // アニメーションセット
                 this._getAnimationSet(inst);
                 return true;
         }
@@ -678,11 +630,11 @@
      * @function _getUserData
      * @returns {xpl.XModelUserData} The user data.
      */
-    ns.XModelDecoder.prototype._getUserData = function() {
+    xpl.XModelDecoder.prototype._getUserData = function () {
         let size = this._getInt32();
         if (size < size) {
             // create structure.
-            let obj = new ns.XModelUserData();
+            let obj = new xpl.XModelUserData();
 
             // data size.
             obj.data_size = size;
@@ -704,10 +656,10 @@
      * @function _getAxisRotate
      * @param {xpl.XModelAxisRotate} inst - The axis rotate structure.
      */
-    ns.XModelDecoder.prototype._getAxisRotate = function(inst) {
-        // value.
-        this._getFloat32Array(inst.initial, 0, ns.XModelStructure.SIZE_AXIS_ROTATE);
-        ArrayUtils.copy(inst.initial, 0, inst.value, 0, ns.XModelStructure.SIZE_AXIS_ROTATE);
+    xpl.XModelDecoder.prototype._getAxisRotate = function (inst) {
+        // 値
+        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_AXIS_ROTATE);
+        ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_AXIS_ROTATE);
     };
 
     /**
@@ -719,10 +671,10 @@
      * @function _getQuaternion
      * @param {xpl.XModelQuaternion} inst - The quaternion structure.
      */
-    ns.XModelDecoder.prototype._getQuaternion = function(inst) {
-        // value.
-        this._getFloat32Array(inst.initial, 0, ns.XModelStructure.SIZE_QUATERNION);
-        ns.ArrayUtils.copy(inst.initial, 0, inst.value, 0, ns.XModelStructure.SIZE_QUATERNION);
+    xpl.XModelDecoder.prototype._getQuaternion = function (inst) {
+        // 値
+        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_QUATERNION);
+        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_QUATERNION);
     };
 
     /**
@@ -734,10 +686,10 @@
      * @function _getScale
      * @param {xpl.XModelScale} inst - The scale structure.
      */
-    ns.XModelDecoder.prototype._getScale = function(inst) {
-        // value.
-        this._getFloat32Array(inst.initial, 0, ns.XModelStructure.SIZE_SCALE);
-        ns.ArrayUtils.copy(inst.initial, 0, inst.value, 0, ns.XModelStructure.SIZE_SCALE);
+    xpl.XModelDecoder.prototype._getScale = function (inst) {
+        // 値
+        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_SCALE);
+        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_SCALE);
     };
 
     /**
@@ -749,10 +701,10 @@
      * @function _getTranslate
      * @param {xpl.XModelTranslate} inst - The translate structure.
      */
-    ns.XModelDecoder.prototype._getTranslate = function(inst) {
-        // value.
-        this._getFloat32Array(inst.initial, 0, ns.XModelStructure.SIZE_TRANSLATE);
-        ns.ArrayUtils.copy(inst.initial, 0, inst.value, 0, ns.XModelStructure.SIZE_TRANSLATE);
+    xpl.XModelDecoder.prototype._getTranslate = function (inst) {
+        // 値
+        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_TRANSLATE);
+        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_TRANSLATE);
     };
 
     /**
@@ -764,10 +716,10 @@
      * @function _getMatrix
      * @param {xpl.XModelMatrix} inst - The matrix structure.
      */
-    ns.XModelDecoder.prototype._getMatrix = function(inst) {
-        // value.
-        this._getFloat32Array(inst.initial, 0, ns.XModelStructure.SIZE_MATRIX);
-        ns.ArrayUtils.copy(inst.initial, 0, inst.value, 0, ns.XModelStructure.SIZE_MATRIX);
+    xpl.XModelDecoder.prototype._getMatrix = function (inst) {
+        // 値
+        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_MATRIX);
+        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_MATRIX);
     };
 
     /**
@@ -779,11 +731,11 @@
      * @function _getContainer
      * @param {xpl.XModelContainer} inst - The container object.
      */
-    ns.XModelDecoder.prototype._getContainer = function(inst) {
+    xpl.XModelDecoder.prototype._getContainer = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // textures.
+        // テクスチャ.
         inst.num_textures = this._getInt16();
         if (0 < inst.num_textures) {
             inst.textures = new Array(inst.num_textures);
@@ -811,17 +763,17 @@
             this._getStructureArray(inst.nodes, 0, inst.num_nodes);
         }
 
-        // time rate.
+        // タイムレート
         inst.time_rate = this._getFloat64();
 
-        // animation set.
+        // アニメーションセット
         inst.num_animation_sets = this._getInt16();
         if (0 < inst.num_animation_sets) {
             inst.animation_sets = new Array(inst.num_animation_sets);
             this._getStructureArray(inst.animation_sets, 0, inst.num_animation_sets);
         }
 
-        // user data (inline).
+        // ユーザ データ (インライン展開)
         inst.userData = this._getUserData();
     };
 
@@ -834,21 +786,21 @@
      * @function _getTexture
      * @param {xpl.XModelTexture} inst - The texture object.
      */
-    ns.XModelDecoder.prototype._getTexture = function(inst) {
+    xpl.XModelDecoder.prototype._getTexture = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // identifier.
+        // 参照
         inst.ref = this._getString();
 
-        // binary.
+        // バイナリ
         inst.data_size = this._getInt32();
         if (0 < inst.data_size) {
             inst.data = new Int8Array(inst.data_size);
             this._getInt8Array(inst.data, 0, inst.data_size);
         }
 
-        // user data (inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
@@ -861,19 +813,19 @@
      * @function _getMaterial
      * @param {xpl.XModelMaterial} inst - The material object.
      */
-    ns.XModelDecoder.prototype._getMaterial = function(inst) {
-        // Name.
+    xpl.XModelDecoder.prototype._getMaterial = function (inst) {
+        // 名前.
         inst.name = this._getString();
 
-        // parameter.
-        this._getFloat32Array(inst.emissive, 0, ns.XModelStructure.SIZE_RGBA);
-        this._getFloat32Array(inst.ambient, 0, ns.XModelStructure.SIZE_RGBA);
-        this._getFloat32Array(inst.diffuse, 0, ns.XModelStructure.SIZE_RGBA);
-        this._getFloat32Array(inst.specular, 0, ns.XModelStructure.SIZE_RGBA);
+        // パラメータ
+        this._getFloat32Array(inst.emissive, 0, xpl.XModelStructure.SIZE_RGBA);
+        this._getFloat32Array(inst.ambient, 0, xpl.XModelStructure.SIZE_RGBA);
+        this._getFloat32Array(inst.diffuse, 0, xpl.XModelStructure.SIZE_RGBA);
+        this._getFloat32Array(inst.specular, 0, xpl.XModelStructure.SIZE_RGBA);
         inst.shininess = this._getFloat32();
         inst.bump = this._getFloat32();
 
-        // texture.
+        // テクスチャ
         inst.emissive_map = this._getStructure();
         inst.ambient_map = this._getStructure();
         inst.diffuse_map = this._getStructure();
@@ -881,10 +833,10 @@
         inst.shininess_map = this._getStructure();
         inst.bump_map = this._getStructure();
 
-        // draw mode.
+        // 描画モード
         inst.draw_mode = this._getInt32();
 
-        // user data (inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
@@ -897,7 +849,7 @@
      * @function _getMesh
      * @param {xpl.XModelMesh} inst - The mesh object.
      */
-    ns.XModelDecoder.prototype._getMesh = function(inst) {
+    xpl.XModelDecoder.prototype._getMesh = function (inst) {
         // 名前
         inst.name = this._getString();
 
@@ -928,7 +880,7 @@
             this._getFloat32Array(inst.colors, 0, size);
         }
 
-        // texture coordinates.
+        // テクスチャcoordinates.
         inst.num_tex_coords = this._getInt32();
         if (0 < inst.num_tex_coords) {
             inst.tex_coord_size = this._getInt8();
@@ -940,7 +892,7 @@
         // skin (inline).
         let has_skinning = this._getBool();
         if (has_skinning) {
-            inst.skin = new ns.XModelSkin();
+            inst.skin = new xpl.XModelSkin();
             this._getSkin(inst.skin);
         }
 
@@ -949,7 +901,7 @@
         if (0 < inst.num_vertices) {
             inst.vertices = new Array(inst.num_vertices);
             for (let i = 0; i < inst.num_vertices; ++i) {
-                let vertex = new ns.XModelVertex();
+                let vertex = new xpl.XModelVertex();
                 this._getVertex(
                     vertex,
                     inst.num_positions,
@@ -968,18 +920,18 @@
             this._getStructureArray(inst.materials, 0, inst.num_materials);
         }
 
-        // elements (inline).
+        // 要素 (インライン展開)
         inst.num_elements = this._getInt32();
         if (0 < inst.num_elements) {
             inst.elements = new Array(inst.num_elements);
             for (let i = 0; i < inst.num_elements; ++i) {
-                let element = new ns.XModelElement();
+                let element = new xpl.XModelElement();
                 this._getElement(element);
                 inst.elements[i] = element
             }
         }
 
-        // user data(inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
@@ -992,7 +944,7 @@
      * @function _getSkin
      * @param {xpl.XModelSkin} inst - The skin object.
      */
-    ns.XModelDecoder.prototype._getSkin = function(inst) {
+    xpl.XModelDecoder.prototype._getSkin = function (inst) {
         // weighted indexs.
         inst.num_weighted_indices = this._getInt32();
         inst.weighted_index_stride = this._getInt8();
@@ -1008,8 +960,8 @@
                 inst.indices[i] = -1;
                 inst.weights[i] = 0;
             }
-            ns.ArrayUtils.fill(inst.indices, 0, num, -1);
-            ns.ArrayUtils.fill(inst.weights, 0, num, 0);
+            xpl.ArrayUtils.fill(inst.indices, 0, num, -1);
+            xpl.ArrayUtils.fill(inst.weights, 0, num, 0);
 
             for (let i = 0, index = 0; i < inst.num_weighted_indices; ++i, index += inst.weighted_index_stride) {
                 // number of elements.
@@ -1036,13 +988,13 @@
             this._getStructureArray(inst.nodes, 0, inst.num_nodes);
 
             // offset transformation matrices.
-            let matrices_size = ns.XModelStructure.SIZE_MATRIX * inst.num_nodes;
+            let matrices_size = xpl.XModelStructure.SIZE_MATRIX * inst.num_nodes;
             inst.offset_matrices = new Float32Array(matrices_size);
             this._getFloat32Array(inst.offset_matrices, 0, matrices_size);
 
             // offset rotate quaternions.
             // @deprecated
-            let quaternions_size = ns.XModelStructure.SIZE_QUATERNION * inst.num_nodes;
+            let quaternions_size = xpl.XModelStructure.SIZE_QUATERNION * inst.num_nodes;
             inst.offset_quaternions = new Float32Array(quaternions_size);
             this._getFloat32Array(inst.offset_quaternions, 0, quaternions_size);
         }
@@ -1072,12 +1024,12 @@
      *          Specified the true if has the skin weights,
      *          specified false if not has the skin weights.
      */
-    ns.XModelDecoder.prototype._getVertex = function(inst,
-                                                     has_positions,
-                                                     has_normals,
-                                                     has_colors,
-                                                     has_tex_coords,
-                                                     has_skinning) {
+    xpl.XModelDecoder.prototype._getVertex = function (inst,
+                                                       has_positions,
+                                                       has_normals,
+                                                       has_colors,
+                                                       has_tex_coords,
+                                                       has_skinning) {
         // position.
         if (0 < has_positions) {
             inst.position = this._getInt32();
@@ -1093,14 +1045,14 @@
             inst.color = this._getInt32();
         }
 
-        // texture coordinate.
+        // テクスチャcoordinate.
         if (0 < has_tex_coords) {
             inst.tex_coord = this._getInt32();
         }
 
         // skin weight.
         if (has_skinning) {
-           inst.skinning = this._getInt32();
+            inst.skinning = this._getInt32();
         }
     };
 
@@ -1113,7 +1065,7 @@
      * @function _getElement
      * @param {xpl.XModelElement} inst - The element object.
      */
-    ns.XModelDecoder.prototype._getElement = function(inst) {
+    xpl.XModelDecoder.prototype._getElement = function (inst) {
         // material.
         inst.material = this._getInt16();
 
@@ -1134,7 +1086,7 @@
      * @function _getNode
      * @param {xpl.XModelNode} inst - The node object.
      */
-    ns.XModelDecoder.prototype._getNode = function(inst) {
+    xpl.XModelDecoder.prototype._getNode = function (inst) {
         // 名前
         inst.name = this._getString();
 
@@ -1142,16 +1094,16 @@
         inst.connected = this._getBool();
 
         // limits of kinematics.
-        this._getBoolArray(inst.lock_axises, 0, ns.XModelStructure.SIZE_VECTOR_3);
-        this._getBoolArray(inst.limit_angles, 0, ns.XModelStructure.SIZE_VECTOR_3);
-        this._getFloat32Array(inst.min_angles, 0, ns.XModelStructure.SIZE_VECTOR_3);
-        this._getFloat32Array(inst.max_angles, 0, ns.XModelStructure.SIZE_VECTOR_3);
+        this._getBoolArray(inst.lock_axises, 0, xpl.XModelStructure.SIZE_VECTOR_3);
+        this._getBoolArray(inst.limit_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
+        this._getFloat32Array(inst.min_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
+        this._getFloat32Array(inst.max_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
 
         // bone tail.
-        this._getFloat32Array(inst.bone_tail, 0, ns.XModelStructure.SIZE_VECTOR_3);
+        this._getFloat32Array(inst.bone_tail, 0, xpl.XModelStructure.SIZE_VECTOR_3);
 
         // transform.
-        this._getStructureArray(inst.transforms, 0, ns.XModelNode.NUM_TRANSFORMS);
+        this._getStructureArray(inst.transforms, 0, xpl.XModelNode.NUM_TRANSFORMS);
 
         // inverse kinematics.
         inst.num_iks = this._getInt16();
@@ -1186,7 +1138,7 @@
             }
         }
 
-        // user data(inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
@@ -1199,17 +1151,17 @@
      * @function _getIK
      * @param {xpl.XModelIK} inst - The inverse kinematics object.
      */
-    ns.XModelDecoder.prototype._getIK = function(inst) {
-        // Target.
+    xpl.XModelDecoder.prototype._getIK = function (inst) {
+        // 対象
         inst.target = this._getStructure();
 
-        // max number of iterations.
+        // 最大反復数
         inst.max_iterations = this._getInt16();
 
-        // chain length.
+        // チェーン長
         inst.chain_length = this._getInt16();
 
-        // rate of influence.
+        // 影響度
         inst.influence = this._getFloat32();
     };
 
@@ -1222,31 +1174,31 @@
      * @function _getAnimation
      * @param {xpl.XModelAnimation} inst - The animation object.
      */
-    ns.XModelDecoder.prototype._getAnimation = function(inst) {
+    xpl.XModelDecoder.prototype._getAnimation = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // structure of processing target.
+        // 対象
         inst.target = this._getStructure();
 
-        // index of processing target.
+        // 対象のインデックス
         inst.index = this._getInt16();
 
-        // keys.
+        // キー
         inst.num_keys = this._getInt16();
         if (0 < inst.num_keys) {
             inst.keys = new Array(inst.num_keys);
             this._getStructureArray(inst.keys, 0, inst.num_keys);
         }
 
-        // animations.
+        // アニメーション
         inst.num_children = this._getInt16();
         if (0 < inst.num_children) {
             inst.children = new Array(inst.num_children);
             this._getStructureArray(inst.children, 0, inst.num_children);
         }
 
-        // User data(inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
@@ -1259,14 +1211,14 @@
      * @function _getAnimationKey
      * @param {xpl.XModelAnimationKey} inst - The animation key object.
      */
-    ns.XModelDecoder.prototype._getAnimationKey = function(inst) {
-        // interpolate.
+    xpl.XModelDecoder.prototype._getAnimationKey = function (inst) {
+        // 補間
         inst.interpolate = this._getInt8();
 
-        // time.
+        // 時間
         inst.time = this._getFloat64();
 
-        // value.
+        // 値
         inst.value_size = this._getInt16();
         if (0 < inst.value_size) {
             inst.value = new Float32Array(inst.value_size);
@@ -1283,18 +1235,18 @@
      * @function _getAnimationSet
      * @param {xpl.XModelAnimationSet} inst - The animation set.
      */
-    ns.XModelDecoder.prototype._getAnimationSet = function(inst) {
+    xpl.XModelDecoder.prototype._getAnimationSet = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // animations.
+        // アニメーション
         inst.num_animations = this._getInt16();
         if (0 < inst.num_animations) {
             inst.animations = new Array(inst.num_animations);
             this._getStructureArray(inst.animations, 0, inst.num_animations);
         }
 
-        // user data(inline).
+        // ユーザ データ (インライン展開)
         inst.user_data = this._getUserData();
     };
 

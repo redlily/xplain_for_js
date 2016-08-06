@@ -55,7 +55,7 @@
     ns.XModelOptimizeUtils.optimizeMeshVertices = function (mesh) {
         if (mesh != null) {
             // TODO
-            console.log("it doesn't implement yet.");
+            console.log("it's not implemented yet.");
         }
     };
 
@@ -68,7 +68,7 @@
     ns.XModelOptimizeUtils.optimizeMeshElements = function (mesh) {
         if (mesh != null) {
             // TODO
-            console.log("it doesn't implement yet.");
+            console.log("it's not implemented yet.");
         }
     };
 
@@ -317,10 +317,11 @@
      * @param {xpl.size_t} [max_weighted_indices=4] -
      */
     ns.XModelOptimizeUtils.optimizeMeshSkinForWeightedIndices = function (mesh, max_weighted_indices) {
+        max_weighted_indices = ns.defaultValue(max_weighted_indices, 4);
+
         if (mesh != null && mesh.skin != null) {
-            if (max_weighted_indices === undefined || max_weighted_indices <= 0) {
-                max_weighted_indices = 4;
-            }
+            // TODO
+            console.log("it's not implemented yet.");
         }
     };
 

@@ -50,7 +50,7 @@
      * @memberof XModelNodeUtils
      * @function getTextures
      * @param {xpl.XModelNode?} root - The root node instance.
-     * @param {Array.<xpl.XModeltexture>?} dest -
+     * @param {xpl.XModeltexture[]?} dest -
      *              The array of destination array for textures.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.
@@ -106,7 +106,7 @@
      * @memberof xpl.XModelNodeUtils
      * @function getMeshes
      * @param {xpl.XModelNode?} root - The root node instance.
-     * @param {Array.<xpl.XModelMesh>?} dest -
+     * @param {xpl.XModelMesh[]?} dest -
      *              The array of destination array for meshes.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.
@@ -166,7 +166,7 @@
      * @memberof xpl.XModelNodeUtils
      * @function getNodes
      * @param {xpl.XModelNode?} root - The root node instance.
-     * @param {Array.<xpl.XModelNode>?} dest -
+     * @param {xpl.XModelNode[]?} dest -
      *              The array of destination array for meshes.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.
@@ -226,7 +226,7 @@
      * @function updateCombinationp
      * @param {xpl.XModelNode?} root - The root node instance.
      * @param {xpl.size_t} num_children - Number of the nodes.
-     * @param {Array.<xpl.XModelNode>} children - Array of the nodes.
+     * @param {xpl.XModelNode[]} children - Array of the nodes.
      * @param {xpl.size_t} children_off - Starting position in the nodes.
      * @param {xpl.float32_t} m00 - Element of 0-0 in the source matrix.
      * @param {xpl.float32_t} m01 - Element of 0-1 in the source matrix.
@@ -303,7 +303,7 @@
      * @function updateCombinationv
      * @param {xpl.XModelNode?} root - The root node instance.
      * @param {xpl.size_t} num_children - Number of the node.
-     * @param {Array.<xpl.XModelNode>} children - Array of the node.
+     * @param {xpl.XModelNode[]} children - Array of the node.
      * @param {xpl.size_t} children_off - Starting position in the node.
      * @param {Float32Array} m - The source matrix.
      * @param {xpl.size_t} m_off - Starting position in the source matrix.
@@ -327,7 +327,7 @@
      * @function updateCombination
      * @param {xpl.XModelNode?} root - The root node instance.
      * @param {xpl.size_t} num_children - Number of the node.
-     * @param {Array.<xpl.XModelNode>} children - Array of the node.
+     * @param {xpl.XModelNode[]} children - Array of the node.
      * @param {xpl.size_t} children_off - Starting position in the node.
      */
     ns.XModelNodeUtils.updateCombination = function (root, num_children, children, children_off) {

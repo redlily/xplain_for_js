@@ -224,7 +224,7 @@
      * @memberof xpl.XModelKinematicsUtils
      * @function updateTransforms
      * @param {xpl.size_t} num_bones - The number of bones.
-     * @param {Array.<BoneInformation>} bone_infos - The bones.
+     * @param {BoneInformation[]} bone_infos - The bones.
      */
     var updateTransforms = function (num_bones, bone_infos) {
         // calculate transform in the root.

@@ -85,7 +85,7 @@
          *
          * @instance
          * @memberof xpl.XModelAnimation
-         * @member {Array.<xpl.XModelAnimationKey>} keys
+         * @member {xpl.XModelAnimationKey[]} keys
          */
         this.keys = null;
 
@@ -103,7 +103,7 @@
          *
          * @instance
          * @memberof xpl.XModelAnimation
-         * @member {Array.<xpl.XModelAnimation>} children
+         * @member {xpl.XModelAnimation[]} children
          */
         this.children = null;
     };
@@ -124,19 +124,18 @@
 
 })(xpl);
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * アニメーションキー構造です。
      *
-     * @class
-     * @alias xpl.XModelAnimationKey
+     * @constructor
      * @augments xpl.XModelStructure
      */
-    ns.XModelAnimationKey = function () {
-        ns.XModelStructure.call(this, ns.XModelStructure.TYPE_ANIMATION_KEY);
+    xpl.XModelAnimationKey = function () {
+        xpl.XModelStructure.call(this, xpl.XModelStructure.TYPE_ANIMATION_KEY);
 
         /**
          * uint8_t : 補間の種別
@@ -145,7 +144,7 @@
          * @memberof xpl.XModelAnimationKey
          * @member {xpl.uint8_t} interpolate
          */
-        this.interpolate = ns.XModelAnimationKey.INTERPOLATE_UNKNOWN;
+        this.interpolate = xpl.XModelAnimationKey.INTERPOLATE_UNKNOWN;
 
         /**
          * float64_t : 時間
@@ -211,37 +210,33 @@
         this.after_value = null;
     };
 
-    Object.setPrototypeOf(ns.XModelAnimationKey.prototype, ns.XModelStructure.prototype);
+    Object.setPrototypeOf(xpl.XModelAnimationKey.prototype, xpl.XModelStructure.prototype);
 
-    //noinspection JSValidateTypes
-    Object.defineProperties(ns.XModelAnimationKey, {
+    Object.defineProperties(xpl.XModelAnimationKey, {
 
         /**
          * 補間の種別不明
          *
-         * @constant
          * @memberof xpl.XModelAnimationKey
-         * @member {xpl.enum_t} INTERPOLATE_UNKNOWN
+         * @const {xpl.enum_t} INTERPOLATE_UNKNOWN
          */
-        "INTERPOLATE_UNKNOWN": {value: -1},
+        INTERPOLATE_UNKNOWN: {value: -1},
 
         /**
          * 線形補間
          *
-         * @constant
          * @memberof xpl.XModelAnimationKey
-         * @member {xpl.enum_t} INTERPOLATE_LINER
+         * @const {xpl.enum_t} INTERPOLATE_LINER
          */
-        "INTERPOLATE_LINER": {value: 0},
+        INTERPOLATE_LINER: {value: 0},
 
         /**
          * ベジェ補間
          *
-         * @constant
          * @memberof xpl.XModelAnimationKey
-         * @member {xpl.enum_t} INTERPOLATE_BEZIER
+         * @const {xpl.enum_t} INTERPOLATE_BEZIER
          */
-        "INTERPOLATE_BEZIER": {value: 1}
+        INTERPOLATE_BEZIER: {value: 1}
     });
 
 })(xpl);
@@ -253,28 +248,27 @@
     /**
      * アニメーションセットの構造です。
      *
-     * @class
-     * @alias xpl.XModelAnimationSet
+     * @constructor
      * @augments xpl.XModelExtensible
      */
     ns.XModelAnimationSet = function () {
         ns.XModelExtensible.call(this, ns.XModelStructure.TYPE_ANIMATION_SET);
 
         /**
-         * string : アニメーションセット名
+         * string : 名前
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
-         * @member {string} name
+         * @var {string} name
          */
         this.name = null;
 
         /**
-         * uint16_t : アニメーション数
+         * uint16_t : アニメーションの数
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
-         * @member {xpl.uint16_t} num_animations
+         * @var {xpl.uint16_t} num_animations
          */
         this.num_animations = 0;
 
@@ -283,7 +277,7 @@
          *
          * @instance
          * @memberof xpl.XModelAnimationSet
-         * @member {Array.<xpl.XModelAnimation>} animations
+         * @var {xpl.XModelAnimation[]} animations
          */
         this.animations = null;
     };
@@ -294,8 +288,6 @@
      * アニメーションセット名を取得します。
      *
      * @instance
-     * @memberof xpl.XModelAnimationSet
-     * @function toString
      * @returns {string} アニメーションセット名
      */
     ns.XModelAnimationSet.prototype.toString = function () {

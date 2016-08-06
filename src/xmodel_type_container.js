@@ -67,7 +67,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {Array.<xpl.XModelTexture>} textures
+         * @member {xpl.XModelTexture[]} textures
          */
         this.textures = null;
 
@@ -85,7 +85,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {Array.<xpl.XModelMaterial>} materials
+         * @member {xpl.XModelMaterial[]} materials
          */
         this.materials = null;
 
@@ -103,7 +103,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {Array.<xpl.XModelMesh>} meths
+         * @member {xpl.XModelMesh[]} meths
          */
         this.meshes = null;
 
@@ -121,7 +121,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {Array.<xpl.XModelNode>} node
+         * @member {xpl.XModelNode[]} node
          */
         this.nodes = null;
 
@@ -148,7 +148,7 @@
          *
          * @instance
          * @memberof xpl.XModelContainer
-         * @member {Array.<xpl.XModelAnimationSet>} animation_sets
+         * @member {xpl.XModelAnimationSet[]} animation_sets
          */
         this.animation_sets = null;
     };
@@ -251,7 +251,7 @@
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {Array.<xpl.XModelTransform>} transforms
+         * @member {xpl.XModelTransform[]} transforms
          */
         this.transforms = [null, null, null, null];
 
@@ -269,7 +269,7 @@
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {Array.<xpl.XModelIK>} iks
+         * @member {xpl.XModelIK[]} iks
          */
         this.iks = null;
 
@@ -287,7 +287,7 @@
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {Array.<xpl.XModelMesh>} meshes
+         * @member {xpl.XModelMesh[]} meshes
          */
         this.meshes = null;
 
@@ -305,7 +305,7 @@
          *
          * @instance
          * @memberof xpl.XModelNode
-         * @member {Array.<xpl.XModelNode>} children
+         * @member {xpl.XModelNode[]} children
          */
         this.children = null;
 

@@ -50,7 +50,7 @@
      * @memberof xpl.XModelContainerUtils
      * @function getTextures
      * @param {xpl.XModelContainer?} container - The container instance.
-     * @param {Array.<xpl.XModelTexture>?} dest -
+     * @param {xpl.XModelTexture[]?} dest -
      *              The array of destination array for textures.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.
@@ -140,7 +140,7 @@
      * @memberof xpl.XModelContainerUtils
      * @function getMeshes
      * @param {xpl.XModelContainer?} container - The container instance.
-     * @param {Array.<xpl.XModelNode>?} dest -
+     * @param {xpl.XModelNode[]?} dest -
      *              The array of destination array for meshes.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.
@@ -200,7 +200,7 @@
      * @memberof xpl.XModelContainerUtils
      * @function getNodes
      * @param {xpl.XModelContainer?} container - The container instance.
-     * @param {Array.<xpl.XModelNode>?} dest -
+     * @param {xpl.XModelNode[]?} dest -
      *              The array of destination array for nodes.
      *              Can set the null if not needed it.
      * @param {xpl.size_t} off - Starting position in the destination.

@@ -30,95 +30,83 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * 数値と数学のユーティリティクラスです。
      *
-     * @namespace xpl.MathUtils
+     * @constructor
      */
-    ns.MathUtils = function () {
+    xpl.MathUtils = function () {
         throw new Error("Unsupported operation!");
     };
 
     /**
      * 引数のうち最も小さい値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function min
      * @param {number} v1 - 第1引数
      * @param {number} v2 - 第2引数
      * @param {number} v3 - 第3引数
-     * @returns {number} 結果
+     * @returns {number} 結果値
      */
-    ns.MathUtils.min = function (v1, v2, v3) {
+    xpl.MathUtils.min = function (v1, v2, v3) {
         return v1 < v2 ? (v1 < v3 ? v1 : v3) : (v2 < v3 ? v2 : v3);
     };
 
     /**
      * 引数のうち中間の値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function mid
      * @param {number} v1 - 第1引数
      * @param {number} v2 - 第2引数
      * @param {number} v3 - 第3引数
-     * @returns {number} 結果
+     * @returns {number} 結果値
      */
-    ns.MathUtils.mid = function (v1, v2, v3) {
+    xpl.MathUtils.mid = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v2 : (v3 < v1 ? v1 : v3)) : (v1 < v3 ? v1 : (v3 < v2 ? v2 : v3));
     };
 
     /**
      * 引数のうち最も大きいの値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function max
      * @param {number} v1 - 第1引数
      * @param {number} v2 - 第2引数
      * @param {number} v3 - 第3引数
-     * @returns {number} 結果
+     * @returns {number} 結果値
      */
-    ns.MathUtils.max = function (v1, v2, v3) {
+    xpl.MathUtils.max = function (v1, v2, v3) {
         return v1 < v2 ? (v2 < v3 ? v3 : v2) : (v1 < v3 ? v3 : v1);
     };
 
     /**
      * 対数値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function log
      * @param {number} base - 基数
      * @param {number} index - 指数
-     * @returns {number} 結果
+     * @returns {number} 結果値
      */
-    ns.MathUtils.log = function (base, index) {
+    xpl.MathUtils.log = function (base, index) {
         return Math.log(index) / Math.log(base);
     };
 
     /**
      * 立方根の値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function cqrt
-     * @param {number} v - 対象値
-     * @returns {number} 結果
+     * @param {number} v - 引数
+     * @returns {number} 結果値
      */
-    ns.MathUtils.cqrt = function (v) {
+    xpl.MathUtils.cqrt = function (v) {
         return 0 <= v ? Math.pow(v, 1.0 / 3.0) : -Math.pow(-v, 1.0 / 3.0);
     };
 
     /**
      * 指定の値以上の正の整数の2乗値の中で小さい値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function floorPow2
-     * @param {number} value - 対象値
-     * @returns {number} 結果
+     * @param {number} value - 引数
+     * @returns {number} 結果値
      */
-    ns.MathUtils.floorPow2 = function (value) {
+    xpl.MathUtils.floorPow2 = function (value) {
         value = Math.floor(value);
         value = value | (value >> 1);
         value = value | (value >> 2);
@@ -132,12 +120,10 @@
     /**
      * 指定の値以下の正の整数の2乗値の中で大きい値を返します。
      *
-     * @memberof xpl.MathUtils
-     * @function ceilPow2
-     * @param {number} value - 対象値
-     * @returns {number} 結果
+     * @param {number} value - 引数
+     * @returns {number} 結果値
      */
-    ns.MathUtils.ceilPow2 = function (value) {
+    xpl.MathUtils.ceilPow2 = function (value) {
         value = Math.floor(value);
         value = value - 1;
         value = value | (value >> 1);

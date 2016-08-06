@@ -30,21 +30,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
-    const M00 = 0, M01 = 4, M02 = 8, M03 = 12,
-        M10 = 1, M11 = 5, M12 = 9, M13 = 13,
-        M20 = 2, M21 = 6, M22 = 10, M23 = 14,
-        M30 = 3, M31 = 7, M32 = 11, M33 = 15;
+    const M00 = 0, M01 = 4, M02 = 8, M03 = 12;
+    const M10 = 1, M11 = 5, M12 = 9, M13 = 13;
+    const M20 = 2, M21 = 6, M22 = 10, M23 = 14;
+    const M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
      * 4*4の行列のユーティリティクラスです。
      *
-     * @namespace xpl.Matrix4x4
+     * @constructor
      */
-    ns.Matrix4x4 = function () {
+    xpl.Matrix4x4 = function () {
         throw new Error("Unsupported operation!");
     };
 
@@ -56,9 +56,7 @@
      *     | i, j, k, l |
      *     | m, n, o, p |
      *
-     * @memberof xpl.Matrix4x4
-     * @function load
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} m00 - 入力元の行列の0, 0の要素
      * @param {number} m01 - 入力元の行列の0, 0の要素
@@ -78,13 +76,13 @@
      * @param {number} m33 - 入力元の行列の3, 3の要素
      * @param {boolean} [trans=false] - 行列の要素を転置するかどうか
      */
-    ns.Matrix4x4.load = function (d, d_off,
-                                  m00, m01, m02, m03,
-                                  m10, m11, m12, m13,
-                                  m20, m21, m22, m23,
-                                  m30, m31, m32, m33,
-                                  trans) {
-        trans = ns.defaultValue(trans, false);
+    xpl.Matrix4x4.load = function (d, d_off,
+                                   m00, m01, m02, m03,
+                                   m10, m11, m12, m13,
+                                   m20, m21, m22, m23,
+                                   m30, m31, m32, m33,
+                                   trans) {
+        trans = xpl.defaultValue(trans, false);
 
         if (trans) {
             d[d_off + M00] = m00;
@@ -131,16 +129,14 @@
      *     | i, j, k, l |
      *     | m, n, o, p |
      *
-     * @memberof xpl.Matrix4x4
-     * @function loadv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} m - 入力元の行列
+     * @param {number[]} m - 入力元の行列
      * @param {number} m_off - 入力元の行列の配列インデックス
      * @param {boolean} [trans=false] - 行列の要素を転置するかどうか
      */
-    ns.Matrix4x4.loadv = function (d, d_off, m, m_off, trans) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.loadv = function (d, d_off, m, m_off, trans) {
+        xpl.Matrix4x4.load(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
             m[m_off + M10], m[m_off + M11], m[m_off + M12], m[m_off + M13],
@@ -157,13 +153,11 @@
      *     | 0, 0, 0, 0 |
      *     | 0, 0, 0, 0 |
      *
-     * @memberof xpl.Matrix4x4
-     * @function loadZero
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      */
-    ns.Matrix4x4.loadZero = function (d, d_off) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.loadZero = function (d, d_off) {
+        xpl.Matrix4x4.load(
             d, d_off,
             0, 0, 0, 0,
             0, 0, 0, 0,
@@ -180,13 +174,11 @@
      *     | 0, 0, 1, 0 |
      *     | 0, 0, 0, 1 |
      *
-     * @memberof xpl.Matrix4x4
-     * @function loadIdentity
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      */
-    ns.Matrix4x4.loadIdentity = function (d, d_off) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.loadIdentity = function (d, d_off) {
+        xpl.Matrix4x4.load(
             d, d_off,
             1, 0, 0, 0,
             0, 1, 0, 0,
@@ -200,20 +192,18 @@
      *
      * d = lrep(a, b; t)
      *
-     * @memberof xpl.Matrix4x4
-     * @function lrepv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} a - 開始の行列
+     * @param {number[]} a - 開始の行列
      * @param {number} a_off - 開始の行列の配列インデックス
-     * @param {Array.<number>} b - 終了の行列
+     * @param {number[]} b - 終了の行列
      * @param {number} b_off - 終了の行列の配列インデックス
      * @param {number} t - 補完係数
      */
-    ns.Matrix4x4.lrepv = function (d, d_off, a, a_off, b, b_off, t) {
+    xpl.Matrix4x4.lrepv = function (d, d_off, a, a_off, b, b_off, t) {
         // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
         let t1 = 1.0 - t;
-        ns.Matrix4x4.load(
+        xpl.Matrix4x4.load(
             d, d_off,
             a[a_off + M00] * t1 + b[b_off + M00] * t,
             a[a_off + M01] * t1 + b[b_off + M01] * t,
@@ -235,18 +225,16 @@
     };
 
     /**
-     * 行列を転置させます。
+     * 行列を転置します。
      *
      * d = m^t
      *
-     * @memberof xpl.Matrix4x4
-     * @function transposev
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} m - 対象の行列
+     * @param {number[]} m - 対象の行列
      * @param {number} m_off - 対象の行列の配列インデックス
      */
-    ns.Matrix4x4.transposev = function (d, d_off, m, m_off) {
+    xpl.Matrix4x4.transposev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
         let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
         let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
@@ -274,13 +262,11 @@
      *
      * d = |m|
      *
-     * @memberof xpl.Matrix4x4
-     * @function determinant
-     * @param {Array.<number>} m - 対象の行列
+     * @param {number[]} m - 対象の行列
      * @param {number} m_off - 対象の行列の配列インデックス
      * @returns {number} 行列式
      */
-    ns.Matrix4x4.determinant = function (m, m_off) {
+    xpl.Matrix4x4.determinant = function (m, m_off) {
         let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
         let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
         let m30 = m[m_off + M30], m31 = m[m_off + M31], m32 = m[m_off + M32], m33 = m[m_off + M33];
@@ -295,14 +281,12 @@
      *
      * d = m^-1
      *
-     * @memberof xpl.Matrix4x4
-     * @function inversev
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} m - 対象の行列
+     * @param {number[]} m - 対象の行列
      * @param {number} m_off - 対象の行列の配列インデックス
      */
-    ns.Matrix4x4.inversev = function (d, d_off, m, m_off) {
+    xpl.Matrix4x4.inversev = function (d, d_off, m, m_off) {
         let m00 = m[m_off + M00], m01 = m[m_off + M01], m02 = m[m_off + M02], m03 = m[m_off + M03];
         let m10 = m[m_off + M10], m11 = m[m_off + M11], m12 = m[m_off + M12], m13 = m[m_off + M13];
         let m20 = m[m_off + M20], m21 = m[m_off + M21], m22 = m[m_off + M22], m23 = m[m_off + M23];
@@ -326,7 +310,7 @@
         let det = m00 * det00 + m01 * det01 + m02 * det02 + m03 * det03;
 
         // 逆行列を算出して、結果の書き出し
-        ns.Matrix4x4.load(
+        xpl.Matrix4x4.load(
             d, d_off,
             det00 / det,
             (m01 * (m23_m32 - m22_m33) + m02 * (m21_m33 - m23_m31) + m03 * (m22_m31 - m21_m32)) / det,
@@ -352,9 +336,7 @@
      *
      * d = a + b
      *
-     * @memberof xpl.Matrix4x4
-     * @function add
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} a00 - 演算子の左側の行列の0, 0の要素
      * @param {number} a01 - 演算子の左側の行列の0, 1の要素
@@ -389,16 +371,16 @@
      * @param {number} b32 - 演算子の右側の行列の3, 2の要素
      * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
-    ns.Matrix4x4.add = function (d, d_off,
-                                 a00, a01, a02, a03,
-                                 a10, a11, a12, a13,
-                                 a20, a21, a22, a23,
-                                 a30, a31, a32, a33,
-                                 b00, b01, b02, b03,
-                                 b10, b11, b12, b13,
-                                 b20, b21, b22, b23,
-                                 b30, b31, b32, b33) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.add = function (d, d_off,
+                                  a00, a01, a02, a03,
+                                  a10, a11, a12, a13,
+                                  a20, a21, a22, a23,
+                                  a30, a31, a32, a33,
+                                  b00, b01, b02, b03,
+                                  b10, b11, b12, b13,
+                                  b20, b21, b22, b23,
+                                  b30, b31, b32, b33) {
+        xpl.Matrix4x4.load(
             d, d_off,
             a00 + b00, a01 + b01, a02 + b02, a03 + b03,
             a10 + b10, a11 + b11, a12 + b12, a13 + b13,
@@ -412,17 +394,15 @@
      *
      * d = a + b
      *
-     * @memberof xpl.Matrix4x4
-     * @function addv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number[]} a - 演算子の左側の行列
      * @param {number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number[]} b - 演算子の右側の行列
      * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
-    ns.Matrix4x4.addv = function (d, d_off, a, a_off, b, b_off) {
-        ns.Matrix4x4.add(
+    xpl.Matrix4x4.addv = function (d, d_off, a, a_off, b, b_off) {
+        xpl.Matrix4x4.add(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
             a[a_off + M10], a[a_off + M11], a[a_off + M12], a[a_off + M13],
@@ -439,9 +419,7 @@
      *
      * d = a - b
      *
-     * @memberof xpl.Matrix4x4
-     * @function sub
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} a00 - 演算子の左側の行列の0, 0の要素
      * @param {number} a01 - 演算子の左側の行列の0, 1の要素
@@ -476,16 +454,16 @@
      * @param {number} b32 - 演算子の右側の行列の3, 2の要素
      * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
-    ns.Matrix4x4.sub = function (d, d_off,
-                                 a00, a01, a02, a03,
-                                 a10, a11, a12, a13,
-                                 a20, a21, a22, a23,
-                                 a30, a31, a32, a33,
-                                 b00, b01, b02, b03,
-                                 b10, b11, b12, b13,
-                                 b20, b21, b22, b23,
-                                 b30, b31, b32, b33) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.sub = function (d, d_off,
+                                  a00, a01, a02, a03,
+                                  a10, a11, a12, a13,
+                                  a20, a21, a22, a23,
+                                  a30, a31, a32, a33,
+                                  b00, b01, b02, b03,
+                                  b10, b11, b12, b13,
+                                  b20, b21, b22, b23,
+                                  b30, b31, b32, b33) {
+        xpl.Matrix4x4.load(
             d, d_off,
             a00 - b00, a01 - b01, a02 - b02, a03 - b03,
             a10 - b10, a11 - b11, a12 - b12, a13 - b13,
@@ -499,17 +477,15 @@
      *
      * d = a - b
      *
-     * @memberof xpl.Matrix4x4
-     * @function subv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number[]} a - 演算子の左側の行列
      * @param {number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number[]} b - 演算子の右側の行列
      * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
-    ns.Matrix4x4.subv = function (d, d_off, a, a_off, b, b_off) {
-        ns.Matrix4x4.sub(
+    xpl.Matrix4x4.subv = function (d, d_off, a, a_off, b, b_off) {
+        xpl.Matrix4x4.sub(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
             a[a_off + M10], a[a_off + M11], a[a_off + M12], a[a_off + M13],
@@ -526,9 +502,7 @@
      *
      * d = a * b
      *
-     * @memberof xpl.Matrix4x4
-     * @function mul
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} a00 - 演算子の左側の行列の0, 0の要素
      * @param {number} a01 - 演算子の左側の行列の0, 1の要素
@@ -563,16 +537,16 @@
      * @param {number} b32 - 演算子の右側の行列の3, 2の要素
      * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
-    ns.Matrix4x4.mul = function (d, d_off,
-                                 a00, a01, a02, a03,
-                                 a10, a11, a12, a13,
-                                 a20, a21, a22, a23,
-                                 a30, a31, a32, a33,
-                                 b00, b01, b02, b03,
-                                 b10, b11, b12, b13,
-                                 b20, b21, b22, b23,
-                                 b30, b31, b32, b33) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.mul = function (d, d_off,
+                                  a00, a01, a02, a03,
+                                  a10, a11, a12, a13,
+                                  a20, a21, a22, a23,
+                                  a30, a31, a32, a33,
+                                  b00, b01, b02, b03,
+                                  b10, b11, b12, b13,
+                                  b20, b21, b22, b23,
+                                  b30, b31, b32, b33) {
+        xpl.Matrix4x4.load(
             d, d_off,
             a00 * b00 + a01 * b10 + a02 * b20 + a03 * b30,
             a00 * b01 + a01 * b11 + a02 * b21 + a03 * b31,
@@ -598,17 +572,15 @@
      *
      * d = a * b
      *
-     * @memberof xpl.Matrix4x4
-     * @function mulv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number[]} a - 演算子の左側の行列
      * @param {number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number[]} b - 演算子の右側の行列
      * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
-    ns.Matrix4x4.mulv = function (d, d_off, a, a_off, b, b_off) {
-        ns.Matrix4x4.mul(
+    xpl.Matrix4x4.mulv = function (d, d_off, a, a_off, b, b_off) {
+        xpl.Matrix4x4.mul(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
             a[a_off + M10], a[a_off + M11], a[a_off + M12], a[a_off + M13],
@@ -625,9 +597,7 @@
      *
      * d = m * s
      *
-     * @memberof xpl.Matrix4x4
-     * @function mulScalar
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} m00 - 対象の行列の0, 0の要素
      * @param {number} m01 - 対象の行列の0, 1の要素
@@ -647,13 +617,13 @@
      * @param {number} m33 - 対象の行列の3, 3の要素
      * @param {number} s - 対象のスカラ
      */
-    ns.Matrix4x4.mulScalar = function (d, d_off,
-                                       m00, m01, m02, m03,
-                                       m10, m11, m12, m13,
-                                       m20, m21, m22, m23,
-                                       m30, m31, m32, m33,
-                                       s) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.mulScalar = function (d, d_off,
+                                        m00, m01, m02, m03,
+                                        m10, m11, m12, m13,
+                                        m20, m21, m22, m23,
+                                        m30, m31, m32, m33,
+                                        s) {
+        xpl.Matrix4x4.load(
             d, d_off,
             m00 * s, m01 * s, m02 * s, m03 * s,
             m10 * s, m11 * s, m12 * s, m13 * s,
@@ -667,16 +637,14 @@
      *
      * d = m * s
      *
-     * @memberof xpl.Matrix4x4
-     * @function mulScalarv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} m - 対象の行列
+     * @param {number[]} m - 対象の行列
      * @param {number} m_off - 対象の行列の配列インデックス
      * @param {number} s - 対象のスカラ
      */
-    ns.Matrix4x4.mulScalarv = function (d, d_off, m, m_off, s) {
-        ns.Matrix4x4.mulScalar(
+    xpl.Matrix4x4.mulScalarv = function (d, d_off, m, m_off, s) {
+        xpl.Matrix4x4.mulScalar(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
             m[m_off + M10], m[m_off + M11], m[m_off + M12], m[m_off + M13],
@@ -690,9 +658,7 @@
      *
      * d = a / b
      *
-     * @memberof xpl.Matrix4x4
-     * @function div
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} a00 - 演算子の左側の行列の0, 0の要素
      * @param {number} a01 - 演算子の左側の行列の0, 1の要素
@@ -727,24 +693,20 @@
      * @param {number} b32 - 演算子の右側の行列の3, 2の要素
      * @param {number} b33 - 演算子の右側の行列の3, 3の要素
      */
-    ns.Matrix4x4.div = function (d, d_off,
-                                 a00, a01, a02, a03,
-                                 a10, a11, a12, a13,
-                                 a20, a21, a22, a23,
-                                 a30, a31, a32, a33,
-                                 b00, b01, b02, b03,
-                                 b10, b11, b12, b13,
-                                 b20, b21, b22, b23,
-                                 b30, b31, b32, b33) {
+    xpl.Matrix4x4.div = function (d, d_off,
+                                  a00, a01, a02, a03,
+                                  a10, a11, a12, a13,
+                                  a20, a21, a22, a23,
+                                  a30, a31, a32, a33,
+                                  b00, b01, b02, b03,
+                                  b10, b11, b12, b13,
+                                  b20, b21, b22, b23,
+                                  b30, b31, b32, b33) {
         // 共通項の算出
-        let m10_m21 = b10 * b21, m10_m22 = b10 * b22, m10_m23 = b10 * b23,
-            m10_m31 = b10 * b31, m10_m32 = b10 * b32, m10_m33 = b10 * b33;
-        let m11_m20 = b11 * b20, m11_m22 = b11 * b22, m11_m23 = b11 * b23,
-            m11_m30 = b11 * b30, m11_m32 = b11 * b32, m11_m33 = b11 * b33;
-        let m12_m20 = b12 * b20, m12_m21 = b12 * b21, m12_m23 = b12 * b23,
-            m12_m30 = b12 * b30, m12_m31 = b12 * b31, m12_m33 = b12 * b33;
-        let m13_m20 = b13 * b20, m13_m21 = b13 * b21, m13_m22 = b13 * b22,
-            m13_m30 = b13 * b30, m13_m31 = b13 * b31, m13_m32 = b13 * b32;
+        let m10_m21 = b10 * b21, m10_m22 = b10 * b22, m10_m23 = b10 * b23, m10_m31 = b10 * b31, m10_m32 = b10 * b32, m10_m33 = b10 * b33;
+        let m11_m20 = b11 * b20, m11_m22 = b11 * b22, m11_m23 = b11 * b23, m11_m30 = b11 * b30, m11_m32 = b11 * b32, m11_m33 = b11 * b33;
+        let m12_m20 = b12 * b20, m12_m21 = b12 * b21, m12_m23 = b12 * b23, m12_m30 = b12 * b30, m12_m31 = b12 * b31, m12_m33 = b12 * b33;
+        let m13_m20 = b13 * b20, m13_m21 = b13 * b21, m13_m22 = b13 * b22, m13_m30 = b13 * b30, m13_m31 = b13 * b31, m13_m32 = b13 * b32;
         let m20_m31 = b20 * b31, m20_m32 = b20 * b32, m20_m33 = b20 * b33;
         let m21_m30 = b21 * b30, m21_m32 = b21 * b32, m21_m33 = b21 * b33;
         let m22_m30 = b22 * b30, m22_m31 = b22 * b31, m22_m33 = b22 * b33;
@@ -758,7 +720,7 @@
         let det = b00 * det00 + b01 * det01 + b02 * det02 + b03 * det03;
 
         // 逆行列を掛け合わせて、結果の書き出し
-        ns.Matrix4x4.mul(
+        xpl.Matrix4x4.mul(
             d, d_off,
             // 行列A
             a00, a01, a02, a03,
@@ -790,17 +752,15 @@
      *
      * d = a / b
      *
-     * @memberof xpl.Matrix4x4
-     * @function divv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} a - 演算子の左側の行列
+     * @param {number[]} a - 演算子の左側の行列
      * @param {number} a_off - 演算子の左側の行列の配列インデックス
-     * @param {Array.<number>} b - 演算子の右側の行列
+     * @param {number[]} b - 演算子の右側の行列
      * @param {number} b_off - 演算子の左側の行列の配列インデックス
      */
-    ns.Matrix4x4.divv = function (d, d_off, a, a_off, b, b_off) {
-        ns.Matrix4x4.div(
+    xpl.Matrix4x4.divv = function (d, d_off, a, a_off, b, b_off) {
+        xpl.Matrix4x4.div(
             d, d_off,
             a[a_off + M00], a[a_off + M01], a[a_off + M02], a[a_off + M03],
             a[a_off + M10], a[a_off + M11], a[a_off + M12], a[a_off + M13],
@@ -817,9 +777,7 @@
      *
      * d = m / s
      *
-     * @memberof xpl.Matrix4x4
-     * @function divScalar
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
      * @param {number} m00 - 対象の行列の0, 0の要素
      * @param {number} m01 - 対象の行列の0, 1の要素
@@ -839,13 +797,13 @@
      * @param {number} m33 - 対象の行列の3, 3の要素
      * @param {number} s - 対象のスカラ
      */
-    ns.Matrix4x4.divScalar = function (d, d_off,
-                                       m00, m01, m02, m03,
-                                       m10, m11, m12, m13,
-                                       m20, m21, m22, m23,
-                                       m30, m31, m32, m33,
-                                       s) {
-        ns.Matrix4x4.load(
+    xpl.Matrix4x4.divScalar = function (d, d_off,
+                                        m00, m01, m02, m03,
+                                        m10, m11, m12, m13,
+                                        m20, m21, m22, m23,
+                                        m30, m31, m32, m33,
+                                        s) {
+        xpl.Matrix4x4.load(
             d, d_off,
             m00 / s, m01 / s, m02 / s, m03 / s,
             m10 / s, m11 / s, m12 / s, m13 / s,
@@ -859,16 +817,14 @@
      *
      * d = m / s
      *
-     * @memberof xpl.Matrix4x4
-     * @function divScalarv
-     * @param {Array.<number>} d - 出力先の行列
+     * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {Array.<number>} m - 対象の行列
+     * @param {number[]} m - 対象の行列
      * @param {number} m_off - 対象の行列の配列インデックス
      * @param {number} s - 対象のスカラ
      */
-    ns.Matrix4x4.divScalarv = function (d, d_off, m, m_off, s) {
-        ns.Matrix4x4.divScalar(
+    xpl.Matrix4x4.divScalarv = function (d, d_off, m, m_off, s) {
+        xpl.Matrix4x4.divScalar(
             d, d_off,
             m[m_off + M00], m[m_off + M01], m[m_off + M02], m[m_off + M03],
             m[m_off + M10], m[m_off + M11], m[m_off + M12], m[m_off + M13],
@@ -880,13 +836,11 @@
     /**
      * 行列の文字列表現を返します。
      *
-     * @memberof xpl.Matrix4x4
-     * @function convertToString
-     * @param {Array.<number>} m - 入力元の行列
+     * @param {number[]} m - 入力元の行列
      * @param {number} m_off - 入力元の行列の配列インデックス
-     * @returns {string} The converted matrix to string.
+     * @returns {string} 行列から変換された文字列
      */
-    ns.Matrix4x4.convertToString = function (m, m_off) {
+    xpl.Matrix4x4.convertToString = function (m, m_off) {
         return "Matrix4x4(" + "\n" +
             "    " + m[m_off + M00] + ", " + m[m_off + M01] + ", " + m[m_off + M02] + ", " + m[m_off + M03] + ",\n" +
             "    " + m[m_off + M10] + ", " + m[m_off + M11] + ", " + m[m_off + M12] + ", " + m[m_off + M13] + ",\n" +

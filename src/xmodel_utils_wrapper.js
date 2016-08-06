@@ -45,18 +45,23 @@
          * @protected
          * @instanceof
          * @memberof
-         * @member {xpl.XModelContainer} _container
+         * @type {xpl.XModelContainer} _container
          */
         this._container = null;
 
         /**
          *
-         * @type {number}
          * @private
+         * @instanceof
+         * @type {number}
          */
         this.__prev_anim_index = -1;
 
         /**
+         *
+         * @private
+         * @instanceof
+         * @type {number}
          */
         this.__min_bounds = new Float32Array([Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE]);
 
@@ -148,7 +153,7 @@
      * @memberof xpl.XModelWrapper
      * @function getMinBound
      * @param {xpl.uint32_t} index - 要素のインデックス
-     * @return {xpl.float32_t} 境界の採用値
+     * @returns {xpl.float32_t} 境界の採用値
      */
     ns.XModelWrapper.prototype.getMinBound = function (index) {
         return this.__min_bounds[index];
@@ -158,7 +163,7 @@
      * 境界の最大値を取得します。
      *
      * @param {xpl.uint32_t} index - 要素のインデックス
-     * @return {xpl.float32_t} 境界の最大値
+     * @returns {xpl.float32_t} 境界の最大値
      */
     ns.XModelWrapper.prototype.getMaxBound = function (index) {
         return this.__max_bounds[index];
@@ -168,7 +173,7 @@
      * モデルの大きさを取得います。
      *
      * @param {xpl.uint32_t} index - 要素のインデックス
-     * @return {xpl.float32_t} モデルの大きさ
+     * @returns {xpl.float32_t} モデルの大きさ
      */
     ns.XModelWrapper.prototype.getSize = function (index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
@@ -178,7 +183,7 @@
      * モデルの中心座標を取得します。
      *
      * @param {xpl.uint32_t} index - 要素のインデックス
-     * @return {xpl.float32_t} モデルの大きさ
+     * @returns {xpl.float32_t} モデルの大きさ
      */
     ns.XModelWrapper.prototype.getCenter = function (index) {
         return (this.__min_bounds[index] + this.__max_bounds[index]) * 0.5;

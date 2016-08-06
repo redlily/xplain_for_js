@@ -30,57 +30,48 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * WebGL用のユーティリティクラスです。
      *
-     * @namespace xpl.GLUtils
+     * @constructor
      */
-    ns.GLUtils = function () {
+    xpl.GLUtils = function () {
         throw new Error("Unsupported operation!");
     };
 
-    Object.defineProperties(ns.GLUtils, {
+    Object.defineProperties(xpl.GLUtils, {
 
         /**
          * 頂点シェーダの識別子
          *
-         * @constant
          * @memberof xpl.GLUtils
-         * @member {string} TYPE_VERTEX_SHADER
+         * @const {string} TYPE_VERTEX_SHADER
          */
-        "TYPE_VERTEX_SHADER": {
-            value: "OpenGL Vertex Shader"
-        },
+        "TYPE_VERTEX_SHADER": {value: "OpenGL Vertex Shader"},
 
         /**
          * フラグメントシェーダの識別子
          *
-         * @constant
          * @memberof xpl.GLUtils
-         * @member {string} TYPE_FRAGMENT_SHADER
+         * @const {string} TYPE_FRAGMENT_SHADER
          */
-        "TYPE_FRAGMENT_SHADER": {
-            value: "OpenGL Fragment Shader"
-        },
+        "TYPE_FRAGMENT_SHADER": {value: "OpenGL Fragment Shader"},
 
         /**
          * シェーダプログラムの識別子
          *
-         * @constant
          * @memberof xpl.GLUtils
-         * @member {string} TYPE_PROGRAM
+         * @const {string} TYPE_PROGRAM
          */
-        "TYPE_PROGRAM": {
-            value: "OpenGL Program"
-        }
+        "TYPE_PROGRAM": {value: "OpenGL Program"}
     });
 
     /**
-     * エラーが発生した場合のコールバック関数
+     * エラーが発生した場合のコールバック関数の定義です。
      *
      * @callback xpl.GLUtils~buildErrorCallback
      * @param {string} type - エラー種別
@@ -88,17 +79,15 @@
      */
 
     /**
-     * WebgLのバッファのインスタンスを生成します。
+     * WebGLのバッファのインスタンスを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createBuffer
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} type - バッファ種別
      * @param {number} data - データ配列
      * @param {number} usage - バッファの使用方法
      * @returns {WebGLBuffer} バッファのインスタンス
      */
-    ns.GLUtils.createBuffer = function (gl, type, data, usage) {
+    xpl.GLUtils.createBuffer = function (gl, type, data, usage) {
         if (type == gl.ARRAY_BUFFER || type == gl.ELEMENT_ARRAY_BUFFER) {
             let buf = gl.createBuffer();
             if (buf != null) {
@@ -113,8 +102,6 @@
     /**
      * WebGLのテクスチャのインスタンスを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createTexture2D
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} format - 色のフォーマット
      * @param {number} type - データ種別
@@ -122,26 +109,26 @@
      * @param {number} height - テクスチャの高さ
      * @param {Object} [pixels=null] - ピクセル配列
      * @param {boolean} [mipmap=false] - ミップマップを生成するかどうか
-     * @param {Array.<number>} [size=null] - テクスチャサイズ
+     * @param {number[]} [size=null] - テクスチャサイズ
      * @param {number} [size_off=0] - テクスチャサイズの配列インデックス
      * @returns {WebGLTexture} テクスチャのインスタンス
      */
-    ns.GLUtils.createTexture2D = function (gl,
-                                           format, type,
-                                           width, height,
-                                           pixels, mipmap,
-                                           size, size_off) {
-        pixels = ns.defaultValue(pixels, null);
-        mipmap = ns.defaultValue(mipmap, false);
-        size = ns.defaultValue(size, null);
-        size_off = ns.defaultValue(size_off, 0);
+    xpl.GLUtils.createTexture2D = function (gl,
+                                            format, type,
+                                            width, height,
+                                            pixels, mipmap,
+                                            size, size_off) {
+        pixels = xpl.defaultValue(pixels, null);
+        mipmap = xpl.defaultValue(mipmap, false);
+        size = xpl.defaultValue(size, null);
+        size_off = xpl.defaultValue(size_off, 0);
 
         // テクスチャのインスタンス生成
         let tex = gl.createTexture();
         if (tex != null) {
             gl.bindTexture(gl.TEXTURE_2D, tex);
-            let tex_width = ns.MathUtils.ceilPow2(width);
-            let tex_height = ns.MathUtils.ceilPow2(height);
+            let tex_width = xpl.MathUtils.ceilPow2(width);
+            let tex_height = xpl.MathUtils.ceilPow2(height);
             if (width == tex_width && height == tex_height) {
                 // サイズが2の乗数の場合
                 gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
@@ -181,15 +168,13 @@
     /**
      * 2次元の画像からWebGLのテクスチャのインスタンスを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createTexture2DFromImage
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} format - 色のフォーマット
      * @param {number} type - データ種別
      * @param {Object} object - 画像データ
      * @returns {WebGLTexture} テクスチャのインスタンス
      */
-    ns.GLUtils.createTexture2DFromImage = function (gl, format, type, object) {
+    xpl.GLUtils.createTexture2DFromImage = function (gl, format, type, object) {
         let tex = gl.createTexture();
         if (tex != null) {
             gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -199,18 +184,16 @@
     };
 
     /**
-     * WebGLのシェーダのインスタンを生成します。
+     * ソースコードからWebGLのシェーダのインスタンを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createShader
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} type - シェーダの種別
      * @param {string} code - シェーダのソースコード
      * @param {xpl.GLUtils~buildErrorCallback} [err_handle=null] - エラーをハンドルするためのコールバック関数
      * @returns {WebGLShader} シェーダのインスタンス
      */
-    ns.GLUtils.createShader = function (gl, type, code, err_handle) {
-        err_handle = ns.defaultValue(err_handle, null);
+    xpl.GLUtils.createShader = function (gl, type, code, err_handle) {
+        err_handle = xpl.defaultValue(err_handle, null);
 
         if (type == gl.VERTEX_SHADER || type == gl.FRAGMENT_SHADER) {
             // シェーダのインスタンスを生成
@@ -226,9 +209,9 @@
                     console.error("Shader compile error:\n" + err_info);
                     if (err_handle != null) {
                         if (type == gl.VERTEX_SHADER) {
-                            err_handle(ns.GLUtils.TYPE_VERTEX_SHADER, err_info);
+                            err_handle(xpl.GLUtils.TYPE_VERTEX_SHADER, err_info);
                         } else if (type == gl.FRAGMENT_SHADER) {
-                            err_handle(ns.GLUtils.TYPE_FRAGMENT_SHADER, +err_info);
+                            err_handle(xpl.GLUtils.TYPE_FRAGMENT_SHADER, +err_info);
                         }
                     }
                     gl.deleteShader(shader);
@@ -241,10 +224,8 @@
     };
 
     /**
-     * Create the OpenGL program instance.
+     * WebGLのシェーダからWebGLのプログラムのインスタンスを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createProgram
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {WebGLShader} vs - 頂点シェーダ
      * @param {WebGLShader} fs - フラグメントシェーダ
@@ -252,7 +233,7 @@
      * @param {xpl.GLUtils~buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */
-    ns.GLUtils.createProgram = function (gl, vs, fs, attr_map, err_handle) {
+    xpl.GLUtils.createProgram = function (gl, vs, fs, attr_map, err_handle) {
         if (vs != null && fs != null) {
             // create the program instance.
             let program = gl.createProgram();
@@ -274,7 +255,7 @@
                     let err_info = gl.getProgramInfoLog(program);
                     console.error("Program linkage error:\n" + err_info);
                     if (err_handle != null) {
-                        err_handle(ns.GLUtils.TYPE_PROGRAM, err_info);
+                        err_handle(xpl.GLUtils.TYPE_PROGRAM, err_info);
                     }
                     gl.deleteProgram(program);
                     return null;
@@ -286,10 +267,8 @@
     };
 
     /**
-     * Create the OpenGL program instance from source code.
+     * ソースコードからWebGLのプログラムを生成します。
      *
-     * @memberof xpl.GLUtils
-     * @function createShaderProgram
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {string} vs_code - 頂点シェーダのソースコード
      * @param {string} fs_code - フラグメントシェーダのソースコード
@@ -297,22 +276,22 @@
      * @param {xpl.GLUtils.buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */
-    ns.GLUtils.createShaderProgram = function (gl, vs_code, fs_code, attr_map, err_handle) {
+    xpl.GLUtils.createShaderProgram = function (gl, vs_code, fs_code, attr_map, err_handle) {
         // 頂点シェーダのインスタンス生成
-        let vs = ns.GLUtils.createShader(gl, gl.VERTEX_SHADER, vs_code, err_handle);
+        let vs = xpl.GLUtils.createShader(gl, gl.VERTEX_SHADER, vs_code, err_handle);
         if (vs == null) {
             return null;
         }
 
         // フラグメントシェーダのインスタンス生成
-        let fs = ns.GLUtils.createShader(gl, gl.FRAGMENT_SHADER, fs_code, err_handle);
+        let fs = xpl.GLUtils.createShader(gl, gl.FRAGMENT_SHADER, fs_code, err_handle);
         if (fs == null) {
             gl.deleteShader(vs);
             return null;
         }
 
         // プログラムのインスタンス生成
-        let pg = ns.GLUtils.createProgram(gl, vs, fs, attr_map, err_handle);
+        let pg = xpl.GLUtils.createProgram(gl, vs, fs, attr_map, err_handle);
         gl.deleteShader(vs);
         gl.deleteShader(fs);
         return pg;

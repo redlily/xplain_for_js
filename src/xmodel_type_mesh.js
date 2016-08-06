@@ -78,26 +78,25 @@
 
 })(xpl);
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * メッシュ構造です。
      *
-     * @class
-     * @alias xpl.XModelMesh
-     * @augments xpl.XModelExtensible
+     * @constructor
+     * @augments xpl.XModelMeshBase
      */
-    ns.XModelMesh = function () {
-        ns.XModelMeshBase.call(this, ns.XModelStructure.TYPE_MESH);
+    xpl.XModelMesh = function () {
+        xpl.XModelMeshBase.call(this, xpl.XModelStructure.TYPE_MESH);
 
         /**
-         * string : メッシュ名
+         * string : 名前
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {string} name
+         * @var {string} name
          */
         this.name = null;
 
@@ -106,7 +105,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {xpl.uint32_t} num_positions
+         * @var {xpl.uint32_t} num_positions
          */
         this.num_positions = 0;
 
@@ -115,7 +114,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {xpl.uint8_t} position_size
+         * @var {xpl.uint8_t} position_size
          */
         this.position_size = 0;
 
@@ -124,7 +123,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Float32Array} positions
+         * @var {Float32Array} positions
          */
         this.positions = null;
 
@@ -133,7 +132,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {xpl.uint32_t} num_normals
+         * @var {xpl.uint32_t} num_normals
          */
         this.num_normals = 0;
 
@@ -232,7 +231,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Array.<xpl.XModelVertex>} vertices
+         * @member {xpl.XModelVertex[]} vertices
          */
         this.vertices = null;
 
@@ -250,7 +249,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Array.<xpl.XModelMaterial>} materials
+         * @member {xpl.XModelMaterial[]} materials
          */
         this.materials = null;
 
@@ -268,7 +267,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Array.<xpl.XModelElement>} elements
+         * @member {xpl.XModelElement[]} elements
          */
         this.elements = null;
 
@@ -286,7 +285,7 @@
          *
          * @instance
          * @memberof xpl.XModelMesh
-         * @member {Array.<XModelMeshSubset>} subset
+         * @member {XModelMeshSubset[]} subset
          */
         this.subsets = null;
 
@@ -302,29 +301,25 @@
         this.parent = null; // 弱参照
     };
 
-    Object.setPrototypeOf(ns.XModelMesh.prototype, ns.XModelMeshBase.prototype);
+    Object.setPrototypeOf(xpl.XModelMesh.prototype, xpl.XModelMeshBase.prototype);
 
-    //noinspection JSValidateTypes
-    Object.defineProperties(ns.XModelMesh, {
+    Object.defineProperties(xpl.XModelMesh, {
 
         /**
          * 位置の型
          *
-         * @constant
          * @memberof xpl.XModelMesh
-         * @member {xpl.enum_t} TYPE_POSITION
+         * @const {xpl.enum_t} TYPE_POSITION
          */
-        "TYPE_POSITION": {value: 0},
+        TYPE_POSITION: {value: 0},
 
         /**
          * 法線の型
          *
-         * @constant
          * @memberof xpl.XModelMesh
-         * @member {xpl.enum_t} TYPE_NORMAL
-         *
+         * @const {xpl.enum_t} TYPE_NORMAL
          */
-        "TYPE_NORMAL": {value: 1}
+        TYPE_NORMAL: {value: 1}
     });
 
     /**
@@ -335,7 +330,7 @@
      * @function toString
      * @returns {string} メッシュ名
      */
-    ns.XModelMesh.prototype.toString = function () {
+    xpl.XModelMesh.prototype.toString = function () {
         return this.name;
     };
 
@@ -418,10 +413,9 @@
     "use strict";
 
     /**
-     * スキン構造です。
+     * スキンの構造です。
      *
-     * @class
-     * @alias xpl.XModelMesh
+     * @constructor
      */
     ns.XModelSkin = function () {
 
@@ -430,7 +424,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {xpl.uint32_t} num_weighted_indices
+         * @var {xpl.uint32_t} num_weighted_indices
          */
         this.num_weighted_indices = 0;
 
@@ -439,7 +433,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {xpl.uint8_t} weighted_index_stride
+         * @var {xpl.uint8_t} weighted_index_stride
          */
         this.weighted_index_stride = 0;
 
@@ -448,7 +442,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Uint8Array} weighted_index_sizes
+         * @var {Uint8Array} weighted_index_sizes
          */
         this.weighted_index_sizes = null;
 
@@ -457,7 +451,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Int16Array} indices
+         * @var {Int16Array} indices
          */
         this.indices = null;
 
@@ -466,7 +460,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Float32Array} weights
+         * @var {Float32Array} weights
          */
         this.weights = null;
 
@@ -475,7 +469,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {xpl.uint16_t} num_nodes
+         * @var {xpl.uint16_t} num_nodes
          */
         this.num_nodes = 0;
 
@@ -484,7 +478,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Array.<xpl.XModelNode>} nodes
+         * @var {xpl.XModelNode[]} nodes
          */
         this.nodes = null; // elements is the weak reference.
 
@@ -493,7 +487,7 @@
          *
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Float32Array} offset_matrices
+         * @var {Float32Array} offset_matrices
          */
         this.offset_matrices = null;
 
@@ -503,14 +497,14 @@
          * @deprecated
          * @instance
          * @memberof xpl.XModelSkin
-         * @member {Float32Array} offset_quaternions
+         * @var {Float32Array} offset_quaternions
          */
         this.offset_quaternions = null;
     };
 
 })(xpl);
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
@@ -520,7 +514,11 @@
      * @class
      * @alias xpl.XModelVertex
      */
-    ns.XModelVertex = function () {
+    /**
+     * 
+     * @constructor
+     */
+    xpl.XModelVertex = function () {
 
         /**
          * uint32_t : 位置のインデックス
@@ -576,7 +574,7 @@
      * @function hashCode
      * @returns {xpl.uint32_t} ハッシュ値
      */
-    ns.XModelVertex.prototype.hashCode = function () {
+    xpl.XModelVertex.prototype.hashCode = function () {
         return this.position ^ this.normal ^ this.color ^ this.tex_coord ^ this.skinning;
     };
 
@@ -589,11 +587,11 @@
      * @param {xpl.XModelVertex} other - 対象のインスタンス
      * @returns {Boolean} 比較の結果
      */
-    ns.XModelVertex.prototype.equals = function (other) {
+    xpl.XModelVertex.prototype.equals = function (other) {
         if (this === other) {
             return true;
         }
-        if (other != null && other instanceof ns.XModelVertex) {
+        if (other != null && other instanceof xpl.XModelVertex) {
             return this.position == other.position &&
                 this.normal == other.normal &&
                 this.color == other.color &&

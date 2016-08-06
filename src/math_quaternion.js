@@ -30,19 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
-    let VX = 0, VY = 1, VZ = 2;
-    let CR = 0, CI = 1, CJ = 2, CK = 3;
+    const VX = 0, VY = 1, VZ = 2;
+    const CR = 0, CI = 1, CJ = 2, CK = 3;
 
     /**
      * 四元数のユーティリティクラスです。
      *
-     * @namespace xpl.Quaternion
+     * @constructor
      */
-    ns.Quaternion = function () {
+    xpl.Quaternion = function () {
         throw new Error("Unsupported operation!");
     };
 
@@ -51,16 +51,14 @@
      *
      * d = (a, b, c, d)
      *
-     * @memberof xpl.Quaternion
-     * @function load
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp - 入力元の四元数の実数部
      * @param {number} ip - 入力元の四元数の虚数I部
      * @param {number} jp - 入力元の四元数の虚数J部
      * @param {number} kp - 入力元の四元数の虚数K部
      */
-    ns.Quaternion.load = function (d, d_off, rp, ip, jp, kp) {
+    xpl.Quaternion.load = function (d, d_off, rp, ip, jp, kp) {
         d[d_off + CR] = rp;
         d[d_off + CI] = ip;
         d[d_off + CJ] = jp;
@@ -72,15 +70,13 @@
      *
      * d = (a, b, c, d)
      *
-     * @memberof xpl.Quaternion
-     * @function loadv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 入力元の四元数
+     * @param {number[]} q - 入力元の四元数
      * @param {number} q_off - 入力元の四元数の配列インデックス
      */
-    ns.Quaternion.loadv = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
+    xpl.Quaternion.loadv = function (d, d_off, q, q_off) {
+        xpl.Quaternion.load(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -88,13 +84,11 @@
      *
      * d = (0, 0, 0, 0)
      *
-     * @memberof xpl.Quaternion
-     * @function loadZero
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - The 出力先の四元数の配列インデックス
      */
-    ns.Quaternion.loadZero = function (d, d_off) {
-        ns.Quaternion.load(d, d_off, 0, 0, 0, 0);
+    xpl.Quaternion.loadZero = function (d, d_off) {
+        xpl.Quaternion.load(d, d_off, 0, 0, 0, 0);
     };
 
     /**
@@ -102,13 +96,11 @@
      *
      * d = (1, 0, 0, 0)
      *
-     * @memberof xpl.Quaternion
-     * @function loadIdentity
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      */
-    ns.Quaternion.loadIdentity = function (d, d_off) {
-        ns.Quaternion.load(d, d_off, 1, 0, 0, 0);
+    xpl.Quaternion.loadIdentity = function (d, d_off) {
+        xpl.Quaternion.load(d, d_off, 1, 0, 0, 0);
     };
 
     /**
@@ -116,13 +108,11 @@
      *
      * d = |q|^2
      *
-     * @memberof xpl.Quaternion
-     * @function absSq
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      * @returns {number} 四元数の絶対値の2乗の値
      */
-    ns.Quaternion.absSq = function (q, q_off) {
+    xpl.Quaternion.absSq = function (q, q_off) {
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -135,14 +125,12 @@
      *
      * d = |q|
      *
-     * @memberof xpl.Quaternion
-     * @function abs
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      * @returns {number} 四元数の絶対値
      */
-    ns.Quaternion.abs = function (q, q_off) {
-        return Math.sqrt(ns.Quaternion.absSq(q, q_off));
+    xpl.Quaternion.abs = function (q, q_off) {
+        return Math.sqrt(xpl.Quaternion.absSq(q, q_off));
     };
 
     /**
@@ -150,14 +138,12 @@
      *
      * d = q / |q|
      *
-     * @memberof xpl.Quaternion
-     * @function normalizev
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      */
-    ns.Quaternion.normalizev = function (d, d_off, q, q_off) {
+    xpl.Quaternion.normalizev = function (d, d_off, q, q_off) {
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -165,9 +151,9 @@
         let len = rp * rp + ip * ip + jp * jp + kp * kp;
         if (0 < len) {
             len = Math.sqrt(len);
-            ns.Quaternion.load(d, d_off, rp / len, ip / len, jp / len, kp / len);
+            xpl.Quaternion.load(d, d_off, rp / len, ip / len, jp / len, kp / len);
         } else {
-            ns.Quaternion.loadZero(d, d_off);
+            xpl.Quaternion.loadZero(d, d_off);
         }
     };
 
@@ -176,21 +162,19 @@
      *
      * d = e^q
      *
-     * @memberof xpl.Quaternion
-     * @function exp
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp - 指数部の四元数の実数部
      * @param {number} ip - 指数部の四元数の虚数I部
      * @param {number} jp - 指数部の四元数の虚数J部
      * @param {number} kp - 指数部の四元数の虚数K部
      */
-    ns.Quaternion.exp = function (d, d_off, rp, ip, jp, kp) {
+    xpl.Quaternion.exp = function (d, d_off, rp, ip, jp, kp) {
         // e^(a + bi + cj + dk) = e^(a + v) = e^a * (cos|v| + (v / |v|) * sin|v|)
         let aexp = Math.exp(rp);                            // e^a
         let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // |v| = √(bi^2 + cj^2 + dk^2)
         let vscale = aexp * Math.sin(vnorm) / vnorm;        // e^a * sin|v| / |v|
-        ns.Quaternion.load(
+        xpl.Quaternion.load(
             d, d_off,
             aexp * Math.cos(vnorm),                         // e^2 * cos|v|
             ip * vscale, jp * vscale, kp * vscale);
@@ -201,15 +185,13 @@
      *
      * d = e^q
      *
-     * @memberof xpl.Quaternion
-     * @function expv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 指数部の四元数
+     * @param {number[]} q - 指数部の四元数
      * @param {number} q_off - 指数部の四元数の配列インデックス
      */
-    ns.Quaternion.expv = function (d, d_off, q, q_off) {
-        ns.Quaternion.exp(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
+    xpl.Quaternion.expv = function (d, d_off, q, q_off) {
+        xpl.Quaternion.exp(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -217,19 +199,17 @@
      *
      * d = e^iv
      *
-     * @memberof xpl.Quaternion
-     * @function cis
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} ip - 指数部の虚数I部
      * @param {number} jp - 指数部の虚数J部
      * @param {number} kp - 指数部の虚数K部
      */
-    ns.Quaternion.cis = function (d, d_off, ip, jp, kp) {
+    xpl.Quaternion.cis = function (d, d_off, ip, jp, kp) {
         // e^(bi + cj + dk) = e^v = cos|v| + (v / |v|) * sin|v|
         let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp); // |v| = √(bi^2 + cj^2 + dk^2)
         let vscale = Math.sin(vnorm) / vnorm;               // e^a * sin|v| / |v|
-        ns.Quaternion.load(
+        xpl.Quaternion.load(
             d, d_off,
             Math.cos(vnorm),                                // cos|v|
             ip * vscale, jp * vscale, kp * vscale);
@@ -240,15 +220,13 @@
      *
      * d = e^iv
      *
-     * @memberof xpl.Quaternion
-     * @function cisv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} v - 指数部の虚数ベクトル
+     * @param {number[]} v - 指数部の虚数ベクトル
      * @param {number} v_off - 指数部の虚数ベクトルの配列インデックス
      */
-    ns.Quaternion.cisv = function (d, d_off, v, v_off) {
-        ns.Quaternion.cis(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
+    xpl.Quaternion.cisv = function (d, d_off, v, v_off) {
+        xpl.Quaternion.cis(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ]);
     };
 
     /**
@@ -256,22 +234,20 @@
      *
      * d = log(q)
      *
-     * @memberof xpl.Quaternion
-     * @function log
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp - 対象の四元数の実数部
      * @param {number} ip - 対象の四元数の虚数I部
      * @param {number} jp - 対象の四元数の虚数J部
      * @param {number} kp - 対象の四元数の虚数K部
      */
-    ns.Quaternion.log = function (d, d_off, rp, ip, jp, kp) {
+    xpl.Quaternion.log = function (d, d_off, rp, ip, jp, kp) {
         // ln(a + bi + cj + dk) = ln(a + v) = ln(q) = ln|q| + v / |v| * cos^-1 (a / |q|)
         let qnorm = Math.sqrt(rp * rp + ip * ip + jp * jp + kp * kp); // |q| = √(a^2 + bi^2 + cj^2 + dk^2)
         let qln = Math.log(qnorm);                                    // ln|q|
         let vnorm = Math.sqrt(ip * ip + jp * jp + kp * kp);           // |v| = √(bi^2 + cj^2 + dk^2)
         let vscale = Math.acos(rp / qnorm) / vnorm;                   // cos^-1 (a / |q|) / |v|
-        ns.Quaternion.load(d, d_off, qln, ip * vscale, jp * vscale, kp * vscale);
+        xpl.Quaternion.load(d, d_off, qln, ip * vscale, jp * vscale, kp * vscale);
     };
 
     /**
@@ -279,15 +255,13 @@
      *
      * d = log(q)
      *
-     * @memberof xpl.Quaternion
-     * @function logv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      */
-    ns.Quaternion.logv = function (d, d_off, q, q_off) {
-        ns.Quaternion.log(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
+    xpl.Quaternion.logv = function (d, d_off, q, q_off) {
+        xpl.Quaternion.log(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK]);
     };
 
     /**
@@ -295,9 +269,7 @@
      *
      * d = lerp(q1, q2; t)
      *
-     * @memberof xpl.Quaternion
-     * @function lerp
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 開始の四元数の実数部
      * @param {number} ip1 - 開始の四元数の虚数I部
@@ -309,10 +281,10 @@
      * @param {number} kp2 - 終了の四元数の虚数K部
      * @param {number} t - 補間係数
      */
-    ns.Quaternion.lerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
+    xpl.Quaternion.lerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
         // lerp(p1, p2; t) = (1.0 - t) * p1 + t * p2
         let t1 = 1.0 - t;
-        ns.Quaternion.load(
+        xpl.Quaternion.load(
             d, d_off,
             rp1 * t1 + rp2 * t,
             ip1 * t1 + ip2 * t,
@@ -325,18 +297,16 @@
      *
      * d = lerp(q1, q2; t)
      *
-     * @memberof xpl.Quaternion
-     * @function lerpv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 開始の四元数
+     * @param {number[]} q1 - 開始の四元数
      * @param {number} q1_off - 開始の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 終了の四元数
+     * @param {number[]} q2 - 終了の四元数
      * @param {number} q2_off - 終了の四元数の配列インデックス
      * @param {number} t - 補間係数
      */
-    ns.Quaternion.lerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
-        ns.Quaternion.lerp(
+    xpl.Quaternion.lerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
+        xpl.Quaternion.lerp(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK],
@@ -348,9 +318,7 @@
      *
      * d = slerp(q1, q2; t)
      *
-     * @memberof xpl.Quaternion
-     * @function slerp
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 開始の四元数の実数部
      * @param {number} ip1 - 開始の四元数の虚数I部
@@ -362,7 +330,7 @@
      * @param {number} kp2 - 終了の四元数の虚数K部
      * @param {number} t - 補間係数
      */
-    ns.Quaternion.slerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
+    xpl.Quaternion.slerp = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2, t) {
         // 開始の四元数の正規化
         let abs1 = rp1 * rp1 + ip1 * ip1 + jp1 * jp1 + kp1 * kp1;
         if (0 < abs1) {
@@ -390,12 +358,12 @@
             // 2つの四元数の向きが同一の場合
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             let abs = abs1 * (1.0 - t) + abs2 * t;
-            ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
+            xpl.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else if (cs <= -1.0) {
             // 2つの四元数の向きが真逆の場合
             // lerp(p0, p1; t) = (1.0 - t) * p0 + t * p1
             let abs = abs1 * (1.0 - t) - abs2 * t;
-            ns.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
+            xpl.Quaternion.load(d, d_off, rp1 * abs, ip1 * abs, jp1 * abs, kp1 * abs);
         } else {
             // その他の場合
 
@@ -413,7 +381,7 @@
             let sn2 = Math.sin(rad3) / sn;
 
             // 結果の書き出し
-            ns.Quaternion.load(
+            xpl.Quaternion.load(
                 d, d_off,
                 (rp1 * sn1 + rp2 * sn2) * abs,
                 (ip1 * sn1 + ip2 * sn2) * abs,
@@ -427,18 +395,16 @@
      *
      * d = slerp(q1, q2; t)
      *
-     * @memberof xpl.Quaternion
-     * @function slerpv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 開始の四元数
+     * @param {number[]} q1 - 開始の四元数
      * @param {number} q1_off - 開始の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 終了の四元数
+     * @param {number[]} q2 - 終了の四元数
      * @param {number} q2_off - 終了の四元数の配列インデックス
      * @param {number} t - 補間係数
      */
-    ns.Quaternion.slerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
-        ns.Quaternion.slerp(
+    xpl.Quaternion.slerpv = function (d, d_off, q1, q1_off, q2, q2_off, t) {
+        xpl.Quaternion.slerp(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK],
@@ -450,8 +416,6 @@
      *
      * d = a1 ・ a2
      *
-     * @memberof xpl.Quaternion
-     * @function dot
      * @param {number} rp1 - 演算子の左側の四元数の実数部
      * @param {number} ip1 - 演算子の左側の四元数の虚数I部
      * @param {number} jp1 - 演算子の左側の四元数の虚数J部
@@ -462,7 +426,7 @@
      * @param {number} kp2 - 演算子の右側の四元数の虚数K部
      * @returns {number} 内積値
      */
-    ns.Quaternion.dot = function (rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    xpl.Quaternion.dot = function (rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         return rp1 * rp2 + ip1 * ip2 + jp1 * jp2 + kp1 * kp2;
     };
 
@@ -471,15 +435,13 @@
      *
      * d = a1 ・ a2
      *
-     * @memberof xpl.Quaternion
-     * @function dotv
-     * @param {Array.<number>} q1 - 演算子の左側の四元数
+     * @param {number[]} q1 - 演算子の左側の四元数
      * @param {number} q1_off - 演算子の左側の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 演算子の右側の四元数
+     * @param {number[]} q2 - 演算子の右側の四元数
      * @param {number} q2_off - 演算子の右側の四元数の配列インデックス
      * @returns {number} 内積値
      */
-    ns.Quaternion.dotv = function (q1, q1_off, q2, q2_off) {
+    xpl.Quaternion.dotv = function (q1, q1_off, q2, q2_off) {
         return q1[q1_off + CR] * q2[q2_off + CR] +
             q1[q1_off + CI] * q2[q2_off + CI] +
             q1[q1_off + CJ] * q2[q2_off + CJ] +
@@ -491,15 +453,13 @@
      *     _
      * d = q
      *
-     * @memberof xpl.Quaternion
-     * @function conjugatev
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      */
-    ns.Quaternion.conjugatev = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
+    xpl.Quaternion.conjugatev = function (d, d_off, q, q_off) {
+        xpl.Quaternion.load(d, d_off, q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
     };
 
     /**
@@ -507,15 +467,13 @@
      *
      * d = -q
      *
-     * @memberof xpl.Quaternion
-     * @function reversev
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      */
-    ns.Quaternion.reversev = function (d, d_off, q, q_off) {
-        ns.Quaternion.load(d, d_off, -q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
+    xpl.Quaternion.reversev = function (d, d_off, q, q_off) {
+        xpl.Quaternion.load(d, d_off, -q[q_off + CR], -q[q_off + CI], -q[q_off + CJ], -q[q_off + CK]);
     };
 
     /**
@@ -523,14 +481,12 @@
      *
      * d = q^-1
      *
-     * @memberof xpl.Quaternion
-     * @function inversev
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      */
-    ns.Quaternion.inversev = function (d, d_off, q, q_off) {
+    xpl.Quaternion.inversev = function (d, d_off, q, q_off) {
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -543,7 +499,7 @@
             jp /= -det;
             kp /= -det;
         }
-        ns.Quaternion.load(d, d_off, rp, ip, jp, kp);
+        xpl.Quaternion.load(d, d_off, rp, ip, jp, kp);
     };
 
     /**
@@ -551,9 +507,7 @@
      *
      * d = q1 + q2
      *
-     * @memberof xpl.Quaternion
-     * @function add
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 演算子の左側の四元数の実数部
      * @param {number} ip1 - 演算子の左側の四元数の虚数I部
@@ -564,8 +518,8 @@
      * @param {number} jp2 - 演算子の右側の四元数の虚数J部
      * @param {number} kp2 - 演算子の右側の四元数の虚数K部
      */
-    ns.Quaternion.add = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
-        ns.Quaternion.load(d, d_off, rp1 + rp2, ip1 + ip2, jp1 + jp2, kp1 + kp2);
+    xpl.Quaternion.add = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+        xpl.Quaternion.load(d, d_off, rp1 + rp2, ip1 + ip2, jp1 + jp2, kp1 + kp2);
     };
 
     /**
@@ -573,17 +527,15 @@
      *
      * d = q1 + q2
      *
-     * @memberof xpl.Quaternion
-     * @function addv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 演算子の左側の四元数
+     * @param {number[]} q1 - 演算子の左側の四元数
      * @param {number} q1_off - 演算子の左側の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 演算子の右側の四元数
+     * @param {number[]} q2 - 演算子の右側の四元数
      * @param {number} q2_off - 演算子の右側の四元数の配列インデックス
      */
-    ns.Quaternion.addv = function (d, d_off, q1, q1_off, q2, q2_off) {
-        ns.Quaternion.add(
+    xpl.Quaternion.addv = function (d, d_off, q1, q1_off, q2, q2_off) {
+        xpl.Quaternion.add(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
@@ -594,9 +546,7 @@
      *
      * d = q1 - q2
      *
-     * @memberof xpl.Quaternion
-     * @function sub
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 演算子の左側の四元数の実数部
      * @param {number} ip1 - 演算子の左側の四元数の虚数I部
@@ -607,8 +557,8 @@
      * @param {number} jp2 - 演算子の右側の四元数の虚数J部
      * @param {number} kp2 - 演算子の右側の四元数の虚数K部
      */
-    ns.Quaternion.sub = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
-        ns.Quaternion.load(d, d_off, rp1 - rp2, ip1 - ip2, jp1 - jp2, kp1 - kp2);
+    xpl.Quaternion.sub = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+        xpl.Quaternion.load(d, d_off, rp1 - rp2, ip1 - ip2, jp1 - jp2, kp1 - kp2);
     };
 
     /**
@@ -616,17 +566,15 @@
      *
      * d = q1 - q2
      *
-     * @memberof xpl.Quaternion
-     * @function subv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 演算子の左側の四元数
+     * @param {number[]} q1 - 演算子の左側の四元数
      * @param {number} q1_off - 演算子の左側の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 演算子の右側の四元数
+     * @param {number[]} q2 - 演算子の右側の四元数
      * @param {number} q2_off - 演算子の右側の四元数の配列インデックス
      */
-    ns.Quaternion.subv = function (d, d_off, q1, q1_off, q2, q2_off) {
-        ns.Quaternion.sub(
+    xpl.Quaternion.subv = function (d, d_off, q1, q1_off, q2, q2_off) {
+        xpl.Quaternion.sub(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
@@ -637,9 +585,7 @@
      *
      * d = q1 * q2
      *
-     * @memberof xpl.Quaternion
-     * @function mul
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 演算子の左側の四元数の実数部
      * @param {number} ip1 - 演算子の左側の四元数の虚数I部
@@ -650,10 +596,10 @@
      * @param {number} jp2 - 演算子の右側の四元数の虚数J部
      * @param {number} kp2 - 演算子の右側の四元数の虚数K部
      */
-    ns.Quaternion.mul = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    xpl.Quaternion.mul = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = r1r2 - i1 ・ i2, ip = r1i2 + r2i1 + i1 × i2
-        ns.Quaternion.load(
+        xpl.Quaternion.load(
             d, d_off,
             rp1 * rp2 - (ip1 * ip2 + jp1 * jp2 + kp1 * kp2),
             rp1 * ip2 + ip1 * rp2 + (jp1 * kp2 - kp1 * jp2),
@@ -666,17 +612,15 @@
      *
      * d = q1 * q2
      *
-     * @memberof xpl.Quaternion
-     * @function mulv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 演算子の左側の四元数
+     * @param {number[]} q1 - 演算子の左側の四元数
      * @param {number} q1_off - 演算子の左側の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 演算子の右側の四元数
+     * @param {number[]} q2 - 演算子の右側の四元数
      * @param {number} q2_off - 演算子の右側の四元数の配列インデックス
      */
-    ns.Quaternion.mulv = function (d, d_off, q1, q1_off, q2, q2_off) {
-        ns.Quaternion.mul(
+    xpl.Quaternion.mulv = function (d, d_off, q1, q1_off, q2, q2_off) {
+        xpl.Quaternion.mul(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
@@ -687,9 +631,7 @@
      *
      * d = q * s
      *
-     * @memberof xpl.Quaternion
-     * @function mulScalar
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp - 対象の四元数の実数部
      * @param {number} ip - 対象の四元数の虚数I部
@@ -697,8 +639,8 @@
      * @param {number} kp - 対象の四元数の虚数K部
      * @param {number} s - 対象のスカラ
      */
-    ns.Quaternion.mulScalar = function (d, d_off, rp, ip, jp, kp, s) {
-        ns.Quaternion.load(d, d_off, rp * s, ip * s, jp * s, kp * s);
+    xpl.Quaternion.mulScalar = function (d, d_off, rp, ip, jp, kp, s) {
+        xpl.Quaternion.load(d, d_off, rp * s, ip * s, jp * s, kp * s);
     };
 
     /**
@@ -706,16 +648,14 @@
      *
      * d = q * s
      *
-     * @memberof xpl.Quaternion
-     * @function mulScalarv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      * @param {number} s - 対象のスカラ
      */
-    ns.Quaternion.mulScalarv = function (d, d_off, q, q_off, s) {
-        ns.Quaternion.mulScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
+    xpl.Quaternion.mulScalarv = function (d, d_off, q, q_off, s) {
+        xpl.Quaternion.mulScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
     };
 
     /**
@@ -723,9 +663,7 @@
      *
      * d = q1 / q2
      *
-     * @memberof xpl.Quaternion
-     * @function div
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp1 - 演算子の左側の四元数の実数部
      * @param {number} ip1 - 演算子の左側の四元数の虚数I部
@@ -736,11 +674,11 @@
      * @param {number} jp2 - 演算子の右側の四元数の虚数J部
      * @param {number} kp2 - 演算子の右側の四元数の虚数K部
      */
-    ns.Quaternion.div = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
+    xpl.Quaternion.div = function (d, d_off, rp1, ip1, jp1, kp1, rp2, ip2, jp2, kp2) {
         // i^2 = j^2 = k^2 = ijk = -1, ij = -ji = k, jk = -kj = i, ki = -ik = j
         // rp = (r1r2 - i1 ・ i2) / (r2^2 + i2^2), ip = (r1i2 + r2i1 + i1 × i2) / (r2^2 + i2^2)
         let det = rp2 * rp2 + ip2 * ip2 + jp2 * jp2 + kp2 * kp2;
-        ns.Quaternion.load(
+        xpl.Quaternion.load(
             d, d_off,
             (  rp1 * rp2 + (ip1 * ip2 + jp1 * jp2 + kp1 * kp2)) / det,
             (-rp1 * ip2 + ip1 * rp2 - (jp1 * kp2 - kp1 * jp2)) / det,
@@ -753,17 +691,15 @@
      *
      * d = q1 / q2
      *
-     * @memberof xpl.Quaternion
-     * @function divv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q1 - 演算子の左側の四元数
+     * @param {number[]} q1 - 演算子の左側の四元数
      * @param {number} q1_off - 演算子の左側の四元数の配列インデックス
-     * @param {Array.<number>} q2 - 演算子の右側の四元数
+     * @param {number[]} q2 - 演算子の右側の四元数
      * @param {number} q2_off - 演算子の右側の四元数の配列インデックス
      */
-    ns.Quaternion.divv = function (d, d_off, q1, q1_off, q2, q2_off) {
-        ns.Quaternion.div(
+    xpl.Quaternion.divv = function (d, d_off, q1, q1_off, q2, q2_off) {
+        xpl.Quaternion.div(
             d, d_off,
             q1[q1_off + CR], q1[q1_off + CI], q1[q1_off + CJ], q1[q1_off + CK],
             q2[q2_off + CR], q2[q2_off + CI], q2[q2_off + CJ], q2[q2_off + CK]);
@@ -774,9 +710,7 @@
      *
      * d = q / s
      *
-     * @memberof xpl.Quaternion
-     * @function divScalar
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
      * @param {number} rp - 対象の四元数の実数部
      * @param {number} ip - 対象の四元数の虚数I部
@@ -784,8 +718,8 @@
      * @param {number} kp - 対象の四元数の虚数K部
      * @param {number} s - 対象のスカラ
      */
-    ns.Quaternion.divScalar = function (d, d_off, rp, ip, jp, kp, s) {
-        ns.Quaternion.load(d, d_off, rp / s, ip / s, jp / s, kp / s);
+    xpl.Quaternion.divScalar = function (d, d_off, rp, ip, jp, kp, s) {
+        xpl.Quaternion.load(d, d_off, rp / s, ip / s, jp / s, kp / s);
     };
 
     /**
@@ -793,28 +727,24 @@
      *
      * d = q / s
      *
-     * @memberof xpl.Quaternion
-     * @function divScalarv
-     * @param {Array.<number>} d - 出力先の四元数
+     * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
      * @param {number} s - 対象のスカラ
      */
-    ns.Quaternion.divScalarv = function (d, d_off, q, q_off, s) {
-        ns.Quaternion.divScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
+    xpl.Quaternion.divScalarv = function (d, d_off, q, q_off, s) {
+        xpl.Quaternion.divScalar(d, d_off, q[q_off + CR], q[q_off + CI], q[q_off + CJ], q[q_off + CK], s);
     };
 
     /**
      * 四元数の文字列表現を返します。
      *
-     * @memberof xpl.Quaternion
-     * @function convertToString
-     * @param {Array.<number>} q - 対象の四元数
+     * @param {number[]} q - 対象の四元数
      * @param {number} off - 対象の四元数の配列インデックス
-     * @returns {string} 変換された文字列
+     * @returns {string} 四元数から変換された文字列
      */
-    ns.Quaternion.convertToString = function (q, off) {
+    xpl.Quaternion.convertToString = function (q, off) {
         return "Quaternion(" + q[off + CR] + ", " + q[off + CI] + ", " + q[off + CJ] + ", " + q[off + CK] + ")";
     };
 
