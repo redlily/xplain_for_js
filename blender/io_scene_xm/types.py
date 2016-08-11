@@ -30,173 +30,193 @@
 
 import math
 
+
 # create the unit quaternion
 def _identity_quaternion():
-    return [ 1.0, 0.0, 0.0, 0.0 ]
+    return [1.0, 0.0, 0.0, 0.0]
 
 
 # create the identity matrix
 def _identity_matrix():
-    return [ 1.0, 0.0, 0.0, 0.0,
-             0.0, 1.0, 0.0, 0.0,
-             0.0, 0.0, 1.0, 0.0,
-             0.0, 0.0, 0.0, 1.0 ]
+    return [1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]
+
 
 # Base structure of xModel
-# @author Syuuhei Kuno
 class XModelStructure:
-
-    # structure of nudefined
-    TYPE_UNDEFINED      = -1
+    # structure of undefined
+    TYPE_UNDEFINED = -1
     # structure of null
-    TYPE_NULL           =  0
+    TYPE_NULL = 0
+    # structure of RGB
+    TYPE_RGB = 15
+    # structure of RGBA
+    TYPE_RGBA = 16
     # structure of axis rotate
-    TYPE_AXIS_ROTATE    =  1
+    TYPE_AXIS_ROTATE = 1
     # structure of quaternion
-    TYPE_QUATERNION     =  2
+    TYPE_QUATERNION = 2
     # structure of scale
-    TYPE_SCALE          =  3
+    TYPE_SCALE = 3
     # structure of translate
-    TYPE_TRANSLATE      =  4
+    TYPE_TRANSLATE = 4
     # structure of matrix
-    TYPE_MATRIX         =  5
+    TYPE_MATRIX = 5
     # structure of container
-    TYPE_CONTAINER      =  6
+    TYPE_CONTAINER = 6
     # structure of texture
-    TYPE_TEXTURE        =  7
+    TYPE_TEXTURE = 7
     # structure of material
-    TYPE_MATERIAL       =  8
+    TYPE_MATERIAL = 8
     # structure of mesh
-    TYPE_MESH           =  9
+    TYPE_MESH = 9
     # structure of node
-    TYPE_NODE           =  10
+    TYPE_NODE = 10
     # structure of kinematic
-    TYPE_KINEMATIC      =  11
+    TYPE_KINEMATIC = 11
     # structure of animation
-    TYPE_ANIMATION      =  12
+    TYPE_ANIMATION = 12
     # structure of animation key
-    TYPE_ANIMATION_KEY  =  13
+    TYPE_ANIMATION_KEY = 13
     # structure of animation set
-    TYPE_ANIMATION_SET  =  14
+    TYPE_ANIMATION_SET = 14
 
+    # size of RGB parameter
+    SIZE_RGB = 3
     # size of RGBA parameter
-    SIZE_RGBA       = 4
+    SIZE_RGBA = 4
     # size of three dimensionally vector
-    SIZE_VECTOR_3   = 3
+    SIZE_VECTOR_3 = 3
     # size of axis rotate parameter
-    SIZE_AXIS_ROTATE     = 4 # three dimensionally vector and angle.
+    SIZE_AXIS_ROTATE = 4  # three dimensionally vector and angle.
     # size of quaternion parameter
     SIZE_QUATERNION = 4
     # size of scale parameter
-    SIZE_SCALE      = 3
+    SIZE_SCALE = 3
     # size of translate parameter
-    SIZE_TRANSLATE  = 3
+    SIZE_TRANSLATE = 3
     # size of matrix parameter
-    SIZE_MATRIX     = 16
-    
+    SIZE_MATRIX = 16
+
     # number of slot for animation blend
-    NUM_BLEND_SLOT = 2;
-    
+    NUM_BLEND_SLOT = 2
+
     # initialize
     def __init__(self, structure_type):
         # const int32_t : type of structure
         self.structure_type = structure_type
 
-# User data structure of xModel
-# @author Syuuhei Kuno
-class XModelUserData:
 
+# User data structure of xModel
+class XModelUserData:
     # initialize
     def __init__(self):
         # int32_t : size of data
         self.data_size = 0
+
         # byte[] : data
         self.data = None
 
-# Axis rotate transform structure of xModel
-# @author Syuuhei Kuno
-class XModelAxisRotate(XModelStructure):
 
+# Parameter structure of xModel
+class XModelParameter(XModelStructure):
+    # initialize
+    def __init__(self, structure_type):
+        super(XModelParameter, self).__init__(structure_type)
+
+
+# 32bit float number array structure of xModel
+class XModelFloatArray(XModelParameter):
+    # initialize
+    def __init__(self, structure_type, size):
+        super(XModelFloatArray, self).__init__(structure_type)
+
+        # uint32 : size of element
+        self.size = size
+
+        # float32_t[size * (NUM_BLEND_SLOT + 1)] : elements
+        self.values = size * (self.NUM_BLEND_SLOT + 1)
+
+
+# Axis rotate transform structure of xModel
+class XModelAxisRotate(XModelStructure):
     # initialize
     def __init__(self):
-        super(XModelRotate, self).__init__(self.TYPE_AXIS_ROTATE)
+        super(XModelAxisRotate, self).__init__(self.TYPE_AXIS_ROTATE)
 
-        # float32[SIZE_ASIS_ROTATE] : initial value
-        self.initial = [ 0.0, 0.0, 0.1, 0.0 ]
+        # float32_t[SIZE_AXIS_ROTATE] : initial value
+        self.initial = [0.0, 0.0, 0.1, 0.0]
 
         # work variable
 
-        # float32[SIZE_AXIS_ROTATE * NUM_BLEND_SLOT] : work value
-        self.value = [ 0.0, 0.0, 0.1, 0.0 ] * self.NUM_BLEND_SLOT
+        # float32_t[SIZE_AXIS_ROTATE * NUM_BLEND_SLOT] : work value
+        self.value = [0.0, 0.0, 0.1, 0.0] * self.NUM_BLEND_SLOT
+
 
 # Quaternion transform structure fo xModel
-# @author Syuuhei Kuno
 class XModelQuaternion(XModelStructure):
-
     # initialize
     def __init__(self):
         super(XModelQuaternion, self).__init__(self.TYPE_QUATERNION)
 
-        # float32[SIZE_QUATERNION] : initial value
+        # float32_t[SIZE_QUATERNION] : initial value
         self.initial = _identity_quaternion()
 
         # work variable
 
-        # float32[SIZE_QUATERNION * NUM_BLEND_SLOT] : work value
+        # float32_t[SIZE_QUATERNION * NUM_BLEND_SLOT] : work value
         self.value = _identity_quaternion() * self.NUM_BLEND_SLOT
 
-# Scale transform structure of xModel
-# @author Syuuhei Kuno
-class XModelScale(XModelStructure):
 
+# Scale transform structure of xModel
+class XModelScale(XModelStructure):
     # initialize
     def __init__(self):
         super(XModelScale, self).__init__(self.TYPE_SCALE)
 
-        # float32[SIZE_SCALE] : initial value
-        self.initial = [ 1.0, 1.0, 1.0 ]
+        # float32_t[SIZE_SCALE] : initial value
+        self.initial = [1.0, 1.0, 1.0]
 
         # work variable
 
-        # float32[SIZE_SCALE * NUM_BLEND_SLOT] : work value
-        self.value = [ 1.0, 1.0, 1.0 ] * self.NUM_BLEND_SLOT
+        # float32_t[SIZE_SCALE * NUM_BLEND_SLOT] : work value
+        self.value = [1.0, 1.0, 1.0] * self.NUM_BLEND_SLOT
+
 
 # Translate transform structure of xModel
-# @author Syuuhei Kuno
 class XModelTranslate(XModelStructure):
-
     # initialize
     def __init__(self):
         super(XModelTranslate, self).__init__(self.TYPE_TRANSLATE)
 
-        # float32[SIZE_TRANSLATE] : initial value
-        self.initial = [ 0.0, 0.0, 0.0 ]
+        # float32_t[SIZE_TRANSLATE] : initial value
+        self.initial = [0.0, 0.0, 0.0]
 
         # work variable
 
-        # float32[SIZE_TRANSLATE * NUM_BLEND_SLOT : work value
-        self.value = [ 0.0, 0.0, 0.0 ] * self.NUM_BLEND_SLOT
+        # float32_t[SIZE_TRANSLATE * NUM_BLEND_SLOT : work value
+        self.value = [0.0, 0.0, 0.0] * self.NUM_BLEND_SLOT
+
 
 # Matrix transform structure of xModel
-# @author Syuuhei Kuno
 class XModelMatrix(XModelStructure):
-
     # initialize
     def __init__(self):
         super(XModelMatrix, self).__init__(self.TYPE_MATRIX)
 
-        # float32[SIZE_MATRIX * NUM_BLEND_SLOT] : initial value
+        # float32_t[SIZE_MATRIX * NUM_BLEND_SLOT] : initial value
         self.initial = _identity_matrix()
 
         # work variable
 
-        # float32[SIZE_MATRIX] : work value
+        # float32_t[SIZE_MATRIX] : work value
         self.value = _identity_matrix() * self.NUM_BLEND_SLOT
 
-# Extensible structure of xModel
-# @author Syuuhei Kuno
-class XModelExtensible(XModelStructure):
 
+# Extensible structure of xModel
+class XModelExtensible(XModelStructure):
     # initialize
     def __init__(self, structure_type):
         super(XModelExtensible, self).__init__(structure_type)
@@ -209,10 +229,9 @@ class XModelExtensible(XModelStructure):
         # any object : temporary user object
         self.user_object = None
 
-# Container structure of xModel
-# @author Syuuhei Kuno
-class XModelContainer(XModelExtensible):
 
+# Container structure of xModel
+class XModelContainer(XModelExtensible):
     # initialize
     def __init__(self):
         super(XModelContainer, self).__init__(self.TYPE_CONTAINER)
@@ -227,7 +246,7 @@ class XModelContainer(XModelExtensible):
 
         # int16_t : number of materials
         self.num_materials = 0
-        # XModelMateria[] : array of materials
+        # XModelMaterial[] : array of materials
         self.materials = None
 
         # int16_t : number of meshs
@@ -248,10 +267,9 @@ class XModelContainer(XModelExtensible):
         # XmodelAnimationSet[] : array of animation sets
         self.animation_sets = None
 
-# Texture structure of xModel
-# @author Syuuhei Kuno
-class XModelTexture(XModelExtensible):
 
+# Texture structure of xModel
+class XModelTexture(XModelExtensible):
     # initialize
     def __init__(self):
         super(XModelTexture, self).__init__(self.TYPE_TEXTURE)
@@ -276,16 +294,15 @@ class XModelTexture(XModelExtensible):
         # int32_t :
         self.z_size = 0
 
-# Material structure of xModel
-# @author Syuuhei Kuno
-class XModelMaterial(XModelExtensible):
 
+# Material structure of xModel
+class XModelMaterial(XModelExtensible):
     # draw mode none
-    DRAW_MODE_FACE_NONE                = 0
+    DRAW_MODE_FACE_NONE = 0
     # draw mode for draw only the front surface
-    DRAW_MODE_FACE_FRONT_BITS          = 0x1<<0
+    DRAW_MODE_FACE_FRONT_BITS = 0x1 << 0
     # draw mode for draw only the back surface
-    DRAW_MODE_FACE_BACK_BITS           = 0x1<<1
+    DRAW_MODE_FACE_BACK_BITS = 0x1 << 1
     # draw mode for draw front and back surface
     DRAW_MODE_FACE_FRONT_AND_BACK_BITS = (DRAW_MODE_FACE_FRONT_BITS |
                                           DRAW_MODE_FACE_BACK_BITS)
@@ -298,13 +315,13 @@ class XModelMaterial(XModelExtensible):
         self.name = None
 
         # float32_t[SIZE_RGBA] : emissive color
-        self.emissive = [ 0.0, 0.0, 0.0, 1.0 ]
+        self.emissive = [0.0, 0.0, 0.0, 1.0]
         # float32_t[SIZE_RGBA] : ambient color
-        self.ambient = [ 0.1, 0.1, 0.1, 1.0 ]
+        self.ambient = [0.1, 0.1, 0.1, 1.0]
         # float32_t[SIZE_RGBA] : diffuse color
-        self.diffuse =  [ 1.0, 1.0, 1.0, 1.0 ]
+        self.diffuse = [1.0, 1.0, 1.0, 1.0]
         # float32_t[SIZE_RGBA] : specular color
-        self.specular = [ 0.4, 0.4, 0.4, 1.0 ]
+        self.specular = [0.4, 0.4, 0.4, 1.0]
         # float32_t : shininess power
         self.shininess = 5.0
         # float32_t : bump power
@@ -326,10 +343,9 @@ class XModelMaterial(XModelExtensible):
         # int32_t : draw mode flags
         self.draw_mode = self.DRAW_MODE_FACE_FRONT_BITS
 
-# Mesh structure of xModel
-# @author Syuuhei Kuno
-class XModelMesh(XModelExtensible):
 
+# Mesh structure of xModel
+class XModelMesh(XModelExtensible):
     # initialize
     def __init__(self):
         super(XModelMesh, self).__init__(self.TYPE_MESH)
@@ -378,7 +394,7 @@ class XModelMesh(XModelExtensible):
         # XModelMaterial[] : material array
         self.materials = None
 
-        # int32_t : number of element
+        # int32_t : number of elements
         self.num_elements = 0
         # XModelElement[] : element array
         self.elements = None
@@ -386,24 +402,23 @@ class XModelMesh(XModelExtensible):
         # work variable
 
         # XModelNone : parent of this mesh
-        self.parent = None # weak reference
+        self.parent = None  # weak reference
 
         # any object : vertex buffer object
         self.vertex_buffer = None
         # any object : element buffer object
         self.element_buffer = None
 
-# Skin data structure of xModel
-# @author Syuuhei Kuno
-class XModelSkin:
 
-    # 1 dimentions weight
+# Skin data structure of xModel
+class XModelSkin:
+    # 1 dimensions weight
     SIZE_WEIGHTED1 = 1
-    # 2 dimentions weight
+    # 2 dimensions weight
     SIZE_WEIGHTED2 = 2
-    # 3 dimentions weight
+    # 3 dimensions weight
     SIZE_WEIGHTED3 = 3
-    # 3 dimentions weight
+    # 3 dimensions weight
     SIZE_WEIGHTED4 = 4
 
     # initialize
@@ -425,16 +440,13 @@ class XModelSkin:
 
         # float[] : offset matrices
         self.offset_matrices = None
-        # float[] : offset quaternions
-        self.offset_quaternions = None
 
         # XModelNodes[] : nodes as the bones
-        self.nodes = None # elements is weak reference
+        self.nodes = None  # elements is weak reference
+
 
 # Vertex data structure of xModel
-# @author Syuuhei Kuno
 class XModelVertex:
-    
     # initialize
     def __init__(self):
         # int32_t : position index
@@ -456,18 +468,17 @@ class XModelVertex:
                 self.skin_weight)
 
     def __eq__(self, other):
-        if not isinstance(other, XModelVertex):
-            return False
-        return (self.position == other.position and
-                self.normal == other.normal and
-                self.color == other.color and
-                self.tex_coord == other.tex_coord and
-                self.skin_weight == other.skin_weight)
+        if isinstance(other, XModelVertex):
+            return (self.position == other.position and
+                    self.normal == other.normal and
+                    self.color == other.color and
+                    self.tex_coord == other.tex_coord and
+                    self.skin_weight == other.skin_weight)
+        return False
+
 
 # Element data structure of xModel
-# @author Syuuhei Kuno
 class XModelElement:
-
     # initialize
     def __init__(self):
         # int16_t : material index
@@ -483,26 +494,25 @@ class XModelElement:
                 hash(self.vertices) if self.vertices is not None else 0)
 
     def __eq__(self, other):
-        if not isinstance(other, XModelElement):
-            return False
-        return (self.material == other.material and
-                self.num_vertices == other.num_vertices and
-                self.vertices == other.vertices)
+        if isinstance(other, XModelElement):
+            return (self.material == other.material and
+                    self.num_vertices == other.num_vertices and
+                    self.vertices == other.vertices)
+        return False
+
 
 # Node structure of xModel
-# @author Syuuhei Kuno
 class XModelNode(XModelExtensible):
-
     # transform of matrix
-    TRANSFORM_MATRIX    = 0
+    TRANSFORM_MATRIX = 0
     # transform of translate
     TRANSFORM_TRANSLATE = 1
     # transform of scale
-    TRANSFORM_SCALE     = 2
+    TRANSFORM_SCALE = 2
     # transform of rotate
-    TRANSFORM_ROTATE    = 3
+    TRANSFORM_ROTATE = 3
     # number of transforms
-    NUM_TRANSFORMS      = 4
+    NUM_TRANSFORMS = 4
 
     # initialize
     def __init__(self):
@@ -510,25 +520,25 @@ class XModelNode(XModelExtensible):
 
         # string : node name
         self.name = None
-        
+
         # bool : connected parent
         self.connected = True
-        
+
         # bool[SIZE_VECTOR_3] : lock the rotation of axis by ik
-        self.ik_lock_axis = [ False, False, False ]
+        self.ik_lock_axis = [False, False, False]
         # bool[SIZE_VECTOR_3] : limit the angle of axis rotate by ik
-        self.ik_limit_angle = [ False, False, False ]
+        self.ik_limit_angle = [False, False, False]
         # float32_t[SIZE_VECTOR_3] : minimum angle for ik limits
-        self.ik_min_angle = [ -math.pi, -math.pi, -math.pi  ]
+        self.ik_min_angle = [-math.pi, -math.pi, -math.pi]
         # float32_t[SIZE_VECTOR_3] : maximum angle for ik limits
-        self.ik_max_angle = [ math.pi, math.pi, math.pi  ]
-        
+        self.ik_max_angle = [math.pi, math.pi, math.pi]
+
         # float32_t[SIZE_VECTOR_3] : location of bone tail
-        self.bone_tail = [ 0.0, 0.0, 0.0 ]
+        self.bone_tail = [0.0, 0.0, 0.0]
 
         # XModelTransform[NUM_TRANSFORMS] : array of transforms
-        self.transforms = [ None, None, None, None ]
-        
+        self.transforms = [None, None, None, None]
+
         # int16_t : number of inverse kinematics
         self.num_inverse_kinematics = 0
         # XModelKinematic[] : array of inverse kinematics
@@ -547,26 +557,20 @@ class XModelNode(XModelExtensible):
         # work variable
 
         # XModelNode : this object is parent of this node
-        self.parent = None # weak reference
+        self.parent = None  # weak reference
 
         # float32_t[SIZE_MATRIX] : offset matrix
         self.offset_matrix = _identity_matrix()
-        # float32_t[SIZE_QUATERNION] : offset quaternion
-        self.offset_quaternion = _identity_quaternion()
-
-        # float32_t[] : combined matrix
+        # float32_t[SIZE_MATRIX] : combined matrix
         self.combined_matrix = _identity_matrix()
-        # float32_t[] : combined quaternion
-        self.combined_quaternion = _identity_quaternion()
-        
+
+
 # Kinematic structure of xModel
-# @author Syuuhei Kuno
 class XModelKinematic(XModelStructure):
-    
     # initialize
     def __init__(self):
         super(XModelKinematic, self).__init__(self.TYPE_KINEMATIC)
-        
+
         # XModelNode : target node
         self.target = None
         # int16 : max number of iterations
@@ -575,58 +579,56 @@ class XModelKinematic(XModelStructure):
         self.chain_length = 1
         # float32_t : influence on transform of bone
         self.influence = 1.0
-        
+
+
 # Animation structure of xModel
-# @author Syuuhei Kuno
 class XModelAnimation(XModelExtensible):
-    
     # initialize
     def __init__(self):
         super(XModelAnimation, self).__init__(self.TYPE_ANIMATION)
-        
+
         # string : animation name
         self.name = None
-        
+
         # XModelStructure : target
         self.target = None
         # int32_t : index in elements of target
         self.index = -1
-        
+
         # int16_t : number of keys
         self.num_keys = 0
         # XModelAnimationKey[] : array of keys
         self.keys = None
-        
+
         # int16_t : number of children
         self.num_children = 0
         # XModelAnimation[] : array of children
         self.children = None
-        
+
+
 # Animation key structure of xModel
-# @author Syuuhei Kuno
 class XModelAnimationKey(XModelStructure):
-    
     # interpolate by unknown
-    INTERPOLATE_UNKNOWN = -1;
+    INTERPOLATE_UNKNOWN = -1
     # interpolate by liner
-    INTERPOLATE_LINER   =  0
+    INTERPOLATE_LINER = 0
     # interpolate by bezier
-    INTERPOLATE_BEZIER  =  1
-    
+    INTERPOLATE_BEZIER = 1
+
     # initialize
     def __init__(self):
         super(XModelAnimationKey, self).__init__(self.TYPE_ANIMATION_KEY)
-        
+
         # int8_t : interpolate
         self.interpolate = self.INTERPOLATE_UNKNOWN
-        
+
         # float64_t : time
         self.time = 0
         # float64_t : before control time
         self.before_time = 0
         # float64_t : after control time
         self.after_time = 0
-        
+
         # int32_t : value size
         self.value_size = 0
         # float32_t[] : value
@@ -635,20 +637,18 @@ class XModelAnimationKey(XModelStructure):
         self.before_value = None
         # float32_t[] : after control value
         self.after_value = None
-        
+
+
 # Animation set structure of xModel
-# @author Syuuhei Kuno
 class XModelAnimationSet(XModelExtensible):
-    
     # initialize
     def __init__(self):
         super(XModelAnimationSet, self).__init__(self.TYPE_ANIMATION_SET)
-        
+
         # string : animation set name
         self.name = None
-        
+
         # int16_t : number of animations
         self.num_animations = 0
         # XModelAnimation[] : array of animations
         self.animations = None
-        

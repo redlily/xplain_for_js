@@ -55,20 +55,19 @@ from io_scene_xm.types import (XModelStructure,
                                XModelAnimationSet)
 from io_scene_xm.code import XModelBinaryEncoder
 
-# class that convert to xModel format from context.
-# author Syuuhei Kuno
-class XModelExporter:
 
-    # initialie
+# class that convert to xModel format from context.
+class XModelExporter:
+    # initialize
     def __init__(self,
                  context,
-                 filepath = None,
-                 output_visible_mesh = True,
-                 use_mesh_modifiers = True,
-                 invert_face = True,
-                 global_matrix = Matrix(),
-                 export_bones = False,
-                 export_actions = False):
+                 filepath=None,
+                 output_visible_mesh=True,
+                 use_mesh_modifiers=True,
+                 invert_face=True,
+                 global_matrix=Matrix(),
+                 export_bones=False,
+                 export_actions=False):
         self.context = context
         self.filepath = filepath
         self.output_visible_mesh = output_visible_mesh
@@ -193,7 +192,7 @@ class XModelExporter:
         dest_material.emissive[2] = material.emit
         dest_material.emissive[3] = 1.0
 
-        # ambiient parameter
+        # ambient parameter
         dest_material.ambient[0] = material.ambient
         dest_material.ambient[1] = material.ambient
         dest_material.ambient[2] = material.ambient
@@ -221,32 +220,32 @@ class XModelExporter:
 
                 # emissive map texture
                 if (dest_material.emissive_map is None and
-                    texture.use_map_emission):
+                        texture.use_map_emission):
                     dest_material.emissive_map = converted
 
                 # ambient map texture
                 if (dest_material.ambient_map is None and
-                    texture.use_map_ambient):
+                        texture.use_map_ambient):
                     dest_material.ambient_map = converted
 
                 # diffuse map texture
                 if (dest_material.diffuse_map is None and
-                    (texture.use_map_color_diffuse or texture.use_map_alpha)):
+                        (texture.use_map_color_diffuse or texture.use_map_alpha)):
                     dest_material.diffuse_map = converted
 
                 # specular map texture
                 if (dest_material.specular_map is None and
-                    texture.use_map_color_spec):
+                        texture.use_map_color_spec):
                     dest_material.specular_map = converted
 
                 # shininess map texture
                 if (dest_material.shininess_map is None and
-                    texture.use_map_hardness):
+                        texture.use_map_hardness):
                     dest_material.shininess_map = converted
 
                 # bump map texture
                 if (dest_material.bump_map is None and
-                    texture.use_map_normal):
+                        texture.use_map_normal):
                     dest_material.bump = texture.normal_factor
                     dest_material.bump_map = converted
 
@@ -351,7 +350,7 @@ class XModelExporter:
 
                 color_index = -1
                 if work_mesh.vertex_colors.active is not None:
-                    color       = work_mesh.vertex_colors.active.data[loop_index].color
+                    color = work_mesh.vertex_colors.active.data[loop_index].color
                     color_index = colors[color[:]]
 
                 tex_coord_index = -1
@@ -421,7 +420,7 @@ class XModelExporter:
                     dest_mesh.normals[index + i] = vn[i]
 
         # build xModel colors
-        dest_mesh.num_colors = 0 #num_colors
+        dest_mesh.num_colors = 0  # num_colors
         if 0 < dest_mesh.num_colors:
             dest_mesh.color_size = 4
             dest_mesh.colors = [1.0] * 4 * dest_mesh.num_colors
@@ -472,7 +471,6 @@ class XModelExporter:
                            0.0, 1.0, 0.0, 0.0,
                            0.0, 0.0, 1.0, 0.0,
                            0.0, 0.0, 0.0, 1.0] * num_nodes
-        offset_quaternions = [1,0, 0.0, 0.0, 0.0] * num_nodes
 
         # scan the bones in armature modifiers
         for modifier in src_mesh.modifiers:
@@ -485,7 +483,7 @@ class XModelExporter:
                 bones[bone.name] = bone
 
             for key, value in enumerate(src_mesh.vertex_groups):
-                # search bone from armature midifiers
+                # search bone from armature modifiers
                 if value.name not in bones:
                     continue
                 bone = bones[value.name]
@@ -498,7 +496,6 @@ class XModelExporter:
                 offset_matrix = (self.global_matrix *
                                  armature.matrix_world *
                                  bone.matrix_local).inverted()
-                offset_quaternion = offset_matrix.to_quaternion()
 
                 # build offset transform matrix
                 mat_index = 16 * key
@@ -519,17 +516,9 @@ class XModelExporter:
                 offset_matrices[mat_index + 14] = offset_matrix[2][3]
                 offset_matrices[mat_index + 15] = offset_matrix[3][3]
 
-                # build offset transform quaternion
-                quat_index = 4 * key
-                offset_quaternions[quat_index + 0] = offset_quaternion[0]
-                offset_quaternions[quat_index + 1] = offset_quaternion[1]
-                offset_quaternions[quat_index + 2] = offset_quaternion[2]
-                offset_quaternions[quat_index + 3] = offset_quaternion[3]
-
         dest_skin.num_nodes = num_nodes
         dest_skin.nodes = nodes
         dest_skin.offset_matrices = offset_matrices
-        dest_skin.offset_quaternions = offset_quaternions
 
     # convert the armature to xModel node
     def __convertXModelNodeWithArmature(self, armature):
@@ -580,7 +569,7 @@ class XModelExporter:
         return dest_node
 
     # convert the bone to xModel node
-    def __convertXModelNodeWithBone(self, bone, invert_matrix = Matrix()):
+    def __convertXModelNodeWithBone(self, bone, invert_matrix=Matrix()):
         if bone in self.nodes:
             return self.nodes[bone]
 
@@ -653,7 +642,7 @@ class XModelExporter:
         dest_node.ik_min_angle[1] = pose.ik_min_y
         dest_node.ik_min_angle[2] = pose.ik_min_z
 
-        # maximum of rorate angle
+        # maximum of rotate angle
         dest_node.ik_max_angle[0] = pose.ik_max_x
         dest_node.ik_max_angle[1] = pose.ik_max_y
         dest_node.ik_max_angle[2] = pose.ik_max_z
@@ -757,7 +746,7 @@ class XModelExporter:
                         # case of the axis rotate transform
                         elif fcurve.data_path == value.data.path_from_id("rotation_axis_angle"):
                             if not isinstance(node.transforms[XModelNode.TRANSFORM_ROTATE], XModelAxisRotate):
-                                node.transforms[XModelNode.TRANSFORM_ROTATION] = XModelAxisRotate()
+                                node.transforms[XModelNode.TRANSFORM_ROTATE] = XModelAxisRotate()
                             dest_animation.target = node.transforms[XModelNode.TRANSFORM_ROTATE]
                             dest_animation.index = fcurve.array_index
 

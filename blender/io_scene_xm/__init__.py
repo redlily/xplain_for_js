@@ -46,52 +46,52 @@ from bpy_extras.io_utils import (ImportHelper,
                                  ExportHelper,
                                  axis_conversion)
 
-class ImportBlenderXModel(bpy.types.Operator, ImportHelper):
 
+class ImportBlenderXModel(bpy.types.Operator, ImportHelper):
     bl_idname = "import.xm_data"
     bl_label = "Import xModel Data"
 
     filename_ext = ".xm"
 
     filter_glob = StringProperty(
-            default = "*.xm",
-            options = {'HIDDEN'})
+        default="*.xm",
+        options={'HIDDEN'})
 
     axis_forward = EnumProperty(
-            name = "Forward",
-            items = (('X', "X Forward", ""),
-                     ('Y', "Y Forward", ""),
-                     ('Z', "Z Forward", ""),
-                     ('-X', "-X Forward", ""),
-                     ('-Y', "-Y Forward", ""),
-                     ('-Z', "-Z Forward", "")),
-            default = 'Z')
+        name="Forward",
+        items=(('X', "X Forward", ""),
+               ('Y', "Y Forward", ""),
+               ('Z', "Z Forward", ""),
+               ('-X', "-X Forward", ""),
+               ('-Y', "-Y Forward", ""),
+               ('-Z', "-Z Forward", "")),
+        default='Z')
 
     axis_up = EnumProperty(
-            name = "Up",
-            items = (('X', "X Up", ""),
-                     ('Y', "Y Up", ""),
-                     ('Z', "Z Up", ""),
-                     ('-X', "-X Up", ""),
-                     ('-Y', "-Y Up", ""),
-                     ('-Z', "-Z Up", "")),
-            default='Y')
+        name="Up",
+        items=(('X', "X Up", ""),
+               ('Y', "Y Up", ""),
+               ('Z', "Z Up", ""),
+               ('-X', "-X Up", ""),
+               ('-Y', "-Y Up", ""),
+               ('-Z', "-Z Up", "")),
+        default='Y')
 
     invert_face = BoolProperty(
-            name = "Invert Face",
-            default = True)
+        name="Invert Face",
+        default=True)
 
     flip_x = BoolProperty(
-            name = "Flip X-Axis",
-            default = True)
+        name="Flip X-Axis",
+        default=True)
 
     flip_y = BoolProperty(
-            name = "Flip Y-Axis",
-            default = False)
+        name="Flip Y-Axis",
+        default=False)
 
     flip_z = BoolProperty(
-            name = "Flip Z-Axis",
-            default = False)
+        name="Flip Z-Axis",
+        default=False)
 
     def execute(self, context):
         from . import import_xm
@@ -112,68 +112,68 @@ class ImportBlenderXModel(bpy.types.Operator, ImportHelper):
         importer = import_xm.XModelImporter(self, **context)
         return importer.decode()
 
-class ExportBlenderXModel(bpy.types.Operator, ExportHelper):
 
+class ExportBlenderXModel(bpy.types.Operator, ExportHelper):
     bl_idname = "export.xm_data"
     bl_label = "Export xModel Data"
 
     filename_ext = ".xm"
 
     filter_glob = StringProperty(
-            default = "*.xm",
-            options = {'HIDDEN'})
-            
+        default="*.xm",
+        options={'HIDDEN'})
+
     output_visible_mesh = BoolProperty(
-            name = "Output Visible Mesh Only",
-            default = True)
+        name="Output Visible Mesh Only",
+        default=True)
 
     use_mesh_modifiers = BoolProperty(
-            name = "Apply Modifiers",
-            default = False)
+        name="Apply Modifiers",
+        default=False)
 
     invert_face = BoolProperty(
-            name = "Invert Face",
-            default = True)
+        name="Invert Face",
+        default=True)
 
     axis_forward = EnumProperty(
-            name = "Forward",
-            items = (('X', "X Forward", ""),
-                     ('Y', "Y Forward", ""),
-                     ('Z', "Z Forward", ""),
-                     ('-X', "-X Forward", ""),
-                     ('-Y', "-Y Forward", ""),
-                     ('-Z', "-Z Forward", "")),
-            default = 'Z')
+        name="Forward",
+        items=(('X', "X Forward", ""),
+               ('Y', "Y Forward", ""),
+               ('Z', "Z Forward", ""),
+               ('-X', "-X Forward", ""),
+               ('-Y', "-Y Forward", ""),
+               ('-Z', "-Z Forward", "")),
+        default='Z')
 
     axis_up = EnumProperty(
-            name = "Up Axis",
-            items = (('X', "X Up", ""),
-                     ('Y', "Y Up", ""),
-                     ('Z', "Z Up", ""),
-                     ('-X', "-X Up", ""),
-                     ('-Y', "-Y Up", ""),
-                     ('-Z', "-Z Up", "")),
-            default = 'Y')
+        name="Up Axis",
+        items=(('X', "X Up", ""),
+               ('Y', "Y Up", ""),
+               ('Z', "Z Up", ""),
+               ('-X', "-X Up", ""),
+               ('-Y', "-Y Up", ""),
+               ('-Z', "-Z Up", "")),
+        default='Y')
 
     flip_x = BoolProperty(
-            name = "Flip X-Axis",
-            default = True)
+        name="Flip X-Axis",
+        default=True)
 
     flip_y = BoolProperty(
-            name = "Flip Y-Axis",
-            default = False)
+        name="Flip Y-Axis",
+        default=False)
 
     flip_z = BoolProperty(
-            name = "Flip Z-Axis",
-            default = False)
-            
+        name="Flip Z-Axis",
+        default=False)
+
     export_bones = BoolProperty(
-            name = "Export Bones",
-            default = True)
-            
+        name="Export Bones",
+        default=True)
+
     export_actions = BoolProperty(
-            name = "Export Actions",
-            default = True)
+        name="Export Actions",
+        default=True)
 
     def execute(self, context):
         from . import export_xm
@@ -199,13 +199,14 @@ class ExportBlenderXModel(bpy.types.Operator, ExportHelper):
         exporter = export_xm.XModelExporter(context, **config)
         return exporter.encode()
 
-def import_test(filepath = ".\\test.xm",
-                invert_face = True,
-                flip_x = False,
-                flip_y = True,
-                flip_z = False,
-                axis_forward = "Z",
-                axis_up = "Y"):
+
+def import_test(filepath=".\\test.xm",
+                invert_face=True,
+                flip_x=False,
+                flip_y=True,
+                flip_z=False,
+                axis_forward="Z",
+                axis_up="Y"):
     from . import import_xm
     import imp
     imp.reload(import_xm)
@@ -226,16 +227,17 @@ def import_test(filepath = ".\\test.xm",
     importer = import_xm.XModelImporter(bpy.context, **config)
     return importer.decode()
 
-def export_test(filepath = ".\\test.xm",
-                use_mesh_modifiers = True,
-                invert_face = True,
-                flip_x = True,
-                flip_y = False,
-                flip_z = False,
-                axis_forward = "Z",
-                axis_up = "Y",
-                export_bones = True,
-                export_actions = True):
+
+def export_test(filepath=".\\test.xm",
+                use_mesh_modifiers=True,
+                invert_face=True,
+                flip_x=True,
+                flip_y=False,
+                flip_z=False,
+                axis_forward="Z",
+                axis_up="Y",
+                export_bones=True,
+                export_actions=True):
     from . import export_xm
     import imp
     imp.reload(export_xm)
@@ -260,21 +262,26 @@ def export_test(filepath = ".\\test.xm",
     exporter = export_xm.XModelExporter(bpy.context, **config)
     return exporter.encode()
 
+
 def menu_func_import(self, context):
     self.layout.operator(ImportBlenderXModel.bl_idname, text="xModel (.xm)")
 
+
 def menu_func_export(self, context):
     self.layout.operator(ExportBlenderXModel.bl_idname, text="xModel (.xm)")
+
 
 def register():
     bpy.utils.register_module(__name__)
     bpy.types.INFO_MT_file_export.append(menu_func_export)
     bpy.types.INFO_MT_file_import.append(menu_func_import)
 
+
 def unregister():
     bpy.utils.unregister_module(__name__)
     bpy.types.INFO_MT_file_export.remove(menu_func_export)
     bpy.types.INFO_MT_file_import.remove(menu_func_import)
+
 
 if __name__ == "__main__":
     register()

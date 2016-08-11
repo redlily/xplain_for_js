@@ -37,33 +37,33 @@ from io_scene_xm.types import (XModelStructure,
 CODE_NAME = "Elise"
 
 # magic number (XModel DAta)
-MAGIC_NUMBER = (((0xff & ord('x')) << 0)  |
-                ((0xff & ord('m')) << 8)  |
+MAGIC_NUMBER = (((0xff & ord('x')) << 0) |
+                ((0xff & ord('m')) << 8) |
                 ((0xff & ord('d')) << 16) |
                 ((0xff & ord('a')) << 24))
 
-# tarminator (End Of Xmodel Data)
-END_OF_DATA = (((0xff & ord('e')) << 0)  |
-               ((0xff & ord('o')) << 8)  |
+# terminator (End Of Xmodel Data)
+END_OF_DATA = (((0xff & ord('e')) << 0) |
+               ((0xff & ord('o')) << 8) |
                ((0xff & ord('x')) << 16) |
                ((0xff & ord('d')) << 24))
 
 # version
-VERSION = 35
+VERSION = 36
 
 # compatibility version
-COMPATIBILITY_VERSION = 35
+COMPATIBILITY_VERSION = 36
 
 # version name
-VERSION_NAME = "0.9.91"
+VERSION_NAME = "0.9.92"
 
 # compatibility version name
-COMPATIBILITY_VERSION_NAME = "0.9.91"
+COMPATIBILITY_VERSION_NAME = "0.9.92"
+
 
 # binary encoder for xModel
 # @author Syuuhei Kuno
 class XModelBinaryEncoder:
-
     # initialize
     def __init__(self):
         # writer
@@ -74,7 +74,7 @@ class XModelBinaryEncoder:
         self.__weak_inst_map = {}
         # instance identifier counter
         self.__inst_id_cnt = 1
-        # worte size in binary
+        # write size in binary
         self.__write_size = 0
 
     # recycle for this instance
@@ -134,15 +134,6 @@ class XModelBinaryEncoder:
         for i in range(offset, offset + length):
             self._putFloat64(array[i])
 
-    # write boolean
-    def _putBool(self, value):
-        self._putInt8(1 if value else 0)
-
-    # write boolean array
-    def _putBoolArray(self, array, offset, length):
-        for i in range(offset, offset + length):
-            self._putBool(array[i])
-
     # write string
     def _putString(self, value):
         if value is None:
@@ -154,7 +145,7 @@ class XModelBinaryEncoder:
 
     # write string array
     def _putStringArray(self, array, offset, length):
-        for i in range(offset, offset+length):
+        for i in range(offset, offset + length):
             self._putString(array[i])
 
     # write boolean
@@ -185,7 +176,7 @@ class XModelBinaryEncoder:
 
     # write structure array
     def _putStructureArray(self, array, offset, length):
-        for i in range(offset, offset+length):
+        for i in range(offset, offset + length):
             self._putXModelStructure(array[i])
 
     # encode to binary
@@ -480,11 +471,6 @@ class XModelBinaryEncoder:
             self._putFloat32Array(obj.offset_matrices,
                                   0,
                                   XModelStructure.SIZE_MATRIX * obj.num_nodes)
-
-            # offset quaternions
-            self._putFloat32Array(obj.offset_quaternions,
-                                  0,
-                                  XModelStructure.SIZE_QUATERNION * obj.num_nodes)
 
     # write vertex
     def _putVertex(self,

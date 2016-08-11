@@ -32,11 +32,11 @@ import bpy
 
 from mathutils import Matrix
 
-class XModelImporter:
 
+class XModelImporter:
     def __init__(self,
                  context,
-                 global_matrix = Matrix()):
+                 global_matrix=Matrix()):
         self.context = context
 
     # importing from xModel format
