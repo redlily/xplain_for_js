@@ -30,13 +30,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * 3次元の幾何学に特化した機能を四元数のユーティリティクラスに追加する拡張定義です。
- */
 (function (xpl) {
 
     "use strict";
 
+    /**
+     * 3次元の幾何学に特化した機能を四元数のユーティリティクラスに追加する拡張定義です。
+     */
     if (xpl.Quaternion == null) {
         return;
     }

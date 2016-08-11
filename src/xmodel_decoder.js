@@ -72,7 +72,7 @@
         this.__inst_map = null;
 
         /**
-         * 弱参照のインスタンスマップ
+         * 弱参照用のインスタンスマップ
          *
          * @private
          * @instance
@@ -113,7 +113,7 @@
             return null;
         }
 
-        // 構造読み込み
+        // 構造
         let type = this._getInt32();
         let inst = this._createStructureProcedure(type);
         this._getStructureProcedure(inst);
@@ -340,7 +340,7 @@
      *
      * @protected
      * @instance
-     * @returns {string} The string value.
+     * @returns {?string} The string value.
      */
     xpl.XModelDecoder.prototype._getString = function () {
         let len = this._getInt16();
@@ -349,7 +349,7 @@
             this._getUint8Array(str, 0, len);
             return xpl.StringUtils.decodeUTF8(str);
         }
-        return "";
+        return null;
     };
 
     /**
@@ -401,7 +401,7 @@
         // 追加
         this.__inst_map[inst_id] = value;
 
-        // 初期化
+        // 取得
         this._getStructureProcedure(value);
         return value;
     };
@@ -426,7 +426,7 @@
      *
      * @protected
      * @instance
-     * @returns {xpl.XModelStructure} The read xModel structure.
+     * @returns {xpl.XModelStructure} 構造
      */
     xpl.XModelDecoder.prototype._getStructureRef = function () {
         // 識別子
@@ -462,13 +462,12 @@
      */
     xpl.XModelDecoder.prototype._getStructureRefArray = function (buf, off, len) {
         for (let i = 0; i < len; ++i) {
-            buf[off++] = this._getStructRef();
+            buf[off++] = this._getStructureRef();
         }
     };
 
     /**
-     * It is a procedure that create the xModel structure.
-     *
+     * 指定の構造を生成します。
      *
      * @protected
      * @instance
@@ -477,144 +476,114 @@
      */
     xpl.XModelDecoder.prototype._createStructureProcedure = function (struct_type) {
         switch (struct_type) {
-            case xpl.XModelStructure.TYPE_AXIS_ROTATE:
-                // 軸回転
+            case xpl.XModelStructure.TYPE_AXIS_ROTATE: // 軸回転
                 return new xpl.XModelAxisRotate();
 
-            case xpl.XModelStructure.TYPE_QUATERNION:
-                // 四元数
+            case xpl.XModelStructure.TYPE_QUATERNION: // 四元数
                 return new xpl.XModelQuaternion();
 
-            case xpl.XModelStructure.TYPE_SCALE:
-                // 拡大
+            case xpl.XModelStructure.TYPE_SCALE: // 拡大
                 return new xpl.XModelScale();
 
-            case xpl.XModelStructure.TYPE_TRANSLATE:
-                // 平行移動
+            case xpl.XModelStructure.TYPE_TRANSLATE: // 平行移動
                 return new xpl.XModelTranslate();
 
-            case xpl.XModelStructure.TYPE_MATRIX:
-                // 行列
+            case xpl.XModelStructure.TYPE_MATRIX: // 行列
                 return new xpl.XModelMatrix();
 
-            case xpl.XModelStructure.TYPE_CONTAINER:
-                // コンテナ
+            case xpl.XModelStructure.TYPE_CONTAINER: // コンテナ
                 return new xpl.XModelContainer();
 
-            case xpl.XModelStructure.TYPE_TEXTURE:
-                // テクスチャ
+            case xpl.XModelStructure.TYPE_TEXTURE: // テクスチャ
                 return new xpl.XModelTexture();
 
-            case xpl.XModelStructure.TYPE_MATERIAL:
-                // 材質
+            case xpl.XModelStructure.TYPE_MATERIAL: // 材質
                 return new xpl.XModelMaterial();
 
-            case xpl.XModelStructure.TYPE_MESH:
-                // メッシュ
+            case xpl.XModelStructure.TYPE_MESH: // メッシュ
                 return new xpl.XModelMesh();
 
-            case xpl.XModelStructure.TYPE_NODE:
-                // ノード
+            case xpl.XModelStructure.TYPE_NODE: // ノード
                 return new xpl.XModelNode();
 
-            case xpl.XModelStructure.TYPE_IK:
-                // 逆運動学
+            case xpl.XModelStructure.TYPE_IK: // 逆運動学
                 return new xpl.XModelIK();
 
-            case xpl.XModelStructure.TYPE_ANIMATION:
-                // アニメーション
+            case xpl.XModelStructure.TYPE_ANIMATION: // アニメーション
                 return new xpl.XModelAnimation();
 
-            case xpl.XModelStructure.TYPE_ANIMATION_KEY:
-                // アニメーションキー
+            case xpl.XModelStructure.TYPE_ANIMATION_KEY: // アニメーションキー
                 return new xpl.XModelAnimationKey();
 
-            case xpl.XModelStructure.TYPE_ANIMATION_SET:
-                // アニメーションセット
+            case xpl.XModelStructure.TYPE_ANIMATION_SET: // アニメーションセット
                 return new xpl.XModelAnimationSet();
         }
         return null;
     };
 
     /**
-     * It is a procedure that read the xModel structure.
+     * 指定の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getStructureProcedure
-     * @param {xpl.XModelStructure} inst - The xModel instance uninitialized.
-     * @returns {Boolean} Returns true if successful, returns false if failed.
+     * @param {xpl.XModelStructure} inst - 初期化前の構造
+     * @returns {boolean} 初期化に成功したかどうか
      */
     xpl.XModelDecoder.prototype._getStructureProcedure = function (inst) {
         switch (inst.structure_type) {
-            case xpl.XModelStructure.TYPE_AXIS_ROTATE:
-                // axis rotate.
+            case xpl.XModelStructure.TYPE_AXIS_ROTATE: // 軸回転
                 this._getAxisRotate(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_QUATERNION:
-                // quaternion.
+            case xpl.XModelStructure.TYPE_QUATERNION: // 四元数
                 this._getQuaternion(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_SCALE:
-                // scale.
+            case xpl.XModelStructure.TYPE_SCALE: // 拡大
                 this._getScale(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_TRANSLATE:
-                // translate.
+            case xpl.XModelStructure.TYPE_TRANSLATE: // 平行移動
                 this._getTranslate(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_MATRIX:
-                // matrix.
+            case xpl.XModelStructure.TYPE_MATRIX: // 行列
                 this._getMatrix(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_CONTAINER:
-                // container.
+            case xpl.XModelStructure.TYPE_CONTAINER: // コンテナ
                 this._getContainer(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_TEXTURE:
-                // テクスチャ
+            case xpl.XModelStructure.TYPE_TEXTURE: // テクスチャ
                 this._getTexture(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_MATERIAL:
-                // material.
+            case xpl.XModelStructure.TYPE_MATERIAL: // 材質
                 this._getMaterial(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_MESH:
-                // mesh.
+            case xpl.XModelStructure.TYPE_MESH: // メッシュ
                 this._getMesh(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_NODE:
-                // node.
+            case xpl.XModelStructure.TYPE_NODE: // ノード
                 this._getNode(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_IK:
-                // inverse kinematics.
+            case xpl.XModelStructure.TYPE_IK: // 逆運動学
                 this._getIK(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_ANIMATION:
-                // animation.
+            case xpl.XModelStructure.TYPE_ANIMATION: // アニメーション
                 this._getAnimation(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_ANIMATION_KEY:
-                // animation key.
+            case xpl.XModelStructure.TYPE_ANIMATION_KEY: // アニメーションキー
                 this._getAnimationKey(inst);
                 return true;
 
-            case xpl.XModelStructure.TYPE_ANIMATION_SET:
-                // アニメーションセット
+            case xpl.XModelStructure.TYPE_ANIMATION_SET: // アニメーションセット
                 this._getAnimationSet(inst);
                 return true;
         }
@@ -622,13 +591,11 @@
     };
 
     /**
-     * Get the user data structure.
+     * ユーザーデータの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getUserData
-     * @returns {xpl.XModelUserData} The user data.
+     * @returns {xpl.XModelUserData} ユーザーデータ構造
      */
     xpl.XModelDecoder.prototype._getUserData = function () {
         let size = this._getInt32();
@@ -648,94 +615,72 @@
     };
 
     /**
-     * Get the axis rotate structure.
+     * 軸回転の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getAxisRotate
-     * @param {xpl.XModelAxisRotate} inst - The axis rotate structure.
+     * @param {xpl.XModelAxisRotate} inst - 軸回転構造
      */
     xpl.XModelDecoder.prototype._getAxisRotate = function (inst) {
-        // 値
-        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_AXIS_ROTATE);
-        ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_AXIS_ROTATE);
+        this._getFloat32Array(inst.values, 0, xpl.XModelStructure.SIZE_AXIS_ROTATE);
     };
 
     /**
-     * Get the quaternion structure.
+     * 四元数の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecodr
-     * @function _getQuaternion
-     * @param {xpl.XModelQuaternion} inst - The quaternion structure.
+     * @param {xpl.XModelQuaternion} inst - 四元数構造
      */
     xpl.XModelDecoder.prototype._getQuaternion = function (inst) {
-        // 値
-        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_QUATERNION);
-        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_QUATERNION);
+        this._getFloat32Array(inst.values, 0, xpl.XModelStructure.SIZE_QUATERNION);
     };
 
     /**
-     * Get the scale structure.
+     * 拡大の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getScale
-     * @param {xpl.XModelScale} inst - The scale structure.
+     * @param {xpl.XModelScale} inst - 拡大構造
      */
     xpl.XModelDecoder.prototype._getScale = function (inst) {
-        // 値
-        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_SCALE);
-        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_SCALE);
+        this._getFloat32Array(inst.values, 0, xpl.XModelStructure.SIZE_SCALE);
     };
 
     /**
-     * Get the translate structure.
+     * 平行移動の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getTranslate
-     * @param {xpl.XModelTranslate} inst - The translate structure.
+     * @param {xpl.XModelTranslate} inst - 平行移動構造
      */
     xpl.XModelDecoder.prototype._getTranslate = function (inst) {
-        // 値
-        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_TRANSLATE);
-        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_TRANSLATE);
+        this._getFloat32Array(inst.values, 0, xpl.XModelStructure.SIZE_TRANSLATE);
     };
 
     /**
-     * Get the matrix structure.
+     * 行列の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getMatrix
-     * @param {xpl.XModelMatrix} inst - The matrix structure.
+     * @param {xpl.XModelMatrix} inst - 行列構造
      */
     xpl.XModelDecoder.prototype._getMatrix = function (inst) {
-        // 値
-        this._getFloat32Array(inst.initial, 0, xpl.XModelStructure.SIZE_MATRIX);
-        xpl.ArrayUtils.copy(inst.initial, 0, inst.value, 0, xpl.XModelStructure.SIZE_MATRIX);
+        this._getFloat32Array(inst.values, 0, xpl.XModelStructure.SIZE_MATRIX);
     };
 
     /**
-     * Get the container structure.
+     * コンテナの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getContainer
-     * @param {xpl.XModelContainer} inst - The container object.
+     * @param {xpl.XModelContainer} inst - コンテナ構造
      */
     xpl.XModelDecoder.prototype._getContainer = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // テクスチャ.
+        // テクスチャ
         inst.num_textures = this._getInt16();
         if (0 < inst.num_textures) {
             inst.textures = new Array(inst.num_textures);
@@ -749,14 +694,14 @@
             this._getStructureArray(inst.materials, 0, inst.num_materials);
         }
 
-        // meshes.
+        // メッシュ配列
         inst.num_meshes = this._getInt16();
         if (0 < inst.num_meshes) {
             inst.meshes = new Array(inst.num_meshes);
             this._getStructureArray(inst.meshes, 0, inst.num_meshes);
         }
 
-        // nodes.
+        // ノード配列
         inst.num_nodes = this._getInt16();
         if (0 < inst.num_nodes) {
             inst.nodes = new Array(inst.num_nodes);
@@ -766,25 +711,23 @@
         // タイムレート
         inst.time_rate = this._getFloat64();
 
-        // アニメーションセット
+        // アニメーションセット配列
         inst.num_animation_sets = this._getInt16();
         if (0 < inst.num_animation_sets) {
             inst.animation_sets = new Array(inst.num_animation_sets);
             this._getStructureArray(inst.animation_sets, 0, inst.num_animation_sets);
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.userData = this._getUserData();
     };
 
     /**
-     * Get the texture structure.
+     * テクスチャの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getTexture
-     * @param {xpl.XModelTexture} inst - The texture object.
+     * @param {xpl.XModelTexture} inst - テクスチャの構造
      */
     xpl.XModelDecoder.prototype._getTexture = function (inst) {
         // 名前
@@ -800,21 +743,19 @@
             this._getInt8Array(inst.data, 0, inst.data_size);
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
     /**
-     * Get the material structure.
+     * 材質の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getMaterial
-     * @param {xpl.XModelMaterial} inst - The material object.
+     * @param {xpl.XModelMaterial} inst - 材質の構造
      */
     xpl.XModelDecoder.prototype._getMaterial = function (inst) {
-        // 名前.
+        // 名前
         inst.name = this._getString();
 
         // パラメータ
@@ -825,7 +766,7 @@
         inst.shininess = this._getFloat32();
         inst.bump = this._getFloat32();
 
-        // テクスチャ
+        // テクスチャマップ
         inst.emissive_map = this._getStructure();
         inst.ambient_map = this._getStructure();
         inst.diffuse_map = this._getStructure();
@@ -836,18 +777,16 @@
         // 描画モード
         inst.draw_mode = this._getInt32();
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
     /**
-     * Get the mesh structure.
+     * メッシュの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getMesh
-     * @param {xpl.XModelMesh} inst - The mesh object.
+     * @param {xpl.XModelMesh} inst - メッシュの構造
      */
     xpl.XModelDecoder.prototype._getMesh = function (inst) {
         // 名前
@@ -862,7 +801,7 @@
             this._getFloat32Array(inst.positions, 0, size);
         }
 
-        // normals.
+        // 法線配列
         inst.num_normals = this._getInt32();
         if (0 < inst.num_normals) {
             inst.normal_size = this._getInt8();
@@ -871,7 +810,7 @@
             this._getFloat32Array(inst.normals, 0, size);
         }
 
-        // colors.
+        // 色配列
         inst.num_colors = this._getInt32();
         if (0 < inst.num_colors) {
             inst.color_size = this._getInt8();
@@ -880,7 +819,7 @@
             this._getFloat32Array(inst.colors, 0, size);
         }
 
-        // テクスチャcoordinates.
+        // テクスチャ座標配列
         inst.num_tex_coords = this._getInt32();
         if (0 < inst.num_tex_coords) {
             inst.tex_coord_size = this._getInt8();
@@ -889,14 +828,14 @@
             this._getFloat32Array(inst.tex_coords, 0, size);
         }
 
-        // skin (inline).
+        // スキン (インライン展開)
         let has_skinning = this._getBool();
         if (has_skinning) {
             inst.skin = new xpl.XModelSkin();
             this._getSkin(inst.skin);
         }
 
-        // vertices (inline).
+        // 頂点配列 (インライン展開)
         inst.num_vertices = this._getInt32();
         if (0 < inst.num_vertices) {
             inst.vertices = new Array(inst.num_vertices);
@@ -920,7 +859,7 @@
             this._getStructureArray(inst.materials, 0, inst.num_materials);
         }
 
-        // 要素 (インライン展開)
+        // 要素配列 (インライン展開)
         inst.num_elements = this._getInt32();
         if (0 < inst.num_elements) {
             inst.elements = new Array(inst.num_elements);
@@ -931,28 +870,26 @@
             }
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
     /**
-     * Get the skin structure.
+     * スキンの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getSkin
-     * @param {xpl.XModelSkin} inst - The skin object.
+     * @param {xpl.XModelSkin} inst - スキン構造
      */
     xpl.XModelDecoder.prototype._getSkin = function (inst) {
-        // weighted indexs.
+        // 重み付きインデックス配列
         inst.num_weighted_indices = this._getInt32();
         inst.weighted_index_stride = this._getInt8();
         if (0 < inst.num_weighted_indices) {
-            // size of weighted indices array.
+            // 重み付きインデックスの数
             inst.weighted_index_sizes = new Uint8Array(inst.num_weighted_indices);
 
-            // array of weighted indices.
+            // 重み付きインデックスの配列
             let num = inst.weighted_index_stride * inst.num_weighted_indices;
             inst.indices = new Int16Array(num);
             inst.weights = new Float32Array(num);
@@ -964,65 +901,47 @@
             xpl.ArrayUtils.fill(inst.weights, 0, num, 0);
 
             for (let i = 0, index = 0; i < inst.num_weighted_indices; ++i, index += inst.weighted_index_stride) {
-                // number of elements.
+                // 要素数
                 let size = this._getInt8();
                 inst.weighted_index_sizes[i] = size;
 
                 for (let j = 0; j < size; ++j) {
                     let ind = index + j;
 
-                    // index.
+                    // インデックス
                     inst.indices[ind] = this._getInt16();
 
-                    // weight.
+                    // 重み
                     inst.weights[ind] = this._getFloat32();
                 }
             }
         }
 
-        // bones.
+        // ボーン
         inst.num_nodes = this._getInt16();
         if (0 < inst.num_nodes) {
-            // nodes.
+            // ノード
             inst.nodes = new Array(inst.num_nodes);
             this._getStructureArray(inst.nodes, 0, inst.num_nodes);
 
-            // offset transformation matrices.
+            // オフセット行列
             let matrices_size = xpl.XModelStructure.SIZE_MATRIX * inst.num_nodes;
             inst.offset_matrices = new Float32Array(matrices_size);
             this._getFloat32Array(inst.offset_matrices, 0, matrices_size);
-
-            // offset rotate quaternions.
-            // @deprecated
-            let quaternions_size = xpl.XModelStructure.SIZE_QUATERNION * inst.num_nodes;
-            inst.offset_quaternions = new Float32Array(quaternions_size);
-            this._getFloat32Array(inst.offset_quaternions, 0, quaternions_size);
         }
     };
 
     /**
-     * Get the vertex structure.
+     * 頂点の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getVertex
-     * @param {xpl.XModelVertex} inst - The vertex object.
-     * @param {xpl.int32_t} has_positions -
-     *          Specified 0 < x if has the positions,
-     *          specified x <= 0 if not has the positions.
-     * @param {xpl.int32_t} has_normals -
-     *          Specified 0 < x if has normals,
-     *          specified x <= 0 if not has normals.
-     * @param {xpl.int32_t} has_colors -
-     *          Specified 0 < x if has the colors,
-     *          specified x <= 0 if not has the colors.
-     * @param {xpl.int32_t} has_tex_coords -
-     *          Specified 0 < x if has the texture coordinates,
-     *          specified x <= 0 if not has the texture coordinates.
-     * @param {xpl.int32_t} has_skinning -
-     *          Specified the true if has the skin weights,
-     *          specified false if not has the skin weights.
+     * @param {xpl.XModelVertex} inst - 頂点構造
+     * @param {xpl.int32_t} has_positions - 頂点パラメータを持っているかどうか
+     * @param {xpl.int32_t} has_normals - 法線パラメータを持っているかどうか
+     * @param {xpl.int32_t} has_colors - 色パラメータを持っているかどうか
+     * @param {xpl.int32_t} has_tex_coords - テクスチャ座標パラメータを持っているかどうか
+     * @param {xpl.int32_t} has_skinning - スキンパラメータを持っているかどうか
      */
     xpl.XModelDecoder.prototype._getVertex = function (inst,
                                                        has_positions,
@@ -1030,46 +949,44 @@
                                                        has_colors,
                                                        has_tex_coords,
                                                        has_skinning) {
-        // position.
+        // 位置
         if (0 < has_positions) {
             inst.position = this._getInt32();
         }
 
-        // normal.
+        // 法線
         if (0 < has_normals) {
             inst.normal = this._getInt32();
         }
 
-        // color.
+        // 色
         if (0 < has_colors) {
             inst.color = this._getInt32();
         }
 
-        // テクスチャcoordinate.
+        // テクスチャ座標
         if (0 < has_tex_coords) {
             inst.tex_coord = this._getInt32();
         }
 
-        // skin weight.
+        // スキン
         if (has_skinning) {
             inst.skinning = this._getInt32();
         }
     };
 
     /**
-     * Get the element structure.
+     * 要素の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getElement
-     * @param {xpl.XModelElement} inst - The element object.
+     * @param {xpl.XModelElement} inst - 要素構造
      */
     xpl.XModelDecoder.prototype._getElement = function (inst) {
-        // material.
+        // 材質
         inst.material = this._getInt16();
 
-        // vertices.
+        // 頂点
         inst.num_vertices = this._getInt8();
         if (0 < inst.num_vertices) {
             inst.vertices = new Uint32Array(inst.num_vertices);
@@ -1078,41 +995,39 @@
     };
 
     /**
-     * Get the node structure.
+     * ノードの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getNode
-     * @param {xpl.XModelNode} inst - The node object.
+     * @param {xpl.XModelNode} inst - ノード構造
      */
     xpl.XModelDecoder.prototype._getNode = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // connected.
+        // 接続
         inst.connected = this._getBool();
 
-        // limits of kinematics.
+        // 可動制限
         this._getBoolArray(inst.lock_axises, 0, xpl.XModelStructure.SIZE_VECTOR_3);
         this._getBoolArray(inst.limit_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
         this._getFloat32Array(inst.min_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
         this._getFloat32Array(inst.max_angles, 0, xpl.XModelStructure.SIZE_VECTOR_3);
 
-        // bone tail.
+        // ボーン末端
         this._getFloat32Array(inst.bone_tail, 0, xpl.XModelStructure.SIZE_VECTOR_3);
 
-        // transform.
+        // 変形
         this._getStructureArray(inst.transforms, 0, xpl.XModelNode.NUM_TRANSFORMS);
 
-        // inverse kinematics.
+        // 逆運動学
         inst.num_iks = this._getInt16();
         if (0 < inst.num_iks) {
             inst.iks = new Array(inst.num_iks);
             this._getStructureArray(inst.iks, 0, inst.num_iks);
         }
 
-        // meshes.
+        // メッシュ配列
         inst.num_meshes = this._getInt16();
         if (0 < inst.num_meshes) {
             inst.meshes = new Array(inst.num_meshes);
@@ -1125,7 +1040,7 @@
             }
         }
 
-        // nodes.
+        // ノード配列
         inst.num_children = this._getInt16();
         if (0 < inst.num_children) {
             inst.children = new Array(inst.num_children);
@@ -1138,18 +1053,16 @@
             }
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
     /**
-     * Get the inverse kinematics structure.
+     * 逆運動学の構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getIK
-     * @param {xpl.XModelIK} inst - The inverse kinematics object.
+     * @param {xpl.XModelIK} inst - 逆運動学構造
      */
     xpl.XModelDecoder.prototype._getIK = function (inst) {
         // 対象
@@ -1166,13 +1079,13 @@
     };
 
     /**
-     * Get the animation structure.
+     * アニメーション構造を取得します。
      *
      * @protected
      * @instance
      * @memberof xpl.XModelDecoder
      * @function _getAnimation
-     * @param {xpl.XModelAnimation} inst - The animation object.
+     * @param {xpl.XModelAnimation} inst - アニメーション構造
      */
     xpl.XModelDecoder.prototype._getAnimation = function (inst) {
         // 名前
@@ -1184,35 +1097,33 @@
         // 対象のインデックス
         inst.index = this._getInt16();
 
-        // キー
+        // アニメーションキー配列
         inst.num_keys = this._getInt16();
         if (0 < inst.num_keys) {
             inst.keys = new Array(inst.num_keys);
             this._getStructureArray(inst.keys, 0, inst.num_keys);
         }
 
-        // アニメーション
+        // アニメーション配列
         inst.num_children = this._getInt16();
         if (0 < inst.num_children) {
             inst.children = new Array(inst.num_children);
             this._getStructureArray(inst.children, 0, inst.num_children);
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 
     /**
-     * Get the animation key structure.
+     * アニメーションキーの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getAnimationKey
-     * @param {xpl.XModelAnimationKey} inst - The animation key object.
+     * @param {xpl.XModelAnimationKey} inst - アニメーションキー構造
      */
     xpl.XModelDecoder.prototype._getAnimationKey = function (inst) {
-        // 補間
+        // 補間種別
         inst.interpolate = this._getInt8();
 
         // 時間
@@ -1227,26 +1138,24 @@
     };
 
     /**
-     * Get the animation set structure.
+     * アニメーションセットの構造を取得します。
      *
      * @protected
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function _getAnimationSet
-     * @param {xpl.XModelAnimationSet} inst - The animation set.
+     * @param {xpl.XModelAnimationSet} inst - アニメーションセット構造
      */
     xpl.XModelDecoder.prototype._getAnimationSet = function (inst) {
         // 名前
         inst.name = this._getString();
 
-        // アニメーション
+        // アニメーション配列
         inst.num_animations = this._getInt16();
         if (0 < inst.num_animations) {
             inst.animations = new Array(inst.num_animations);
             this._getStructureArray(inst.animations, 0, inst.num_animations);
         }
 
-        // ユーザ データ (インライン展開)
+        // ユーザーデータ (インライン展開)
         inst.user_data = this._getUserData();
     };
 

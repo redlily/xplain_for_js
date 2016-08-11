@@ -30,14 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
     /**
      * XModelの読み込み、描画の処理をラップしたユーティリティクラスです。
      */
-    ns.XModelWrapper = function () {
+    xpl.XModelWrapper = function () {
 
         /**
          * コンテナ
@@ -79,7 +79,7 @@
         this.__is_canseled = false;
     };
 
-    Object.defineProperties(ns.XModelWrapper.prototype, {
+    Object.defineProperties(xpl.XModelWrapper.prototype, {
 
         /**
          *
@@ -124,9 +124,9 @@
      * @memberof xpl.XModelWrapper
      * @function _complete
      */
-    ns.XModelWrapper.prototype._complete = function () {
+    xpl.XModelWrapper.prototype._complete = function () {
         this.__is_completed = true;
-        ns.XModelContainerUtils.forEachMesh(this._container, (function (mesh, arg) {
+        xpl.XModelContainerUtils.forEachMesh(this._container, (function (mesh, arg) {
             for (var i = 0; i < mesh.num_positions; ++i) {
                 for (var j = 0; j < mesh.position_size; ++j) {
                     var value = mesh.positions[mesh.position_size * i + j];
@@ -143,7 +143,7 @@
      * @memberof xpl.XModelWrapper
      * @function cancel
      */
-    ns.XModelWrapper.prototype.cancel = function () {
+    xpl.XModelWrapper.prototype.cancel = function () {
         this.__is_canseled = true;
     };
 
@@ -155,7 +155,7 @@
      * @param {xpl.uint32_t} index - 要素のインデックス
      * @returns {xpl.float32_t} 境界の採用値
      */
-    ns.XModelWrapper.prototype.getMinBound = function (index) {
+    xpl.XModelWrapper.prototype.getMinBound = function (index) {
         return this.__min_bounds[index];
     };
 
@@ -165,7 +165,7 @@
      * @param {xpl.uint32_t} index - 要素のインデックス
      * @returns {xpl.float32_t} 境界の最大値
      */
-    ns.XModelWrapper.prototype.getMaxBound = function (index) {
+    xpl.XModelWrapper.prototype.getMaxBound = function (index) {
         return this.__max_bounds[index];
     };
 
@@ -175,7 +175,7 @@
      * @param {xpl.uint32_t} index - 要素のインデックス
      * @returns {xpl.float32_t} モデルの大きさ
      */
-    ns.XModelWrapper.prototype.getSize = function (index) {
+    xpl.XModelWrapper.prototype.getSize = function (index) {
         return this.__max_bounds[index] - this.__min_bounds[index];
     };
 
@@ -185,22 +185,22 @@
      * @param {xpl.uint32_t} index - 要素のインデックス
      * @returns {xpl.float32_t} モデルの大きさ
      */
-    ns.XModelWrapper.prototype.getCenter = function (index) {
+    xpl.XModelWrapper.prototype.getCenter = function (index) {
         return (this.__min_bounds[index] + this.__max_bounds[index]) * 0.5;
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.resetPose = function () {
-        ns.XModelContainerUtils.resetTransforms(this._container);
-        ns.XModelContainerUtils.updateCombination(this._container);
+    xpl.XModelWrapper.prototype.resetPose = function () {
+        xpl.XModelContainerUtils.resetTransforms(this._container);
+        xpl.XModelContainerUtils.updateCombination(this._container);
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.setAnimation = function (index, time, loop, kinematics) {
+    xpl.XModelWrapper.prototype.setAnimation = function (index, time, loop, kinematics) {
         if (loop == undefined) {
             loop = false;
         }
@@ -211,20 +211,20 @@
             this.__prev_anim_index = index;
             this.resetPose();
         } else {
-            ns.XModelContainerUtils.resetTransforms(this._container);
+            xpl.XModelContainerUtils.resetTransforms(this._container);
         }
-        ns.XModelContainerUtils.setAnimation(
+        xpl.XModelContainerUtils.setAnimation(
             this._container, index, time, loop);
         if (kinematics) {
-            ns.XModelContainerUtils.applyKinematics(this._container);
+            xpl.XModelContainerUtils.applyKinematics(this._container);
         }
-        ns.XModelContainerUtils.updateCombination(this._container);
+        xpl.XModelContainerUtils.updateCombination(this._container);
     };
 
     /**
      *
      */
-    ns.XModelWrapper.prototype.dispose = function () {
+    xpl.XModelWrapper.prototype.dispose = function () {
         this.cancel();
         this.__is_completed = false;
     };
@@ -255,154 +255,154 @@
         /**
          *
          */
-        "CONFIG_MEMORY_ALIGNMENT_SIZE": {
+        CONFIG_MEMORY_ALIGNMENT_SIZE: {
             value: "memory_alignment_size"
         },
 
         /**
          *
          */
-        "CONFIG_USE_VERTEX_ARRAY_OBJECT": {
+        CONFIG_USE_VERTEX_ARRAY_OBJECT: {
             value: "use_vertex_array_object"
         },
 
         /**
          *
          */
-        "CONFIG_USE_MIPMAP_TEXTURE": {
+        CONFIG_USE_MIPMAP_TEXTURE: {
             value: "use_mipmap_texture"
         },
 
         /**
          *
          */
-        "CONFIG_USE_SKINNING": {
+        CONFIG_USE_SKINNING: {
             value: "use_skinning"
         },
 
         /**
          *
          */
-        "CONFIG_GPU_SKINNING": {
+        CONFIG_GPU_SKINNING: {
             value: "gpu_skinning"
         },
 
         /**
          *
          */
-        "CONFIG_MAX_BONE_WEIGHTED_INDICES": {
+        CONFIG_MAX_BONE_WEIGHTED_INDICES: {
             value: "max_bone_weighted_indices"
         },
 
         /**
          *
          */
-        "CONFIG_MAX_BONE_MATRICES": {
+        CONFIG_MAX_BONE_MATRICES: {
             value: "max_bone_matrices"
         },
 
         /**
          *
          */
-        "CONFIG_PATH_ALIAS": {
+        CONFIG_PATH_ALIAS: {
             value: "path_alias"
         },
 
         /**
          *
          */
-        "CONFIG_USE_MORFING": {
+        CONFIG_USE_MORFING: {
             value: "use_mofing"
         },
 
         /**
          *
          */
-        "CONFIG_GPU_MORFING": {
+        CONFIG_GPU_MORFING: {
             value: "gpu_morfing"
         },
 
         /**
          *
          */
-        "UNIFORM_DIFFUSE": {
+        UNIFORM_DIFFUSE: {
             value: "u_diffuse"
         },
 
         /**
          *
          */
-        "UNIFORM_DIFFUSE_MAP": {
+        UNIFORM_DIFFUSE_MAP: {
             value: "u_diffuse_map"
         },
 
         /**
          *
          */
-        "UNIFORM_SPECULAR": {
+        UNIFORM_SPECULAR: {
             value: "u_specular"
         },
 
         /**
          *
          */
-        "UNIFORM_SPECULAR_MAP": {
+        UNIFORM_SPECULAR_MAP: {
             value: "u_specular_map"
         },
 
         /**
          *
          */
-        "UNIFORM_BONE_MATRICES": {
+        UNIFORM_BONE_MATRICES: {
             value: "u_bone_matrices"
         },
 
         /**
          *
          */
-        "UNIFORM_MAX_BONES": {
+        UNIFORM_MAX_BONES: {
             value: "u_max_bones"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_POSITION": {
+        ATTRIBUTE_POSITION: {
             value: "a_position"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_NORMAL": {
+        ATTRIBUTE_NORMAL: {
             value: "a_normal"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_COLOR": {
+        ATTRIBUTE_COLOR: {
             value: "a_color"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_TEXCOORD": {
+        ATTRIBUTE_TEXCOORD: {
             value: "a_tex_coord"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_BONEINDICES": {
+        ATTRIBUTE_BONEINDICES: {
             value: "a_bone_indices"
         },
 
         /**
          *
          */
-        "ATTRIBUTE_BONEWEIGHTS": {
+        ATTRIBUTE_BONEWEIGHTS: {
             value: "a_bone_weights"
         }
     });

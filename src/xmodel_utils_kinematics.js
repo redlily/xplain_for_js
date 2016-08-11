@@ -35,11 +35,10 @@
     "use strict";
 
     const VX = ns.Geometry.VX, VY = ns.Geometry.VY, VZ = ns.Geometry.VZ;
-    const CR = ns.Geometry.CR, CI = ns.Geometry.CI, CJ = ns.Geometry.CJ, CK = ns.Geometry.CK;
-    const M00 = ns.Geometry.M4X4_00, M01 = ns.Geometry.M4X4_01, M02 = ns.Geometry.M4X4_02, M03 = ns.Geometry.M4X4_03,
-        M10 = ns.Geometry.M4X4_10, M11 = ns.Geometry.M4X4_11, M12 = ns.Geometry.M4X4_12, M13 = ns.Geometry.M4X4_13,
-        M20 = ns.Geometry.M4X4_20, M21 = ns.Geometry.M4X4_21, M22 = ns.Geometry.M4X4_22, M23 = ns.Geometry.M4X4_23,
-        M30 = ns.Geometry.M4X4_30, M31 = ns.Geometry.M4X4_31, M32 = ns.Geometry.M4X4_32, M33 = ns.Geometry.M4X4_33;
+    const CI = ns.Geometry.CI, CJ = ns.Geometry.CJ, CK = ns.Geometry.CK;
+    const M00 = ns.Geometry.M4X4_00, M01 = ns.Geometry.M4X4_01, M02 = ns.Geometry.M4X4_02, M03 = ns.Geometry.M4X4_03;
+    const M10 = ns.Geometry.M4X4_10, M11 = ns.Geometry.M4X4_11, M12 = ns.Geometry.M4X4_12, M13 = ns.Geometry.M4X4_13;
+    const M20 = ns.Geometry.M4X4_20, M21 = ns.Geometry.M4X4_21, M22 = ns.Geometry.M4X4_22, M23 = ns.Geometry.M4X4_23;
 
     /**
      * Utilities for the xModel kinematics structure.
@@ -68,7 +67,7 @@
      * @alias xpl.XModelKinematicsUtils.BoneInformation
      * @param {xpl.XModelNode} node - The node.
      */
-    var BoneInformation = function (node) {
+    var BoneInformation = function (node, slot) {
 
         /**
          * XModelNode : The node.
@@ -146,15 +145,15 @@
         // local transform.
         ns.Matrix4x4.loadIdentity(this.local_transform, 0);
         for (var i = 0; i < ns.XModelNode.TRANSFORM_ROTATE; ++i) {
-            ns.XModeParameterUtils.applyTransform(
+            ns.XModelParameterUtils.applyTransform(
                 this.node.transforms[i],
-                this.local_transform, 0);
+                this.local_transform, 0, 1);
         }
         ns.Matrix4x4.normalizeAxisv(
             this.local_transform, 0, this.local_transform, 0, true);
 
         // check the volume of cube.
-        var m00 = this.local_transform[M00], m01 = this.local_transform[M01], m02 = this.local_transform[M02],
+        let m00 = this.local_transform[M00], m01 = this.local_transform[M01], m02 = this.local_transform[M02],
             m10 = this.local_transform[M10], m11 = this.local_transform[M11], m12 = this.local_transform[M12],
             m20 = this.local_transform[M20], m21 = this.local_transform[M21], m22 = this.local_transform[M22];
         if (((m10 * m21 - m20 * m11) * m02 +
@@ -175,15 +174,16 @@
         // local rotation.
         var transform = this.node.transforms[ns.XModelNode.TRANSFORM_ROTATE];
         if (transform.structure_type == ns.XModelStructure.TYPE_AXIS_ROTATE) {
+            let index = transform.size * slot;
             ns.Quaternion.loadRotate(
                 this.rotate, 0,
-                transform.value[ns.XModelAxisRotate.X],
-                transform.value[ns.XModelAxisRotate.Y],
-                transform.value[ns.XModelAxisRotate.Z],
-                transform.value[ns.XModelAxisRotate.ANGLE],
+                transform.values[index + ns.XModelAxisRotate.X],
+                transform.values[index + ns.XModelAxisRotate.Y],
+                transform.values[index + ns.XModelAxisRotate.Z],
+                transform.values[index + ns.XModelAxisRotate.ANGLE],
                 true);
         } else if (transform.structure_type == ns.XModelStructure.TYPE_QUATERNION) {
-            ns.Quaternion.loadv(this.rotate, 0, transform.value, 0);
+            ns.Quaternion.loadv(this.rotate, 0, transform.values, transform.size * slot);
             ns.Quaternion.normalizev(this.rotate, 0, this.rotate, 0);
         } else {
             ns.Quaternion.loadIdentity(this.rotate, 0);
@@ -286,9 +286,12 @@
      * @param {xpl.uint32_t} num_max_chain - The number of chained nodes.
      * @param {xpl.float32_t} err_len - The allowable error distance.
      */
-    ns.XModelKinematicsUtils.applyInverseKinematicesLocation = function (node, target,
-                                                                         num_max_iteration, num_max_chain,
-                                                                         err_len) {
+    ns.XModelKinematicsUtils.applyInverseKinematicsLocation = function (node,
+                                                                        target,
+                                                                        num_max_iteration,
+                                                                        num_max_chain,
+                                                                        err_len,
+                                                                        slot) {
         if (node != null && 1 <= num_max_chain) {
             // count and reset transform at target nodes.
             var last_node = node;
@@ -308,7 +311,7 @@
             var bone_infos = new Array(num_nodes);
             var current_node = node;
             for (var i = 0; i < num_nodes; ++i) {
-                bone_infos[i] = bone_info = new BoneInformation(current_node);
+                bone_infos[i] = bone_info = new BoneInformation(current_node, slot);
                 current_node = current_node.parent;
             }
 
@@ -434,13 +437,14 @@
                         jp /= len;
                         kp /= len;
                     }
-                    transform.value[ns.XModelAxisRotate.ANGLE] =
+                    let index = transform.size * slot;
+                    transform.values[index + ns.XModelAxisRotate.X] = ip;
+                    transform.values[index + ns.XModelAxisRotate.Y] = jp;
+                    transform.values[index + ns.XModelAxisRotate.Z] = kp;
+                    transform.values[index + ns.XModelAxisRotate.ANGLE] =
                         Math.acos(bone_info.rotation[ns.Geometry.CR]);
-                    transform.value[ns.XModelAxisRotate.X] = ip;
-                    transform.value[ns.XModelAxisRotate.Y] = jp;
-                    transform.value[ns.XModelAxisRotate.Z] = kp;
                 } else if (transform.structure_type == ns.XModelStructure.TYPE_QUATERNION) {
-                    ns.Quaternion.loadv(transform.value, 0, bone_info.rotate, 0);
+                    ns.Quaternion.loadv(transform.values, transform.size * slot, bone_info.rotate, 0);
                 }
             }
             updateCombination(last_node);
@@ -450,33 +454,32 @@
     /**
      * Apply the inverse kinematics.
      *
-     * @memberof xpl.XModelKinematicsUtils
-     * @function applyInverseKinematices
      * @param {xpl.XModelNode} node - The node.
      * @param {xpl.XModelNode} target - The target node.
      * @param {xpl.uint32_t} num_max_iteration - The number of processing iteration.
      * @param {xpl.uint32_t} num_max_chain - The number of chained nodes.
-     * @param {xpl.float32} err_len - The allowable error distance.
+     * @param {xpl.float32_t} err_len - The allowable error distance.
      */
-    ns.XModelKinematicsUtils.applyInverseKinematices = function (node,
-                                                                 target,
-                                                                 num_max_iteration,
-                                                                 num_max_chain,
-                                                                 err_len) {
+    ns.XModelKinematicsUtils.applyInverseKinematics = function (node,
+                                                                target,
+                                                                num_max_iteration,
+                                                                num_max_chain,
+                                                                err_len,
+                                                                slot) {
         if (node != null && target != null) {
             var position = new Float32Array(ns.XModelStructure.SIZE_VECTOR_3);
             ns.Vector3.loadZero(position, 0);
             ns.Vector3.mulMatrix4x4v(
                 position, 0,
                 target.combined_matrix, 0,
-                position, 0,
-                true);
-            ns.XModelKinematicsUtils.applyInverseKinematicesLocation(
+                position, 0);
+            ns.XModelKinematicsUtils.applyInverseKinematicsLocation(
                 node,
                 position,
                 num_max_iteration,
                 num_max_chain,
-                0.0001);
+                0.0001,
+                slot);
         }
     };
 

@@ -30,13 +30,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * 3次元の幾何学に特化した機能を4*4の行列のユーティリティクラスに追加する拡張定義です。
- */
 (function (xpl) {
 
     "use strict";
 
+    /**
+     * 3次元の幾何学に特化した機能を4*4の行列のユーティリティクラスに追加する拡張定義です。
+     */
     if (xpl.Matrix4x4 == null) {
         return;
     }
@@ -58,9 +58,9 @@
      *
      * @param {number[]} d - 出力先の行列
      * @param {number} d_off - 出力先の行列の配列インデックス
-     * @param {number} x - X軸の拡大値
-     * @param {number} y - Y軸の拡大値
-     * @param {number} z - Z軸の拡大値
+     * @param {number} x - X軸の拡大率
+     * @param {number} y - Y軸の拡大率
+     * @param {number} z - Z軸の拡大率
      */
     xpl.Matrix4x4.loadScale = function (d, d_off, x, y, z) {
         xpl.Matrix4x4.load(
@@ -70,6 +70,23 @@
             0, 0, z, 0,
             0, 0, 0, 1,
             false);
+    };
+
+    /**
+     * 拡大の変換行列に読み込ませます。
+     *
+     *     | x, 0, 0, 0 |
+     * d = | 0, y, 0, 0 |
+     *     | 0, 0, z, 0 |
+     *     | 0, 0, 0, 1 |
+     *
+     * @param {number[]} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number[]} v - 拡大率のベクトル
+     * @param {number} v_off - 拡大率のベクトルの配列インデックス
+     */
+    xpl.Matrix4x4.loadScalev = function (d, d_off, v, v_off) {
+        xpl.Matrix4x4.loadScale(d, d_off, v[v_off + VX], v[v_off + VX], v[v_off + VX]);
     };
 
     /**
@@ -97,6 +114,24 @@
             0, 0, 1, z,
             0, 0, 0, 1,
             !column);
+    };
+
+    /**
+     * 平行移動の変換行列を読み込ませます。
+     *
+     *     | 1, 0, 0, x |
+     * d = | 0, 1, 0, y |
+     *     | 0, 0, 1, z |
+     *     | 0, 0, 0, 1 |
+     *
+     * @param {number[]} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number[]} v - 移動量のベクトル
+     * @param {number} v_off - 移動量のベクトルの配列インデックス
+     * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
+     */
+    xpl.Matrix4x4.loadTranslatev = function (d, d_off, v, v_off, column) {
+
     };
 
     /**
@@ -1251,6 +1286,7 @@
         // Y-axis = q * (0; (0, 1, 0)) * q
         //                               _
         // Z-axis = q * (0; (0, 0, 1)) * q
+        
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -1283,7 +1319,7 @@
      *      | x_axis.x, y_axis.x, z_axis.x, 0 |
      * d *= | x_axis.y, y_axis.y, z_axis.y, 0 |
      *      | x_axis.z, y_axis.z, z_axis.z, 0 |
-     *      | 0,   0,   0,   1 |
+     *      | 0,        0,        0,        1 |
      *
      * @param {number[]} m - 出力先の行列
      * @param {number} m_off - 出力先の行列の配列インデックス
@@ -1300,6 +1336,7 @@
         // Y-axis = q * (0; (0, 1, 0)) * q
         //                               _
         // Z-axis = q * (0; (0, 0, 1)) * q
+
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -1374,6 +1411,7 @@
         // Y-axis = q * (0; (0, 1, 0)) * q
         //                               _
         // Z-axis = q * (0; (0, 0, 1)) * q
+
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];
@@ -1435,6 +1473,7 @@
         // | ij2 + rk2,          jj  + rr - ii - kk, jk2 - ri2,          n |
         // | ik2 - rj2,          jk2 + ri2,          kk  + rr - jj - ii, n |
         // | n,                  n,                  n,                  n |
+
         let m00 = m[m_off + M00];
         let m11 = m[m_off + M11];
         let m22 = m[m_off + M22];
@@ -1559,6 +1598,7 @@
         // | xy  (1 - cosθ) + zsinθ, y^2 (1 - cosθ) +  cosθ, yz  (1 - cosθ) - xsinθ, n |
         // | xz  (1 - cosθ) - ysinθ, yz  (1 - cosθ) + xsinθ, z^2 (1 - cosθ) +  cosθ, n |
         // | n,                      n,                      n,                      n |
+
         let m00 = m[m_off + M00];
         let m11 = m[m_off + M11];
         let m22 = m[m_off + M22];

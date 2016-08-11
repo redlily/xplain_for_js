@@ -31,7 +31,7 @@
  */
 
 /**
- * xPlainのネームスペースです。
+ * xPlainの名前空間です。
  *
  * @namespace xpl
  */
@@ -64,25 +64,7 @@ if (typeof module == "object") {
     };
 
     /**
-     * クラス継承をサポートするための処理を行います。
-     * 処理内容としてクラスそのもののプロパティとプロトタイプのプロパティの複製を行い、コンストラクタにてスーパークラスの
-     * コンストラクタを動作させるための __super をプロトタイプに追加します。
-     *
-     * @param {function} sub_class - サブクラス
-     * @param {function} super_class - スーパークラス
-     */
-    xpl.classExtends = function (sub_class, super_class) {
-        if (sub_class.prototype != null && super_class.prototype != null) {
-            Object.setPrototypeOf(sub_class, super_class);
-            Object.setPrototypeOf(sub_class.prototype, super_class.prototype);
-            sub_class.prototype.__super = function () {
-                super_class.apply(this, arguments);
-            };
-        }
-    };
-
-    /**
-     * xPlainについての情報を収納するネームスペースです。
+     * xPlainについての情報を収納する名前空間です。
      *
      * @namespace xpl.about
      */
@@ -158,7 +140,7 @@ if (typeof module == "object") {
     /**
      * ライブラリの情報を取得します。
      *
-     * @returns {string} 情報
+     * @returns {string} ライブラリの情報
      */
     xpl.getAbout = function () {
         return xpl.about.NAME + "\n" +
@@ -172,18 +154,12 @@ if (typeof module == "object") {
 
     /**
      * ライブラリの情報をコンソール上に表示します。
-     *
-     * @memberof xpl
-     * @function printAbout
      */
-    xpl.putAboutToStdout = function () {
+    xpl.printAbout = function () {
         console.log(xpl.getAbout);
     };
 
-    // 作業用バッファ
-    let workBuf = new DataView(new ArrayBuffer(8));
-
-    // JsDoc用の型定義
+    // 型定義
 
     /**
      * @typedef {number} xpl.size_t
@@ -199,11 +175,14 @@ if (typeof module == "object") {
      * @typedef {number} xpl.enum_t
      */
 
+    // 作業用バッファ
+    let workBuf = new DataView(new ArrayBuffer(8));
+
     /**
      * size_t型のクラスです。
      *
      * @augments xpl.size_t
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.size_t} 変換後の数値
      */
     xpl.Size = function (value) {
@@ -214,7 +193,7 @@ if (typeof module == "object") {
      * ptrdiff_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.ptrdiff_t} 変換後の数値
      */
     xpl.Ptrdiff = function (value) {
@@ -225,7 +204,7 @@ if (typeof module == "object") {
      * int8_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.int8_t} 変換後の数値
      */
     xpl.Int8 = function (value) {
@@ -240,7 +219,7 @@ if (typeof module == "object") {
          * @memberof xpl.Int8
          * @const {xpl.int8_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: -Math.pow(2, 7)},
+        MIN_VALUE: {value: -Math.pow(2, 7)},
 
         /**
          * 最大数値
@@ -248,14 +227,14 @@ if (typeof module == "object") {
          * @memberof xpl.Int8
          * @const {xpl.int8_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 7) - 1}
+        MAX_VALUE: {value: Math.pow(2, 7) - 1}
     });
 
     /**
      * uint8_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.uint8_t} 変換後の数値
      */
     xpl.Uint8 = function (value) {
@@ -270,7 +249,7 @@ if (typeof module == "object") {
          * @memberof xpl.Uint8
          * @const {xpl.uint8_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: 0},
+        MIN_VALUE: {value: 0},
 
         /**
          * 最大数値
@@ -278,14 +257,14 @@ if (typeof module == "object") {
          * @memberof xpl.Uint8
          * @const {xpl.uint8_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 8) - 1}
+        MAX_VALUE: {value: Math.pow(2, 8) - 1}
     });
 
     /**
      * int16_t型のクラスです。
      *
      * @augments xpl.int16_t
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.int16_t} 変換後の数値
      */
     xpl.Int16 = function (value) {
@@ -300,7 +279,7 @@ if (typeof module == "object") {
          * @memberof xpl.Int16
          * @const {xpl.uint16_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: 0},
+        MIN_VALUE: {value: 0},
 
         /**
          * 最大数値
@@ -308,14 +287,14 @@ if (typeof module == "object") {
          * @memberof xpl.Int16
          * @const {xpl.uint16_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 8) - 1}
+        MAX_VALUE: {value: Math.pow(2, 8) - 1}
     });
 
     /**
      * uint16_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.uint16_t} 変換後の数値
      */
     xpl.Uint16 = function (value) {
@@ -330,7 +309,7 @@ if (typeof module == "object") {
          * @memberof xpl.Uint16
          * @const {xpl.int16_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: 0},
+        MIN_VALUE: {value: 0},
 
         /**
          * 最大数値
@@ -338,14 +317,14 @@ if (typeof module == "object") {
          * @memberof xpl.Uint16
          * @const {xpl.uint16_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 16) - 1}
+        MAX_VALUE: {value: Math.pow(2, 16) - 1}
     });
 
     /**
      * int32_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.int32_t} 変換後の数値
      */
     xpl.Int32 = function (value) {
@@ -360,7 +339,7 @@ if (typeof module == "object") {
          * @memberof xpl.Int32
          * @const {xpl.int32_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: -Math.pow(2, 31)},
+        MIN_VALUE: {value: -Math.pow(2, 31)},
 
         /**
          * 最大数値
@@ -368,14 +347,14 @@ if (typeof module == "object") {
          * @memberof xpl.Int32
          * @const {xpl.int32_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 31) - 1}
+        MAX_VALUE: {value: Math.pow(2, 31) - 1}
     });
 
     /**
      * uint32_t型のクラスです。
      *
      * @augments Number
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.uint32_t} 変換後の数値
      */
     xpl.Uint32 = function (value) {
@@ -390,7 +369,7 @@ if (typeof module == "object") {
          * @memberof xpl.Uint32
          * @const {xpl.uint32_t} MIN_VALUE
          */
-        "MIN_VALUE": {value: 0},
+        MIN_VALUE: {value: 0},
 
         /**
          * 最大数値
@@ -398,7 +377,7 @@ if (typeof module == "object") {
          * @memberof xpl.Uint32
          * @const {xpl.uint32_t} MIN_VALUE
          */
-        "MAX_VALUE": {value: Math.pow(2, 32) - 1}
+        MAX_VALUE: {value: Math.pow(2, 32) - 1}
     });
 
     /**
@@ -406,7 +385,7 @@ if (typeof module == "object") {
      *
      * @constructor
      * @augments Number
-     * @param {Object} value - 任意の数値
+     * @param {*} value - 任意の数値
      * @returns {xpl.float32_t} 変換後の数値
      */
     xpl.Float32 = function (value) {
@@ -429,7 +408,7 @@ if (typeof module == "object") {
      *
      * @constructor
      * @augments xpl.float64_t
-     * @param {Object} value - 任意の数値
+     * @param {*} value - 任意の数値
      * @returns {xpl.float64_t} 変換後の数値
      */
     xpl.Float64 = function (value) {
@@ -452,7 +431,7 @@ if (typeof module == "object") {
      *
      * @constructor
      * @augments xpl.enum_t
-     * @param {Object} value - 任意の数
+     * @param {*} value - 任意の数
      * @returns {xpl.enum_t} 変換後の数値
      */
     xpl.Enum = function (value) {

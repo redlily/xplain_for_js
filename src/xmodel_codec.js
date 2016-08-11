@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * xModelのデコーダの定義クラスです。
+     * xModelのコーデック用の定義クラスです。
      *
      * @constructor
      */
@@ -45,22 +45,20 @@
     Object.defineProperties(xpl.XModelCodec, {
 
         /**
-         * コードネーム.
+         * コードネーム
          *
          * @memberof xpl.XModelCodec
          * @const {string} CODE_NAME
          */
-        "CODE_NAME": {
-            value: "EX-MACHINA"
-        },
+        CODE_NAME: {value: "EX-MACHINA"},
 
         /**
-         * マジックナンバー (XModel DAta).
+         * マジックナンバー (XModel DAta)
          *
          * @memberof xpl.XModelCodec
          * @const {xpl.uint32_t} MAGIC_NUMBER
          */
-        "MAGIC_NUMBER": {
+        MAGIC_NUMBER: {
             value: ((0xff & "x".charCodeAt(0)) << 0) |
             ((0xff & "m".charCodeAt(0)) << 8) |
             ((0xff & "d".charCodeAt(0)) << 16) |
@@ -68,12 +66,12 @@
         },
 
         /**
-         * 終端識別子 (End Of xModel Data).
+         * 終端識別子 (End Of xModel Data)
          *
          * @memberof xpl.XModelCodec
          * @const {xpl.uint32_t} END_OF_DATA
          */
-        "END_OF_DATA": {
+        END_OF_DATA: {
             value: ((0xff & "e".charCodeAt(0)) << 0) |
             ((0xff & "o".charCodeAt(0)) << 8) |
             ((0xff & "x".charCodeAt(0)) << 16) |
@@ -86,7 +84,7 @@
          * @memberof xpl.XModelCodec
          * @const {xpl.uint32_t} VERSION
          */
-        "VERSION": {value: 35},
+        VERSION: {value: 36},
 
         /**
          * 互換のあるバージョン数
@@ -94,7 +92,7 @@
          * @memberof xpl.XModelCodec
          * @const {xpl.uint32_t} COMPATIBILITY_VERSION
          */
-        "COMPATIBILITY_VERSION": {value: 35},
+        COMPATIBILITY_VERSION: {value: 36},
 
         /**
          * バージョン文字列
@@ -102,7 +100,7 @@
          * @memberof xpl.XModelCodec
          * @const {string} VERSION_NAME
          */
-        "VERSION_NAME": {value: "0.9.90"},
+        VERSION_NAME: {value: "0.9.92"},
 
         /**
          * 互換のあるバージョン文字列
@@ -110,7 +108,7 @@
          * @memberof xpl.XModelCodec
          * @const {string} COMPATIBILITY_VERSION_NAME
          */
-        "COMPATIBILITY_VERSION_NAME": {value: "0.9.90"}
+        COMPATIBILITY_VERSION_NAME: {value: "0.9.92"}
     });
 
 })(xpl);

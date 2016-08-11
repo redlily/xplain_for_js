@@ -51,7 +51,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_VERTEX_SHADER
          */
-        "TYPE_VERTEX_SHADER": {value: "OpenGL Vertex Shader"},
+        TYPE_VERTEX_SHADER: {value: "OpenGL Vertex Shader"},
 
         /**
          * フラグメントシェーダの識別子
@@ -59,7 +59,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_FRAGMENT_SHADER
          */
-        "TYPE_FRAGMENT_SHADER": {value: "OpenGL Fragment Shader"},
+        TYPE_FRAGMENT_SHADER: {value: "OpenGL Fragment Shader"},
 
         /**
          * シェーダプログラムの識別子
@@ -67,7 +67,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_PROGRAM
          */
-        "TYPE_PROGRAM": {value: "OpenGL Program"}
+        TYPE_PROGRAM: {value: "OpenGL Program"}
     });
 
     /**
@@ -83,7 +83,7 @@
      *
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} type - バッファ種別
-     * @param {number} data - データ配列
+     * @param {ArrayBuffer} data - データ配列
      * @param {number} usage - バッファの使用方法
      * @returns {WebGLBuffer} バッファのインスタンス
      */

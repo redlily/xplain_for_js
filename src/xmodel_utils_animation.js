@@ -30,17 +30,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
+
+    "use strict";
 
     /**
-     * Utilities for xModel animation structure.
+     * アニメーション用のユーティリティクラスです。
      *
-     * @namespace xpl.XModelAnimationUtils
-     * @see xpl.XModelAnimationSet
-     * @see xpl.XModelAnimation
-     * @see xpl.XModelAnimationKey
+     * @constructor
      */
-    ns.XModelAnimationUtils = function () {
+    xpl.XModelAnimationUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -76,133 +75,123 @@
     };
 
     /**
-     * Interpolate the rotate transform.
+     * 軸回転構造に対する補間を行います。
      *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function interpolateRotate
-     * @param {xpl.XModelAnimation} anim - The animation structure.
-     * @param {xpl.XModelAnimationKey} key0 - The first animation key structure.
-     * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
-     * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimationKey} start - 開始のキー
+     * @param {xpl.XModelAnimationKey} end - 終了のキー
+     * @param {xpl.float32_t} rate - 補間係数
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    var interpolateRotate = function (anim, key0, key1, weight) {
-        var target = anim.target;
-        if (weight <= 0) {
+    xpl.interpolateRotate = function (anim, start, end, rate, slot) {
+        if (anim != null) {
+            let target = anim.target;
+            let index = target.size * slot;
             if (anim.index == -1) {
-                // assignment to the all elements.
-                ns.Vector3.loadv(target.value, 0, key0.value, 0);
-                target.value[ns.XModelAxisRotate.ANGLE] = key0.value[ns.XModelAxisRotate.ANGLE];
+                // 全体的な補間
+                xpl.Vector3.slerpv(target.values, index, start.value, 0, end.value, 0, rate);
+                target.values[index + xpl.XModelAxisRotate.ANGLE] =
+                    start.value[xpl.XModelAxisRotate.ANGLE] * (1.0 - rate) +
+                    end.value[xpl.XModelAxisRotate.ANGLE] * rate;
             } else {
-                // assignment to a element.
-                target.value[anim.index] = key0.value[0];
-            }
-        } else {
-            if (anim.index == -1) {
-                // interpolate to the all elements.
-                ns.Vector3.slerpv(target.value, 0, key0.value, 0, key1.value, 0, weight);
-                target.value[ns.XModelAxisRotate.ANGLE] =
-                    key0.value[ns.XModelAxisRotate.ANGLE] * (1.0 - weight) +
-                    key1.value[ns.XModelAxisRotate.ANGLE] * weight;
-            } else {
-                // interpolate to a element.
-                target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
+                // 局所的な補間
+                target.values[index + anim.index] = start.value[0] * (1.0 - rate) + end.value[0] * rate;
             }
         }
     };
 
     /**
-     * Interpolate the quaternion transform.
+     * 四元数構造に対する補間を行います。
      *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function interpolateQuaternion
-     * @param {xpl.XModelAnimation} anim - The animation structure.
-     * @param {xpl.XModelAnimationKey} key0 - The first animation key structure.
-     * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
-     * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimationKey} start - 開始のキー
+     * @param {xpl.XModelAnimationKey} end - 終了のキー
+     * @param {xpl.float32_t} rate - 補間係数
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    var interpolateQuaternion = function (anim, key0, key1, weight) {
-        var target = anim.target;
-        if (weight <= 0) {
+    xpl.interpolateQuaternion = function (anim, start, end, rate, slot) {
+        if (anim != null) {
+            let target = anim.target;
+            let index = target.size * slot;
             if (anim.index == -1) {
-                // assignment to the all elements.
-                ns.Quaternion.loadv(target.value, 0, key0.value, 0);
+                // 全体的な補間
+                xpl.Quaternion.slerpv(target.values, index, start.value, 0, end.value, 0, rate);
             } else {
-                // assignment to a element.
-                target.value[anim.index] = key0.value[0];
-            }
-        } else {
-            if (anim.index == -1) {
-                // interpolate to the all elements.
-                ns.Quaternion.slerpv(target.value, 0, key0.value, 0, key1.value, 0, weight);
-            } else {
-                // interpolate to a element.
-                target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
+                // 局所的な補間
+                target.values[index + anim.index] = start.value[0] * (1.0 - rate) + end.value[0] * rate;
             }
         }
     };
 
     /**
-     * Interpolate the scale transform.
+     * 拡大構造に対する補間を行います。
      *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function interpolateScale
-     * @param {xpl.XModelAnimation} anim - The animation structure.
-     * @param {xpl.XModelAnimationKey} key0 - The first animation key structure.
-     * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
-     * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimationKey} start - 開始のキー
+     * @param {xpl.XModelAnimationKey} end - 終了のキー
+     * @param {xpl.float32_t} rate - 補間係数
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    var interpolateScale = function (anim, key0, key1, weight) {
-        var target = anim.target;
-        if (weight <= 0) {
+    xpl.interpolateScale = function (anim, start, end, rate, slot) {
+        if (anim != null) {
+            let target = anim.target;
+            let index = target.size * slot;
             if (anim.index == -1) {
-                // assignment to the all elements.
-                ns.Vector3.loadv(target.value, 0, key0.value, 0);
+                // 全体的な補間
+                xpl.Vector3.lerpv(target.values, index, key0.value, 0, key1.value, 0, weight);
             } else {
-                // assignment to a element.
-                target.value[anim.index] = key0.value[0];
-            }
-        } else {
-            if (anim.index == -1) {
-                // interpolate to the all elements.
-                ns.Vector3.lerpv(target.value, 0, key0.value, 0, key1.value, 0, weight);
-            } else {
-                // interpolate to a element.
-                target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
+                // 局所的な補間
+                target.values[index + anim.index] = start.value[0] * (1.0 - rate) + end.value[0] * rate;
             }
         }
     };
 
     /**
-     * Interpolate the translate transformation.
+     * 平行移動に対する補間を行います。
      *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function interpolateTranslate
-     * @param {xpl.XModelAnimation} anim - The animation structure.
-     * @param {xpl.XModelAnimationKey} key0 - The first animation key structure.
-     * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
-     * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimationKey} start - 開始のキー
+     * @param {xpl.XModelAnimationKey} end - 終了のキー
+     * @param {xpl.float32_t} rate - 補間係数
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    var interpolateTranslate = function (anim, key0, key1, weight) {
-        var target = anim.target;
-        if (weight <= 0) {
+    xpl.interpolateTranslate = function (anim, start, end, rate, slot) {
+        if (anim != null) {
+            let target = anim.target;
+            let index = target.size * slot;
             if (anim.index == -1) {
-                // assignment to all elements.
-                ns.Vector3.loadv(target.value, 0, key0.value, 0);
+                // 全体的な補間
+                xpl.Vector3.lerpv(target.values, index, start.value, 0, end.value, 0, weight);
             } else {
-                // assignment to one element.
-                target.value[anim.index] = key0.value[0];
+                // 局所的な補間
+                target.values[index + anim.index] = start.value[0] * (1.0 - rate) + end.value[0] * rate;
             }
-        } else {
+        }
+    };
+
+    /**
+     * 行列に対する補間を行います。
+     *
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimationKey} start - 開始のキー
+     * @param {xpl.XModelAnimationKey} end - 終了のキー
+     * @param {xpl.float32_t} rate - 補間係数
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
+     */
+    xpl.interpolateMatrix = function (anim, start, end, rate, slot) {
+        if (anim != null) {
+            let target = anim.target;
+            let index = target.size * slot;
             if (anim.index == -1) {
-                // interpolate to all elements.
-                ns.Vector3.lerpv(target.value, 0, key0.value, 0, key1.value, 0, weight);
+                // 全体的な補間
+                xpl.Matrix4x4.slrepAxisAndLrepOtherv(
+                    target.values, index,
+                    start.value, 0,
+                    end.value, 0,
+                    weight);
             } else {
-                // interpolate to one element.
-                target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
+                // 局所的な補間
+                target.values[index + anim.index] = start.value[0] * (1.0 - rate) + end.value[0] * rate;
             }
         }
     };
@@ -223,7 +212,7 @@
         if (weight <= 0) {
             if (anim.index == -1) {
                 // assignment to the all elements.
-                ns.Matrix4x4.loadv(target.value, 0, key0.value, 0);
+                xpl.Matrix4x4.loadv(target.value, 0, key0.value, 0);
             } else {
                 // assignment to a element.
                 target.value[anim.index] = key0.value[0];
@@ -231,7 +220,7 @@
         } else {
             if (anim.index == -1) {
                 // interpolate to the all elements.
-                ns.Matrix4x4.slrepAxisAndLrepOtherv(
+                xpl.Matrix4x4.slrepAxisAndLrepOtherv(
                     target.value, 0,
                     key0.value, 0,
                     key1.value, 0,
@@ -252,28 +241,30 @@
      * @param {xpl.XModelAnimation?} anim - The target animation structure.
      * @param {xpl.float64_t} time - The any time.
      */
-    ns.XModelAnimationUtils.setAnimation = function (anim, time) {
+    xpl.XModelAnimationUtils.setAnimation = function (anim, time) {
         if (anim != null) {
             if (0 < anim.num_keys) {
                 // search a keys.
-                var key0;
-                var key1;
-                var weight;
+                let key0, key1, weight;
+
+
+
+
                 if (anim.num_keys == 1) {
-                    // number of keys is one.
+                    // キーフーレムの数が単数の場合
                     key0 = anim.keys[0];
                     key1 = anim.keys[0];
                     weight = 0;
                 } else {
-                    // number of keys is same.
+                    // キーフレームの数が複数の場合
                     var index = search(anim.keys, 0, anim.num_keys, time);
                     if (0 <= index) {
-                        // found consistent time.
+                        // キーフレームが見つかった場合
                         key0 = anim.keys[index];
                         key1 = anim.keys[index];
                         weight = 0;
                     } else if (index != -1) {
-                        // need interpolation.
+                        // キーフレームが見つからなかった場合
                         index = -(index + 2);
                         if (index < anim.num_keys - 1) {
                             key0 = anim.keys[index + 0];
@@ -291,38 +282,32 @@
                     }
                 }
 
-                // interpolate transformation.
                 switch (anim.target.structure_type) {
-                    case ns.XModelStructure.TYPE_AXIS_ROTATE:
-                        // axis rotate.
-                        interpolateRotate(anim, key0, key1, weight);
+                    case xpl.XModelStructure.TYPE_AXIS_ROTATE: // 軸回転
+                        xpl.interpolateRotate(anim, key0, key1, weight, 1);
                         break;
 
-                    case ns.XModelStructure.TYPE_QUATERNION:
-                        // quaternion.
-                        interpolateQuaternion(anim, key0, key1, weight);
+                    case xpl.XModelStructure.TYPE_QUATERNION: // 四元数
+                        xpl.interpolateQuaternion(anim, key0, key1, weight, 1);
                         break;
 
-                    case ns.XModelStructure.TYPE_SCALE:
-                        // scale.
-                        interpolateScale(anim, key0, key1, weight);
+                    case xpl.XModelStructure.TYPE_SCALE: // 拡大
+                        xpl.interpolateScale(anim, key0, key1, weight, 1);
                         break;
 
-                    case ns.XModelStructure.TYPE_TRANSLATE:
-                        // translate.
-                        interpolateTranslate(anim, key0, key1, weight);
+                    case xpl.XModelStructure.TYPE_TRANSLATE: // 平行移動
+                        xpl.interpolateTranslate(anim, key0, key1, weight, 1);
                         break;
 
-                    case ns.XModelStructure.TYPE_MATRIX:
-                        // matrix.
-                        interpolateMatrix(anim, key0, key1, weight);
+                    case xpl.XModelStructure.TYPE_MATRIX: // 行列
+                        xpl.interpolateMatrix(anim, key0, key1, weight, 1);
                         break;
                 }
             }
 
             // update the animation children.
             for (var i = 0; i < anim.num_children; ++i) {
-                ns.XModelAnimation.setAnimation(anim.children[i], time);
+                xpl.XModelAnimation.setAnimation(anim.children[i], time);
             }
         }
     };
@@ -335,10 +320,10 @@
      * @param {xpl.XModelAnimationSet?} anim_set - The target animation structure.
      * @param {xpl.float64_t} time - The any value.
      */
-    ns.XModelAnimationUtils.setAnimationSet = function (anim_set, time) {
+    xpl.XModelAnimationUtils.setAnimationSet = function (anim_set, time) {
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {
-                ns.XModelAnimationUtils.setAnimation(anim_set.animations[i], time);
+                xpl.XModelAnimationUtils.setAnimation(anim_set.animations[i], time);
             }
         }
     };
@@ -351,7 +336,7 @@
      * @param {xpl.XModelAnimation?} anim - The target animation structure.
      * @returns {xpl.float64_t} The total animation time.
      */
-    ns.XModelAnimationUtils.getAnimationTotalTime = function (anim) {
+    xpl.XModelAnimationUtils.getAnimationTotalTime = function (anim) {
         var max = 0;
         if (anim != null) {
             // scane the maximum time to this animation.
@@ -364,7 +349,7 @@
 
             // scan the maximum time that be chained to the this animation.
             for (var i = 0; i < anim.num_children; ++i) {
-                var time = ns.XModelAnimationUtils.getAnimationTotalTime(anim.children[i]);
+                var time = xpl.XModelAnimationUtils.getAnimationTotalTime(anim.children[i]);
                 if (max < time) {
                     max = time;
                 }
@@ -381,11 +366,11 @@
      * @param {xpl.XModelAnimationSet?} anim_set - The target animation set structure.
      * @returns {xpl.float64_t} The total animation time.
      */
-    ns.XModelAnimationUtils.getAnimationSetTotalTime = function (anim_set) {
+    xpl.XModelAnimationUtils.getAnimationSetTotalTime = function (anim_set) {
         var max = 0;
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {
-                var time = ns.XModelAnimationUtils.getAnimationTotalTime(anim_set.animations[i]);
+                var time = xpl.XModelAnimationUtils.getAnimationTotalTime(anim_set.animations[i]);
                 if (max < time) {
                     max = time;
                 }
