@@ -30,48 +30,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
-    const SIZE_VECTOR_3 = ns.Geometry.SIZE_VECTOR_3;
-    const SIZE_MATRIX_4X4 = ns.Geometry.SIZE_MATRIX_4X4;
+    const SIZE_VECTOR_3 = xpl.Geometry.SIZE_VECTOR_3;
+    const SIZE_MATRIX_4X4 = xpl.Geometry.SIZE_MATRIX_4X4;
 
     /**
      * スキニング構造用のユーティリティクラスです。
      *
-     * @namespace xpl.XModelSkinUtils
-     * @see xpl.XModelNode
-     * @see xpl.XModelMesh
-     * @see xpl.XModelSkin
+     * @constructor
      */
-    ns.XModelSkinUtils = function () {
+    xpl.XModelSkinUtils = function () {
         throw new Error("Unsupported operation");
     };
 
     /**
      * 行列パレットを更新します。
      *
-     * @memberof xpl.XModelSkinUtils
-     * @function updateMatrixPallet
      * @param {xpl.XModelSkin?} skin - スキン構造のインスタンス
      * @param {xpl.uint16_t} num_matrices - 行列の数
      * @param {Float32Array} matrices - 行列パレット
      * @param {xpl.size_t} matrices_off - 行列パレットの配列インデックス
      * @returns {xpl.uint16_t} 実際に更新した行列の数
      */
-    ns.XModelSkinUtils.updateMatrixPallet = function (skin, num_matrices, matrices, matrices_off) {
+    xpl.XModelSkinUtils.updateMatrixPallet = function (skin, num_matrices, matrices, matrices_off) {
         if (skin != null) {
             for (let i = 0; i < skin.num_nodes && i < num_matrices; ++i) {
                 let index = SIZE_MATRIX_4X4 * i;
                 let node = skin.nodes[i];
                 if (node != null) {
-                    ns.Matrix4x4.mulv(
+                    xpl.Matrix4x4.mulv(
                         matrices, matrices_off + index,
                         node.combined_matrix, 0,
                         skin.offset_matrices, index);
                 } else {
-                    ns.Matrix4x4.loadIdentity(matrices, matrices_off + index);
+                    xpl.Matrix4x4.loadIdentity(matrices, matrices_off + index);
                 }
             }
             return Math.min(skin.num_nodes, num_matrices);
@@ -82,8 +77,6 @@
     /**
      * 行列パレットの情報を元に頂点の位置を更新します。
      *
-     * @memberof xpl.XModelSkinUtils
-     * @member updateVertices
      * @param {Float32Array} mat_pallet - 行列パレット
      * @param {xpl.size_t} mat_pallet_off - 行列パレットの配列インデックス
      * @param {xpl.size_t} num_vertices - 頂点数
@@ -106,14 +99,14 @@
      *                  <li>xpl.XModelMesh.TYPE_NORMAL: 法線</li>
      *              </ul>
      */
-    ns.XModelSkinUtils.updateVertices = function (mat_pallet, mat_pallet_off,
-                                                  num_vertices,
-                                                  src, src_off, src_stride,
-                                                  dest, dest_off, dest_stride,
-                                                  weighted_indices_size,
-                                                  indices, indices_off, indices_stride,
-                                                  weights, weights_off, weights_stride,
-                                                  type) {
+    xpl.XModelSkinUtils.updateVertices = function (mat_pallet, mat_pallet_off,
+                                                   num_vertices,
+                                                   src, src_off, src_stride,
+                                                   dest, dest_off, dest_stride,
+                                                   weighted_indices_size,
+                                                   indices, indices_off, indices_stride,
+                                                   weights, weights_off, weights_stride,
+                                                   type) {
         if (src_stride < SIZE_VECTOR_3) {
             src_stride = SIZE_VECTOR_3;
         }
@@ -126,17 +119,19 @@
         if (indices_stride < weighted_indices_size) {
             indices_stride = weighted_indices_size;
         }
+
         let trans_func = null;
         switch (type) {
-            case ns.XModelMesh.TYPE_POSITION:
-                trans_func = ns.Vector3.mulMatrix4x4v;
+            case xpl.XModelMesh.TYPE_POSITION:
+                trans_func = xpl.Vector3.mulMatrix4x4v;
                 break;
-            case ns.XModelMesh.TYPE_NORMAL:
-                trans_func = ns.Vector3.mulMatrix4x4Axisv;
+            case xpl.XModelMesh.TYPE_NORMAL:
+                trans_func = xpl.Vector3.mulMatrix4x4Axisv;
                 break;
             default:
-                throw new Error("Unsupported the type of " + +".");
+                throw new Error("Unsupported type.");
         }
+
         if (weighted_indices_size == 1) {
             // 重み付きインデックスの幅が1の場合
             for (let i = 0; i < num_vertices; ++i) {
@@ -153,7 +148,7 @@
             // 重み付きインデックスの幅が1を超える場合
             let vector = new Float32Array(SIZE_VECTOR_3);
             for (let i = 0; i < num_vertices; ++i) {
-                ns.Vector3.loadZero(dest, dest_off);
+                xpl.Vector3.loadZero(dest, dest_off);
                 for (let j = 0; j < weighted_indices_size; ++j) {
                     let weight = weights[weights_off + j];
                     if (0 < weight) {
@@ -163,8 +158,8 @@
                             mat_pallet, mat_pallet_off + SIZE_MATRIX_4X4 * indices[indices_off + j],
                             src, src_off,
                             true);
-                        ns.Vector3.mulv(vector, 0, vector, 0, weight);
-                        ns.Vector3.addv(dest, dest_off, dest, dest_off, vector, 0);
+                        xpl.Vector3.mulv(vector, 0, vector, 0, weight);
+                        xpl.Vector3.addv(dest, dest_off, dest, dest_off, vector, 0);
                     }
                 }
                 src_off += src_stride;

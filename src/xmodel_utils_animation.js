@@ -43,22 +43,8 @@
         throw new Error("Unsupported operation");
     };
 
-    /**
-     * Search the index of the key from time.
-     *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function search
-     * @param {Float64Array} keys - The sorted time sequence.
-     * @param {xpl.size_t} from - The Starting position in the sequence.
-     * @param {xpl.size_t} to - The End position in the sequence.
-     * @param {xpl.float64_t} time - The target time.
-     * @returns {xpl.ptrdiff_t}
-     *              found index to the element if return value is positive,
-     *              target time following nearest negative index to the element nearest
-     *              if return value is negative.
-     */
-    var search = function (keys, from, to, time) {
+    // 2分探索
+    var binarySearch = function (keys, from, to, time) {
         to--;
         while (from <= to) {
             var mid = (from + to) >> 1;
@@ -197,115 +183,64 @@
     };
 
     /**
-     * Interpolate the matrix transformation.
+     * 変形をアニメーションにより更新します。
      *
-     * @private
-     * @memberof xpl.XModelAnimationUtils
-     * @function interpolateMatrix
-     * @param {xpl.XModelAnimation} anim - The animation structure.
-     * @param {xpl.XModelAnimationKey} key0 - The first animation key structure.
-     * @param {xpl.XModelAnimationKey} key1 - The second animation key structure.
-     * @param {xpl.float32_t} weight - The interpolation weight must be set to between 0.0 and 1.0.
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
+     * @param {xpl.float64_t} time - 任意の時間
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    var interpolateMatrix = function (anim, key0, key1, weight) {
-        var target = anim.target;
-        if (weight <= 0) {
-            if (anim.index == -1) {
-                // assignment to the all elements.
-                xpl.Matrix4x4.loadv(target.value, 0, key0.value, 0);
-            } else {
-                // assignment to a element.
-                target.value[anim.index] = key0.value[0];
-            }
-        } else {
-            if (anim.index == -1) {
-                // interpolate to the all elements.
-                xpl.Matrix4x4.slrepAxisAndLrepOtherv(
-                    target.value, 0,
-                    key0.value, 0,
-                    key1.value, 0,
-                    weight,
-                    true);
-            } else {
-                // interpolate to a element.
-                target.value[anim.index] = key0.value[0] * (1.0 - weight) + key1.value[0] * weight;
-            }
-        }
-    };
-
-    /**
-     * Update the animation to transformation.
-     *
-     * @memberof xpl.XModelAnimationUtils
-     * @function setAnimation
-     * @param {xpl.XModelAnimation?} anim - The target animation structure.
-     * @param {xpl.float64_t} time - The any time.
-     */
-    xpl.XModelAnimationUtils.setAnimation = function (anim, time) {
+    xpl.XModelAnimationUtils.setAnimation = function (anim, time, slot) {
         if (anim != null) {
             if (0 < anim.num_keys) {
-                // search a keys.
-                let key0, key1, weight;
-
-
-
-
-                if (anim.num_keys == 1) {
-                    // キーフーレムの数が単数の場合
-                    key0 = anim.keys[0];
-                    key1 = anim.keys[0];
-                    weight = 0;
-                } else {
-                    // キーフレームの数が複数の場合
-                    var index = search(anim.keys, 0, anim.num_keys, time);
+                // キーフレームの検索
+                let start = anim.keys[0];
+                let end = anim.keys[0];
+                let rate = 0.0;
+                if (1 < anim.num_keys) {
+                    var index = binarySearch(anim.keys, 0, anim.num_keys, time);
                     if (0 <= index) {
-                        // キーフレームが見つかった場合
-                        key0 = anim.keys[index];
-                        key1 = anim.keys[index];
-                        weight = 0;
+                        start = anim.keys[index];
+                        end = anim.keys[index];
+                        rate = 0.0;
                     } else if (index != -1) {
-                        // キーフレームが見つからなかった場合
                         index = -(index + 2);
                         if (index < anim.num_keys - 1) {
-                            key0 = anim.keys[index + 0];
-                            key1 = anim.keys[index + 1];
-                            weight = (time - key0.time) / (key1.time - key0.time);
+                            start = anim.keys[index + 0];
+                            end = anim.keys[index + 1];
+                            rate = (time - start.time) / (end.time - start.time);
                         } else {
-                            key0 = anim.keys[index];
-                            key1 = anim.keys[index];
-                            weight = 0;
+                            start = anim.keys[index];
+                            end = anim.keys[index];
+                            rate = 0.0;
                         }
-                    } else {
-                        key0 = anim.keys[0];
-                        key1 = anim.keys[0];
-                        weight = 0;
                     }
                 }
 
+                // キーフーレム間の補間
                 switch (anim.target.structure_type) {
                     case xpl.XModelStructure.TYPE_AXIS_ROTATE: // 軸回転
-                        xpl.interpolateRotate(anim, key0, key1, weight, 1);
+                        xpl.interpolateRotate(anim, start, end, rate, slot);
                         break;
 
                     case xpl.XModelStructure.TYPE_QUATERNION: // 四元数
-                        xpl.interpolateQuaternion(anim, key0, key1, weight, 1);
+                        xpl.interpolateQuaternion(anim, start, end, rate, slot);
                         break;
 
                     case xpl.XModelStructure.TYPE_SCALE: // 拡大
-                        xpl.interpolateScale(anim, key0, key1, weight, 1);
+                        xpl.interpolateScale(anim, start, end, rate, slot);
                         break;
 
                     case xpl.XModelStructure.TYPE_TRANSLATE: // 平行移動
-                        xpl.interpolateTranslate(anim, key0, key1, weight, 1);
+                        xpl.interpolateTranslate(anim, start, end, rate, slot);
                         break;
 
                     case xpl.XModelStructure.TYPE_MATRIX: // 行列
-                        xpl.interpolateMatrix(anim, key0, key1, weight, 1);
+                        xpl.interpolateMatrix(anim, start, end, rate, slot);
                         break;
                 }
             }
 
-            // update the animation children.
+            // 子のアニメーションの更新
             for (var i = 0; i < anim.num_children; ++i) {
                 xpl.XModelAnimation.setAnimation(anim.children[i], time);
             }
@@ -313,70 +248,55 @@
     };
 
     /**
-     * Update the animation set to transformation.
+     * 変形をアニメーションセットにより更新します。
      *
      * @memberof xpl.XModelAnimationUtils
      * @function setAnimationSet
-     * @param {xpl.XModelAnimationSet?} anim_set - The target animation structure.
-     * @param {xpl.float64_t} time - The any value.
+     * @param {xpl.XModelAnimationSet?} anim_set - 処理対象のアニメーションセット
+     * @param {xpl.float64_t} time - 任意の時間
+     * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
-    xpl.XModelAnimationUtils.setAnimationSet = function (anim_set, time) {
+    xpl.XModelAnimationUtils.setAnimationSet = function (anim_set, time, slot) {
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {
-                xpl.XModelAnimationUtils.setAnimation(anim_set.animations[i], time);
+                xpl.XModelAnimationUtils.setAnimation(anim_set.animations[i], time, 1);
             }
         }
     };
 
     /**
-     * Get the total time of the animation.
+     * アニメーションのトータル時間を取得します。
      *
-     * @memberof xpl.XModelAnimationSet
-     * @function getAnimationTotalTime
-     * @param {xpl.XModelAnimation?} anim - The target animation structure.
-     * @returns {xpl.float64_t} The total animation time.
+     * @param {xpl.XModelAnimation?} anim - 処理対象のアニメーション構造
+     * @returns {xpl.float64_t} トータルの時間
      */
     xpl.XModelAnimationUtils.getAnimationTotalTime = function (anim) {
-        var max = 0;
+        var time = 0;
         if (anim != null) {
-            // scane the maximum time to this animation.
             for (var i = 0; i < anim.num_keys; ++i) {
-                var time = anim.keys[anim.num_keys - 1].time;
-                if (max < time) {
-                    max = time;
-                }
+                time = Math.max(anim.keys[anim.num_keys - 1].time, time);
             }
-
-            // scan the maximum time that be chained to the this animation.
             for (var i = 0; i < anim.num_children; ++i) {
-                var time = xpl.XModelAnimationUtils.getAnimationTotalTime(anim.children[i]);
-                if (max < time) {
-                    max = time;
-                }
+                time = Math.max(xpl.XModelAnimationUtils.getAnimationTotalTime(anim.children[i]), time);
             }
         }
-        return max;
+        return time;
     };
 
     /**
-     * Get the total time of the animation set.
+     * アニメーションセットのトータル時間を取得します。
      *
-     * @memberof xpl.XModelAnimationUtils
-     * @function getAnimationSetTotalTime
-     * @param {xpl.XModelAnimationSet?} anim_set - The target animation set structure.
-     * @returns {xpl.float64_t} The total animation time.
+     * @param {xpl.XModelAnimationSet?} anim_set - 処理対象のアニメーションセット構造
+     * @returns {xpl.float64_t} トータルの時間
      */
     xpl.XModelAnimationUtils.getAnimationSetTotalTime = function (anim_set) {
-        var max = 0;
+        var time = 0;
         if (anim_set != null) {
             for (var i = 0; i < anim_set.num_animations; ++i) {
-                var time = xpl.XModelAnimationUtils.getAnimationTotalTime(anim_set.animations[i]);
-                if (max < time) {
-                    max = time;
-                }
+                time = Math.max(xpl.XModelAnimationUtils.getAnimationTotalTime(anim_set.animations[i]), time);
             }
         }
-        return max;
+        return time;
     };
 
 })(xpl);

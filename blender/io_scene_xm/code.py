@@ -273,27 +273,27 @@ class XModelBinaryEncoder:
     # write axis rotate
     def _putAxisRotate(self, obj):
         # value
-        self._putFloat32Array(obj.initial, 0, XModelStructure.SIZE_AXIS_ROTATE)
+        self._putFloat32Array(obj.values, 0, XModelStructure.SIZE_AXIS_ROTATE)
 
     # write quaternion
     def _putQuaternion(self, obj):
         # value
-        self._putFloat32Array(obj.initial, 0, XModelStructure.SIZE_QUATERNION)
+        self._putFloat32Array(obj.values, 0, XModelStructure.SIZE_QUATERNION)
 
     # write scale
     def _putScale(self, obj):
         # value
-        self._putFloat32Array(obj.initial, 0, XModelStructure.SIZE_SCALE)
+        self._putFloat32Array(obj.values, 0, XModelStructure.SIZE_SCALE)
 
     # write translate
     def _putTranslate(self, obj):
         # value
-        self._putFloat32Array(obj.initial, 0, XModelStructure.SIZE_TRANSLATE)
+        self._putFloat32Array(obj.values, 0, XModelStructure.SIZE_TRANSLATE)
 
     # write matrix
     def _putMatrix(self, obj):
         # value
-        self._putFloat32Array(obj.initial, 0, XModelStructure.SIZE_MATRIX)
+        self._putFloat32Array(obj.values, 0, XModelStructure.SIZE_MATRIX)
 
     # write container
     def _putContainer(self, obj):

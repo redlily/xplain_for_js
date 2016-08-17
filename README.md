@@ -64,7 +64,7 @@ python3 -m http.server 8000
 <script type="text/javascript" src="src/xmodel_type_animation.js"></script>
 <script type="text/javascript" src="src/xmodel_codec.js"></script>
 <script type="text/javascript" src="src/xmodel_decoder.js"></script>
-<script type="text/javascript" src="src/xmodel_utils_transform.js"></script>
+<script type="text/javascript" src="src/xmodel_utils_parameter.js"></script>
 <script type="text/javascript" src="src/xmodel_utils_material.js"></script>
 <script type="text/javascript" src="src/xmodel_utils_skin.js"></script>
 <script type="text/javascript" src="src/xmodel_utils_mesh.js"></script>

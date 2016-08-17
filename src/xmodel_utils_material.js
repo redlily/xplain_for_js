@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (ns) {
+(function (xpl) {
 
     "use strict";
 
@@ -40,7 +40,7 @@
      * @namespace xpl.XModelMaterialUtils
      * @see xpl.XModelMaterial
      */
-    ns.XModelMaterialUtils = function () {
+    xpl.XModelMaterialUtils = function () {
         throw new Error("Unsupported operation");
     };
 
@@ -57,7 +57,7 @@
      * @param {xpl.size_t} len - The maximum number of elements to be copied.
      * @returns {xpl.size_t} The number of texture.
      */
-    ns.XModelMaterialUtils.getTextures = function (material, dest, off, len) {
+    xpl.XModelMaterialUtils.getTextures = function (material, dest, off, len) {
         var count = 0;
         if (material != null) {
             // emissive map.
@@ -122,7 +122,7 @@
      *
      * @param {xpl.XModelMaterial?} material - The material instance.
      */
-    ns.XModelMaterialUtils.releaseTexture = function (material) {
+    xpl.XModelMaterialUtils.releaseTexture = function (material) {
         if (material != null) {
             // emissive map.
             if (material.emissive_map) {

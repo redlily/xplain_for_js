@@ -988,7 +988,6 @@
         /**
          * 描画なしの描画モード
          *
-         * @constant
          * @memberof xpl.XModelMaterial
          * @const {xpl.uint32_t} DRAW_MODE_FACE_NONE_BITS
          */
@@ -997,7 +996,6 @@
         /**
          * 表面描画のモード
          *
-         * @constant
          * @memberof xpl.XModelMaterial
          * @const {xpl.uint32_t} DRAW_MODE_FACE_FRONT_BITS
          */
@@ -1006,7 +1004,6 @@
         /**
          * 裏面描画の描画モード
          *
-         * @constant
          * @memberof xpl.XModelMaterial
          * @const {xpl.uint32_t} DRAW_MODE_FACE_BACK_BITS
          */
@@ -1015,7 +1012,6 @@
         /**
          * 両面描画の描画モード
          *
-         * @constant
          * @memberof xpl.XModelMaterial
          * @const {xpl.uint32_t} DRAW_MODE_FACE_FRONT_AND_BACK_BITS
          */

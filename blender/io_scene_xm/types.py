@@ -137,82 +137,42 @@ class XModelFloatArray(XModelParameter):
         self.size = size
 
         # float32_t[size * (NUM_BLEND_SLOT + 1)] : elements
-        self.values = size * (self.NUM_BLEND_SLOT + 1)
+        self.values = [0.0] * size * (self.NUM_BLEND_SLOT + 1)
 
 
 # Axis rotate transform structure of xModel
-class XModelAxisRotate(XModelStructure):
+class XModelAxisRotate(XModelFloatArray):
     # initialize
     def __init__(self):
-        super(XModelAxisRotate, self).__init__(self.TYPE_AXIS_ROTATE)
-
-        # float32_t[SIZE_AXIS_ROTATE] : initial value
-        self.initial = [0.0, 0.0, 0.1, 0.0]
-
-        # work variable
-
-        # float32_t[SIZE_AXIS_ROTATE * NUM_BLEND_SLOT] : work value
-        self.value = [0.0, 0.0, 0.1, 0.0] * self.NUM_BLEND_SLOT
+        super(XModelAxisRotate, self).__init__(self.TYPE_AXIS_ROTATE, self.SIZE_AXIS_ROTATE)
 
 
 # Quaternion transform structure fo xModel
-class XModelQuaternion(XModelStructure):
+class XModelQuaternion(XModelFloatArray):
     # initialize
     def __init__(self):
-        super(XModelQuaternion, self).__init__(self.TYPE_QUATERNION)
-
-        # float32_t[SIZE_QUATERNION] : initial value
-        self.initial = _identity_quaternion()
-
-        # work variable
-
-        # float32_t[SIZE_QUATERNION * NUM_BLEND_SLOT] : work value
-        self.value = _identity_quaternion() * self.NUM_BLEND_SLOT
+        super(XModelQuaternion, self).__init__(self.TYPE_QUATERNION, self.SIZE_QUATERNION)
 
 
 # Scale transform structure of xModel
-class XModelScale(XModelStructure):
+class XModelScale(XModelFloatArray):
     # initialize
     def __init__(self):
-        super(XModelScale, self).__init__(self.TYPE_SCALE)
-
-        # float32_t[SIZE_SCALE] : initial value
-        self.initial = [1.0, 1.0, 1.0]
-
-        # work variable
-
-        # float32_t[SIZE_SCALE * NUM_BLEND_SLOT] : work value
-        self.value = [1.0, 1.0, 1.0] * self.NUM_BLEND_SLOT
+        super(XModelScale, self).__init__(self.TYPE_SCALE, self.SIZE_SCALE)
 
 
 # Translate transform structure of xModel
-class XModelTranslate(XModelStructure):
+class XModelTranslate(XModelFloatArray):
     # initialize
     def __init__(self):
-        super(XModelTranslate, self).__init__(self.TYPE_TRANSLATE)
-
-        # float32_t[SIZE_TRANSLATE] : initial value
-        self.initial = [0.0, 0.0, 0.0]
-
-        # work variable
-
-        # float32_t[SIZE_TRANSLATE * NUM_BLEND_SLOT : work value
-        self.value = [0.0, 0.0, 0.0] * self.NUM_BLEND_SLOT
+        super(XModelTranslate, self).__init__(self.TYPE_TRANSLATE, self.SIZE_TRANSLATE)
 
 
 # Matrix transform structure of xModel
-class XModelMatrix(XModelStructure):
+class XModelMatrix(XModelFloatArray):
     # initialize
     def __init__(self):
-        super(XModelMatrix, self).__init__(self.TYPE_MATRIX)
-
-        # float32_t[SIZE_MATRIX * NUM_BLEND_SLOT] : initial value
-        self.initial = _identity_matrix()
-
-        # work variable
-
-        # float32_t[SIZE_MATRIX] : work value
-        self.value = _identity_matrix() * self.NUM_BLEND_SLOT
+        super(XModelMatrix, self).__init__(self.TYPE_MATRIX, self.SIZE_MATRIX)
 
 
 # Extensible structure of xModel

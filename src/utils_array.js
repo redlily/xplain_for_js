@@ -94,7 +94,8 @@
      * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数
      *              nullの場合はJavaScriptの比較演算子が使用されます。
      * @returns {number} 指定の値が見つかった場合は、その要素の配列インデックス値を返し、
-     *              見つからなかった場合は指定の要素以下の値を持つ最も近い要素の配列インデックスの負数のプラス1の値を返します。
+     *              見つからなかった場合は指定の要素以下の値を持つ最も近い要素の配列インデックスの
+     *              負数のプラス1の値を返します。
      */
     xpl.ArrayUtils.binarySearch = function (ary, from, to, key, comp) {
         comp = xpl.defaultValue(comp, null);
@@ -126,7 +127,8 @@
      * @param {Array} ary - 配列
      * @param {number} from - 配列の開始のインデックス
      * @param {number} to - 配列の終了のインデックス
-     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
+     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、
+     *              nullの場合はJavaScriptの比較演算子が使用されます。
      * @returns {Array} 重複が取り除かれた新たな配列
      */
     xpl.ArrayUtils.convertToSet = function (ary, from, to, comp) {
@@ -156,7 +158,8 @@
      * @param {Array} subset - 下位集合
      * @param {number} sub_from - 下位集合の配列の開始インデックス
      * @param {number} sub_to - 下位集合の配列の終了インデックス
-     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
+     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、
+     *              nullの場合はJavaScriptの比較演算子が使用されます。
      * @returns {boolean} 内包されているかどうか
      */
     xpl.ArrayUtils.isContained = function (superset, super_from, super_to, subset, sub_from, sub_to, comp) {
