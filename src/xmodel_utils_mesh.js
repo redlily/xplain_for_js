@@ -35,10 +35,9 @@
     "use strict";
 
     /**
-     * 材質構造用のユーティリティクラスです。
+     * メッシュ用のユーティリティクラスです。
      *
-     * @namespace xpl.XModelMeshUtils
-     * @see xpl.XModelMesh
+     * @constructor
      */
     xpl.XModelMeshUtils = function () {
         throw new Error("Unsupported operation");
@@ -1258,38 +1257,25 @@
     };
 
     /**
-     * Get the number of textures that be included in the mesh.
-     *
-     * @memberof xpl.XModelMesh
-     * @function getTextures
-     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
-     * @param {xpl.XModelTexture[]} dest -
-     *              The destination array for texture.
-     *              Can specified the null if not needed it.
-     * @param {xpl.size_t} off - Starting position in the destination array.
-     * @param {xpl.size_t} len - maximum number of the elements to be copied.
-     * @returns {xpl.size_t} Number of the texture.
+     * メッシュに含まれる全てのテクスチャを取得します。
+     * 
+     * @param {xpl.XModelMesh} mesh - 処理対象のメッシュ構造
+     * @returns {xpl.XModelTexture[]} テクスチャの配列
      */
-    xpl.XModelMeshUtils.getTextures = function (mesh, dest, off, len) {
-        let count = 0;
+    xpl.XModelMeshUtils.getTextures = function (mesh) {
+        let textures = [];
         if (mesh != null) {
             for (let i = 0; i < mesh.num_materials; ++i) {
-                let num = xpl.XModelMaterialUtils.getTextures(
-                    mesh.materials[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+                textures.concat(xpl.XModelMaterialUtils.getTextures(mesh.materials[i]));
             }
         }
-        return count;
+        return xpl.XModelMaterialUtils.convertToTextureSet(textures);
     };
-
+    
     /**
-     * Release the textures that included in the mesh.
-     *
-     * @memberof xpl.XModelMesh
-     * @function releaseTextures
-     * @param {xpl.XModelMesh} mesh - メッシュ構造のインスタンス
+     * メッシュに含まれる全てのテクスチャを開放します。
+     * 
+     * @param {xpl.XModelMesh} mesh - 処理対象のメッシュ構造
      */
     xpl.XModelMeshUtils.releaseTextures = function (mesh) {
         if (mesh != null) {

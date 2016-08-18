@@ -193,11 +193,11 @@
      * @param {xpl.float32_t} err_len - The allowable error distance.
      */
     xpl.XModelKinematicsUtils.applyInverseKinematicsLocation = function (node,
-                                                                        target,
-                                                                        num_max_iteration,
-                                                                        num_max_chain,
-                                                                        err_len,
-                                                                        slot) {
+                                                                         target,
+                                                                         num_max_iteration,
+                                                                         num_max_chain,
+                                                                         err_len,
+                                                                         slot) {
         if (node != null && 1 <= num_max_chain) {
             // count and reset transform at target nodes.
             var last_node = node;
@@ -212,6 +212,12 @@
             if (num_max_chain == 1 || num_nodes <= 1) {
                 num_max_iteration = 1;
             }
+            
+            
+            
+            
+            
+            
 
             // make temporary structure for the bones.
             var bone_infos = new Array(num_nodes);
@@ -356,22 +362,23 @@
             updateCombination(last_node);
         }
     };
-
+    
     /**
-     * Apply the inverse kinematics.
-     *
-     * @param {xpl.XModelNode} node - The node.
-     * @param {xpl.XModelNode} target - The target node.
-     * @param {xpl.uint32_t} num_max_iteration - The number of processing iteration.
-     * @param {xpl.uint32_t} num_max_chain - The number of chained nodes.
-     * @param {xpl.float32_t} err_len - The allowable error distance.
+     * 逆運動学を適用します。
+     * 
+     * @param {xpl.XModelNode} node - 処理対象のノード構造
+     * @param {xpl.XModelNode} target - 追従を行うノード構造
+     * @param {xpl.size_t} num_max_iteration - 繰り返しの最大数
+     * @param {xpl.size_t} num_max_chain - 連鎖数
+     * @param {xpl.float32_t} err_len - 距離の許容誤差
+     * @param {xpl.size_t} slot - 
      */
     xpl.XModelKinematicsUtils.applyInverseKinematics = function (node,
-                                                                target,
-                                                                num_max_iteration,
-                                                                num_max_chain,
-                                                                err_len,
-                                                                slot) {
+                                                                 target,
+                                                                 num_max_iteration,
+                                                                 num_max_chain,
+                                                                 err_len,
+                                                                 slot) {
         if (node != null && target != null) {
             var position = new Float32Array(xpl.XModelStructure.SIZE_VECTOR_3);
             xpl.Vector3.loadZero(position, 0);
@@ -390,14 +397,14 @@
     };
 
     /**
-     * Apply the copy transform.
+     * 変形の複製を行います。
      *
-     * @memberof xpl.XModelKinematicsUtils
-     * @function applyCopyTransform
-     * @param {xpl.XModelNode} node - The node.
-     * @param {xpl.XModelNode} target - The target node.
+     * @param {xpl.XModelNode} node - 処理対象のノード構造
+     * @param {xpl.XModelNode} target - 複製対象のノード構造
+     * @param {xpl.float32_t} rate - 複製率
+     * @param {xpl.size_t} slot - 更新を行うスロット
      */
-    xpl.XModelKinematicsUtils.applyCopyTransform = function (node, target) {
+    xpl.XModelKinematicsUtils.applyCopyTransform = function (node, target, rate, slot) {
         // TODO: implementation.
     };
 

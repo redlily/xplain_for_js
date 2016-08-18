@@ -252,7 +252,7 @@
      *
      * @memberof xpl.XModelAnimationUtils
      * @function setAnimationSet
-     * @param {xpl.XModelAnimationSet?} anim_set - 処理対象のアニメーションセット
+     * @param {xpl.XModelAnimationSet} anim_set - 処理対象のアニメーションセット
      * @param {xpl.float64_t} time - 任意の時間
      * @param {xpl.size_t} slot - 結果を書き出すスロット
      */
@@ -267,7 +267,7 @@
     /**
      * アニメーションのトータル時間を取得します。
      *
-     * @param {xpl.XModelAnimation?} anim - 処理対象のアニメーション構造
+     * @param {xpl.XModelAnimation} anim - 処理対象のアニメーション構造
      * @returns {xpl.float64_t} トータルの時間
      */
     xpl.XModelAnimationUtils.getAnimationTotalTime = function (anim) {
@@ -286,7 +286,7 @@
     /**
      * アニメーションセットのトータル時間を取得します。
      *
-     * @param {xpl.XModelAnimationSet?} anim_set - 処理対象のアニメーションセット構造
+     * @param {xpl.XModelAnimationSet} anim_set - 処理対象のアニメーションセット構造
      * @returns {xpl.float64_t} トータルの時間
      */
     xpl.XModelAnimationUtils.getAnimationSetTotalTime = function (anim_set) {

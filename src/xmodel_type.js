@@ -99,7 +99,7 @@
      * @returns {boolean} 同じ構造かどうか
      */
     xpl.XModelStructure.prototype.equals = function (other) {
-        return this == other;
+        return this === other;
     };
 
     Object.defineProperties(xpl.XModelStructure, {
@@ -827,6 +827,17 @@
     };
 
     Object.setPrototypeOf(xpl.XModelTexture.prototype, xpl.XModelExtensible.prototype);
+
+    /**
+     * この構造と引数で指定する構造が同じものかを調べます。
+     *
+     * @instance
+     * @param {xpl.XModelStructure} other - 指定の構造
+     * @returns {boolean} 同じ構造かどうか
+     */
+    xpl.XModelTexture.prototype.equals = function (other) {
+
+    };
 
     /**
      * テクスチャの名前を取得します。
@@ -1566,8 +1577,8 @@
      * この構造と引数で指定する構造が同じものかを調べます。
      *
      * @instance
-     * @param {xpl.XModelVertex} other - 対象のインスタンス
-     * @returns {boolean} 比較の結果
+     * @param {xpl.XModelVertex} other - 指定の構造
+     * @returns {boolean} 同じ構造かどうか
      */
     xpl.XModelVertex.prototype.equals = function (other) {
         if (this === other) {
@@ -1642,10 +1653,13 @@
      * この構造と引数で指定する構造が同じものかを調べます。
      *
      * @instance
-     * @param {xpl.XModelElement} other - 対象のインスタンス
-     * @returns {boolean} 比較の結果
+     * @param {xpl.XModelElement} other - 指定の構造
+     * @returns {boolean} 同じ構造かどうか
      */
     xpl.XModelElement.prototype.equals = function (other) {
+        if (this === other) {
+            return true;
+        }
         if (other instanceof xpl.XModelElement &&
             this.material == other.material &&
             this.num_vertices == other.num_vertices) {
@@ -1821,13 +1835,13 @@
         this.offset_matrix = new Float32Array(xpl.XModelStructure.SIZE_MATRIX);
 
         /**
-         * float32_t[SIZE_MATRIX] : 合成された行列
+         * float32_t[SIZE_MATRIX * (NUM_BLEND_SLOT + 1)] : 合成された行列
          *
          * @instance
          * @memberof xpl.XModelNode
          * @member {Float32Array} combined_matrix
          */
-        this.combined_matrix = new Float32Array(xpl.XModelStructure.SIZE_MATRIX);
+        this.combined_matrix = new Float32Array(xpl.XModelStructure.SIZE_MATRIX * (xpl.XModelStructure.NUM_BLEND_SLOT + 1));
     };
 
     Object.setPrototypeOf(xpl.XModelNode.prototype, xpl.XModelExtensible.prototype);

@@ -822,16 +822,8 @@
                             this.resetPose();
                         }
 
-                        // get the texture information.
-                        var num_textures = ns.XModelContainerUtils.getTextures(
-                            this._container, null, 0, 0);
-                        var textures = new Array(num_textures);
-                        ns.XModelContainerUtils.getTextures(
-                            this._container, textures, 0, num_textures);
-                        textures = ns.ArrayUtils.convertToSet(
-                            textures, 0, textures.length, function (a, b) {
-                                return a.name == b.name;
-                            });
+                        // テクスチャ情報を取得
+                        var textures = ns.XModelContainerUtils.getTextures(this._container);
 
                         // load the textures.
                         this.__remain_textures = textures.length;
@@ -1158,15 +1150,6 @@
 
         // release the textures memory.
         gl.deleteTexture(this.__white_texture);
-        var num_textures = ns.XModelContainerUtils.getTextures(this._container, null, 0, 0);
-        var textures = new Array(num_textures);
-        for (var i = 0; i < num_textures; ++i) {
-            var texture = textures[i];
-            if (texture != null) {
-                gl.deleteTexture(texture.texture);
-                texture.texture = null;
-            }
-        }
     };
 
 })(xpl);

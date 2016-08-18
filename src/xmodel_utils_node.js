@@ -35,48 +35,33 @@
     "use strict";
 
     /**
-     * Utilities for the Model node structure.
+     * ノード用のユーティリティクラスです。
      *
-     * @namespace xpl.XModelNodeUtils
-     * @see xpl.XModelNode
+     * @constructor
      */
     xpl.XModelNodeUtils = function () {
         throw new Error("Unsupported operation");
     };
 
     /**
-     * Get the textures that be included in the node recursively.
+     * ノードに含まれる全てのテクスチャを取得します。
      *
-     * @memberof XModelNodeUtils
-     * @function getTextures
-     * @param {xpl.XModelNode?} root - The root node instance.
-     * @param {xpl.XModeltexture[]?} dest -
-     *              The array of destination array for textures.
-     *              Can set the null if not needed it.
-     * @param {xpl.size_t} off - Starting position in the destination.
-     * @param {xpl.size_t} len - Number of the destination to be copied.
-     * @returns {xpl.size_t} Number of written the textures.
+     * @param {xpl.XModelNode} node - 処理対象のノード構造
+     * @param {boolean} [allow_duplicate=false] - 出力されるテクスチャの配列の要素の重複を許容するかどうか
+     * @returns {xpl.XModelTexture[]} テクスチャ配列
      */
-    xpl.XModelNodeUtils.getTextures = function (root, dest, off, len) {
-        var count = 0;
-        if (root != null) {
-            // count the textures in the meshes that be chained to the this node.
-            for (var i = 0; i < root.num_meshes; ++i) {
-                var num = xpl.XModelMeshUtils.getTextures(root.meshes[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+    xpl.XModelNodeUtils.getTextures = function (node, allow_duplicate) {
+        allow_duplicate = xpl.defaultValue(allow_duplicate, false);
+        let textures = [];
+        if (node != null) {
+            for (let i = 0; i < node.num_meshes; ++i) {
+                textures.concat(xpl.XModelMeshUtils.getTextures(node.meshes[i], true));
             }
-
-            // count the textures in the nodes that be chained to the this node.
-            for (var i = 0; i < root.num_children; ++i) {
-                var num = xpl.XModelNodeUtils.getTextures(root.children[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+            for (let i = 0; i < node.num_children; ++i) {
+                textures.concat(xpl.XModelNodeUtils.getTextures(node.children[i], true));
             }
         }
-        return count;
+        return allow_duplicate ? textures : xpl.XModelMaterialUtils.convertToTextureSet(textures);
     };
 
     /**

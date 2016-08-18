@@ -35,7 +35,7 @@
     "use strict";
 
     /**
-     * コンテナ構造用のユーティリティクラスです。
+     * コンテナ用のユーティリティクラスです。
      *
      * @namespace xpl.XModelContainerUtils
      */
@@ -44,88 +44,53 @@
     };
 
     /**
-     * Get the textures that be included in the container recursively.
-     *
-     * @param {xpl.XModelContainer?} container - 処理対象のコンテナ構造
-     * @param {xpl.XModelTexture[]?} dest -
-     *              The array of destination array for textures.
-     *              Can set the null if not needed it.
-     * @param {xpl.size_t} off - Starting position in the destination.
-     * @param {xpl.size_t} len - Number of the destination to be copied.
-     * @returns {xpl.size_t} Number of the textures.
+     * コンテナに含まれる全てのテクスチャを取得します。
+     * 
+     * @param {xpl.XModelContainer} container - 処理対象のコンテナ構造
+     * @param {boolean} [allow_duplicate=false] - 結果のテクスチャの配列の重複を許容するかどうか
+     * @returns {xpl.XModelTexture[]} テクスチャの配列
      */
-    xpl.XModelContainerUtils.getTextures = function (container, dest, off, len) {
-        var count = 0;
+    xpl.XModelContainerUtils.getTextures = function (container, allow_duplicate) {
+        allow_duplicate = xpl.defaultValue(allow_duplicate, false);
+        let textures = [];
         if (container != null) {
-            // count the textures in the this container.
-            for (var i = 0; i < container.num_textures; ++i) {
-                var texture = container.textures[i];
-                if (texture != null) {
-                    if (dest != null && 0 < len) {
-                        dest[off++] = texture;
-                        len--;
-                    }
-                    count++;
-                }
+            for (let i = 0; i < container.num_textures; ++i) {
+                textures.push(container.textures[i]);
             }
-
-            // count the textures in the materials then be chained to the this container.
-            for (var i = 0; i < container.num_materials; ++i) {
-                var num = xpl.XModelMaterialUtils.getTextures(container.materials[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+            for (let i = 0; i < container.num_materials; ++i) {
+                textures.concat(xpl.XModelMaterialUtils.getTextures(container.materials[i]), true);
             }
-
-            // count the textures in the meshes that be chained to the this container.
-            for (var i = 0; i < container.num_meshes; ++i) {
-                var num = xpl.XModelMeshUtils.getTextures(container.meshes[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+            for (let i = 0; i < container.num_meshes; ++i) {
+                textures.concat(xpl.XModelMeshUtils.getTextures(container.meshes[i]), true);
             }
-
-            // count the textures in the nodes that has be chained to ths this container.
             for (var i = 0; i < container.num_nodes; ++i) {
-                var num = xpl.XModelNodeUtils.getTextures(container.nodes[i], dest, off, len);
-                off += num;
-                len -= num;
-                count += num;
+                textures.concat(xpl.XModelNodeUtils.getTextures(container.nodes[i]), true);
             }
         }
-        return count;
+        return allow_duplicate ? textures : xpl.XModelMaterialUtils.convertToTextureSet(textures);
     };
-
+    
     /**
-     * Release the textures that be included in the container recursively.
-     *
-     * @memberof xpl.XModelContainerUtils
-     * @function releaseTextures
-     * @param {xpl.XModelContainer?} container - The container instance.
+     * コンテナに含まれる全てのテクスチャを開放します。
+     * 
+     * @param {xpl.XModelContainer} container - 処理対象のコンテナ構造
      */
     xpl.XModelContainerUtils.releaseTextures = function (container) {
         if (container != null) {
-            // release the textures in the this container.
-            for (var i = 0; i < container.num_textures; ++i) {
+            for (let i = 0; i < container.num_textures; ++i) {
                 var texture = container.textures[i];
                 if (texture != null) {
                     texture.data = null;
                     texture.data_size = 0;
                 }
             }
-
-            // release the textures in the materials that be chained to the this container.
-            for (var i = 0; i < container.num_materials; ++i) {
+            for (let i = 0; i < container.num_materials; ++i) {
                 xpl.XModelMaterialUtils.releaseTexture(container.materials[i]);
             }
-
-            // release the textures in the meshes that be chained to the this container.
-            for (var i = 0; i < container.num_meshes; ++i) {
+            for (let i = 0; i < container.num_meshes; ++i) {
                 xpl.XModelMeshUtils.releaseTextures(container.meshes[i]);
             }
-
-            // release the textures in the nodes that be chained to the this container.
-            for (var i = 0; i < container.num_nodes; ++i) {
+            for (let i = 0; i < container.num_nodes; ++i) {
                 xpl.XModelNodeUtils.releaseTextures(container.nodes[i]);
             }
         }

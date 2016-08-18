@@ -158,8 +158,7 @@
      * @param {Array} subset - 下位集合
      * @param {number} sub_from - 下位集合の配列の開始インデックス
      * @param {number} sub_to - 下位集合の配列の終了インデックス
-     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、
-     *              nullの場合はJavaScriptの比較演算子が使用されます。
+     * @param {xpl.ArrayUtils~comparator} [comp=null] - 比較関数、nullの場合はJavaScriptの比較演算子が使用されます。
      * @returns {boolean} 内包されているかどうか
      */
     xpl.ArrayUtils.isContained = function (superset, super_from, super_to, subset, sub_from, sub_to, comp) {

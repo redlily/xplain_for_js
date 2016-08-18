@@ -47,7 +47,7 @@
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @var {DataView} __data_view
+         * @member {DataView} __data_view
          */
         this.__data_view = null;
 
@@ -57,7 +57,7 @@
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @var {xpl.size_t} __data_offset
+         * @member {xpl.size_t} __data_offset
          */
         this.__data_offset = 0;
 
@@ -67,7 +67,7 @@
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @var {Map.<uint32_t, XModelStructure>}
+         * @member {Object.<uint32_t, XModelStructure>}
          */
         this.__inst_map = null;
 
@@ -77,7 +77,7 @@
          * @private
          * @instance
          * @memberof xpl.XModelDecoder
-         * @var {Map.<uint32_t, XModelStructure>}
+         * @member {Object.<uint32_t, XModelStructure>}
          */
         this.__weak_inst_map = null;
     };
@@ -88,8 +88,6 @@
      * デコード処理を行います。
      *
      * @instance
-     * @memberof xpl.XModelDecoder
-     * @function decode
      * @param {ArrayBuffer} buf - デコード対象のデータバッファ
      * @returns {xpl.XModelStructure} デコードされたインスタンス
      */

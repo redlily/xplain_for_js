@@ -35,126 +35,88 @@
     "use strict";
 
     /**
-     * Utilities material for the xModel material structure.
+     * 材質用のユーティリティクラス
      *
-     * @namespace xpl.XModelMaterialUtils
-     * @see xpl.XModelMaterial
+     * @constructor
      */
     xpl.XModelMaterialUtils = function () {
         throw new Error("Unsupported operation");
     };
 
     /**
-     * Get the textures that be included in the mesh.
+     * テクスチャの配列を除去した配列を返します。
      *
-     * @memberof xpl.XModelMaterialUtils
-     * @function getTextures
-     * @param {xpl.XModelMaterial?} material - The material instance.
-     * @param {xpl.XModelTexture[]?} dest -
-     *              The destination array for texture.
-     *              Can specified the null if not needed it.
-     * @param {xpl.size_t} off - Starting position the in the destination array.
-     * @param {xpl.size_t} len - The maximum number of elements to be copied.
-     * @returns {xpl.size_t} The number of texture.
+     * @param {xpl.XModelTexture[]} textures - テクスチャの配列
+     * @returns {xpl.XModelTexture[]} 重複を除去したテクスチャの配列
      */
-    xpl.XModelMaterialUtils.getTextures = function (material, dest, off, len) {
-        var count = 0;
-        if (material != null) {
-            // emissive map.
-            if (material.emissive_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.emissive_map;
-                    len--;
-                }
-                count++;
-            }
-
-            // ambient reflection map.
-            if (material.ambient_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.ambient_map;
-                    len--;
-                }
-                count++;
-            }
-
-            // diffuse reflection map.
-            if (material.diffuse_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.diffuse_map;
-                    len--;
-                }
-                count++;
-            }
-
-            // specular reflection map.
-            if (material.specular_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.specular_map;
-                    len--;
-                }
-                count++;
-            }
-
-            // specular power map.
-            if (material.shininess_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.shininess_map;
-                    len--;
-                }
-                count++;
-            }
-
-            // bump map.
-            if (material.bump_map) {
-                if (dest && 0 < len) {
-                    dest[off++] = material.bump_map;
-                    len--;
-                }
-                count++;
-            }
-        }
-        return count;
+    xpl.XModelMaterialUtils.convertToTextureSet = function (textures) {
+        return xpl.ArrayUtils.convertToSet(
+            textures,
+            0,
+            textures.length,
+            function (a, b) {
+                return a.name == b.name;
+            });
     };
 
     /**
-     * Release the textures that be included in the mesh.
+     * 材質に含まれるテクスチャを取得します。
      *
-     * @param {xpl.XModelMaterial?} material - The material instance.
+     * @param {xpl.XModelMaterial} material - 処理対象の材質構造
+     * @returns {xpl.XModelTexture[]} テクスチャの配列
+     */
+    xpl.XModelMaterialUtils.getTextures = function (material) {
+        let textures = [];
+        if (material != null) {
+            if (material.emissive_map != null) {
+                textures.push(material.emissive_map);
+            }
+            if (material.ambient_map != null) {
+                textures.push(material.ambient_map);
+            }
+            if (material.diffuse_map != null) {
+                textures.push(material.diffuse_map);
+            }
+            if (material.specular_map != null) {
+                textures.push(material.specular_map);
+            }
+            if (material.shininess_map != null) {
+                textures.push(material.shininess_map);
+            }
+            if (material.bump_map != null) {
+                textures.push(material.bump_map);
+            }
+        }
+        return xpl.XModelMaterialUtils.convertToTextureSet(textures);
+    };
+
+    /**
+     * 材質に含まれるテクスチャを開放します。
+     *
+     * @param {xpl.XModelMaterial} material - 処理対象の材質構造
      */
     xpl.XModelMaterialUtils.releaseTexture = function (material) {
         if (material != null) {
-            // emissive map.
             if (material.emissive_map) {
                 material.emissive_map.data = null;
                 material.emissive_map.data_size = 0;
             }
-
-            // ambient reflection map.
             if (material.ambient_map) {
                 material.ambient_map.data = null;
                 material.ambient_map.data_size = 0;
             }
-
-            // diffuse reflection map.
             if (material.diffuse_map) {
                 material.diffuse_map.data = null;
                 material.diffuse_map.data_size = 0;
             }
-
-            // specular reflection map.
             if (material.specular_map) {
                 material.specular_map.data = null;
                 material.specular_map.data_size = 0;
             }
-
-            // specular power map.
             if (material.shininess_map) {
                 material.shininess_map.data = null;
                 material.shininess_map.data_size = 0;
             }
-
-            // bump map.
             if (material.bump_map) {
                 material.bump_map.data = null;
                 material.bump_map.data_size = 0;
