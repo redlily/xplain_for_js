@@ -211,7 +211,7 @@
                         if (type == gl.VERTEX_SHADER) {
                             err_handle(xpl.GLUtils.TYPE_VERTEX_SHADER, err_info);
                         } else if (type == gl.FRAGMENT_SHADER) {
-                            err_handle(xpl.GLUtils.TYPE_FRAGMENT_SHADER, +err_info);
+                            err_handle(xpl.GLUtils.TYPE_FRAGMENT_SHADER, err_info);
                         }
                     }
                     gl.deleteShader(shader);
@@ -230,7 +230,7 @@
      * @param {WebGLShader} vs - 頂点シェーダ
      * @param {WebGLShader} fs - フラグメントシェーダ
      * @param {Map.<string, number>} attr_map - バインドする名前付きアトリビュート変数のマップ
-     * @param {xpl.GLUtils~buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
+     * @param {xpl.GLUtils~buildErrorCallback} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */
     xpl.GLUtils.createProgram = function (gl, vs, fs, attr_map, err_handle) {
@@ -273,7 +273,7 @@
      * @param {string} vs_code - 頂点シェーダのソースコード
      * @param {string} fs_code - フラグメントシェーダのソースコード
      * @param {Map.<string, number>} attr_map - バインドする名前付きアトリビュート変数のマップ
-     * @param {xpl.GLUtils.buildErrorCallback?} err_handle - エラーをハンドルするためのコールバック関数
+     * @param {xpl.GLUtils.buildErrorCallback} err_handle - エラーをハンドルするためのコールバック関数
      * @returns {WebGLProgram} プログラムのインスタンス
      */
     xpl.GLUtils.createShaderProgram = function (gl, vs_code, fs_code, attr_map, err_handle) {

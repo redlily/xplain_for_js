@@ -131,7 +131,7 @@
      * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
      */
     xpl.Matrix4x4.loadTranslatev = function (d, d_off, v, v_off, column) {
-
+        xpl.Matrix4x4.loadTranslate(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], column);
     };
 
     /**
@@ -264,6 +264,26 @@
             xzcs1 - ysn, yzcs1 + xsn, cs + z * z * cs1, 0,
             0, 0, 0, 1,
             !column);
+    };
+
+    /**
+     * 任意軸の回転の変換用列を読み込ませます。
+     *
+     *     | cosθ + x^2 * (1.0 - cosθ),       x * y * (1.0 - cosθ) - z * sinθ, x * z * (1.0 - cosθ) + y * sinθ, 0 |
+     * d = | x * y * (1.0 - cosθ) + z * sinθ, cosθ + y^2 * (1.0 - cosθ),       y * z * (1.0 - cosθ) - x * sinθ, 0 |
+     *     | x * z * (1.0 - cosθ) - y * sinθ, y * z * (1.0 - cosθ) + x * sinθ, cosθ + y^2 * (1.0 - cosθ),       0 |
+     *     | 0,                               0,                               0,                               1 |
+     *
+     * @param {number[]} d - 出力先の行列
+     * @param {number} d_off - 出力先の行列の配列インデックス
+     * @param {number} v - 回転軸のベクトル
+     * @param {number} v_off - 回転軸のベクトルの配列インデックス
+     * @param {number} rad - 回転のラジアン値
+     * @param {boolean} [norm=true] - 回転軸を正規化するかどうか
+     * @param {boolean} [column=true] - 処理対象のベクトルが列ベクトルかどうか
+     */
+    xpl.Matrix4x4.loadRotatev = function (d, d_off, v, v_off, rad, norm, column) {
+        xpl.Matrix4x4.loadRotate(d, d_off, v[v_off + VX], v[v_off + VY], v[v_off + VZ], rad, norm, column);
     };
 
     /**
@@ -1286,7 +1306,7 @@
         // Y-axis = q * (0; (0, 1, 0)) * q
         //                               _
         // Z-axis = q * (0; (0, 0, 1)) * q
-        
+
         let rp = q[q_off + CR];
         let ip = q[q_off + CI];
         let jp = q[q_off + CJ];

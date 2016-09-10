@@ -87,6 +87,7 @@
         /**
          * フルスクリーンをサポートしているかどうかを調べます。
          *
+         * @param {Element} target_element - フルスクリーンの対象になる対象の要素
          * @returns {boolean} フルスクリーンをサポートしているかどうか
          */
         xpl.SystemUtils.isSupportedFullScreen = function (target_element) {

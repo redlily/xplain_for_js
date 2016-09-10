@@ -93,30 +93,30 @@
      *
      * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {number} ip - 入力元の四元数の虚数I部
-     * @param {number} jp - 入力元の四元数の虚数J部
-     * @param {number} kp - 入力元の四元数の虚数K部
+     * @param {number} x - 回転軸のX要素
+     * @param {number} y - 回転軸のY要素
+     * @param {number} z - 回転軸のZ要素
      * @param {number} rad - 回転のラジアン値
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
-    xpl.Quaternion.loadRotate = function (d, d_off, ip, jp, kp, rad, norm) {
+    xpl.Quaternion.loadRotate = function (d, d_off, x, y, z, rad, norm) {
         norm = xpl.defaultValue(norm, true);
 
         // 四元数を正規化
         if (norm) {
-            let len = ip * ip + jp * jp + kp * kp;
+            let len = x * x + y * y + z * z;
             if (0 < len) {
                 len = Math.sqrt(len);
-                ip /= len;
-                jp /= len;
-                kp /= len;
+                x /= len;
+                y /= len;
+                z /= len;
             }
         }
 
         // 結果の書き出し
         rad *= 0.5;
         let sn = Math.sin(rad);
-        xpl.Quaternion.load(d, d_off, Math.cos(rad), ip * sn, jp * sn, kp * sn);
+        xpl.Quaternion.load(d, d_off, Math.cos(rad), x * sn, y * sn, z * sn);
     };
 
     /**
@@ -128,27 +128,27 @@
      *
      * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {number} fx - 開始のベクトルのX要素
-     * @param {number} fy - 開始のベクトルのY要素
-     * @param {number} fz - 開始のベクトルのZ要素
-     * @param {boolean} fv_norm - 開始のベクトルを正規化するかどうか
-     * @param {number} tx - 終了のベクトルのX要素
-     * @param {number} ty - 終了のベクトルのY要素
-     * @param {number} tz - 終了のベクトルのZ要素
-     * @param {boolean} tv_norm - 終了のベクトルを正規化するかどうか
+     * @param {number} sx - 開始のベクトルのX要素
+     * @param {number} sy - 開始のベクトルのY要素
+     * @param {number} sz - 開始のベクトルのZ要素
+     * @param {boolean} sv_norm - 開始のベクトルを正規化するかどうか
+     * @param {number} ex - 終了のベクトルのX要素
+     * @param {number} ey - 終了のベクトルのY要素
+     * @param {number} ez - 終了のベクトルのZ要素
+     * @param {boolean} ev_norm - 終了のベクトルを正規化するかどうか
      * @param {number} [t=1.0] - 補完係数
      */
-    xpl.Quaternion.loadRotateVector3 = function (d, d_off, fx, fy, fz, fv_norm, tx, ty, tz, tv_norm, t) {
+    xpl.Quaternion.loadRotateVector3 = function (d, d_off, sx, sy, sz, sv_norm, ex, ey, ez, ev_norm, t) {
         t = xpl.defaultValue(t, 1.0);
 
         // 開始のベクトルを正規化
-        if (fv_norm) {
-            let f_len = fx * fx + fy * fy + fz * fz;
+        if (sv_norm) {
+            let f_len = sx * sx + sy * sy + sz * sz;
             if (0 < f_len) {
                 f_len = Math.sqrt(f_len);
-                fx /= f_len;
-                fy /= f_len;
-                fz /= f_len;
+                sx /= f_len;
+                sy /= f_len;
+                sz /= f_len;
             } else {
                 xpl.Quaternion.loadIdentity(d, d_off);
                 return;
@@ -156,13 +156,13 @@
         }
 
         // 終了のベクトルを正規化
-        if (tv_norm) {
-            let t_len = tx * tx + ty * ty + tz * tz;
+        if (ev_norm) {
+            let t_len = ex * ex + ey * ey + ez * ez;
             if (0 < t_len) {
                 t_len = Math.sqrt(t_len);
-                tx /= t_len;
-                ty /= t_len;
-                tz /= t_len;
+                ex /= t_len;
+                ey /= t_len;
+                ez /= t_len;
             } else {
                 xpl.Quaternion.loadIdentity(d, d_off);
                 return;
@@ -170,16 +170,16 @@
         }
 
         // 2つのベクトルのcos値を算出
-        let cs = fx * tx + fy * ty + fz * tz;
+        let cs = sx * ex + sy * ey + sz * ez;
         if (1.0 <= cs) {
             xpl.Quaternion.loadIdentity(d, d_off);
             return;
         }
 
         // 回転軸を算出
-        let ip = fy * tz - fz * ty;
-        let jp = fz * tx - fx * tz;
-        let kp = fx * ty - fy * tx;
+        let ip = sy * ez - sz * ey;
+        let jp = sz * ex - sx * ez;
+        let kp = sx * ey - sy * ex;
 
         // 回転軸を正規化
         let axis_len = ip * ip + jp * jp + kp * kp;
@@ -321,9 +321,9 @@
      *
      * @param {number[]} q - 対象の四元数
      * @param {number} q_off - 対象の四元数の配列インデックス
-     * @param {number} ip - 入力元の四元数の虚数I部
-     * @param {number} jp - 入力元の四元数の虚数J部
-     * @param {number} kp - 入力元の四元数の虚数K部
+     * @param {number} ip - 回転軸のX要素
+     * @param {number} jp - 回転軸のY要素
+     * @param {number} kp - 回転軸のZ要素
      * @param {number} rad - 回転のラジアン値
      * @param {boolean} [norm=true] - 入力元の四元数を正規化するかどうか
      */
