@@ -45,12 +45,12 @@
 
     if (typeof window == "object") {
 
-        const requestAnimationFrame =
+        const _requestAnimationFrame =
             window.requestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.msRequestAnimationFrame;
-        const cancelAnimationFrame =
+        const _cancelAnimationFrame =
             window.cancelAnimationFrame ||
             window.mozCancelAnimationFrame ||
             window.webkitCancelAnimationFrame ||
@@ -63,7 +63,7 @@
          * @returns {number} タイマーID
          */
         xpl.SystemUtils.requestAnimationFrame = function (callback) {
-            return requestAnimationFrame(callback);
+            return _requestAnimationFrame(callback);
         };
 
         /**
@@ -72,7 +72,9 @@
          * @param {number} timer_id - タイマーID
          */
         xpl.SystemUtils.cancelAnimationFrame = function (timer_id) {
-            cancelAnimationFrame(timer_id);
+            if (_cancelAnimationFrame) {
+                _cancelAnimationFrame(timer_id);
+            }
         };
     }
 

@@ -131,18 +131,18 @@
      * @param {number} sx - 開始のベクトルのX要素
      * @param {number} sy - 開始のベクトルのY要素
      * @param {number} sz - 開始のベクトルのZ要素
-     * @param {boolean} sv_norm - 開始のベクトルを正規化するかどうか
+     * @param {boolean} s_norm - 開始のベクトルを正規化するかどうか
      * @param {number} ex - 終了のベクトルのX要素
      * @param {number} ey - 終了のベクトルのY要素
      * @param {number} ez - 終了のベクトルのZ要素
-     * @param {boolean} ev_norm - 終了のベクトルを正規化するかどうか
+     * @param {boolean} e_norm - 終了のベクトルを正規化するかどうか
      * @param {number} [t=1.0] - 補完係数
      */
-    xpl.Quaternion.loadRotateVector3 = function (d, d_off, sx, sy, sz, sv_norm, ex, ey, ez, ev_norm, t) {
+    xpl.Quaternion.loadRotateVector3 = function (d, d_off, sx, sy, sz, s_norm, ex, ey, ez, e_norm, t) {
         t = xpl.defaultValue(t, 1.0);
 
         // 開始のベクトルを正規化
-        if (sv_norm) {
+        if (s_norm) {
             let f_len = sx * sx + sy * sy + sz * sz;
             if (0 < f_len) {
                 f_len = Math.sqrt(f_len);
@@ -156,7 +156,7 @@
         }
 
         // 終了のベクトルを正規化
-        if (ev_norm) {
+        if (e_norm) {
             let t_len = ex * ex + ey * ey + ez * ez;
             if (0 < t_len) {
                 t_len = Math.sqrt(t_len);
@@ -208,19 +208,19 @@
      *
      * @param {number[]} d - 出力先の四元数
      * @param {number} d_off - 出力先の四元数の配列インデックス
-     * @param {number[]} fv - 開始のベクトル
-     * @param {number} fv_off - 開始のベクトルの配列インデックス
-     * @param {boolean} fv_norm - 開始のベクトルを正規化するかどうか
-     * @param {number[]} tv - 終了のベクトル
-     * @param {number} tv_off - 終了のベクトルの配列インデックス
-     * @param {boolean} tv_norm - 終了のベクトルの配列インデックス
+     * @param {number[]} sv - 開始のベクトル
+     * @param {number} sv_off - 開始のベクトルの配列インデックス
+     * @param {boolean} sv_norm - 開始のベクトルを正規化するかどうか
+     * @param {number[]} ev - 終了のベクトル
+     * @param {number} ev_off - 終了のベクトルの配列インデックス
+     * @param {boolean} ev_norm - 終了のベクトルの配列インデックス
      * @param {number} [t=1.0] - 補完係数
      */
-    xpl.Quaternion.loadRotateVector3v = function (d, d_off, fv, fv_off, fv_norm, tv, tv_off, tv_norm, t) {
+    xpl.Quaternion.loadRotateVector3v = function (d, d_off, sv, sv_off, sv_norm, ev, ev_off, ev_norm, t) {
         xpl.Quaternion.loadRotateVector3(
             d, d_off,
-            fv[fv_off + VX], fv[fv_off + VY], fv[fv_off + VZ], fv_norm,
-            tv[tv_off + VX], tv[tv_off + VY], tv[tv_off + VZ], tv_norm,
+            sv[sv_off + VX], sv[sv_off + VY], sv[sv_off + VZ], sv_norm,
+            ev[ev_off + VX], ev[ev_off + VY], ev[ev_off + VZ], ev_norm,
             t);
     };
 

@@ -51,7 +51,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_VERTEX_SHADER
          */
-        TYPE_VERTEX_SHADER: {value: "OpenGL Vertex Shader"},
+        TYPE_VERTEX_SHADER: {value: "WebGL Vertex Shader"},
 
         /**
          * フラグメントシェーダの識別子
@@ -59,7 +59,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_FRAGMENT_SHADER
          */
-        TYPE_FRAGMENT_SHADER: {value: "OpenGL Fragment Shader"},
+        TYPE_FRAGMENT_SHADER: {value: "WebGL Fragment Shader"},
 
         /**
          * シェーダプログラムの識別子
@@ -67,7 +67,7 @@
          * @memberof xpl.GLUtils
          * @const {string} TYPE_PROGRAM
          */
-        TYPE_PROGRAM: {value: "OpenGL Program"}
+        TYPE_PROGRAM: {value: "WebGL Program"}
     });
 
     /**
@@ -83,11 +83,13 @@
      *
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
      * @param {number} type - バッファ種別
-     * @param {ArrayBuffer} data - データ配列
-     * @param {number} usage - バッファの使用方法
+     * @param {ArrayBuffer|TypedArray} data - データ配列
+     * @param {number} [usage=gl.STATIC_DRAW] - バッファの使用方法
      * @returns {WebGLBuffer} バッファのインスタンス
      */
     xpl.GLUtils.createBuffer = function (gl, type, data, usage) {
+        usage = xpl.defaultValue(usage, gl.STATIC_DRAW);
+
         if (type == gl.ARRAY_BUFFER || type == gl.ELEMENT_ARRAY_BUFFER) {
             let buf = gl.createBuffer();
             if (buf != null) {
@@ -151,6 +153,12 @@
                 }
             }
 
+            // 初期パラメータを設定
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
             // ミップマップを生成
             if (mipmap) {
                 gl.generateMipmap(gl.TEXTURE_2D);
@@ -179,8 +187,40 @@
         if (tex != null) {
             gl.bindTexture(gl.TEXTURE_2D, tex);
             gl.texImage2D(gl.TEXTURE_2D, 0, format, format, type, object);
+
+            // 初期パラメータを設定
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         }
         return tex;
+    };
+
+    xpl.GLUtils.createRenderBuffer = function (type, width, height) {
+        let buf = gl.createRenderbuffer();
+        if (buf != null) {
+            gl.bindRenderbuffer(gl.RENDERBUFFER, buf);
+            gl.renderbufferStorage(gl.RENDERBUFFER, type, width, height);
+        }
+        return buf;
+    };
+
+    xpl.GLUtils.createFramebuffer = function (color, depth, stencil) {
+        let buf = gl.createFramebuffer();
+        if (buf != null) {
+            gl.bindFramebuffer(gl.FRAMEBUFFER, buf);
+            if (color != null) {
+                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.RENDERBUFFER, color);
+            }
+            if (depth != null) {
+                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depth);
+            }
+            if (stencil != null) {
+                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.RENDERBUFFER, stencil);
+            }
+        }
+        return buf;
     };
 
     /**
@@ -224,6 +264,45 @@
     };
 
     /**
+     * WegGLのシェーダにアトリビュート変数のロケーションをバインドします。
+     *
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {WebGLProgram} program - 対象のプログラム
+     * @param {Map.<string, number>} map - バインドする名前付きアトリビュート変数のマップ
+     */
+    xpl.GLUtils.bindAttributes = function (gl, program, map) {
+        Object.keys(map).forEach((key) => {
+            gl.bindAttribLocation(program, map[key], key);
+        });
+    };
+
+    /**
+     * WebGLのプログラムからアトリビュート変数のロケーションを取得します。
+     *
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {WebGLProgram} program - 対象のプログラム
+     * @param {Map.<string, number>} map - ロケーションを取得する名前付きアトリビュート変数のマップ
+     */
+    xpl.GLUtils.getAttributes = function (gl, program, map) {
+        Object.keys(map).forEach((key) => {
+            map[key] = gl.getAttribLocation(program, key);
+        });
+    };
+
+    /**
+     * WebGLのプログラムからユニフォーム変数のロケーションを取得します。
+     *
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {WebGLProgram} program - 対象のプログラム
+     * @param {Map.<string, number>} map - ロケーションを取得する名前付きユニフォーム変数のマップ
+     */
+    xpl.GLUtils.getUniforms = function (gl, program, map) {
+        Object.keys(map).forEach((key) => {
+            map[key] = gl.getUniformLocation(program, key);
+        });
+    };
+
+    /**
      * WebGLのシェーダからWebGLのプログラムのインスタンスを生成します。
      *
      * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
@@ -235,16 +314,14 @@
      */
     xpl.GLUtils.createProgram = function (gl, vs, fs, attr_map, err_handle) {
         if (vs != null && fs != null) {
-            // create the program instance.
+            // プログラムのインスタンスを生成
             let program = gl.createProgram();
             if (program != null) {
                 // シェーダオブジェクトをプログラムに接続
                 gl.attachShader(program, vs);
                 gl.attachShader(program, fs);
                 if (attr_map != null) {
-                    for (let key in attr_map) {
-                        gl.bindAttribLocation(program, attr_map[key], key);
-                    }
+                    xpl.GLUtils.bindAttributes(gl, program, attr_map);
                 }
 
                 // プログラムのリンク
@@ -295,6 +372,25 @@
         gl.deleteShader(vs);
         gl.deleteShader(fs);
         return pg;
+    };
+
+    /**
+     * DOMのIDからソースコードを取得してWebGLのプログラムを生成します。
+     *
+     * @param {WebGLRenderingContext} gl - WebGLのコンテキスト
+     * @param {string} vs_id - 頂点シェーダのDOM ID
+     * @param {string} fs_id - フラグメントシェーダのDOM ID
+     * @param {Map.<string, number>} attr_map - バインドする名前付きアトリビュート変数のマップ
+     * @param {xpl.GLUtils.buildErrorCallback} err_handle - エラーをハンドルするためのコールバック関数
+     * @returns {WebGLProgram} プログラムのインスタンス
+     */
+    xpl.GLUtils.createShaderProgramFromDomId = function (gl, vs_id, fs_id, attr_map, err_handle) {
+        return xpl.GLUtils.createShaderProgram(
+            gl,
+            document.getElementById(vs_id).text,
+            document.getElementById(fs_id).text,
+            attr_map,
+            err_handle);
     };
 
 })(xpl);

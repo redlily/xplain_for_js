@@ -36,10 +36,10 @@
 
     const VX = 0, VY = 1, VZ = 2;
     const CR = 0, CI = 1, CJ = 2, CK = 3;
-    const M00 = 0, M01 = 4, M02 = 8, M03 = 12,
-        M10 = 1, M11 = 5, M12 = 9, M13 = 13,
-        M20 = 2, M21 = 6, M22 = 10, M23 = 14,
-        M30 = 3, M31 = 7, M32 = 11, M33 = 15;
+    const M00 = 0, M01 = 4, M02 = 8, M03 = 12;
+    const M10 = 1, M11 = 5, M12 = 9, M13 = 13;
+    const M20 = 2, M21 = 6, M22 = 10, M23 = 14;
+    const M30 = 3, M31 = 7, M32 = 11, M33 = 15;
 
     /**
      * 3次元ベクトルのユーティリティクラスです。
@@ -575,12 +575,12 @@
      * @param {number} a1_off - 演算子の左側の数値の配列インデックス
      * @param {number[]} a2 - 演算子の右側の数値
      * @param {number} a2_off - 演算子の右側の数値の配列インデックス
-     * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
+     * @param {boolean} [col=true] - 指定されている列ベクトルかどうか
      */
-    xpl.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = xpl.defaultValue(column, true);
+    xpl.Vector3.mulMatrix4x4v = function (d, d_off, a1, a1_off, a2, a2_off, col) {
+        col = xpl.defaultValue(col, true);
 
-        if (column) {
+        if (col) {
             // 列ベクトル場合
             let x = a2[a2_off + VX];
             let y = a2[a2_off + VY];
@@ -623,12 +623,12 @@
      * @param {number} a1_off - 演算子の左側の数値の配列インデックス
      * @param {number[]} a2 - 演算子の右側の数値
      * @param {number} a2_off - 演算子の右側の数値の配列インデックス
-     * @param {boolean} [column=true] - 指定されている列ベクトルかどうか
+     * @param {boolean} [col=true] - 指定されている列ベクトルかどうか
      */
-    xpl.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, column) {
-        column = xpl.defaultValue(column, true);
+    xpl.Vector3.mulMatrix4x4Axisv = function (d, d_off, a1, a1_off, a2, a2_off, col) {
+        col = xpl.defaultValue(col, true);
 
-        if (column) {
+        if (col) {
             // 列ベクトルの場合
             let x = a2[a2_off + VX];
             let y = a2[a2_off + VY];
