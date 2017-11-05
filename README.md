@@ -157,7 +157,7 @@ git clone git@github.com:redlily/test_resources.git
 
 Syuuhei Kuno  
 E-Mail: circular.nine@gmail.com  
-Twitter: [@tabihato](https://twitter.com/tabihato)
+Twitter: [@as_kuya](https://twitter.com/as_kuya)
 
 ## ライセンス
 
