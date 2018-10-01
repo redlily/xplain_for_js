@@ -153,12 +153,6 @@ git clone git@github.com:redlily/test_resources.git
 |Safari|×|○|letキーワードでエラー|
 |Edge|-|-|未検証|
 
-## 開発者
-
-Syuuhei Kuno  
-E-Mail: circular.nine@gmail.com  
-Twitter: [@as_kuya](https://twitter.com/as_kuya)
-
 ## ライセンス
 
 ### xPlainのライセンス
